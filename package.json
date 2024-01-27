@@ -6,6 +6,7 @@
     "start": "yarn build:lib && ng serve",
     "build:lib": "ng build ngx-ol --configuration production",
     "build:demo": "ng build demo-ngx-ol",
+    "build:gh-pages": "ng build --output-path docs --base-href /ngx-ol/",
     "build": "yarn build:lib && yarn build:demo",
     "test": "yarn build:lib && ng test",
     "lint": "ng lint",
