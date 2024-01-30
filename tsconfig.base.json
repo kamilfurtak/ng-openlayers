@@ -21,7 +21,7 @@
     ],
     "paths": {
       "ngx-ol": [
-        "dist/ngx-ol"
+        "libs/ngx-ol/src/public-api.ts"
       ]
     },
     "useDefineForClassFields": false,
