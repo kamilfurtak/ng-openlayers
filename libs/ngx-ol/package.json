@@ -1,0 +1,35 @@
+{
+  "name": "@kamilfurtak/ngx-ol",
+  "version": "17.1.0",
+  "description": "Openlayers Angular framework",
+  "author": "Kamil Furtak (kamil.furtak@gmail.com)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kamilfurtak/ngx-ol.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kamilfurtak/ngx-ol/issues"
+  },
+  "homepage": "https://github.com/kamilfurtak/ngx-ol",
+  "keywords": [
+    "angular",
+    "openlayers"
+  ],
+  "license": "MPL-2.0",
+  "private": false,
+  "scripts": {
+    "release": "standard-version -m \"chore(release): version %s\" -t \"\"",
+    "prepublishOnly": "cp projects/ngx-ol/README.md dist/ngx-ol/README.md"
+  },
+  "standard-version": {
+    "postchangelog": "cp projects/ngx-ol/CHANGELOG.md dist/ngx-ol/CHANGELOG.md"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=17.0.0",
+    "@angular/core": ">=17.0.0",
+    "ol": "^8.2.0"
+  }
+}
