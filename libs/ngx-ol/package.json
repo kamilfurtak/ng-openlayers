@@ -1,6 +1,6 @@
 {
-  "name": "@kamilfurtak/ngx-ol",
-  "version": "17.1.0",
+  "name": "ng-ol",
+  "version": "17.1.1",
   "description": "Openlayers Angular framework",
   "author": "Kamil Furtak (kamil.furtak@gmail.com)",
   "repository": {
@@ -12,8 +12,12 @@
   },
   "homepage": "https://github.com/kamilfurtak/ngx-ol",
   "keywords": [
+    "ngx-openlayers",
     "angular",
-    "openlayers"
+    "angular17",
+    "openlayers",
+    "openlayers8",
+    "ol8"
   ],
   "license": "MPL-2.0",
   "private": false,
