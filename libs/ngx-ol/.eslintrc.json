@@ -10,7 +10,7 @@
       ],
       "parserOptions": {
         "project": [
-          "libs/ngx-ol/tsconfig.*?.json"
+          "libs/ng-ol/tsconfig.*?.json"
         ],
         "createDefaultProgram": true
       },

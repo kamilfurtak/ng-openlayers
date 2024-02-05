@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { SourceUTFGridComponent, ViewComponent } from 'ngx-ol';
+import { SourceUTFGridComponent, ViewComponent } from 'ng-ol';
 import { Coordinate } from 'ol/coordinate';
 
 @Component({

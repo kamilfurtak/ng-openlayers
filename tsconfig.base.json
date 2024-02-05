@@ -20,8 +20,8 @@
       "dom"
     ],
     "paths": {
-      "ngx-ol": [
-        "libs/ngx-ol/src/public-api.ts"
+      "ng-ol": [
+        "libs/ng-ol/src/public-api.ts"
       ]
     },
     "useDefineForClassFields": false,

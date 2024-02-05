@@ -17,7 +17,7 @@ pipeline {
       steps {
         nodejs(nodeJSInstallationName: nodeVersion) {
           sh 'npm run build:lib'
-          sh 'cp -r dist/ngx-ol dist/ngx-ol-publish'
+          sh 'cp -r dist/ng-ol dist/ng-ol-publish'
           sh 'npm run build:demo'
         }
       }
@@ -30,8 +30,8 @@ pipeline {
 //         // Assuming that you have already configured GitHub credentials in Jenkins
 //         withCredentials([string(credentialsId: 'github_oauth_token', variable: 'GITHUB_OAUTH_TOKEN')]) {
 //             sh '''
-//                 cd dist/ngx-ol-publish
-//                 cp ../../projects/ngx-ol/CHANGELOG.md CHANGELOG.md
+//                 cd dist/ng-ol-publish
+//                 cp ../../projects/ng-ol/CHANGELOG.md CHANGELOG.md
 //                 npm pack
 //                 git tag ${env.GIT_TAG_NAME}
 //                 git push origin --tags
@@ -45,7 +45,7 @@ pipeline {
 //         expression { return env.GIT_TAG_NAME =~ /^\d+.\d+.\d+-next.\d+$/ }
 //     }
 //     steps {
-//         sh 'cd dist/demo-ngx-ol'
+//         sh 'cd dist/demo-ng-ol'
 //         // Implementation of deploying to GitHub Pages would depend on your specific setup
 //     }
 // }
@@ -57,8 +57,8 @@ pipeline {
 //     steps {
 //         withCredentials([usernamePassword(credentialsId: 'npm_credentials', usernameVariable: 'NPM_EMAIL', passwordVariable: 'NPM_TOKEN')]) {
 //             sh '''
-//                 cp projects/ngx-ol/CHANGELOG.md dist/ngx-ol-publish/CHANGELOG.md
-//                 cd dist/ngx-ol-publish
+//                 cp projects/ng-ol/CHANGELOG.md dist/ng-ol-publish/CHANGELOG.md
+//                 cd dist/ng-ol-publish
 //                 npm publish --tag next
 //             '''
 //         }

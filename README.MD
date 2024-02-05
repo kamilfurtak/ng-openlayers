@@ -1,14 +1,14 @@
-# ngx-ol ![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+# ng-ol ![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
 
 ## Demo
-https://kamilfurtak.github.io/ngx-ol/
+https://kamilfurtak.github.io/ng-ol/
 
 ## Installation
 
 To install this library, run:
 
 ```bash
-npm install ngx-ol --save
+npm install ng-ol --save
 ```
 
 ## Example

@@ -1,14 +1,14 @@
 {
-  "name": "demo-ngx-ol-e2e",
+  "name": "demo-ng-ol-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/demo-ngx-ol-e2e/src",
+  "sourceRoot": "apps/demo-ng-ol-e2e/src",
   "projectType": "application",
   "targets": {
     "e2e": {
       "executor": "@angular-devkit/build-angular:protractor",
       "options": {
-        "protractorConfig": "apps/demo-ngx-ol-e2e/protractor.conf.js",
-        "devServerTarget": "demo-ngx-ol:serve"
+        "protractorConfig": "apps/demo-ng-ol-e2e/protractor.conf.js",
+        "devServerTarget": "demo-ng-ol:serve"
       }
     },
     "lint": {
@@ -16,7 +16,7 @@
     }
   },
   "implicitDependencies": [
-    "demo-ngx-ol"
+    "demo-ng-ol"
   ],
   "tags": []
 }

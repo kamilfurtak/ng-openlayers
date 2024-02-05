@@ -29,7 +29,7 @@ import { SwipeComponent } from './swipe/swipe.component';
 import { TileJsonComponent } from './tile-json/tile-json.component';
 import { UTFGridComponent } from './utfgrid/utfgrid.component';
 import { ViewProjectionUpdateComponent } from './view-projection-update/view-projection-update.component';
-import { AngularOpenlayersModule } from '../../../../libs/ngx-ol/src/public-api';
+import { AngularOpenlayersModule } from '../../../../libs/ng-ol/src/public-api';
 
 @NgModule({
   declarations: [

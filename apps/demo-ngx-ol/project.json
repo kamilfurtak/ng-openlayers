@@ -1,5 +1,5 @@
 {
-  "name": "demo-ngx-ol",
+  "name": "demo-ng-ol",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "generators": {
@@ -25,23 +25,23 @@
       "skipTests": true
     }
   },
-  "sourceRoot": "apps/demo-ngx-ol/src",
+  "sourceRoot": "apps/demo-ng-ol/src",
   "prefix": "app",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "options": {
-        "outputPath": "dist/apps/demo-ngx-ol",
-        "index": "apps/demo-ngx-ol/src/index.html",
-        "main": "apps/demo-ngx-ol/src/main.ts",
-        "polyfills": "apps/demo-ngx-ol/src/polyfills.ts",
-        "tsConfig": "apps/demo-ngx-ol/tsconfig.app.json",
+        "outputPath": "dist/apps/demo-ng-ol",
+        "index": "apps/demo-ng-ol/src/index.html",
+        "main": "apps/demo-ng-ol/src/main.ts",
+        "polyfills": "apps/demo-ng-ol/src/polyfills.ts",
+        "tsConfig": "apps/demo-ng-ol/tsconfig.app.json",
         "assets": [
-          "apps/demo-ngx-ol/src/favicon.ico",
-          "apps/demo-ngx-ol/src/assets"
+          "apps/demo-ng-ol/src/favicon.ico",
+          "apps/demo-ng-ol/src/assets"
         ],
         "styles": [
-          "apps/demo-ngx-ol/src/styles.css",
+          "apps/demo-ng-ol/src/styles.css",
           "node_modules/ol/ol.css"
         ],
         "scripts": [],
@@ -62,8 +62,8 @@
           ],
           "fileReplacements": [
             {
-              "replace": "apps/demo-ngx-ol/src/environments/environment.ts",
-              "with": "apps/demo-ngx-ol/src/environments/environment.prod.ts"
+              "replace": "apps/demo-ng-ol/src/environments/environment.ts",
+              "with": "apps/demo-ng-ol/src/environments/environment.prod.ts"
             }
           ],
           "optimization": true,
@@ -80,33 +80,33 @@
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
-        "buildTarget": "demo-ngx-ol:build"
+        "buildTarget": "demo-ng-ol:build"
       },
       "configurations": {
         "production": {
-          "buildTarget": "demo-ngx-ol:build:production"
+          "buildTarget": "demo-ng-ol:build:production"
         }
       }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "demo-ngx-ol:build"
+        "buildTarget": "demo-ng-ol:build"
       }
     },
     "test": {
       "executor": "@angular-devkit/build-angular:karma",
       "options": {
-        "main": "apps/demo-ngx-ol/src/test.ts",
-        "polyfills": "apps/demo-ngx-ol/src/polyfills.ts",
-        "tsConfig": "apps/demo-ngx-ol/tsconfig.spec.json",
-        "karmaConfig": "apps/demo-ngx-ol/karma.conf.js",
+        "main": "apps/demo-ng-ol/src/test.ts",
+        "polyfills": "apps/demo-ng-ol/src/polyfills.ts",
+        "tsConfig": "apps/demo-ng-ol/tsconfig.spec.json",
+        "karmaConfig": "apps/demo-ng-ol/karma.conf.js",
         "assets": [
-          "apps/demo-ngx-ol/src/favicon.ico",
-          "apps/demo-ngx-ol/src/assets"
+          "apps/demo-ng-ol/src/favicon.ico",
+          "apps/demo-ng-ol/src/assets"
         ],
         "styles": [
-          "apps/demo-ngx-ol/src/styles.css"
+          "apps/demo-ng-ol/src/styles.css"
         ],
         "scripts": []
       }
@@ -115,8 +115,8 @@
       "executor": "@nx/eslint:lint",
       "options": {
         "lintFilePatterns": [
-          "apps/demo-ngx-ol/**/*.ts",
-          "apps/demo-ngx-ol/**/*.html"
+          "apps/demo-ng-ol/**/*.ts",
+          "apps/demo-ng-ol/**/*.html"
         ]
       }
     }

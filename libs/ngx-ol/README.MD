@@ -1,14 +1,14 @@
-# @kamilfurtak/ngx-ol [![Build Status](https://travis-ci.org/kamilfurtak/ngx-ol.svg?branch=next)](https://travis-ci.org/kamilfurtak/ngx-ol)[![Join the chat at https://gitter.im/ngx-openlayers](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ngx-openlayers?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# @kamilfurtak/ng-ol [![Build Status](https://travis-ci.org/kamilfurtak/ng-ol.svg?branch=next)](https://travis-ci.org/kamilfurtak/ng-ol)[![Join the chat at https://gitter.im/ngx-openlayers](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ngx-openlayers?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Demo
-https://kamilfurtak.github.io/ngx-ol/
+https://kamilfurtak.github.io/ng-ol/
 
 ## Installation
 
 To install this library, run:
 
 ```bash
-npm install ngx-ol --save
+npm install ng-ol --save
 ```
 
 ## Example

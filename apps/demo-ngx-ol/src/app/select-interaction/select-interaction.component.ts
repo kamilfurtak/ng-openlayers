@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Layer as OlLayer } from 'ol/layer';
 import { SelectEvent } from 'ol/interaction/Select';
-import { LayerVectorComponent } from 'ngx-ol';
+import { LayerVectorComponent } from 'ng-ol';
 
 @Component({
   selector: 'app-select-interaction',

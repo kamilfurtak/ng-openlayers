@@ -9,7 +9,7 @@
       ],
       "parserOptions": {
         "project": [
-          "apps/demo-ngx-ol/tsconfig.*?.json"
+          "apps/demo-ng-ol/tsconfig.*?.json"
         ],
         "createDefaultProgram": true
       },
