@@ -1,4 +1,4 @@
-# ngx-ol [![Build Status](https://travis-ci.org/achimha/ngx-ol.svg?branch=next)](https://travis-ci.org/achimha/ngx-ol)[![Join the chat at https://gitter.im/ngx-openlayers](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ngx-openlayers?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# ngx-ol ![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
 
 ## Demo
 https://kamilfurtak.github.io/ngx-ol/

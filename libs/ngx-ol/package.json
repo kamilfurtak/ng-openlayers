@@ -1,16 +1,16 @@
 {
-  "name": "@achimha/ngx-ol",
+  "name": "@kamilfurtak/ngx-ol",
   "version": "17.1.0",
   "description": "Openlayers Angular framework",
-  "author": "Achim Hasenmueller (achim.hasenmueller@gmail.com)",
+  "author": "Kamil Furtak (kamil.furtak@gmail.com)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/achimha/ngx-ol.git"
+    "url": "https://github.com/kamilfurtak/ngx-ol.git"
   },
   "bugs": {
-    "url": "https://github.com/achimha/ngx-ol/issues"
+    "url": "https://github.com/kamilfurtak/ngx-ol/issues"
   },
-  "homepage": "https://github.com/achimha/ngx-ol",
+  "homepage": "https://github.com/kamilfurtak/ngx-ol",
   "keywords": [
     "angular",
     "openlayers"
