@@ -1,7 +1,6 @@
 pipeline {
   agent any
   environment {
-    // Extract Node version
     nodeVersion = '20.11.0'
   }
 
