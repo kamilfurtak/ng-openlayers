@@ -5,12 +5,12 @@
   "author": "Kamil Furtak (kamil.furtak@gmail.com)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kamilfurtak/ngx-ol.git"
+    "url": "https://github.com/kamilfurtak/ng-openlayers.git"
   },
   "bugs": {
-    "url": "https://github.com/kamilfurtak/ngx-ol/issues"
+    "url": "https://github.com/kamilfurtak/ng-openlayers/issues"
   },
-  "homepage": "https://github.com/kamilfurtak/ngx-ol",
+  "homepage": "https://github.com/kamilfurtak/ng-openlayers",
   "keywords": [
     "ngx-openlayers",
     "angular",
@@ -23,10 +23,10 @@
   "private": false,
   "scripts": {
     "release": "standard-version -m \"chore(release): version %s\" -t \"\"",
-    "prepublishOnly": "cp projects/ngx-ol/README.md dist/ngx-ol/README.md"
+    "prepublishOnly": "cp projects/ng-openlayers/README.md dist/ng-openlayers/README.md"
   },
   "standard-version": {
-    "postchangelog": "cp projects/ngx-ol/CHANGELOG.md dist/ngx-ol/CHANGELOG.md"
+    "postchangelog": "cp projects/ng-openlayers/CHANGELOG.md dist/ng-openlayers/CHANGELOG.md"
   },
   "dependencies": {
     "tslib": "^2.3.0"
