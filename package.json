@@ -12,7 +12,7 @@
     "lint": "nx lint",
     "e2e": "npm run build:lib && nx e2e",
     "format": "prettier --write \"**/@(src|e2e)/**/*.ts\"",
-    "release": "npm --cwd projects/ng-openlayers release"
+    "release": "npm --cwd libs/ng-openlayers release"
   },
   "private": false,
   "dependencies": {
