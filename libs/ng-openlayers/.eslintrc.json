@@ -1,4 +1,5 @@
 {
+  "extends": "../../.eslintrc.json",
   "ignorePatterns": [
     "!**/*"
   ],
@@ -9,19 +10,16 @@
       ],
       "parserOptions": {
         "project": [
-          "apps/demo-ngx-ol/tsconfig.*?.json"
+          "libs/ng-openlayers/tsconfig.*?.json"
         ],
         "createDefaultProgram": true
       },
-      "extends": [
-        "plugin:@angular-eslint/template/process-inline-templates"
-      ],
       "rules": {
         "@angular-eslint/component-selector": [
           "error",
           {
             "type": "element",
-            "prefix": "app",
+            "prefix": "aol",
             "style": "kebab-case"
           }
         ],
@@ -29,7 +27,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "app",
+            "prefix": "aol",
             "style": "camelCase"
           }
         ],
@@ -50,11 +48,7 @@
       "files": [
         "*.html"
       ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
       "rules": {}
     }
-  ],
-  "extends": "../../.eslintrc.json"
+  ]
 }
