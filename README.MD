@@ -1,5 +1,5 @@
 # ng-openlayers ![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
-
+OpenLayers library for Angular
 ## Demo
 https://kamilfurtak.github.io/ng-openlayers/
 
