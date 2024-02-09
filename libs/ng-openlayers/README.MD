@@ -1,5 +1,5 @@
-# ng-openlayers ![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
-OpenLayers library for Angular
+# ng-openlayers [![Build Status](https://travis-ci.org/kamilfurtak/ng-openlayers.svg?branch=next)](https://travis-ci.org/kamilfurtak/ng-openlayers)[![Join the chat at https://gitter.im/ngx-openlayers](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ngx-openlayers?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ## Demo
 https://kamilfurtak.github.io/ng-openlayers/
 

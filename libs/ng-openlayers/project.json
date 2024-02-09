@@ -1,0 +1,38 @@
+{
+  "name": "ng-openlayers",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/ng-openlayers/src",
+  "prefix": "lib",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "options": {
+        "tsConfig": "libs/ng-openlayers/tsconfig.lib.json",
+        "project": "libs/ng-openlayers/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ng-openlayers/tsconfig.lib.prod.json"
+        }
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "libs/ng-openlayers/src/test.ts",
+        "tsConfig": "libs/ng-openlayers/tsconfig.spec.json",
+        "karmaConfig": "libs/ng-openlayers/karma.conf.js"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/ng-openlayers/**/*.ts",
+          "libs/ng-openlayers/**/*.html"
+        ]
+      }
+    }
+  }
+}

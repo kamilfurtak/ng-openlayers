@@ -1,0 +1,124 @@
+{
+  "name": "demo-ng-openlayers",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "generators": {
+    "@schematics/angular:component": {
+      "inlineTemplate": true,
+      "inlineStyle": true,
+      "skipTests": true
+    },
+    "@schematics/angular:class": {
+      "skipTests": true
+    },
+    "@schematics/angular:directive": {
+      "skipTests": true
+    },
+    "@schematics/angular:guard": {
+      "skipTests": true
+    },
+    "@schematics/angular:module": {},
+    "@schematics/angular:pipe": {
+      "skipTests": true
+    },
+    "@schematics/angular:service": {
+      "skipTests": true
+    }
+  },
+  "sourceRoot": "apps/demo-ng-openlayers/src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/demo-ng-openlayers",
+        "index": "apps/demo-ng-openlayers/src/index.html",
+        "main": "apps/demo-ng-openlayers/src/main.ts",
+        "polyfills": "apps/demo-ng-openlayers/src/polyfills.ts",
+        "tsConfig": "apps/demo-ng-openlayers/tsconfig.app.json",
+        "assets": [
+          "apps/demo-ng-openlayers/src/favicon.ico",
+          "apps/demo-ng-openlayers/src/assets"
+        ],
+        "styles": [
+          "apps/demo-ng-openlayers/src/styles.css",
+          "node_modules/ol/ol.css"
+        ],
+        "scripts": [],
+        "vendorChunk": true,
+        "extractLicenses": false,
+        "buildOptimizer": false,
+        "sourceMap": true,
+        "optimization": false,
+        "namedChunks": true
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/demo-ng-openlayers/src/environments/environment.ts",
+              "with": "apps/demo-ng-openlayers/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true
+        }
+      },
+      "defaultConfiguration": ""
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "buildTarget": "demo-ng-openlayers:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "demo-ng-openlayers:build:production"
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "demo-ng-openlayers:build"
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "apps/demo-ng-openlayers/src/test.ts",
+        "polyfills": "apps/demo-ng-openlayers/src/polyfills.ts",
+        "tsConfig": "apps/demo-ng-openlayers/tsconfig.spec.json",
+        "karmaConfig": "apps/demo-ng-openlayers/karma.conf.js",
+        "assets": [
+          "apps/demo-ng-openlayers/src/favicon.ico",
+          "apps/demo-ng-openlayers/src/assets"
+        ],
+        "styles": [
+          "apps/demo-ng-openlayers/src/styles.css"
+        ],
+        "scripts": []
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": [
+          "apps/demo-ng-openlayers/**/*.ts",
+          "apps/demo-ng-openlayers/**/*.html"
+        ]
+      }
+    }
+  }
+}

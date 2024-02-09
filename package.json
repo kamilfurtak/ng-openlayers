@@ -1,18 +1,18 @@
 {
-  "name": "demo-ngx-ol",
+  "name": "demo-ng-openlayers",
   "version": "17.1.0",
   "scripts": {
     "ng": "ng",
-    "start": "nx serve demo-ngx-ol",
-    "build:lib": "nx build ngx-ol --configuration production",
-    "build:demo": "nx build demo-ngx-ol --base-href /ngx-ol/",
-    "build:gh-pages": "nx build --output-path docs --base-href /ngx-ol/",
+    "start": "nx serve demo-ng-openlayers",
+    "build:lib": "nx build ng-openlayers --configuration production",
+    "build:demo": "nx build demo-ng-openlayers --base-href /ng-openlayers/",
+    "build:gh-pages": "nx build --output-path docs --base-href /ng-openlayers/",
     "build": "npm run build:lib && npm run build:demo",
     "test": "npm run build:lib && nx test",
     "lint": "nx lint",
     "e2e": "npm run build:lib && nx e2e",
     "format": "prettier --write \"**/@(src|e2e)/**/*.ts\"",
-    "release": "npm --cwd projects/ngx-ol release"
+    "release": "npm --cwd libs/ng-openlayers release"
   },
   "private": false,
   "dependencies": {

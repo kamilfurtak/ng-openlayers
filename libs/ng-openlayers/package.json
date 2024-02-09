@@ -1,0 +1,39 @@
+{
+  "name": "ng-openlayers",
+  "version": "17.1.0",
+  "description": "OpenLayers library for Angular",
+  "author": "Kamil Furtak (kamil.furtak@gmail.com)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kamilfurtak/ng-openlayers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kamilfurtak/ng-openlayers/issues"
+  },
+  "homepage": "https://github.com/kamilfurtak/ng-openlayers",
+  "keywords": [
+    "ngx-openlayers",
+    "angular",
+    "angular17",
+    "openlayers",
+    "openlayers8",
+    "ol8"
+  ],
+  "license": "MPL-2.0",
+  "private": false,
+  "scripts": {
+    "release": "standard-version -m \"chore(release): version %s\" -t \"\"",
+    "prepublishOnly": "cp projects/ng-openlayers/README.md dist/ng-openlayers/README.md"
+  },
+  "standard-version": {
+    "postchangelog": "cp projects/ng-openlayers/CHANGELOG.md dist/ng-openlayers/CHANGELOG.md"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=17.0.0",
+    "@angular/core": ">=17.0.0",
+    "ol": "^8.2.0"
+  }
+}
