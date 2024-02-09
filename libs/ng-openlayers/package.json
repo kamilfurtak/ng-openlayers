@@ -1,6 +1,6 @@
 {
-  "name": "ng-ol",
-  "version": "17.1.1",
+  "name": "ng-openlayers",
+  "version": "17.1.0",
   "description": "OpenLayers library for Angular",
   "author": "Kamil Furtak (kamil.furtak@gmail.com)",
   "repository": {
