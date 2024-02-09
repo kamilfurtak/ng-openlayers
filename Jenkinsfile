@@ -16,9 +16,7 @@ pipeline {
     stage('build') {
       steps {
         nodejs(nodeJSInstallationName: nodeVersion) {
-          sh 'npm run build:lib'
-          sh 'cp -r dist/ng-openlayers dist/ng-openlayers-publish'
-          sh 'npm run build:demo'
+          sh 'npm run build'
         }
       }
     }
