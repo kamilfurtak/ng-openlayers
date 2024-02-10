@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 17.1.1 (2024-02-10)
+* Bump Angular version to 17.1.0
+* Bump OpenLayers version to 8.2.0
+* Migration to NX Monorepo 
+
 ## 15.0.0 (2022-09-14)
 
 
