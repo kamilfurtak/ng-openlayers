@@ -1,0 +1,43 @@
+import { AfterContentInit, SimpleChanges, OnChanges, EventEmitter } from '@angular/core';
+import { LayerTileComponent } from '../layers/layertile.component';
+import { SourceComponent } from './source.component';
+import { TileGridWMTSComponent } from '../tilegridwmts.component';
+import { WMTS as SourceWMTS } from 'ol/source';
+import WMTS from 'ol/tilegrid/WMTS';
+import { ProjectionLike } from 'ol/proj';
+import { LoadFunction } from 'ol/Tile';
+import { TileSourceEvent } from 'ol/source/Tile';
+import { RequestEncoding } from 'ol/source/WMTS';
+import * as i0 from "@angular/core";
+export declare class SourceTileWMTSComponent extends SourceComponent implements AfterContentInit, OnChanges {
+    cacheSize?: number;
+    crossOrigin?: string;
+    tileGrid: WMTS;
+    projection: ProjectionLike;
+    reprojectionErrorThreshold?: number;
+    requestEncoding?: RequestEncoding | undefined;
+    layer: string;
+    style: string;
+    tileClass?: any;
+    tilePixelRatio?: number;
+    version?: string;
+    format?: string;
+    matrixSet: string;
+    dimensions?: any;
+    url?: string;
+    tileLoadFunction?: LoadFunction;
+    urls?: string[];
+    wrapX?: boolean;
+    tileLoadStart: EventEmitter<TileSourceEvent>;
+    tileLoadEnd: EventEmitter<TileSourceEvent>;
+    tileLoadError: EventEmitter<TileSourceEvent>;
+    tileGridWMTS: TileGridWMTSComponent;
+    instance: SourceWMTS;
+    constructor(layer: LayerTileComponent);
+    ngOnChanges(changes: SimpleChanges): void;
+    setLayerSource(): void;
+    ngAfterContentInit(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<SourceTileWMTSComponent, [{ host: true; }]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<SourceTileWMTSComponent, "aol-source-tilewmts", never, { "cacheSize": { "alias": "cacheSize"; "required": false; }; "crossOrigin": { "alias": "crossOrigin"; "required": false; }; "tileGrid": { "alias": "tileGrid"; "required": false; }; "projection": { "alias": "projection"; "required": false; }; "reprojectionErrorThreshold": { "alias": "reprojectionErrorThreshold"; "required": false; }; "requestEncoding": { "alias": "requestEncoding"; "required": false; }; "layer": { "alias": "layer"; "required": false; }; "style": { "alias": "style"; "required": false; }; "tileClass": { "alias": "tileClass"; "required": false; }; "tilePixelRatio": { "alias": "tilePixelRatio"; "required": false; }; "version": { "alias": "version"; "required": false; }; "format": { "alias": "format"; "required": false; }; "matrixSet": { "alias": "matrixSet"; "required": false; }; "dimensions": { "alias": "dimensions"; "required": false; }; "url": { "alias": "url"; "required": false; }; "tileLoadFunction": { "alias": "tileLoadFunction"; "required": false; }; "urls": { "alias": "urls"; "required": false; }; "wrapX": { "alias": "wrapX"; "required": false; }; }, { "tileLoadStart": "tileLoadStart"; "tileLoadEnd": "tileLoadEnd"; "tileLoadError": "tileLoadError"; }, ["tileGridWMTS"], ["*"], false, never>;
+}
+//# sourceMappingURL=tilewmts.component.d.ts.map

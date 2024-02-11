@@ -1,0 +1,48 @@
+import { OnInit, OnChanges, OnDestroy, SimpleChanges, EventEmitter } from '@angular/core';
+import View from 'ol/View';
+import { MapComponent } from './map.component';
+import { ObjectEvent } from 'ol/Object';
+import { Extent } from 'ol/extent';
+import { Coordinate } from 'ol/coordinate';
+import { DrawEvent } from 'ol/interaction/Draw';
+import BaseEvent from 'ol/events/Event';
+import * as i0 from "@angular/core";
+export declare class ViewComponent implements OnInit, OnChanges, OnDestroy {
+    private host;
+    constrainRotation: boolean | number;
+    enableRotation: boolean;
+    extent: Extent;
+    maxResolution: number;
+    minResolution: number;
+    maxZoom: number;
+    minZoom: number;
+    resolution: number;
+    resolutions: number[];
+    rotation: number;
+    zoom: number;
+    zoomFactor: number;
+    center: Coordinate;
+    projection: string;
+    constrainOnlyCenter: boolean;
+    smoothExtentConstraint: boolean;
+    constrainResolution: boolean;
+    smoothResolutionConstraint: boolean;
+    showFullExtent: boolean;
+    multiWorld: boolean;
+    zoomAnimation: boolean;
+    olChange: EventEmitter<DrawEvent>;
+    changeCenter: EventEmitter<ObjectEvent>;
+    changeResolution: EventEmitter<ObjectEvent>;
+    changeRotation: EventEmitter<ObjectEvent>;
+    olError: EventEmitter<BaseEvent>;
+    propertyChange: EventEmitter<ObjectEvent>;
+    instance: View;
+    componentType: string;
+    constructor(host: MapComponent);
+    ngOnInit(): void;
+    ngOnChanges(changes: SimpleChanges): void;
+    ngOnDestroy(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<ViewComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ViewComponent, "aol-view", never, { "constrainRotation": { "alias": "constrainRotation"; "required": false; }; "enableRotation": { "alias": "enableRotation"; "required": false; }; "extent": { "alias": "extent"; "required": false; }; "maxResolution": { "alias": "maxResolution"; "required": false; }; "minResolution": { "alias": "minResolution"; "required": false; }; "maxZoom": { "alias": "maxZoom"; "required": false; }; "minZoom": { "alias": "minZoom"; "required": false; }; "resolution": { "alias": "resolution"; "required": false; }; "resolutions": { "alias": "resolutions"; "required": false; }; "rotation": { "alias": "rotation"; "required": false; }; "zoom": { "alias": "zoom"; "required": false; }; "zoomFactor": { "alias": "zoomFactor"; "required": false; }; "center": { "alias": "center"; "required": false; }; "projection": { "alias": "projection"; "required": false; }; "constrainOnlyCenter": { "alias": "constrainOnlyCenter"; "required": false; }; "smoothExtentConstraint": { "alias": "smoothExtentConstraint"; "required": false; }; "constrainResolution": { "alias": "constrainResolution"; "required": false; }; "smoothResolutionConstraint": { "alias": "smoothResolutionConstraint"; "required": false; }; "showFullExtent": { "alias": "showFullExtent"; "required": false; }; "multiWorld": { "alias": "multiWorld"; "required": false; }; "zoomAnimation": { "alias": "zoomAnimation"; "required": false; }; }, { "olChange": "olChange"; "changeCenter": "changeCenter"; "changeResolution": "changeResolution"; "changeRotation": "changeRotation"; "olError": "olError"; "propertyChange": "propertyChange"; }, never, ["*"], false, never>;
+}
+//# sourceMappingURL=view.component.d.ts.map

@@ -1,0 +1,45 @@
+import { OnDestroy, OnInit, EventEmitter } from '@angular/core';
+import { MapComponent } from '../map.component';
+import { Draw } from 'ol/interaction';
+import { Collection, Feature } from 'ol';
+import { Vector } from 'ol/source';
+import { Style } from 'ol/style';
+import { DrawEvent, GeometryFunction } from 'ol/interaction/Draw';
+import { StyleFunction } from 'ol/style/Style';
+import { Condition } from 'ol/events/condition';
+import { Type } from 'ol/geom/Geometry';
+import { ObjectEvent } from 'ol/Object';
+import BaseEvent from 'ol/events/Event';
+import * as i0 from "@angular/core";
+export declare class DrawInteractionComponent implements OnInit, OnDestroy {
+    private map;
+    clickTolerance?: number;
+    features?: Collection<Feature>;
+    source?: Vector;
+    snapTolerance?: number;
+    type: Type;
+    maxPoints?: number;
+    minPoints?: number;
+    finishCondition?: Condition;
+    style?: Style | Style[] | StyleFunction;
+    geometryFunction?: GeometryFunction;
+    geometryName?: string;
+    condition?: Condition;
+    freehandCondition?: Condition;
+    freehand?: boolean;
+    wrapX?: boolean;
+    olChange: EventEmitter<DrawEvent>;
+    olChangeActive: EventEmitter<ObjectEvent>;
+    olDrawAbort: EventEmitter<DrawEvent>;
+    drawEnd: EventEmitter<DrawEvent>;
+    drawStart: EventEmitter<DrawEvent>;
+    olError: EventEmitter<BaseEvent>;
+    propertyChange: EventEmitter<ObjectEvent>;
+    instance: Draw;
+    constructor(map: MapComponent);
+    ngOnInit(): void;
+    ngOnDestroy(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<DrawInteractionComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<DrawInteractionComponent, "aol-interaction-draw", never, { "clickTolerance": { "alias": "clickTolerance"; "required": false; }; "features": { "alias": "features"; "required": false; }; "source": { "alias": "source"; "required": false; }; "snapTolerance": { "alias": "snapTolerance"; "required": false; }; "type": { "alias": "type"; "required": false; }; "maxPoints": { "alias": "maxPoints"; "required": false; }; "minPoints": { "alias": "minPoints"; "required": false; }; "finishCondition": { "alias": "finishCondition"; "required": false; }; "style": { "alias": "style"; "required": false; }; "geometryFunction": { "alias": "geometryFunction"; "required": false; }; "geometryName": { "alias": "geometryName"; "required": false; }; "condition": { "alias": "condition"; "required": false; }; "freehandCondition": { "alias": "freehandCondition"; "required": false; }; "freehand": { "alias": "freehand"; "required": false; }; "wrapX": { "alias": "wrapX"; "required": false; }; }, { "olChange": "olChange"; "olChangeActive": "olChangeActive"; "olDrawAbort": "olDrawAbort"; "drawEnd": "drawEnd"; "drawStart": "drawStart"; "olError": "olError"; "propertyChange": "propertyChange"; }, never, never, false, never>;
+}
+//# sourceMappingURL=draw.component.d.ts.map

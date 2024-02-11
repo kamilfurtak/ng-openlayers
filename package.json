@@ -1,82 +1,52 @@
 {
-  "name": "demo-ng-openlayers",
+  "name": "ng-openlayers",
   "version": "17.1.1",
-  "scripts": {
-    "ng": "ng",
-    "start": "nx serve demo-ng-openlayers",
-    "build:lib": "nx build ng-openlayers --configuration production",
-    "build:demo": "nx build demo-ng-openlayers --base-href /ng-openlayers/",
-    "build:gh-pages": "nx build --output-path docs --base-href /ng-openlayers/",
-    "build": "npm run build:lib && npm run build:demo",
-    "test": "npm run build:lib && nx test",
-    "lint": "nx lint",
-    "e2e": "npm run build:lib && nx e2e",
-    "format": "prettier --write \"**/@(src|e2e)/**/*.ts\"",
-    "release": "npm --cwd libs/ng-openlayers release"
+  "description": "OpenLayers library for Angular",
+  "author": "Kamil Furtak (kamil.furtak@gmail.com)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kamilfurtak/ng-openlayers.git"
   },
+  "bugs": {
+    "url": "https://github.com/kamilfurtak/ng-openlayers/issues"
+  },
+  "homepage": "https://github.com/kamilfurtak/ng-openlayers",
+  "keywords": [
+    "ngx-openlayers",
+    "angular",
+    "angular17",
+    "openlayers",
+    "openlayers8",
+    "ol8"
+  ],
+  "license": "MPL-2.0",
   "private": false,
-  "dependencies": {
-    "@angular/animations": "^17.1.0",
-    "@angular/common": "^17.1.0",
-    "@angular/compiler": "^17.1.0",
-    "@angular/core": "^17.1.0",
-    "@angular/forms": "^17.1.0",
-    "@angular/platform-browser": "^17.1.0",
-    "@angular/platform-browser-dynamic": "^17.1.0",
-    "@angular/router": "^17.1.0",
-    "hammerjs": "^2.0.8",
-    "ol": "^8.2.0",
-    "rxjs": "~6.5.4",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.14.3"
+  "standard-version": {
+    "postchangelog": "cp projects/ng-openlayers/CHANGELOG.md dist/ng-openlayers/CHANGELOG.md"
   },
-  "devDependencies": {
-    "@angular-devkit/build-angular": "^17.1.0",
-    "@angular-devkit/core": "^17.1.0",
-    "@angular-devkit/schematics": "^17.1.0",
-    "@angular-eslint/eslint-plugin": "^17.2.0",
-    "@angular-eslint/eslint-plugin-template": "^17.2.0",
-    "@angular-eslint/template-parser": "^17.2.0",
-    "@angular/cli": "^17.1.0",
-    "@angular/compiler-cli": "^17.1.0",
-    "@angular/language-service": "^17.1.0",
-    "@nx/angular": "18.0.4",
-    "@nx/eslint": "18.0.4",
-    "@nx/eslint-plugin": "18.0.4",
-    "@nx/js": "18.0.4",
-    "@nx/workspace": "18.0.4",
-    "@schematics/angular": "^17.1.0",
-    "@swc-node/register": "1.8.0",
-    "@swc/core": "~1.3.85",
-    "@swc/helpers": "~0.5.2",
-    "@types/arcgis-rest-api": "^10.4.8",
-    "@types/jasmine": "^5.1.4",
-    "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^20.11.5",
-    "@types/topojson-specification": "^1.0.5",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@typescript-eslint/parser": "^6.19.0",
-    "autoprefixer": "^10.4.0",
-    "eslint": "^8.56.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-jsdoc": "^48.0.2",
-    "eslint-plugin-prefer-arrow": "^1.2.3",
-    "jasmine-core": "^5.1.1",
-    "jasmine-spec-reporter": "^7.0.0",
-    "karma": "^6.4.2",
-    "karma-chrome-launcher": "^3.2.0",
-    "karma-coverage-istanbul-reporter": "^3.0.3",
-    "karma-jasmine": "^5.1.0",
-    "karma-jasmine-html-reporter": "^2.1.0",
-    "ng-packagr": "^17.1.0",
-    "nx": "18.0.4",
-    "nx-release": "^3.3.0",
-    "postcss": "^8.4.5",
-    "postcss-url": "~10.1.3",
-    "prettier": "^3.2.4",
-    "protractor": "~7.0.0",
-    "standard-version": "^9.5.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=17.0.0",
+    "@angular/core": ">=17.0.0",
+    "ol": "^8.2.0"
+  },
+  "module": "fesm2022/ng-openlayers.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2022": "./esm2022/ng-openlayers.mjs",
+      "esm": "./esm2022/ng-openlayers.mjs",
+      "default": "./fesm2022/ng-openlayers.mjs"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by Ivy in full compilation mode. This is not allowed.\\nPlease delete and rebuild the package with Ivy partial compilation mode, before attempting to publish.\\n')\" && exit 1"
   }
 }
