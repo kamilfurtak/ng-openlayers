@@ -2,8 +2,6 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/libs/ng-openlayers",
   "assets": [
-    "README.MD",
-    "CHANGELOG.md",
     "ngcc.config.js"
   ],
   "lib": {

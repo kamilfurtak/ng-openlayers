@@ -485,11 +485,6 @@ Exposed events are:
 - `onDrawStart` (`ol.interaction.Draw.Event`) - Triggered upon feature draw start
 - `onPropertyChange` (`ol.Object.Event`) - Triggered when a property is changed.
 
-
-## Getting Help
-
-Join us at our Gitter: [https://gitter.im/ngx-openlayers](https://gitter.im/ngx-openlayers)
-
 ## Development
 
 To generate all `*.js`, `*.js.map` and `*.d.ts` files:
