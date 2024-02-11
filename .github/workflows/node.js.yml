@@ -31,7 +31,7 @@ jobs:
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v4
       with:
-        folder: build dist/libs/ng-openlayers
+        folder: dist/libs/ng-openlayers
 #      env:
 #        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 #        BASE_BRANCH: master
