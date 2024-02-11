@@ -18,10 +18,10 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
     - name: Checkout 🛎️
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Install and Build
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
@@ -31,10 +31,4 @@ jobs:
     - name: Build and Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v4
       with:
-        folder: dist/libs/ng-openlayers
-#      env:
-#        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-#        BASE_BRANCH: master
-#        BRANCH: gh-pages
-#        FOLDER: dist/libs/ng-openlayers
-#        BUILD_SCRIPT: npm install && npm run build
+        folder: dist/apps/demo-ng-openlayers
