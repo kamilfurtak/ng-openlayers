@@ -1,1 +1,0 @@
-{"version":3,"file":"attribution.component.d.ts","sourceRoot":"","sources":["../../../../libs/ng-openlayers/src/lib/attribution.component.ts"],"names":[],"mappings":"AAAA,OAAO,EAAa,UAAU,EAAE,MAAM,EAAE,MAAM,eAAe,CAAC;;AAE9D,qBAIa,oBAAqB,YAAW,MAAM;IAGrC,OAAO,CAAC,UAAU;IAF9B,KAAK,EAAE,MAAM,CAAC;gBAEM,UAAU,EAAE,UAAU;IAE1C,QAAQ;yCALG,oBAAoB;2CAApB,oBAAoB;CAQhC"}
