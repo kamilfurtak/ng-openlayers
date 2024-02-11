@@ -1,10 +1,10 @@
 {
   "name": "demo-ng-openlayers",
-  "version": "17.1.1",
+  "version": "17.1.2",
   "scripts": {
     "ng": "ng",
     "start": "nx serve demo-ng-openlayers",
-    "build:lib": "nx build ng-openlayers --configuration production && npm run copy:lib:docs",
+    "build:lib": "nx build ng-openlayers --configuration production",
     "copy:lib:docs": "cp -r *.md dist/libs/ng-openlayers",
     "build:demo": "nx build demo-ng-openlayers --base-href /ng-openlayers/",
     "build:gh-pages": "nx build --output-path docs --base-href /ng-openlayers/",
