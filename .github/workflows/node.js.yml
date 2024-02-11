@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "nx-migration" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "nx-migration" ]
+    branches: [ "master" ]
 
 jobs:
   build:
@@ -29,3 +29,12 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
 #    - run: npm test
+
+    - name: Build and Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v2
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BASE_BRANCH: master
+        BRANCH: gh-pages
+        FOLDER: dist/libs/ng-openlayers
+        BUILD_SCRIPT: npm install && npm run build
