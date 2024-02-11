@@ -20,23 +20,23 @@ pipeline {
         }
       }
     }
-// stage('Release: Github') {
-//     when {
-//         expression { return env.GIT_TAG_NAME =~ /^\d+.\d+.\d+-next.\d+$/ }
-//     }
-//     steps {
-//         // Assuming that you have already configured GitHub credentials in Jenkins
-//         withCredentials([string(credentialsId: 'github_oauth_token', variable: 'GITHUB_OAUTH_TOKEN')]) {
-//             sh '''
-//                 cd dist/ng-openlayers-publish
-//                 cp ../../projects/ng-openlayers/CHANGELOG.md CHANGELOG.md
-//                 npm pack
-//                 git tag ${env.GIT_TAG_NAME}
-//                 git push origin --tags
-//             '''
-//         }
-//     }
-// }
+//   stage('Release: Github') {
+//       when {
+//           expression { return env.GIT_TAG_NAME =~ /^v\d+.\d+.\d+$/ }
+//       }
+//       steps {
+//           // Assuming that you have already configured GitHub credentials in Jenkins
+//           withCredentials([string(credentialsId: 'github_oauth_token', variable: 'GITHUB_OAUTH_TOKEN')]) {
+//               sh '''
+//                   cd dist/lib/ng-openlayers
+//                   npm pack
+//                   git tag ${env.GIT_TAG_NAME}
+//                   git push origin --tags
+//               '''
+//           }
+//       }
+//   }
+
 
 // stage('Release: Github Pages') {
 //     when {
