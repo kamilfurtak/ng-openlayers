@@ -4,29 +4,46 @@
 https://kamilfurtak.github.io/ng-openlayers/
 
 ## Installation
+Hiere is a link to the blog post with the tutorial on how to create interactive maps with Angular 17 and latest OpenLayers using this library:
+
+https://blog.furtak.dev/create-interactive-maps-with-angular-17-and-latest-openlayers-7ae9b7fdb7ec
 
 To install this library, run:
 
 ```bash
 npm install ng-openlayers --save
 ```
+Import AngularOpenlayersModule ex. to your AppComponent in standalone mode.
+
+Now add OpenLayers CSS styles to your project. Open angular.json and add "node_modules/ol/ol.css" next to existing css styles.
+```bash
+"styles": [
+"src/styles.css",
+"node_modules/ol/ol.css"
+],
+````
 
 ## Example
 
-Here is a "minimal" map example that fetches tiles from OpenStreetMap and center the map in Meylan (France):
+Here is a "minimal" map example with default interactions and controls:
 
 ```html
-<aol-map [width]="'500px'" [height]="'300'">
+<div style="height: 500px">
+  <aol-map>
     <aol-view [zoom]="2">
-        <aol-coordinate [x]="5.795122" [y]="45.210225" [srid]="'EPSG:4326'"></aol-coordinate>
+      <aol-coordinate [x]="5.795122" [y]="45.210225" [srid]="'EPSG:4326'"></aol-coordinate>
     </aol-view>
     <aol-layer-tile>
-        <aol-source-osm></aol-source-osm>
+      <aol-source-osm></aol-source-osm>
     </aol-layer-tile>
-</aol-map>
-```
+    <aol-interaction-default></aol-interaction-default>
+    <aol-control-scaleline></aol-control-scaleline>
+    <aol-control-zoomslider></aol-control-zoomslider>
+    <aol-control-zoom></aol-control-zoom>
+  </aol-map>
+</div>
 
-## Documentation
+```
 
 ## Foreword
 
