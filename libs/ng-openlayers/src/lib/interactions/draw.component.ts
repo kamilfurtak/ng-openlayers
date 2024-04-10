@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MapComponent } from '../map.component';
 import { Draw } from 'ol/interaction';
 import { Collection, Feature } from 'ol';

@@ -17,13 +17,18 @@ import { fromExtent } from 'ol/geom/Polygon';
       >
       </aol-interaction-draw>
 
+      <aol-interaction-draw-hole-in-polygon
+        *ngIf="isHoleDrawing"
+        (drawEnd)="endHoleDraw($event.feature)"
+      ></aol-interaction-draw-hole-in-polygon>
+
       <aol-view [zoom]="5">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
 
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
 
-      <aol-layer-vector *ngIf="feature">
+      <aol-layer-vector *ngIf="feature" #vectorLayer>
         <aol-source-vector>
           <aol-feature>
             <aol-geometry-polygon>
@@ -38,6 +43,7 @@ import { fromExtent } from 'ol/geom/Polygon';
     <div class="info">
       <div class="draw-section">
         <button (click)="drawMode()">{{ isDrawing ? 'End draw' : 'Start draw' }}</button>
+        <button (click)="drawHole()">Draw hole</button>
         <h3>Result</h3>
         <code>
           <pre>{{ feature | json }}</pre>
@@ -69,6 +75,7 @@ export class DrawPolygonComponent implements OnInit {
   isDrawing = false;
   drawBoxGeometryFunction = createBox();
   feature;
+  isHoleDrawing = false;
 
   ngOnInit() {}
 
@@ -87,5 +94,15 @@ export class DrawPolygonComponent implements OnInit {
         coordinates: [olGeomPolygon.getCoordinates()[0]],
       },
     };
+  }
+
+  drawHole() {
+    this.isDrawing = false;
+    console.log(this.feature);
+    this.isHoleDrawing = true;
+  }
+
+  endHoleDraw(feature: Feature) {
+    // this.isHoleDrawing = false;
   }
 }

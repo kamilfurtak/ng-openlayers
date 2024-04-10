@@ -79,6 +79,7 @@ import { AttributionsComponent } from './lib/attributions.component';
 import { AttributionComponent } from './lib/attribution.component';
 import { SourceUTFGridComponent } from './lib/sources/utfgrid.component';
 import { LayerComponent } from './lib/layers/layer.component';
+import { DrawHoleInPolygonInteractionComponent } from './lib/interactions/draw-hole-in-polygon';
 
 export {
   MapComponent,
@@ -157,6 +158,7 @@ export {
   ContentComponent,
   AttributionsComponent,
   AttributionComponent,
+  DrawHoleInPolygonInteractionComponent,
 };
 
 const COMPONENTS = [
@@ -235,6 +237,7 @@ const COMPONENTS = [
   SelectInteractionComponent,
   ModifyInteractionComponent,
   TranslateInteractionComponent,
+  DrawHoleInPolygonInteractionComponent,
 
   OverlayComponent,
   ContentComponent,

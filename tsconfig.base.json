@@ -25,12 +25,13 @@
       ]
     },
     "useDefineForClassFields": false,
-    "rootDir": "."
+    "rootDir": ".",
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "skipLibs": true,
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
   },
   "exclude": [
     "node_modules",
