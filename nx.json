@@ -1,7 +1,4 @@
 {
-  "affected": {
-    "defaultBase": "main"
-  },
   "namedInputs": {
     "sharedGlobals": [],
     "default": [
@@ -60,5 +57,6 @@
         "{workspaceRoot}/eslint.config.js"
       ]
     }
-  }
+  },
+  "defaultBase": "main"
 }
