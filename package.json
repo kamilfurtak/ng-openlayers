@@ -43,11 +43,11 @@
     "@angular/cli": "~17.3.0",
     "@angular/compiler-cli": "17.3.3",
     "@angular/language-service": "17.3.3",
-    "@nx/angular": "18.2.4",
-    "@nx/eslint": "18.2.4",
-    "@nx/eslint-plugin": "18.2.4",
-    "@nx/js": "18.2.4",
-    "@nx/workspace": "18.2.4",
+    "@nx/angular": "18.3.4",
+    "@nx/eslint": "18.3.4",
+    "@nx/eslint-plugin": "18.3.4",
+    "@nx/js": "18.3.4",
+    "@nx/workspace": "18.3.4",
     "@schematics/angular": "17.3.3",
     "@swc-node/register": "1.8.0",
     "@swc/core": "~1.3.85",
@@ -72,7 +72,7 @@
     "karma-jasmine": "^5.1.0",
     "karma-jasmine-html-reporter": "^2.1.0",
     "ng-packagr": "17.3.0",
-    "nx": "18.2.4",
+    "nx": "18.3.4",
     "nx-release": "^3.3.0",
     "postcss": "^8.4.5",
     "postcss-url": "~10.1.3",
@@ -83,3 +83,4 @@
     "typescript": "5.4.5"
   }
 }
+
