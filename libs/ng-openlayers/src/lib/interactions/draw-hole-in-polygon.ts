@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Feature } from 'ol';
 import { DrawEvent } from 'ol/interaction/Draw';
 import { Draw } from 'ol/interaction';
@@ -16,7 +16,7 @@ import { MapComponent } from '../map.component';
     </aol-interaction-draw>
   `,
 })
-export class DrawHoleInPolygonInteractionComponent implements OnInit, AfterViewInit {
+export class DrawHoleInPolygonInteractionComponent implements AfterViewInit {
   @ViewChild('drawInstance') drawInteractionComponent: DrawInteractionComponent;
   @Output()
   drawEnd = new EventEmitter<DrawEvent>();
@@ -24,11 +24,7 @@ export class DrawHoleInPolygonInteractionComponent implements OnInit, AfterViewI
   private intersectedGeometryFeature: Feature<Geometry>;
   private coordsLength: number;
   private intersectedPolygon: Polygon;
-  constructor(private map: MapComponent) {
-    console.log(this.map);
-  }
-
-  ngOnInit() {}
+  constructor(private map: MapComponent) {}
 
   ngAfterViewInit() {
     this.drawInteractionComponent.instance.on('drawstart', this.onDrawStart);
@@ -65,9 +61,9 @@ export class DrawHoleInPolygonInteractionComponent implements OnInit, AfterViewI
   };
 
   onGeomChange = (e: DrawEvent) => {
-    let linear_ring = new LinearRing(e.target.getCoordinates()[0]);
-    let coordinates = this.intersectedPolygon.getCoordinates();
-    let geom = new Polygon(coordinates.slice(0, this.coordsLength));
+    const linear_ring = new LinearRing(e.target.getCoordinates()[0]);
+    const coordinates = this.intersectedPolygon.getCoordinates();
+    const geom = new Polygon(coordinates.slice(0, this.coordsLength));
     geom.appendLinearRing(linear_ring);
     console.log('Geom', geom.getArea());
     this.intersectedGeometryFeature.setGeometry(geom);
