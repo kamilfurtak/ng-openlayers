@@ -43,7 +43,7 @@ import { fromExtent } from 'ol/geom/Polygon';
     <div class="info">
       <div class="draw-section">
         <button (click)="drawMode()">{{ isDrawing ? 'End draw' : 'Start draw' }}</button>
-        <button (click)="drawHole()">Draw hole</button>
+        <button (click)="drawHole()">{{ isHoleDrawing ? 'End draw hole' : 'Start draw hole' }}</button>
         <h3>Result</h3>
         <code>
           <pre>{{ feature | json }}</pre>
@@ -99,7 +99,7 @@ export class DrawPolygonComponent implements OnInit {
   drawHole() {
     this.isDrawing = false;
     console.log(this.feature);
-    this.isHoleDrawing = true;
+    this.isHoleDrawing = !this.isHoleDrawing;
   }
 
   endHoleDraw(feature: Feature) {
