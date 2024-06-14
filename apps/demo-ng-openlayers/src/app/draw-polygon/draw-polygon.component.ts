@@ -42,8 +42,10 @@ import { fromExtent } from 'ol/geom/Polygon';
 
     <div class="info">
       <div class="draw-section">
-        <button (click)="drawMode()">{{ isDrawing ? 'End draw' : 'Start draw' }}</button>
-        <button (click)="drawHole()">{{ isHoleDrawing ? 'End draw hole' : 'Start draw hole' }}</button>
+        <button (click)="drawMode()" [disabled]="isHoleDrawing">{{ isDrawing ? 'End draw' : 'Start draw' }}</button>
+        <button (click)="drawHole()" [disabled]="isDrawing">
+          {{ isHoleDrawing ? 'End draw hole' : 'Start draw hole' }}
+        </button>
         <h3>Result</h3>
         <code>
           <pre>{{ feature | json }}</pre>
