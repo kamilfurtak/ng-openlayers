@@ -27,13 +27,5 @@
   },
   "standard-version": {
     "postchangelog": "cp projects/ng-openlayers/CHANGELOG.md dist/ng-openlayers/CHANGELOG.md"
-  },
-  "dependencies": {
-    "tslib": "^2.3.0"
-  },
-  "peerDependencies": {
-    "@angular/common": "15 - 18",
-    "@angular/core": "15 - 18",
-    "ol": "^8.2.0"
   }
 }
