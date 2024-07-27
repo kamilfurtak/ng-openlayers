@@ -17,12 +17,14 @@ import { Coordinate } from 'ol/coordinate';
           [url]="'https://api.tiles.mapbox.com/v4/mapbox.geography-class.json?secure&access_token=' + key"
         ></aol-source-utfgrid>
       </aol-layer-tile>
-      <aol-overlay *ngIf="coords && info" [positioning]="'BOTTOM_RIGHT'" [stopEvent]="false">
+      @if (coords && info) {
+<aol-overlay [positioning]="'BOTTOM_RIGHT'" [stopEvent]="false">
         <aol-coordinate [x]="coords[0]" [y]="coords[1]" [srid]="'EPSG:3857'"> </aol-coordinate>
         <aol-content>
           <img [src]="'data:image/png;base64,' + info['flag_png']" />
         </aol-content>
       </aol-overlay>
+}
     </aol-map>
   `,
   styles: [

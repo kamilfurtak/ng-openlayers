@@ -9,19 +9,21 @@ import { Stroke } from 'ol/style';
       <aol-control-defaults></aol-control-defaults>
       <aol-control-fullscreen></aol-control-fullscreen>
       <aol-view [zoom]="zoom"> <aol-coordinate [x]="-10997148" [y]="4569099"></aol-coordinate> </aol-view>
-
+    
       <aol-layer-tile>
         <aol-source-osm></aol-source-osm>
       </aol-layer-tile>
-
-      <aol-graticule *ngIf="shownGraticule" [strokeStyle]="graticuleStyle" [showLabels]="true"></aol-graticule>
+    
+      @if (shownGraticule) {
+        <aol-graticule [strokeStyle]="graticuleStyle" [showLabels]="true"></aol-graticule>
+      }
     </aol-map>
-
+    
     <div class="controls">
       <input type="checkbox" id="graticule" name="graticule" [(ngModel)]="shownGraticule" />
       <label for="graticule">Toggle graticule</label>
     </div>
-  `,
+    `,
   styles: [
     `
       :host {

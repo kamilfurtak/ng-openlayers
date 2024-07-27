@@ -9,37 +9,41 @@ import { fromExtent } from 'ol/geom/Polygon';
   template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
-      <aol-interaction-draw
-        *ngIf="isDrawing"
-        type="Circle"
-        [geometryFunction]="drawBoxGeometryFunction"
-        (drawEnd)="endDraw($event.feature)"
-      >
-      </aol-interaction-draw>
-
-      <aol-interaction-draw-hole-in-polygon
-        *ngIf="isHoleDrawing"
-        (drawEnd)="endHoleDraw($event.feature)"
-      ></aol-interaction-draw-hole-in-polygon>
-
+      @if (isDrawing) {
+        <aol-interaction-draw
+          type="Circle"
+          [geometryFunction]="drawBoxGeometryFunction"
+          (drawEnd)="endDraw($event.feature)"
+          >
+        </aol-interaction-draw>
+      }
+    
+      @if (isHoleDrawing) {
+        <aol-interaction-draw-hole-in-polygon
+          (drawEnd)="endHoleDraw($event.feature)"
+        ></aol-interaction-draw-hole-in-polygon>
+      }
+    
       <aol-view [zoom]="5">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
-
+    
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
-
-      <aol-layer-vector *ngIf="feature" #vectorLayer>
-        <aol-source-vector>
-          <aol-feature>
-            <aol-geometry-polygon>
-              <aol-collection-coordinates [coordinates]="feature.geometry.coordinates" [srid]="'EPSG:4326'">
-              </aol-collection-coordinates>
-            </aol-geometry-polygon>
-          </aol-feature>
-        </aol-source-vector>
-      </aol-layer-vector>
+    
+      @if (feature) {
+        <aol-layer-vector #vectorLayer>
+          <aol-source-vector>
+            <aol-feature>
+              <aol-geometry-polygon>
+                <aol-collection-coordinates [coordinates]="feature.geometry.coordinates" [srid]="'EPSG:4326'">
+                </aol-collection-coordinates>
+              </aol-geometry-polygon>
+            </aol-feature>
+          </aol-source-vector>
+        </aol-layer-vector>
+      }
     </aol-map>
-
+    
     <div class="info">
       <div class="draw-section">
         <button (click)="drawMode()" [disabled]="isHoleDrawing">{{ isDrawing ? 'End draw' : 'Start draw' }}</button>
@@ -52,7 +56,7 @@ import { fromExtent } from 'ol/geom/Polygon';
         </code>
       </div>
     </div>
-  `,
+    `,
   styles: [
     `
       :host {

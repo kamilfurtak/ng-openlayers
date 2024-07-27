@@ -15,26 +15,28 @@ import { Component, OnInit } from '@angular/core';
 
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
 
-      <aol-layer-vector *ngIf="marker">
-        <aol-source-vector #markers>
-          <aol-feature>
-            <aol-geometry-point>
-              <aol-coordinate [x]="marker.lon" [y]="marker.lat" [srid]="'EPSG:4326'"></aol-coordinate>
-            </aol-geometry-point>
-            <aol-style>
-              <aol-style-icon
-                [src]="'assets/marker.svg'"
-                [anchor]="[0.5, 1]"
-                [anchorXUnits]="'fraction'"
-                [anchorYUnits]="'fraction'"
-                [scale]="2"
-                [anchorOrigin]="'top-left'"
-              >
-              </aol-style-icon>
-            </aol-style>
-          </aol-feature>
-        </aol-source-vector>
-      </aol-layer-vector>
+      @if (marker) {
+        <aol-layer-vector>
+          <aol-source-vector #markers>
+            <aol-feature>
+              <aol-geometry-point>
+                <aol-coordinate [x]="marker.lon" [y]="marker.lat" [srid]="'EPSG:4326'"></aol-coordinate>
+              </aol-geometry-point>
+              <aol-style>
+                <aol-style-icon
+                  [src]="'assets/marker.svg'"
+                  [anchor]="[0.5, 1]"
+                  [anchorXUnits]="'fraction'"
+                  [anchorYUnits]="'fraction'"
+                  [scale]="2"
+                  [anchorOrigin]="'top-left'"
+                >
+                </aol-style-icon>
+              </aol-style>
+            </aol-feature>
+          </aol-source-vector>
+        </aol-layer-vector>
+      }
     </aol-map>
   `,
 })
