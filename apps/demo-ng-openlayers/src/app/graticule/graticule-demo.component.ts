@@ -1,5 +1,17 @@
 import { Component } from '@angular/core';
 import { Stroke } from 'ol/style';
+import { FormsModule } from '@angular/forms';
+import {
+  ControlFullScreenComponent,
+  CoordinateComponent,
+  DefaultControlComponent,
+  DefaultInteractionComponent,
+  GraticuleComponent,
+  LayerTileComponent,
+  MapComponent,
+  SourceOsmComponent,
+  ViewComponent,
+} from 'ng-openlayers';
 
 @Component({
   selector: 'app-root',
@@ -9,21 +21,21 @@ import { Stroke } from 'ol/style';
       <aol-control-defaults></aol-control-defaults>
       <aol-control-fullscreen></aol-control-fullscreen>
       <aol-view [zoom]="zoom"> <aol-coordinate [x]="-10997148" [y]="4569099"></aol-coordinate> </aol-view>
-    
+
       <aol-layer-tile>
         <aol-source-osm></aol-source-osm>
       </aol-layer-tile>
-    
+
       @if (shownGraticule) {
         <aol-graticule [strokeStyle]="graticuleStyle" [showLabels]="true"></aol-graticule>
       }
     </aol-map>
-    
+
     <div class="controls">
       <input type="checkbox" id="graticule" name="graticule" [(ngModel)]="shownGraticule" />
       <label for="graticule">Toggle graticule</label>
     </div>
-    `,
+  `,
   styles: [
     `
       :host {
@@ -41,8 +53,21 @@ import { Stroke } from 'ol/style';
       }
     `,
   ],
+  standalone: true,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    ControlFullScreenComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    FormsModule,
+    GraticuleComponent,
+  ],
 })
-export class GraticuleComponent {
+export class GraticuleDemoComponent {
   public zoom = 4;
   public opacity = 1.0;
   public shownGraticule = true;

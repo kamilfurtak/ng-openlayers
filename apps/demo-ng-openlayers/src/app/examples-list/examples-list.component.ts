@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { examplesList } from '../example-list';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-examples-list',
-  template: `
+    selector: 'app-examples-list',
+    template: `
     <div class="search">
       <form [formGroup]="form"><input type="text" formControlName="term" placeholder="Search" /></form>
     </div>
@@ -21,8 +22,8 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
       }
     </div>
     `,
-  styles: [
-    `
+    styles: [
+        `
       .search {
         display: flex;
         justify-content: center;
@@ -74,7 +75,13 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
         font-size: 12px;
       }
     `,
-  ],
+    ],
+    standalone: true,
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        RouterLink,
+    ],
 })
 export class ExamplesListComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder) {}

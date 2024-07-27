@@ -1,8 +1,31 @@
 import { Component, OnInit } from '@angular/core';
+import { GeometryMultiPolygonComponent } from 'ng-openlayers';
+import { GeometryMultiLinestringComponent } from 'ng-openlayers';
+import { GeometryMultiPointComponent } from 'ng-openlayers';
+import { GeometryCircleComponent } from 'ng-openlayers';
+import { GeometryLinestringComponent } from 'ng-openlayers';
+import { StyleCircleComponent } from 'ng-openlayers';
+import { GeometryPointComponent } from 'ng-openlayers';
+import { CollectionCoordinatesComponent } from 'ng-openlayers';
+import { GeometryPolygonComponent } from 'ng-openlayers';
+import { FeatureComponent } from 'ng-openlayers';
+import { StyleFillComponent } from 'ng-openlayers';
+import { StyleStrokeComponent } from 'ng-openlayers';
+import { StyleComponent } from 'ng-openlayers';
+import { SourceVectorComponent } from 'ng-openlayers';
+import { LayerVectorComponent } from 'ng-openlayers';
+import { LayerGroupComponent } from 'ng-openlayers';
+import { SourceOsmComponent } from 'ng-openlayers';
+import { LayerTileComponent } from 'ng-openlayers';
+import { CoordinateComponent } from 'ng-openlayers';
+import { ViewComponent } from 'ng-openlayers';
+import { DefaultControlComponent } from 'ng-openlayers';
+import { DefaultInteractionComponent } from 'ng-openlayers';
+import { MapComponent } from 'ng-openlayers';
 
 @Component({
-  selector: 'app-display-geometry',
-  template: `
+    selector: 'app-display-geometry',
+    template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -123,6 +146,32 @@ import { Component, OnInit } from '@angular/core';
       </aol-layer-group>
     </aol-map>
     `,
+    standalone: true,
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        DefaultControlComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        LayerGroupComponent,
+        LayerVectorComponent,
+        SourceVectorComponent,
+        StyleComponent,
+        StyleStrokeComponent,
+        StyleFillComponent,
+        FeatureComponent,
+        GeometryPolygonComponent,
+        CollectionCoordinatesComponent,
+        GeometryPointComponent,
+        StyleCircleComponent,
+        GeometryLinestringComponent,
+        GeometryCircleComponent,
+        GeometryMultiPointComponent,
+        GeometryMultiLinestringComponent,
+        GeometryMultiPolygonComponent,
+    ],
 })
 export class DisplayGeometryComponent implements OnInit {
   constructor() {}

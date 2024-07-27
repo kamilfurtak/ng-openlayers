@@ -8,8 +8,9 @@ import { LayerGroupComponent } from './layergroup.component';
 import { StyleFunction } from 'ol/style/Style';
 
 @Component({
-  selector: 'aol-layer-vectortile',
-  template: ` <ng-content></ng-content> `,
+    selector: 'aol-layer-vectortile',
+    template: ` <ng-content></ng-content> `,
+    standalone: true,
 })
 export class LayerVectorTileComponent extends LayerComponent implements OnInit, OnChanges {
   @Input()

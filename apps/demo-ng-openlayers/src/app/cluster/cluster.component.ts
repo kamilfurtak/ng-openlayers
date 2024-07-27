@@ -1,8 +1,28 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CollectionCoordinatesComponent } from 'ng-openlayers';
+import { GeometryPolygonComponent } from 'ng-openlayers';
+import { StyleFillComponent } from 'ng-openlayers';
+import { StyleStrokeComponent } from 'ng-openlayers';
+import { StyleCircleComponent } from 'ng-openlayers';
+import { StyleComponent } from 'ng-openlayers';
+import { GeometryPointComponent } from 'ng-openlayers';
+import { FeatureComponent } from 'ng-openlayers';
+import { SourceVectorComponent } from 'ng-openlayers';
+import { SourceClusterComponent } from 'ng-openlayers';
+import { LayerVectorComponent } from 'ng-openlayers';
+import { SourceOsmComponent } from 'ng-openlayers';
+import { LayerTileComponent } from 'ng-openlayers';
+import { CoordinateComponent } from 'ng-openlayers';
+import { ViewComponent } from 'ng-openlayers';
+import { ControlFullScreenComponent } from 'ng-openlayers';
+import { DefaultControlComponent } from 'ng-openlayers';
+import { DefaultInteractionComponent } from 'ng-openlayers';
+import { MapComponent } from 'ng-openlayers';
 
 @Component({
-  selector: 'app-cluster',
-  template: `
+    selector: 'app-cluster',
+    template: `
     <aol-map [width]="'100%'" [height]="'100%'">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -67,8 +87,8 @@ import { Component, OnInit } from '@angular/core';
       <span> ({{ distance }})</span>
     </div>
     `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -87,7 +107,30 @@ import { Component, OnInit } from '@angular/core';
         margin: 20px;
       }
     `,
-  ],
+    ],
+    standalone: true,
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        DefaultControlComponent,
+        ControlFullScreenComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        LayerVectorComponent,
+        SourceClusterComponent,
+        SourceVectorComponent,
+        FeatureComponent,
+        GeometryPointComponent,
+        StyleComponent,
+        StyleCircleComponent,
+        StyleStrokeComponent,
+        StyleFillComponent,
+        GeometryPolygonComponent,
+        CollectionCoordinatesComponent,
+        FormsModule,
+    ],
 })
 export class ClusterComponent implements OnInit {
   distance = 60;

@@ -1,5 +1,23 @@
 import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
-import { MapComponent, LayerVectorComponent } from 'ng-openlayers';
+import {
+  CollectionCoordinatesComponent,
+  CoordinateComponent,
+  DefaultControlComponent,
+  DefaultInteractionComponent,
+  FeatureComponent,
+  GeometryPolygonComponent,
+  LayerGroupComponent,
+  LayerTileComponent,
+  LayerVectorComponent,
+  MapComponent,
+  SelectInteractionComponent,
+  SourceOsmComponent,
+  SourceVectorComponent,
+  StyleComponent,
+  StyleFillComponent,
+  StyleStrokeComponent,
+  ViewComponent,
+} from 'ng-openlayers';
 import { Fill, Stroke, Style } from 'ol/style';
 import { Layer } from 'ol/layer';
 import { Feature } from 'ol';
@@ -11,13 +29,13 @@ import { Feature } from 'ol';
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
       <aol-interaction-select #select [style]="styleInteratiselected"></aol-interaction-select>
-    
+
       <aol-view [zoom]="5">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
-    
+
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
-    
+
       <aol-layer-group>
         @for (f of features.features; track f) {
           <aol-layer-vector #aoiLayerVector>
@@ -46,11 +64,29 @@ import { Feature } from 'ol';
         }
       </aol-layer-group>
     </aol-map>
-    `,
+  `,
+  standalone: true,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    SelectInteractionComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    LayerGroupComponent,
+    LayerVectorComponent,
+    StyleComponent,
+    StyleStrokeComponent,
+    StyleFillComponent,
+    SourceVectorComponent,
+    FeatureComponent,
+    GeometryPolygonComponent,
+    CollectionCoordinatesComponent,
+  ],
 })
 export class ColorSelectHoverComponent implements OnInit {
-  constructor() {}
-
   @ViewChild('map', { static: true })
   map: MapComponent;
   @ViewChildren('aoiLayerVector')

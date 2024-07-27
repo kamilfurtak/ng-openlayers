@@ -10,11 +10,13 @@ import { DrawInteractionComponent } from './draw.component';
 import { MapComponent } from '../map.component';
 
 @Component({
-  selector: 'aol-interaction-draw-hole-in-polygon',
-  template: `
+    selector: 'aol-interaction-draw-hole-in-polygon',
+    template: `
     <aol-interaction-draw #drawInstance type="Polygon" (drawEnd)="endDraw($event.feature)" [style]="staticStyle">
     </aol-interaction-draw>
   `,
+    standalone: true,
+    imports: [DrawInteractionComponent],
 })
 export class DrawHoleInPolygonInteractionComponent implements AfterViewInit {
   @ViewChild('drawInstance') drawInteractionComponent: DrawInteractionComponent;

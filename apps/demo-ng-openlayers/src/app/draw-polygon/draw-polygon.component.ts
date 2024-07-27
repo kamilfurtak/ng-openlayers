@@ -3,10 +3,24 @@ import { createBox } from 'ol/interaction/Draw';
 import { Feature } from 'ol';
 import Projection from 'ol/proj/Projection';
 import { fromExtent } from 'ol/geom/Polygon';
+import { JsonPipe } from '@angular/common';
+import { CollectionCoordinatesComponent } from 'ng-openlayers';
+import { GeometryPolygonComponent } from 'ng-openlayers';
+import { FeatureComponent } from 'ng-openlayers';
+import { SourceVectorComponent } from 'ng-openlayers';
+import { LayerVectorComponent } from 'ng-openlayers';
+import { SourceOsmComponent } from 'ng-openlayers';
+import { LayerTileComponent } from 'ng-openlayers';
+import { CoordinateComponent } from 'ng-openlayers';
+import { ViewComponent } from 'ng-openlayers';
+import { DrawHoleInPolygonInteractionComponent } from 'ng-openlayers';
+import { DrawInteractionComponent } from 'ng-openlayers';
+import { DefaultInteractionComponent } from 'ng-openlayers';
+import { MapComponent } from 'ng-openlayers';
 
 @Component({
-  selector: 'app-draw-polygon',
-  template: `
+    selector: 'app-draw-polygon',
+    template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       @if (isDrawing) {
@@ -57,8 +71,8 @@ import { fromExtent } from 'ol/geom/Polygon';
       </div>
     </div>
     `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -73,7 +87,24 @@ import { fromExtent } from 'ol/geom/Polygon';
         padding: 1rem;
       }
     `,
-  ],
+    ],
+    standalone: true,
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        DrawInteractionComponent,
+        DrawHoleInPolygonInteractionComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        LayerVectorComponent,
+        SourceVectorComponent,
+        FeatureComponent,
+        GeometryPolygonComponent,
+        CollectionCoordinatesComponent,
+        JsonPipe,
+    ],
 })
 export class DrawPolygonComponent implements OnInit {
   constructor() {}

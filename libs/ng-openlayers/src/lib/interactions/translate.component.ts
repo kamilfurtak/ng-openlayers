@@ -8,8 +8,9 @@ import BaseEvent from 'ol/events/Event';
 import { ObjectEvent } from 'ol/Object';
 
 @Component({
-  selector: 'aol-interaction-translate',
-  template: '',
+    selector: 'aol-interaction-translate',
+    template: '',
+    standalone: true,
 })
 export class TranslateInteractionComponent implements OnInit, OnDestroy {
   @Input()

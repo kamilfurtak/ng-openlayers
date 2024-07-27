@@ -1,5 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
-import { SourceUTFGridComponent, ViewComponent } from 'ng-openlayers';
+import {
+  ContentComponent,
+  ControlFullScreenComponent,
+  CoordinateComponent,
+  DefaultControlComponent,
+  DefaultInteractionComponent,
+  LayerTileComponent,
+  MapComponent,
+  OverlayComponent,
+  SourceOsmComponent,
+  SourceUTFGridComponent,
+  ViewComponent,
+} from 'ng-openlayers';
 import { Coordinate } from 'ol/coordinate';
 
 @Component({
@@ -18,13 +30,13 @@ import { Coordinate } from 'ol/coordinate';
         ></aol-source-utfgrid>
       </aol-layer-tile>
       @if (coords && info) {
-<aol-overlay [positioning]="'BOTTOM_RIGHT'" [stopEvent]="false">
-        <aol-coordinate [x]="coords[0]" [y]="coords[1]" [srid]="'EPSG:3857'"> </aol-coordinate>
-        <aol-content>
-          <img [src]="'data:image/png;base64,' + info['flag_png']" />
-        </aol-content>
-      </aol-overlay>
-}
+        <aol-overlay [positioning]="'BOTTOM_RIGHT'" [stopEvent]="false">
+          <aol-coordinate [x]="coords[0]" [y]="coords[1]" [srid]="'EPSG:3857'"> </aol-coordinate>
+          <aol-content>
+            <img [src]="'data:image/png;base64,' + info['flag_png']" />
+          </aol-content>
+        </aol-overlay>
+      }
     </aol-map>
   `,
   styles: [
@@ -39,6 +51,20 @@ import { Coordinate } from 'ol/coordinate';
         height: 100%;
       }
     `,
+  ],
+  standalone: true,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    ControlFullScreenComponent,
+    ViewComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    SourceUTFGridComponent,
+    OverlayComponent,
+    CoordinateComponent,
+    ContentComponent,
   ],
 })
 export class UTFGridComponent {

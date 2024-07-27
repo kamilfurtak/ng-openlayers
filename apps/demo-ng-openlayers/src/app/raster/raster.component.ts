@@ -1,5 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
-import { SourceRasterComponent } from 'ng-openlayers';
+import {
+  ControlFullScreenComponent,
+  CoordinateComponent,
+  DefaultControlComponent,
+  DefaultInteractionComponent,
+  LayerImageComponent,
+  MapComponent,
+  SourceOsmComponent,
+  SourceRasterComponent,
+  SourceXYZComponent,
+  ViewComponent,
+} from 'ng-openlayers';
+import { FormsModule } from '@angular/forms';
 
 interface RasterData {
   brightness: number;
@@ -13,18 +25,18 @@ interface RasterData {
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
       <aol-control-fullscreen></aol-control-fullscreen>
-    
+
       <aol-view [zoom]="14">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
-    
+
       <aol-layer-image>
         <aol-source-raster
           threads="4"
           operationType="image"
           [operation]="operation"
           (beforeOperations)="beforeOperations($event)"
-          >
+        >
           @if (selectLayer === 'osm') {
             <aol-source-osm></aol-source-osm>
           }
@@ -37,13 +49,13 @@ interface RasterData {
         </aol-source-raster>
       </aol-layer-image>
     </aol-map>
-    
+
     <div class="controls">
       <form>
         <input type="radio" name="layer" value="osm" [(ngModel)]="selectLayer" />OSM<br />
         <input type="radio" name="layer" value="xyz" [(ngModel)]="selectLayer" />XYZ<br />
       </form>
-    
+
       <div class="control">
         <span>Contrast : </span>
         <input type="range" min="-255" max="255" [(ngModel)]="contrast" (input)="updateRaster()" />
@@ -55,7 +67,7 @@ interface RasterData {
         <span> ({{ brightness }})</span>
       </div>
     </div>
-    `,
+  `,
   styles: [
     `
       :host {
@@ -79,6 +91,20 @@ interface RasterData {
         margin: 20px;
       }
     `,
+  ],
+  standalone: true,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    ControlFullScreenComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerImageComponent,
+    SourceRasterComponent,
+    SourceOsmComponent,
+    SourceXYZComponent,
+    FormsModule,
   ],
 })
 export class RasterComponent {

@@ -22,9 +22,10 @@ import { TileGridComponent } from '../tilegrid.component';
 import { SourceComponent } from './source.component';
 
 @Component({
-  selector: 'aol-source-xyz',
-  template: ` <ng-content></ng-content> `,
-  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceXYZComponent) }],
+    selector: 'aol-source-xyz',
+    template: ` <ng-content></ng-content> `,
+    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceXYZComponent) }],
+    standalone: true,
 })
 export class SourceXYZComponent extends SourceComponent implements AfterContentInit, OnChanges {
   @Input()

@@ -3,10 +3,24 @@ import OLFeature from 'ol/Feature';
 import Projection from 'ol/proj/Projection';
 import { GeoJSON } from 'ol/format';
 import { Polygon } from 'ol/geom';
+import { JsonPipe } from '@angular/common';
+import { CollectionCoordinatesComponent } from 'ng-openlayers';
+import { GeometryPolygonComponent } from 'ng-openlayers';
+import { FeatureComponent } from 'ng-openlayers';
+import { SourceVectorComponent } from 'ng-openlayers';
+import { LayerVectorComponent } from 'ng-openlayers';
+import { SourceOsmComponent } from 'ng-openlayers';
+import { LayerTileComponent } from 'ng-openlayers';
+import { CoordinateComponent } from 'ng-openlayers';
+import { ViewComponent } from 'ng-openlayers';
+import { ModifyInteractionComponent } from 'ng-openlayers';
+import { SelectInteractionComponent } from 'ng-openlayers';
+import { DefaultInteractionComponent } from 'ng-openlayers';
+import { MapComponent } from 'ng-openlayers';
 
 @Component({
-  selector: 'app-modify-polygon',
-  template: `
+    selector: 'app-modify-polygon',
+    template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-interaction-select [wrapX]="true" #select></aol-interaction-select>
@@ -44,8 +58,8 @@ import { Polygon } from 'ol/geom';
       </code>
     </div>
     `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -60,7 +74,24 @@ import { Polygon } from 'ol/geom';
         padding: 1rem;
       }
     `,
-  ],
+    ],
+    standalone: true,
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        SelectInteractionComponent,
+        ModifyInteractionComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        LayerVectorComponent,
+        SourceVectorComponent,
+        FeatureComponent,
+        GeometryPolygonComponent,
+        CollectionCoordinatesComponent,
+        JsonPipe,
+    ],
 })
 export class ModifyPolygonComponent implements OnInit {
   constructor() {}

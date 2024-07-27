@@ -12,8 +12,9 @@ import { ObjectEvent } from 'ol/Object';
 import BaseEvent from 'ol/events/Event';
 
 @Component({
-  selector: 'aol-interaction-draw',
-  template: '',
+    selector: 'aol-interaction-draw',
+    template: '',
+    standalone: true,
 })
 export class DrawInteractionComponent implements OnInit, OnDestroy {
   @Input()

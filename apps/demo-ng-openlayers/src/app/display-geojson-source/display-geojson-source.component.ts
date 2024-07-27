@@ -1,8 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { SourceGeoJSONComponent } from 'ng-openlayers';
+import { FeatureComponent } from 'ng-openlayers';
+import { SourceVectorComponent } from 'ng-openlayers';
+import { LayerVectorComponent } from 'ng-openlayers';
+import { LayerGroupComponent } from 'ng-openlayers';
+import { SourceOsmComponent } from 'ng-openlayers';
+import { LayerTileComponent } from 'ng-openlayers';
+import { CoordinateComponent } from 'ng-openlayers';
+import { ViewComponent } from 'ng-openlayers';
+import { DefaultControlComponent } from 'ng-openlayers';
+import { DefaultInteractionComponent } from 'ng-openlayers';
+import { MapComponent } from 'ng-openlayers';
 
 @Component({
-  selector: 'app-display-geojson-source',
-  template: `
+    selector: 'app-display-geojson-source',
+    template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -27,6 +39,21 @@ import { Component, OnInit } from '@angular/core';
       </aol-layer-group>
     </aol-map>
   `,
+    standalone: true,
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        DefaultControlComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        LayerGroupComponent,
+        LayerVectorComponent,
+        SourceVectorComponent,
+        FeatureComponent,
+        SourceGeoJSONComponent,
+    ],
 })
 export class DisplayGeojsonSourceComponent implements OnInit {
   constructor() {}

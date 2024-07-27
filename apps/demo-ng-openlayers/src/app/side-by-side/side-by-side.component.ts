@@ -1,5 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MapComponent, ViewComponent } from 'ng-openlayers';
+import {
+  CoordinateComponent,
+  DefaultInteractionComponent,
+  LayerTileComponent,
+  MapComponent,
+  SourceOsmComponent,
+  SourceXYZComponent,
+  ViewComponent,
+} from 'ng-openlayers';
 
 @Component({
   selector: 'app-side-by-side',
@@ -35,6 +43,16 @@ import { MapComponent, ViewComponent } from 'ng-openlayers';
         width: 50%;
       }
     `,
+  ],
+  standalone: true,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    SourceXYZComponent,
   ],
 })
 export class SideBySideComponent implements OnInit, AfterViewInit {

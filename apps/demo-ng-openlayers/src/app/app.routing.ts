@@ -13,7 +13,6 @@ import { DrawPolygonComponent } from './draw-polygon/draw-polygon.component';
 import { ModifyPolygonComponent } from './modify-polygon/modify-polygon.component';
 import { SideBySideComponent } from './side-by-side/side-by-side.component';
 import { SwipeComponent } from './swipe/swipe.component';
-import { OverlayComponent } from './overlay/overlay.component';
 import { ColorSelectHoverComponent } from './color-select-hover/color-select-hover.component';
 import { MarkerComponent } from './marker/marker.component';
 import { ArcgisImageComponent } from './arcgis-image/arcgis-image.component';
@@ -24,7 +23,8 @@ import { OverviewComponent } from './overview/overview.component';
 import { TileJsonComponent } from './tile-json/tile-json.component';
 import { SelectInteractionComponent } from './select-interaction/select-interaction.component';
 import { ImageStaticComponent } from './image-static/image-static.component';
-import { GraticuleComponent } from './graticule/graticule.component';
+import { OverlayDemoComponent } from './overlay/overlay-demo.component';
+import { GraticuleDemoComponent } from './graticule/graticule-demo.component';
 
 const routes: Routes = [
   { path: '', component: ExamplesListComponent },
@@ -41,7 +41,7 @@ const routes: Routes = [
       { path: 'modify-polygon', component: ModifyPolygonComponent },
       { path: 'side-by-side', component: SideBySideComponent },
       { path: 'swipe', component: SwipeComponent },
-      { path: 'overlay', component: OverlayComponent },
+      { path: 'overlay', component: OverlayDemoComponent },
       { path: 'color-select-hover', component: ColorSelectHoverComponent },
       { path: 'marker', component: MarkerComponent },
       { path: 'cluster', component: ClusterComponent },
@@ -54,7 +54,7 @@ const routes: Routes = [
       { path: 'image-static', component: ImageStaticComponent },
       { path: 'select-interaction', component: SelectInteractionComponent },
       { path: 'tile-json', component: TileJsonComponent },
-      { path: 'graticule', component: GraticuleComponent },
+      { path: 'graticule', component: GraticuleDemoComponent },
     ],
   },
   { path: '**', redirectTo: '' },

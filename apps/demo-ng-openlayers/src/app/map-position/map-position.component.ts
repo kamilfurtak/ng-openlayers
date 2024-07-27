@@ -1,6 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MapComponent, ViewComponent } from 'ng-openlayers';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import {
+  CoordinateComponent,
+  DefaultControlComponent,
+  DefaultInteractionComponent,
+  LayerTileComponent,
+  MapComponent,
+  SourceOsmComponent,
+  ViewComponent,
+} from 'ng-openlayers';
+import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { transform } from 'ol/proj';
 import Projection from 'ol/proj/Projection';
 
@@ -77,6 +85,18 @@ import Projection from 'ol/proj/Projection';
         float: left;
       }
     `,
+  ],
+  standalone: true,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class MapPositionComponent implements OnInit {

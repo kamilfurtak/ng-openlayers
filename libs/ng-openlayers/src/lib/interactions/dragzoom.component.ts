@@ -4,8 +4,9 @@ import { MapComponent } from '../map.component';
 import { Condition } from 'ol/events/condition';
 
 @Component({
-  selector: 'aol-interaction-dragzoom',
-  template: '',
+    selector: 'aol-interaction-dragzoom',
+    template: '',
+    standalone: true,
 })
 export class DragZoomInteractionComponent implements OnInit, OnDestroy {
   @Input()

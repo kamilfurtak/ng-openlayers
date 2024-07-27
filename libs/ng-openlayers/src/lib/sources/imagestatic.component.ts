@@ -20,9 +20,10 @@ import { Size } from 'ol/size';
 import { ImageSourceEvent } from 'ol/source/Image';
 
 @Component({
-  selector: 'aol-source-imagestatic',
-  template: ` <ng-content></ng-content> `,
-  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageStaticComponent) }],
+    selector: 'aol-source-imagestatic',
+    template: ` <ng-content></ng-content> `,
+    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageStaticComponent) }],
+    standalone: true,
 })
 export class SourceImageStaticComponent extends SourceComponent implements OnInit, OnChanges {
   @Input()

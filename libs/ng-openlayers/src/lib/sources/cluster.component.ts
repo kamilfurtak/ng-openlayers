@@ -20,6 +20,7 @@ import { SourceVectorComponent } from './vector.component';
   selector: 'aol-source-cluster',
   template: ` <ng-content></ng-content> `,
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceClusterComponent) }],
+  standalone: true,
 })
 export class SourceClusterComponent extends SourceComponent implements AfterContentInit, OnChanges {
   @Input()
