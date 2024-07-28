@@ -1,4 +1,4 @@
-import { Component, Input, Optional, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Optional } from '@angular/core';
 import { Fill, Image, Stroke, Style, Text } from 'ol/style';
 import { Geometry } from 'ol/geom';
 import { FeatureComponent } from '../feature.component';
@@ -6,9 +6,9 @@ import { LayerVectorComponent } from '../layers/layervector.component';
 import { GeometryFunction } from 'ol/style/Style';
 
 @Component({
-    selector: 'aol-style',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-style',
+  template: ` <ng-content></ng-content> `,
+  standalone: true,
 })
 export class StyleComponent implements OnInit {
   @Input()
@@ -30,7 +30,7 @@ export class StyleComponent implements OnInit {
 
   constructor(@Optional() featureHost: FeatureComponent, @Optional() layerHost: LayerVectorComponent) {
     // console.log('creating aol-style');
-    this.host = !!featureHost ? featureHost : layerHost;
+    this.host = featureHost ? featureHost : layerHost;
     if (!this.host) {
       throw new Error('aol-style must be applied to a feature or a layer');
     }

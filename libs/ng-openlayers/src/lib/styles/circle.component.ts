@@ -1,11 +1,11 @@
-import { Component, Input, Host, AfterContentInit, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { AfterContentInit, Component, Host, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Circle, Fill, Stroke } from 'ol/style';
 import { StyleComponent } from './style.component';
 
 @Component({
-    selector: 'aol-style-circle',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-style-circle',
+  template: ` <ng-content></ng-content> `,
+  standalone: true,
 })
 export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDestroy {
   @Input()
@@ -28,7 +28,7 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
    * see openlayers #6233 and #5775
    */
   update() {
-    if (!!this.instance) {
+    if (this.instance) {
       // console.log('setting ol.style.Circle instance\'s radius');
       this.instance.setRadius(this.radius);
     }
