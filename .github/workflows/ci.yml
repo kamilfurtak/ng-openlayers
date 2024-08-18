@@ -65,7 +65,7 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - run: npm ci --legacy-peer-deps
+      - run: npm ci --legacy-peer-deps --include=optional
       - uses: nrwl/nx-set-shas@v4
         with:
           # The "main" branch of your repository (the base branch which you target with PRs).
