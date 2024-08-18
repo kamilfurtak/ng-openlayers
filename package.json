@@ -80,6 +80,7 @@
     "typescript": "5.5.4"
   },
   "optionalDependencies": {
-    "@nx/nx-linux-x64-gnu": "19.5.3"
+    "@nx/nx-linux-x64-gnu": "19.5.3",
+    "@rollup/rollup-linux-x64-gnu": "4.21.0"
   }
 }
