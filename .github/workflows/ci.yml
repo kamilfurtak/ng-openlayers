@@ -67,6 +67,12 @@ jobs:
 
       - run: npm ci --legacy-peer-deps
       - uses: nrwl/nx-set-shas@v4
+        with:
+          # The "main" branch of your repository (the base branch which you target with PRs).
+          # Common names for this branch include main and master.
+          #
+          # Default: main
+          main-branch-name: 'staging'
 
       # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
       # - run: npx nx-cloud record -- echo Hello World
