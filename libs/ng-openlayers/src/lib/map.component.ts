@@ -1,13 +1,13 @@
 import {
-  Component,
-  OnInit,
-  ElementRef,
-  Input,
-  Output,
-  EventEmitter,
   AfterViewInit,
-  SimpleChanges,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
   OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
 } from '@angular/core';
 import { Map } from 'ol';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
@@ -18,13 +18,17 @@ import { Control } from 'ol/control';
 import { Interaction } from 'ol/interaction';
 import { DrawEvent } from 'ol/interaction/Draw';
 import BaseEvent from 'ol/events/Event';
+import { ProjectionCode, ProjectionCodeDefinition } from './map.model';
+import { register } from 'ol/proj/proj4';
+import proj4 from 'proj4';
 
 @Component({
-  selector: 'aol-map',
-  template: `
+    selector: 'aol-map',
+    template: `
     <div [style.width]="width" [style.height]="height"></div>
     <ng-content></ng-content>
   `,
+    standalone: true,
 })
 export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Input()
@@ -98,6 +102,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.Map instance with:', this);
+    this.setProjectionDefinitions();
     this.instance = new Map(this);
     this.instance.setTarget(this.host.nativeElement.firstElementChild);
     this.instance.on('change', (event: DrawEvent) => this.olChange.emit(event));
@@ -138,5 +143,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     this.instance.updateSize();
+  }
+
+  private setProjectionDefinitions(): void {
+    proj4.defs(ProjectionCode.Pl2000zone5, ProjectionCodeDefinition.Pl2000zone5);
+    proj4.defs(ProjectionCode.Pl2000zone6, ProjectionCodeDefinition.Pl2000zone6);
+    proj4.defs(ProjectionCode.Pl2000zone7, ProjectionCodeDefinition.Pl2000zone7);
+    proj4.defs(ProjectionCode.Pl2000zone8, ProjectionCodeDefinition.Pl2000zone8);
+    register(proj4);
   }
 }

@@ -1,5 +1,21 @@
 import { Component } from '@angular/core';
 import { GeoJSON } from 'ol/format';
+import {
+  CollectionCoordinatesComponent,
+  ContentComponent,
+  CoordinateComponent,
+  DefaultControlComponent,
+  DefaultInteractionComponent,
+  FeatureComponent,
+  GeometryPolygonComponent,
+  LayerTileComponent,
+  LayerVectorComponent,
+  MapComponent,
+  OverlayComponent,
+  SourceOsmComponent,
+  SourceVectorComponent,
+  ViewComponent,
+} from 'ng-openlayers';
 
 @Component({
   selector: 'app-display-overlay',
@@ -54,10 +70,25 @@ import { GeoJSON } from 'ol/format';
       }
     `,
   ],
+  standalone: true,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    LayerVectorComponent,
+    SourceVectorComponent,
+    FeatureComponent,
+    GeometryPolygonComponent,
+    CollectionCoordinatesComponent,
+    ContentComponent,
+    OverlayComponent,
+  ],
 })
-export class OverlayComponent {
-  constructor() {}
-
+export class OverlayDemoComponent {
   geoJsonFormat = new GeoJSON();
 
   feature = {

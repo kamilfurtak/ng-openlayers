@@ -1,50 +1,65 @@
 import { Component, OnInit } from '@angular/core';
-import { Feature } from 'geojson';
 import OLFeature from 'ol/Feature';
 import Projection from 'ol/proj/Projection';
 import { GeoJSON } from 'ol/format';
 import { Polygon } from 'ol/geom';
+import { JsonPipe } from '@angular/common';
+import { CollectionCoordinatesComponent } from 'ng-openlayers';
+import { GeometryPolygonComponent } from 'ng-openlayers';
+import { FeatureComponent } from 'ng-openlayers';
+import { SourceVectorComponent } from 'ng-openlayers';
+import { LayerVectorComponent } from 'ng-openlayers';
+import { SourceOsmComponent } from 'ng-openlayers';
+import { LayerTileComponent } from 'ng-openlayers';
+import { CoordinateComponent } from 'ng-openlayers';
+import { ViewComponent } from 'ng-openlayers';
+import { ModifyInteractionComponent } from 'ng-openlayers';
+import { SelectInteractionComponent } from 'ng-openlayers';
+import { DefaultInteractionComponent } from 'ng-openlayers';
+import { MapComponent } from 'ng-openlayers';
 
 @Component({
-  selector: 'app-modify-polygon',
-  template: `
+    selector: 'app-modify-polygon',
+    template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-interaction-select [wrapX]="true" #select></aol-interaction-select>
       <aol-interaction-modify
         #modify
         [features]="select.instance.getFeatures()"
-        (modifyEnd)="modifyEnd($event.features.getArray()[0])"
-      >
+        (olModifyEnd)="modifyEnd($event.features.getArray()[0])"
+        >
       </aol-interaction-modify>
-
+    
       <aol-view [zoom]="5">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
-
+    
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
-
-      <aol-layer-vector *ngIf="feature">
-        <aol-source-vector>
-          <aol-feature>
-            <aol-geometry-polygon>
-              <aol-collection-coordinates [coordinates]="feature.geometry.coordinates" [srid]="'EPSG:4326'">
-              </aol-collection-coordinates>
-            </aol-geometry-polygon>
-          </aol-feature>
-        </aol-source-vector>
-      </aol-layer-vector>
+    
+      @if (feature) {
+        <aol-layer-vector>
+          <aol-source-vector>
+            <aol-feature>
+              <aol-geometry-polygon>
+                <aol-collection-coordinates [coordinates]="feature.geometry.coordinates" [srid]="'EPSG:4326'">
+                </aol-collection-coordinates>
+              </aol-geometry-polygon>
+            </aol-feature>
+          </aol-source-vector>
+        </aol-layer-vector>
+      }
     </aol-map>
-
+    
     <div class="info">
       <h3>Result</h3>
       <code>
         <pre>{{ feature | json }}</pre>
       </code>
     </div>
-  `,
-  styles: [
-    `
+    `,
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -59,7 +74,24 @@ import { Polygon } from 'ol/geom';
         padding: 1rem;
       }
     `,
-  ],
+    ],
+    standalone: true,
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        SelectInteractionComponent,
+        ModifyInteractionComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        LayerVectorComponent,
+        SourceVectorComponent,
+        FeatureComponent,
+        GeometryPolygonComponent,
+        CollectionCoordinatesComponent,
+        JsonPipe,
+    ],
 })
 export class ModifyPolygonComponent implements OnInit {
   constructor() {}

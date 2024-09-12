@@ -1,8 +1,22 @@
 import { Component } from '@angular/core';
+import { StyleIconComponent } from 'ng-openlayers';
+import { StyleFillComponent } from 'ng-openlayers';
+import { StyleStrokeComponent } from 'ng-openlayers';
+import { StyleCircleComponent } from 'ng-openlayers';
+import { StyleComponent } from 'ng-openlayers';
+import { GeometryPointComponent } from 'ng-openlayers';
+import { FeatureComponent } from 'ng-openlayers';
+import { SourceVectorComponent } from 'ng-openlayers';
+import { LayerVectorComponent } from 'ng-openlayers';
+import { SourceOsmComponent } from 'ng-openlayers';
+import { LayerTileComponent } from 'ng-openlayers';
+import { CoordinateComponent } from 'ng-openlayers';
+import { ViewComponent } from 'ng-openlayers';
+import { MapComponent } from 'ng-openlayers';
 
 @Component({
-  selector: 'app-root',
-  template: `
+    selector: 'app-root',
+    template: `
     <aol-map [width]="'100%'" [height]="'100%'">
       <aol-view
         [zoom]="zoom"
@@ -53,8 +67,8 @@ import { Component } from '@angular/core';
       <span>longitude:</span><button (click)="increaseLon()">+</button><button (click)="decreaseLon()">-</button><br />
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -69,7 +83,24 @@ import { Component } from '@angular/core';
         padding: 1rem;
       }
     `,
-  ],
+    ],
+    standalone: true,
+    imports: [
+        MapComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        LayerVectorComponent,
+        SourceVectorComponent,
+        FeatureComponent,
+        GeometryPointComponent,
+        StyleComponent,
+        StyleCircleComponent,
+        StyleStrokeComponent,
+        StyleFillComponent,
+        StyleIconComponent,
+    ],
 })
 export class BasicComponent {
   public zoom = 15;

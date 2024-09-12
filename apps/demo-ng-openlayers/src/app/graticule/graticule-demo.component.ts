@@ -1,5 +1,17 @@
 import { Component } from '@angular/core';
 import { Stroke } from 'ol/style';
+import { FormsModule } from '@angular/forms';
+import {
+  ControlFullScreenComponent,
+  CoordinateComponent,
+  DefaultControlComponent,
+  DefaultInteractionComponent,
+  GraticuleComponent,
+  LayerTileComponent,
+  MapComponent,
+  SourceOsmComponent,
+  ViewComponent,
+} from 'ng-openlayers';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +26,9 @@ import { Stroke } from 'ol/style';
         <aol-source-osm></aol-source-osm>
       </aol-layer-tile>
 
-      <aol-graticule *ngIf="shownGraticule" [strokeStyle]="graticuleStyle" [showLabels]="true"></aol-graticule>
+      @if (shownGraticule) {
+        <aol-graticule [strokeStyle]="graticuleStyle" [showLabels]="true"></aol-graticule>
+      }
     </aol-map>
 
     <div class="controls">
@@ -39,8 +53,21 @@ import { Stroke } from 'ol/style';
       }
     `,
   ],
+  standalone: true,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    ControlFullScreenComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    FormsModule,
+    GraticuleComponent,
+  ],
 })
-export class GraticuleComponent {
+export class GraticuleDemoComponent {
   public zoom = 4;
   public opacity = 1.0;
   public shownGraticule = true;

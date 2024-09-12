@@ -1,4 +1,4 @@
-import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Optional, SimpleChanges } from '@angular/core';
 import { Stroke } from 'ol/style';
 import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';
@@ -9,6 +9,7 @@ import { ColorLike } from 'ol/colorlike';
 @Component({
   selector: 'aol-style-stroke',
   template: ` <div class="aol-style-stroke"></div> `,
+  standalone: true,
 })
 export class StyleStrokeComponent implements OnInit, OnChanges {
   @Input()
@@ -36,9 +37,9 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
     if (!styleHost) {
       throw new Error('aol-style-stroke must be a descendant of aol-style');
     }
-    if (!!styleTextHost) {
+    if (styleTextHost) {
       this.host = styleTextHost;
-    } else if (!!styleCircleHost) {
+    } else if (styleCircleHost) {
       this.host = styleCircleHost;
     } else {
       this.host = styleHost;

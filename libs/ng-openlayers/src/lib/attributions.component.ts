@@ -3,8 +3,9 @@ import { SourceComponent } from './sources/source.component';
 import { AttributionComponent } from './attribution.component';
 
 @Component({
-  selector: 'aol-attributions',
-  template: '<ng-content></ng-content>',
+    selector: 'aol-attributions',
+    template: '<ng-content></ng-content>',
+    standalone: true,
 })
 export class AttributionsComponent implements AfterViewInit {
   @ContentChildren(AttributionComponent)

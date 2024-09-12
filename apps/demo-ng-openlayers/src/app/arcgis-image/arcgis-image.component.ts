@@ -1,8 +1,18 @@
 import { Component } from '@angular/core';
+import { SourceImageArcGISRestComponent } from 'ng-openlayers';
+import { LayerImageComponent } from 'ng-openlayers';
+import { SourceOsmComponent } from 'ng-openlayers';
+import { LayerTileComponent } from 'ng-openlayers';
+import { CoordinateComponent } from 'ng-openlayers';
+import { ViewComponent } from 'ng-openlayers';
+import { ControlFullScreenComponent } from 'ng-openlayers';
+import { DefaultControlComponent } from 'ng-openlayers';
+import { DefaultInteractionComponent } from 'ng-openlayers';
+import { MapComponent } from 'ng-openlayers';
 
 @Component({
-  selector: 'app-root',
-  template: `
+    selector: 'app-root',
+    template: `
     <aol-map>
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -21,8 +31,8 @@ import { Component } from '@angular/core';
       </aol-layer-image>
     </aol-map>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -33,7 +43,20 @@ import { Component } from '@angular/core';
         height: 100%;
       }
     `,
-  ],
+    ],
+    standalone: true,
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        DefaultControlComponent,
+        ControlFullScreenComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        LayerImageComponent,
+        SourceImageArcGISRestComponent,
+    ],
 })
 export class ArcgisImageComponent {
   public zoom = 4;

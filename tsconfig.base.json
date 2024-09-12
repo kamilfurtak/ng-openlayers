@@ -25,7 +25,8 @@
       ]
     },
     "useDefineForClassFields": false,
-    "rootDir": "."
+    "rootDir": ".",
+    "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "skipLibs": true,

@@ -1,7 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
 import { Layer as OlLayer } from 'ol/layer';
 import { SelectEvent } from 'ol/interaction/Select';
-import { LayerVectorComponent } from 'ng-openlayers';
+import {
+  CoordinateComponent,
+  DefaultInteractionComponent,
+  FeatureComponent,
+  GeometryPointComponent,
+  LayerTileComponent,
+  LayerVectorComponent,
+  MapComponent,
+  SourceOsmComponent,
+  SourceVectorComponent,
+  ViewComponent,
+} from 'ng-openlayers';
 
 @Component({
   selector: 'app-select-interaction',
@@ -9,11 +20,11 @@ import { LayerVectorComponent } from 'ng-openlayers';
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
 
-      <aol-interaction-select
-        [layers]="isMarkerLayer"
-        (olSelect)="select($event)"
-        [wrapX]="false"
-      ></aol-interaction-select>
+      <!--      <aol-interaction-select-->
+      <!--        [layers]="isMarkerLayer"-->
+      <!--        (olSelect)="select($event)"-->
+      <!--        [wrapX]="false"-->
+      <!--      ></aol-interaction-select>-->
 
       <aol-view [zoom]="5">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
@@ -34,6 +45,21 @@ import { LayerVectorComponent } from 'ng-openlayers';
       </aol-layer-vector>
     </aol-map>
   `,
+  standalone: true,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    LayerVectorComponent,
+    SourceVectorComponent,
+    FeatureComponent,
+    GeometryPointComponent,
+    SelectInteractionComponent,
+    SelectInteractionComponent,
+  ],
 })
 export class SelectInteractionComponent {
   @ViewChild('markersLayer', { static: true }) markersLayer: LayerVectorComponent;

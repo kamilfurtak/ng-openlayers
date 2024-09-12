@@ -14,13 +14,11 @@ import { DisplayGeometryComponent } from './display-geometry/display-geometry.co
 import { DrawPolygonComponent } from './draw-polygon/draw-polygon.component';
 import { ExamplesItemComponent } from './examples-item/examples-item.component';
 import { ExamplesListComponent } from './examples-list/examples-list.component';
-import { GraticuleComponent } from './graticule/graticule.component';
 import { ImageStaticComponent } from './image-static/image-static.component';
 import { ImageWMSComponent } from './image-wms/image-wms.component';
 import { MapPositionComponent } from './map-position/map-position.component';
 import { MarkerComponent } from './marker/marker.component';
 import { ModifyPolygonComponent } from './modify-polygon/modify-polygon.component';
-import { OverlayComponent } from './overlay/overlay.component';
 import { OverviewComponent } from './overview/overview.component';
 import { RasterComponent } from './raster/raster.component';
 import { SelectInteractionComponent } from './select-interaction/select-interaction.component';
@@ -29,11 +27,20 @@ import { SwipeComponent } from './swipe/swipe.component';
 import { TileJsonComponent } from './tile-json/tile-json.component';
 import { UTFGridComponent } from './utfgrid/utfgrid.component';
 import { ViewProjectionUpdateComponent } from './view-projection-update/view-projection-update.component';
-import { AngularOpenlayersModule } from '../../../../libs/ng-openlayers/src/public-api';
+import { AngularOpenlayersModule } from 'ng-openlayers';
+import { GraticuleDemoComponent } from './graticule/graticule-demo.component';
+import { OverlayDemoComponent } from './overlay/overlay-demo.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    AngularOpenlayersModule,
+    ReactiveFormsModule,
+    HammerModule,
+    AngularOpenlayersModule,
     BasicComponent,
     ClusterComponent,
     RasterComponent,
@@ -47,7 +54,7 @@ import { AngularOpenlayersModule } from '../../../../libs/ng-openlayers/src/publ
     ModifyPolygonComponent,
     SideBySideComponent,
     SwipeComponent,
-    OverlayComponent,
+    OverlayDemoComponent,
     ColorSelectHoverComponent,
     MarkerComponent,
     ArcgisImageComponent,
@@ -58,16 +65,7 @@ import { AngularOpenlayersModule } from '../../../../libs/ng-openlayers/src/publ
     TileJsonComponent,
     OverviewComponent,
     ViewProjectionUpdateComponent,
-    GraticuleComponent,
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule,
-    AngularOpenlayersModule,
-    ReactiveFormsModule,
-    HammerModule,
-    AngularOpenlayersModule,
+    GraticuleDemoComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
 import { Extent, getCenter } from 'ol/extent';
 import Projection, { Options as ProjectionOptions } from 'ol/proj/Projection';
+import { FormsModule } from '@angular/forms';
+import { SourceImageStaticComponent } from 'ng-openlayers';
+import { LayerImageComponent } from 'ng-openlayers';
+import { ViewComponent } from 'ng-openlayers';
+import { MapComponent } from 'ng-openlayers';
 
 @Component({
-  selector: 'app-root',
-  template: `
+    selector: 'app-root',
+    template: `
     <aol-map [width]="'100%'" [height]="'100%'">
       <aol-view [projection]="projection" [zoom]="2" [center]="[512, 484]"> </aol-view>
       <aol-layer-image [opacity]="opacity" [extent]="extent">
@@ -23,8 +28,8 @@ import Projection, { Options as ProjectionOptions } from 'ol/proj/Projection';
       </select>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -39,7 +44,15 @@ import Projection, { Options as ProjectionOptions } from 'ol/proj/Projection';
         padding: 1rem;
       }
     `,
-  ],
+    ],
+    standalone: true,
+    imports: [
+        MapComponent,
+        ViewComponent,
+        LayerImageComponent,
+        SourceImageStaticComponent,
+        FormsModule,
+    ],
 })
 export class ImageStaticComponent {
   public url = 'https://imgs.xkcd.com/comics/online_communities.png';

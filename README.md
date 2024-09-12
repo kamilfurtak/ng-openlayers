@@ -45,6 +45,9 @@ Here is a "minimal" map example with default interactions and controls:
 
 ```
 
+### Online example
+https://stackblitz.com/edit/stackblitz-starters-amwibo?file=src%2Fmain.ts
+
 ## Foreword
 
 Most of the following documentation is an adaptation of OpenLayers' own documentation: https://openlayers.org/en/latest/apidoc/.

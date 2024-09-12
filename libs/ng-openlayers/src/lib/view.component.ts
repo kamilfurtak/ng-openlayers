@@ -8,8 +8,9 @@ import { DrawEvent } from 'ol/interaction/Draw';
 import BaseEvent from 'ol/events/Event';
 
 @Component({
-  selector: 'aol-view',
-  template: ` <ng-content></ng-content> `,
+    selector: 'aol-view',
+    template: ` <ng-content></ng-content> `,
+    standalone: true,
 })
 export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   @Input()

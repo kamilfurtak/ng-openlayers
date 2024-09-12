@@ -11,6 +11,7 @@ import { transform } from 'ol/proj';
 @Component({
   selector: 'aol-collection-coordinates',
   template: ` <div class="aol-collection-coordinates"></div> `,
+  standalone: true,
 })
 export class CollectionCoordinatesComponent implements OnChanges, OnInit {
   @Input()

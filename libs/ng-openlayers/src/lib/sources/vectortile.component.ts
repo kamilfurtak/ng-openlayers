@@ -10,9 +10,10 @@ import { ProjectionLike } from 'ol/proj';
 import { UrlFunction } from 'ol/Tile';
 
 @Component({
-  selector: 'aol-source-vectortile',
-  template: ` <ng-content></ng-content> `,
-  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceVectorTileComponent) }],
+    selector: 'aol-source-vectortile',
+    template: ` <ng-content></ng-content> `,
+    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceVectorTileComponent) }],
+    standalone: true,
 })
 export class SourceVectorTileComponent extends SourceComponent implements AfterContentInit {
   @Input()

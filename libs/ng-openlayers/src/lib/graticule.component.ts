@@ -4,8 +4,9 @@ import { Stroke } from 'ol/style';
 import { MapComponent } from './map.component';
 
 @Component({
-  selector: 'aol-graticule',
-  template: '<ng-content></ng-content>',
+    selector: 'aol-graticule',
+    template: '<ng-content></ng-content>',
+    standalone: true,
 })
 export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestroy {
   @Input()

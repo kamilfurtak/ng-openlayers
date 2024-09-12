@@ -1,5 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
-import { SourceRasterComponent } from 'ng-openlayers';
+import {
+  ControlFullScreenComponent,
+  CoordinateComponent,
+  DefaultControlComponent,
+  DefaultInteractionComponent,
+  LayerImageComponent,
+  MapComponent,
+  SourceOsmComponent,
+  SourceRasterComponent,
+  SourceXYZComponent,
+  ViewComponent,
+} from 'ng-openlayers';
+import { FormsModule } from '@angular/forms';
 
 interface RasterData {
   brightness: number;
@@ -25,12 +37,15 @@ interface RasterData {
           [operation]="operation"
           (beforeOperations)="beforeOperations($event)"
         >
-          <aol-source-osm *ngIf="selectLayer === 'osm'"></aol-source-osm>
-          <aol-source-xyz
-            *ngIf="selectLayer === 'xyz'"
-            url="https://c.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=0e6fc415256d4fbb9b5166a718591d71"
-            crossOrigin=""
-          ></aol-source-xyz>
+          @if (selectLayer === 'osm') {
+            <aol-source-osm></aol-source-osm>
+          }
+          @if (selectLayer === 'xyz') {
+            <aol-source-xyz
+              url="https://c.tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=0e6fc415256d4fbb9b5166a718591d71"
+              crossOrigin=""
+            ></aol-source-xyz>
+          }
         </aol-source-raster>
       </aol-layer-image>
     </aol-map>
@@ -76,6 +91,20 @@ interface RasterData {
         margin: 20px;
       }
     `,
+  ],
+  standalone: true,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    ControlFullScreenComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerImageComponent,
+    SourceRasterComponent,
+    SourceOsmComponent,
+    SourceXYZComponent,
+    FormsModule,
   ],
 })
 export class RasterComponent {

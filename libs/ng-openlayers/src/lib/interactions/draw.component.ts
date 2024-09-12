@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MapComponent } from '../map.component';
 import { Draw } from 'ol/interaction';
 import { Collection, Feature } from 'ol';
@@ -12,8 +12,9 @@ import { ObjectEvent } from 'ol/Object';
 import BaseEvent from 'ol/events/Event';
 
 @Component({
-  selector: 'aol-interaction-draw',
-  template: '',
+    selector: 'aol-interaction-draw',
+    template: '',
+    standalone: true,
 })
 export class DrawInteractionComponent implements OnInit, OnDestroy {
   @Input()

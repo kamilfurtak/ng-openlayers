@@ -4,8 +4,9 @@ import Overlay, { PanOptions, Positioning } from 'ol/Overlay';
 import { ContentComponent } from './content.component';
 
 @Component({
-  selector: 'aol-overlay',
-  template: '<ng-content></ng-content>',
+    selector: 'aol-overlay',
+    template: '<ng-content></ng-content>',
+    standalone: true,
 })
 export class OverlayComponent implements OnInit, OnDestroy {
   @ContentChild(ContentComponent, { static: true })
