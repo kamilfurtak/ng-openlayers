@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "nx serve demo-ng-openlayers",
     "build:lib": "nx build ng-openlayers --configuration production",
+    "build:lib:dev-watch": "nx build ng-openlayers --configuration production --watch",
     "copy:lib:docs": "cp -r *.md dist/libs/ng-openlayers",
     "build:demo": "nx build demo-ng-openlayers --base-href /ng-openlayers/",
     "build:gh-pages": "nx build --output-path docs --base-href /ng-openlayers/",

@@ -31,19 +31,19 @@ import { MapComponent } from 'ng-openlayers';
           >
         </aol-interaction-draw>
       }
-    
+
       @if (isHoleDrawing) {
         <aol-interaction-draw-hole-in-polygon
           (drawEnd)="endHoleDraw($event.feature)"
         ></aol-interaction-draw-hole-in-polygon>
       }
-    
+
       <aol-view [zoom]="5">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
-    
+
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
-    
+
       @if (feature) {
         <aol-layer-vector #vectorLayer>
           <aol-source-vector>
@@ -57,7 +57,7 @@ import { MapComponent } from 'ng-openlayers';
         </aol-layer-vector>
       }
     </aol-map>
-    
+
     <div class="info">
       <div class="draw-section">
         <button (click)="drawMode()" [disabled]="isHoleDrawing">{{ isDrawing ? 'End draw' : 'Start draw' }}</button>
