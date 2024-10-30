@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { createBox } from 'ol/interaction/Draw';
+import { createBox, DrawEvent } from 'ol/interaction/Draw';
 import { Feature } from 'ol';
 import Projection from 'ol/proj/Projection';
 import { fromExtent } from 'ol/geom/Polygon';
@@ -34,7 +34,7 @@ import { MapComponent } from 'ng-openlayers';
 
       @if (isHoleDrawing) {
         <aol-interaction-draw-hole-in-polygon
-          (drawEnd)="endHoleDraw($event.feature)"
+          (drawEnd)="endHoleDraw($event)"
         ></aol-interaction-draw-hole-in-polygon>
       }
 
@@ -139,7 +139,10 @@ export class DrawPolygonComponent implements OnInit {
     this.isHoleDrawing = !this.isHoleDrawing;
   }
 
-  endHoleDraw(feature: Feature) {
+  endHoleDraw(e: DrawEvent) {
+    console.log('endHoleDraw', e.feature
+      .clone()
+      .getGeometry());
     // this.isHoleDrawing = false;
   }
 }

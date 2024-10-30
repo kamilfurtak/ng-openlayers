@@ -76,7 +76,7 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit {
     const geom = new Polygon(coordinates.slice(0, this.coordsLength));
 
     geom.appendLinearRing(linear_ring);
-    console.log('Geom', geom.getArea());
+    // console.log('Geom', geom.getArea());
     this.intersectedGeometryFeature.setGeometry(geom);
   };
   staticStyle = new Style({
@@ -91,15 +91,13 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit {
     }),
   });
 
-  endDraw(feature: Feature) {
-    console.log('Draw hole in polygon', feature);
-  }
-
   /*
 This function will be called when your hole drawing is finished.
 */
-  onDrawEnd =(e) => {
-    console.log('Draw hole in polygon', e.feature);
+  onDrawEnd =(e: DrawEvent) => {
+    console.log('Draw hole in polygon', e.feature
+      .clone()
+      .getGeometry());
     setTimeout(() => {
       this.vectorLayer.getSource().removeFeature(e.feature);
     }, 1000);
