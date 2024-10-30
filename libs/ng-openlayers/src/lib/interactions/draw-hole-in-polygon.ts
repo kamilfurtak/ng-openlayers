@@ -11,18 +11,18 @@ import { MapComponent } from '../map.component';
 import VectorSource from 'ol/source/Vector';
 
 @Component({
-    selector: 'aol-interaction-draw-hole-in-polygon',
-    template: `
+  selector: 'aol-interaction-draw-hole-in-polygon',
+  template: `
     <aol-interaction-draw #drawInstance type="Polygon" (drawEnd)="onDrawEnd($event)" [style]="staticStyle">
     </aol-interaction-draw>
   `,
-    standalone: true,
-    imports: [DrawInteractionComponent],
+  standalone: true,
+  imports: [DrawInteractionComponent],
 })
 export class DrawHoleInPolygonInteractionComponent implements AfterViewInit {
   @ViewChild('drawInstance') drawInteractionComponent: DrawInteractionComponent;
   @Output()
-  drawEnd = new EventEmitter<DrawEvent>();
+  drawEnd = new EventEmitter<Feature<Geometry>>();
   instance: Draw;
   private intersectedGeometryFeature: Feature<Geometry>;
   private coordsLength: number;
@@ -32,17 +32,17 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     //Get Polygon geometry on drawstart that intersects with currently drawing holes.
-     this.vectorLayer = this.map.instance
+    this.vectorLayer = this.map.instance
       .getLayers()
       .getArray()
       .find((l) => l instanceof VectorLayer) as VectorLayer<Vector>;
+    console.log('Vector Layer', this.vectorLayer);
 
     this.drawInteractionComponent.instance.on('drawstart', this.onDrawStart);
-    this.drawInteractionComponent.instance.on('drawend', (event: DrawEvent) => this.drawEnd.emit(event));
+    // this.drawInteractionComponent.instance.on('drawend', (event: DrawEvent) => this.drawEnd.emit(event));
   }
 
   onDrawStart = (e: DrawEvent) => {
-
     if (!this.vectorLayer) {
       alert('No vector layer found');
       e.target.finishDrawing();
@@ -94,13 +94,13 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit {
   /*
 This function will be called when your hole drawing is finished.
 */
-  onDrawEnd =(e: DrawEvent) => {
-    console.log('Draw hole in polygon', e.feature
-      .clone()
-      .getGeometry());
+  onDrawEnd = (e: DrawEvent) => {
+    console.log('Draw hole in polygon', e.feature.clone().getGeometry());
+    this.drawEnd.emit(this.intersectedGeometryFeature);
+
     setTimeout(() => {
       this.vectorLayer.getSource().removeFeature(e.feature);
     }, 1000);
     this.intersectedGeometryFeature = undefined;
-  }
+  };
 }
