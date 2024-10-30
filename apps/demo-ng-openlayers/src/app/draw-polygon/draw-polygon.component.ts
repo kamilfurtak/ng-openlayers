@@ -140,9 +140,22 @@ export class DrawPolygonComponent implements OnInit {
   }
 
   endHoleDraw(e: DrawEvent) {
-    console.log('endHoleDraw', e.feature
-      .clone()
-      .getGeometry());
+    // console.log('endHoleDraw', e.feature
+    //   .clone()
+    //   .getGeometry());
     // this.isHoleDrawing = false;
+
+    const olGeomPolygon = fromExtent(e.feature.getGeometry().getExtent());
+    olGeomPolygon.transform(new Projection({ code: 'EPSG:3857' }), new Projection({ code: 'EPSG:4326' }));
+    this.feature = {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'Polygon',
+        coordinates: [olGeomPolygon.getCoordinates()[0]],
+      },
+    };
+
+    console.log(olGeomPolygon.getCoordinates());
   }
 }
