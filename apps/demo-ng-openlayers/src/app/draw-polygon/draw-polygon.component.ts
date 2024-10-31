@@ -17,10 +17,11 @@ import { DrawHoleInPolygonInteractionComponent } from 'ng-openlayers';
 import { DrawInteractionComponent } from 'ng-openlayers';
 import { DefaultInteractionComponent } from 'ng-openlayers';
 import { MapComponent } from 'ng-openlayers';
+import { Geometry } from 'ol/geom';
 
 @Component({
-    selector: 'app-draw-polygon',
-    template: `
+  selector: 'app-draw-polygon',
+  template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       @if (isDrawing) {
@@ -28,14 +29,12 @@ import { MapComponent } from 'ng-openlayers';
           type="Circle"
           [geometryFunction]="drawBoxGeometryFunction"
           (drawEnd)="endDraw($event.feature)"
-          >
+        >
         </aol-interaction-draw>
       }
 
       @if (isHoleDrawing) {
-        <aol-interaction-draw-hole-in-polygon
-          (drawEnd)="endHoleDraw($event)"
-        ></aol-interaction-draw-hole-in-polygon>
+        <aol-interaction-draw-hole-in-polygon (drawEnd)="endHoleDraw($event)"></aol-interaction-draw-hole-in-polygon>
       }
 
       <aol-view [zoom]="5">
@@ -70,9 +69,9 @@ import { MapComponent } from 'ng-openlayers';
         </code>
       </div>
     </div>
-    `,
-    styles: [
-        `
+  `,
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -87,24 +86,24 @@ import { MapComponent } from 'ng-openlayers';
         padding: 1rem;
       }
     `,
-    ],
-    standalone: true,
-    imports: [
-        MapComponent,
-        DefaultInteractionComponent,
-        DrawInteractionComponent,
-        DrawHoleInPolygonInteractionComponent,
-        ViewComponent,
-        CoordinateComponent,
-        LayerTileComponent,
-        SourceOsmComponent,
-        LayerVectorComponent,
-        SourceVectorComponent,
-        FeatureComponent,
-        GeometryPolygonComponent,
-        CollectionCoordinatesComponent,
-        JsonPipe,
-    ],
+  ],
+  standalone: true,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DrawInteractionComponent,
+    DrawHoleInPolygonInteractionComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    LayerVectorComponent,
+    SourceVectorComponent,
+    FeatureComponent,
+    GeometryPolygonComponent,
+    CollectionCoordinatesComponent,
+    JsonPipe,
+  ],
 })
 export class DrawPolygonComponent implements OnInit {
   constructor() {}
@@ -135,17 +134,17 @@ export class DrawPolygonComponent implements OnInit {
 
   drawHole() {
     this.isDrawing = false;
-    console.log(this.feature);
+    // console.log(this.feature);
     this.isHoleDrawing = !this.isHoleDrawing;
   }
 
-  endHoleDraw(e: DrawEvent) {
+  endHoleDraw(feature: Feature<Geometry>) {
     // console.log('endHoleDraw', e.feature
     //   .clone()
     //   .getGeometry());
     // this.isHoleDrawing = false;
 
-    const olGeomPolygon = fromExtent(e.feature.getGeometry().getExtent());
+    const olGeomPolygon = fromExtent(feature.getGeometry().getExtent());
     olGeomPolygon.transform(new Projection({ code: 'EPSG:3857' }), new Projection({ code: 'EPSG:4326' }));
     this.feature = {
       type: 'Feature',
