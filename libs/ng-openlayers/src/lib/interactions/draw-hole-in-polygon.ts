@@ -9,6 +9,7 @@ import { Fill, Style } from 'ol/style';
 import { DrawInteractionComponent } from './draw.component';
 import { MapComponent } from '../map.component';
 import VectorSource from 'ol/source/Vector';
+import MapBrowserEvent from 'ol/MapBrowserEvent';
 
 @Component({
   selector: 'aol-interaction-draw-hole-in-polygon',
@@ -28,6 +29,8 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit {
   private coordsLength: number;
   private intersectedPolygon: Polygon;
   private vectorLayer: VectorLayer<VectorSource>;
+  private isDrawing: boolean = false;
+
   constructor(private map: MapComponent) {}
 
   ngAfterViewInit() {
@@ -40,6 +43,8 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit {
 
     this.drawInteractionComponent.instance.on('drawstart', this.onDrawStart);
     // this.drawInteractionComponent.instance.on('drawend', (event: DrawEvent) => this.drawEnd.emit(event));
+    // Add click listener to validate vertices as they're added
+    this.map.instance.on('click', this.onMapClick);
   }
 
   onDrawStart = (e: DrawEvent) => {
@@ -61,6 +66,7 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit {
     this.intersectedPolygon = this.intersectedGeometryFeature.getGeometry() as Polygon;
 
     this.coordsLength = this.intersectedPolygon.getCoordinates().length;
+    this.isDrawing = true;
 
     //Binding onGeomChange function with drawing feature f. This function will be called only when you are drawing holes over a polygon.
     e.feature.getGeometry().on('change', this.onGeomChange);
@@ -70,14 +76,16 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit {
  This function will be called only when you are drawing holes and it will continously invoked on geometry change.
  */
   onGeomChange = (e: DrawEvent) => {
-    const linear_ring = new LinearRing(e.target.getCoordinates()[0]);
+    const coordinates = e.target.getCoordinates()[0];
 
-    const coordinates = this.intersectedPolygon.getCoordinates();
-    const geom = new Polygon(coordinates.slice(0, this.coordsLength));
-
-    geom.appendLinearRing(linear_ring);
-    // console.log('Geom', geom.getArea());
-    this.intersectedGeometryFeature.setGeometry(geom);
+    // Only proceed if we have valid coordinates within the polygon
+    if (coordinates.every((coord) => this.intersectedPolygon.intersectsCoordinate(coord))) {
+      const linear_ring = new LinearRing(coordinates);
+      const polygonCoordinates = this.intersectedPolygon.getCoordinates();
+      const geom = new Polygon(polygonCoordinates.slice(0, this.coordsLength));
+      geom.appendLinearRing(linear_ring);
+      this.intersectedGeometryFeature.setGeometry(geom);
+    }
   };
   staticStyle = new Style({
     // Line and Polygon Style
@@ -95,6 +103,8 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit {
 This function will be called when your hole drawing is finished.
 */
   onDrawEnd = (e: DrawEvent) => {
+    this.isDrawing = false;
+
     console.log('Draw hole in polygon', e.feature.clone().getGeometry());
     this.drawEnd.emit(this.intersectedGeometryFeature);
 
@@ -102,5 +112,22 @@ This function will be called when your hole drawing is finished.
       this.vectorLayer.getSource().removeFeature(e.feature);
     }, 1000);
     this.intersectedGeometryFeature = undefined;
+  };
+
+  onMapClick = (e: MapBrowserEvent<MouseEvent>) => {
+    if (!this.isDrawing || !this.intersectedPolygon) return;
+
+    const coordinate = this.map.instance.getCoordinateFromPixel(e.pixel);
+
+    // Validate if the clicked point is inside the polygon
+    if (!this.intersectedPolygon.intersectsCoordinate(coordinate)) {
+      // Prevent adding the vertex by stopping the event propagation
+      e.preventDefault();
+      e.stopPropagation();
+      alert('Cannot add vertex outside the polygon boundary');
+      return false;
+    }
+
+    // this.currentCoordinates.push(coordinate);
   };
 }
