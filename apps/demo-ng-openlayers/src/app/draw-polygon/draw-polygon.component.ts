@@ -155,6 +155,6 @@ export class DrawPolygonComponent implements OnInit {
       },
     };
 
-    console.log(olGeomPolygon.getCoordinates());
+    console.log(olGeomPolygon.getLinearRings());
   }
 }

@@ -33,7 +33,7 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
   @Output()
   drawEnd = new EventEmitter<Feature<Geometry>>();
   instance: Draw;
-  private intersectedGeometryFeature: Feature<Geometry>;
+  private foundFeaturePolygonToApplyEnclave: Feature<Geometry>;
   private coordsLength: number;
   private intersectedPolygon: Polygon;
   private vectorLayer: VectorLayer<VectorSource>;
@@ -64,17 +64,17 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
 
     //Get Polygon geometry on drawstart that intersects with currently drawing holes.
     this.vectorLayer.getSource().forEachFeatureIntersectingExtent(e.feature.getGeometry().getExtent(), (feature) => {
-      this.intersectedGeometryFeature = feature;
+      this.foundFeaturePolygonToApplyEnclave = feature;
     });
 
     //Abort Polygon hole drawing when there is no feature underneath it.
-    if (!this.intersectedGeometryFeature) {
+    if (!this.foundFeaturePolygonToApplyEnclave) {
       alert('No Feature Found to draw holes');
       e.target.abortDrawing();
       return;
     }
 
-    this.intersectedPolygon = this.intersectedGeometryFeature.getGeometry() as Polygon;
+    this.intersectedPolygon = this.foundFeaturePolygonToApplyEnclave.getGeometry() as Polygon;
     this.coordsLength = this.intersectedPolygon.getCoordinates().length;
     this.isDrawing = true;
 
@@ -100,7 +100,7 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
 
       //Add hole coordinates to polygon and reset the polygon geometry
       geom.appendLinearRing(linear_ring);
-      this.intersectedGeometryFeature.setGeometry(geom);
+      this.foundFeaturePolygonToApplyEnclave.setGeometry(geom);
     }
   };
   staticStyle = new Style({
@@ -123,12 +123,12 @@ This function will be called when your hole drawing is finished.
     this.map.instance.un('click', this.onMapClick);
 
     // console.log('Draw hole in polygon', e.feature.clone().getGeometry());
-    this.drawEnd.emit(this.intersectedGeometryFeature);
+    this.drawEnd.emit(this.foundFeaturePolygonToApplyEnclave);
 
     // setTimeout(() => {
     //   this.vectorLayer.getSource().removeFeature(e.feature);
     // }, 1000);
-    // this.intersectedGeometryFeature = undefined;
+    // this.foundFeaturePolygonToApplyEnclave = undefined;
   };
 
   onMapClick = (e: MapBrowserEvent<MouseEvent>) => {
