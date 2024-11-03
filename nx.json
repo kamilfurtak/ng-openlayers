@@ -1,11 +1,13 @@
 {
   "release":{
-    "projects":["libs/ng-openlayers"]
+    "projects":["libs/ng-openlayers"],
+    "changelog":{
+
+    }
   },
   "namedInputs": {
     "sharedGlobals": [],
     "default": [
-      "{projectRoot}/**/*",
       "sharedGlobals"
     ],
     "production": [
