@@ -1,23 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { createBox, DrawEvent } from 'ol/interaction/Draw';
+import { createBox } from 'ol/interaction/Draw';
 import { Feature } from 'ol';
 import Projection from 'ol/proj/Projection';
 import { fromExtent } from 'ol/geom/Polygon';
 import { JsonPipe } from '@angular/common';
-import { CollectionCoordinatesComponent } from 'ng-openlayers';
-import { GeometryPolygonComponent } from 'ng-openlayers';
-import { FeatureComponent } from 'ng-openlayers';
-import { SourceVectorComponent } from 'ng-openlayers';
-import { LayerVectorComponent } from 'ng-openlayers';
-import { SourceOsmComponent } from 'ng-openlayers';
-import { LayerTileComponent } from 'ng-openlayers';
-import { CoordinateComponent } from 'ng-openlayers';
-import { ViewComponent } from 'ng-openlayers';
-import { DrawHoleInPolygonInteractionComponent } from 'ng-openlayers';
-import { DrawInteractionComponent } from 'ng-openlayers';
-import { DefaultInteractionComponent } from 'ng-openlayers';
-import { MapComponent } from 'ng-openlayers';
-import { Geometry } from 'ol/geom';
+import {
+  CollectionCoordinatesComponent,
+  CoordinateComponent,
+  DefaultInteractionComponent,
+  DrawHoleInPolygonInteractionComponent,
+  DrawInteractionComponent,
+  FeatureComponent,
+  GeometryPolygonComponent,
+  LayerTileComponent,
+  LayerVectorComponent,
+  MapComponent,
+  SourceOsmComponent,
+  SourceVectorComponent,
+  ViewComponent,
+} from 'ng-openlayers';
+import { Polygon } from 'ol/geom';
 
 @Component({
   selector: 'app-draw-polygon',
@@ -127,7 +129,7 @@ export class DrawPolygonComponent implements OnInit {
       properties: {},
       geometry: {
         type: 'Polygon',
-        coordinates: [olGeomPolygon.getCoordinates()[0]],
+        coordinates: olGeomPolygon.getCoordinates(),
       },
     };
   }
@@ -138,23 +140,18 @@ export class DrawPolygonComponent implements OnInit {
     this.isHoleDrawing = !this.isHoleDrawing;
   }
 
-  endHoleDraw(feature: Feature<Geometry>) {
-    // console.log('endHoleDraw', e.feature
-    //   .clone()
-    //   .getGeometry());
-    // this.isHoleDrawing = false;
-
-    const olGeomPolygon = fromExtent(feature.getGeometry().getExtent());
+  endHoleDraw(polygon: Polygon) {
+    const olGeomPolygon = polygon;
     olGeomPolygon.transform(new Projection({ code: 'EPSG:3857' }), new Projection({ code: 'EPSG:4326' }));
     this.feature = {
       type: 'Feature',
       properties: {},
       geometry: {
         type: 'Polygon',
-        coordinates: [olGeomPolygon.getCoordinates()[0]],
+        coordinates: olGeomPolygon.getCoordinates(),
       },
     };
 
-    console.log(olGeomPolygon.getLinearRings());
+    console.log(olGeomPolygon.getCoordinates());
   }
 }

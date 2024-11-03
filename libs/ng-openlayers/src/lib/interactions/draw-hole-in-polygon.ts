@@ -31,7 +31,7 @@ import MapBrowserEvent from 'ol/MapBrowserEvent';
 export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnDestroy {
   @ViewChild('drawInstance') drawInteractionComponent: DrawInteractionComponent;
   @Output()
-  drawEnd = new EventEmitter<Feature<Geometry>>();
+  drawEnd = new EventEmitter<Polygon>();
   instance: Draw;
   private foundFeaturePolygonToApplyEnclave: Feature<Geometry>;
   private coordsLength: number;
@@ -123,7 +123,9 @@ This function will be called when your hole drawing is finished.
     this.map.instance.un('click', this.onMapClick);
 
     // console.log('Draw hole in polygon', e.feature.clone().getGeometry());
-    this.drawEnd.emit(this.foundFeaturePolygonToApplyEnclave);
+    this.drawEnd.emit(this.intersectedPolygon);
+    // console.log('Draw hole in polygon', this.foundFeaturePolygonToApplyEnclave.getGeometry());
+    // console.log('Draw hole in polygon', this.intersectedPolygon.getCoordinates());
 
     // setTimeout(() => {
     //   this.vectorLayer.getSource().removeFeature(e.feature);
