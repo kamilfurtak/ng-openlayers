@@ -1,6 +1,6 @@
 {
   "name": "demo-ng-openlayers",
-  "version": "18.0.0",
+  "version": "17.1.3",
   "scripts": {
     "ng": "ng",
     "start": "nx serve demo-ng-openlayers",

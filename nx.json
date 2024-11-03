@@ -1,4 +1,7 @@
 {
+  "release":{
+    "projects":["libs/ng-openlayers"]
+  },
   "namedInputs": {
     "sharedGlobals": [],
     "default": [
