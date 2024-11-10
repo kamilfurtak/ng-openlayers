@@ -1,0 +1,24 @@
+{
+  "name": "ng-openlayers",
+  "version": "17.1.3",
+  "description": "OpenLayers library for Angular",
+  "author": "Kamil Furtak (kamil@fcomp.dev)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kamilfurtak/ng-openlayers.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kamilfurtak/ng-openlayers/issues"
+  },
+  "homepage": "https://github.com/kamilfurtak/ng-openlayers",
+  "keywords": [
+    "ngx-openlayers",
+    "angular",
+    "openlayers"
+  ],
+  "license": "MPL-2.0",
+  "private": false,
+  "scripts": {
+    "prepublishOnly": "cp README.md dist/libs/ng-openlayers/README.md && cp libs/ng-openlayers/CHANGELOG.md dist/libs/ng-openlayers/CHANGELOG.md"
+  }
+}
