@@ -19,6 +19,6 @@
   "license": "MPL-2.0",
   "private": false,
   "scripts": {
-    "prepublishOnly": "cp README.md dist/libs/ng-openlayers/README.md && cp libs/ng-openlayers/CHANGELOG.md dist/libs/ng-openlayers/CHANGELOG.md"
+    "prepublishOnly": "cp ../../README.md ../../dist/libs/ng-openlayers/README.md && cp CHANGELOG.md ../../dist/libs/ng-openlayers/CHANGELOG.md"
   }
 }
