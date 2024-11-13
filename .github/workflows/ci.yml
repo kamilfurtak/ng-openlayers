@@ -1,5 +1,4 @@
 name: CI
-#test
 on:
   push:
     tags:
@@ -7,6 +6,8 @@ on:
     branches:
       - master
   pull_request:
+#    types: [opened, synchronize, reopened, ready_for_review]
+    types: [ready_for_review]
     branches: [ "staging" ]
   workflow_dispatch:
   workflow_call:
