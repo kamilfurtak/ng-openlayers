@@ -7,7 +7,7 @@ on:
     branches:
       - master
   pull_request:
-    types: [ opened, synchronize, reopened, ready_for_review ]
+    types: [ opened, synchronize, reopened ]
     branches: [ "staging" ]
   workflow_dispatch:
   workflow_call:
