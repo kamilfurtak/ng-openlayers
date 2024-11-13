@@ -135,4 +135,9 @@ export const examplesList = [
     routerLink: 'graticule',
     openLayersLink: 'https://openlayers.org/en/latest/examples/graticule.html',
   },
+  {
+    title: 'Draw hole in polygon',
+    description: 'Example of using aol-interaction-draw-hole-in-polygon',
+    routerLink: 'draw-hole-in-polygon',
+  },
 ];
