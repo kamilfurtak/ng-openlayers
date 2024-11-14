@@ -4,7 +4,7 @@ import Projection from 'ol/proj/Projection';
 import { GeoJSON } from 'ol/format';
 import { Polygon } from 'ol/geom';
 import { JsonPipe } from '@angular/common';
-import { CollectionCoordinatesComponent } from 'ng-openlayers';
+import { CollectionCoordinatesComponent, DrawHoleInPolygonInteractionComponent } from 'ng-openlayers';
 import { GeometryPolygonComponent } from 'ng-openlayers';
 import { FeatureComponent } from 'ng-openlayers';
 import { SourceVectorComponent } from 'ng-openlayers';
@@ -30,6 +30,10 @@ import { MapComponent } from 'ng-openlayers';
         (olModifyEnd)="modifyEnd($event.features.getArray()[0])"
       >
       </aol-interaction-modify>
+
+      @if (isHoleDrawing) {
+        <aol-interaction-draw-hole-in-polygon (drawEnd)="endHoleDraw($event)"></aol-interaction-draw-hole-in-polygon>
+      }
 
       <aol-view [zoom]="7">
         <aol-coordinate [x]="1.345" [y]="45.543" [srid]="'EPSG:4326'"></aol-coordinate>
@@ -91,6 +95,7 @@ import { MapComponent } from 'ng-openlayers';
     GeometryPolygonComponent,
     CollectionCoordinatesComponent,
     JsonPipe,
+    DrawHoleInPolygonInteractionComponent,
   ],
 })
 export class DrawHoleInPolygonComponent implements OnInit {
@@ -116,6 +121,7 @@ export class DrawHoleInPolygonComponent implements OnInit {
     properties: {},
     type: 'Feature',
   };
+  isHoleDrawing: boolean;
 
   ngOnInit() {}
 
@@ -124,5 +130,20 @@ export class DrawHoleInPolygonComponent implements OnInit {
       dataProjection: this.inputProj,
       featureProjection: this.displayProj,
     }) as any;
+  }
+
+  endHoleDraw(polygon: Polygon) {
+    const olGeomPolygon = polygon;
+    olGeomPolygon.transform(new Projection({ code: 'EPSG:3857' }), new Projection({ code: 'EPSG:4326' }));
+    this.feature = {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'Polygon',
+        coordinates: olGeomPolygon.getCoordinates(),
+      },
+    };
+
+    console.log(olGeomPolygon.getCoordinates());
   }
 }
