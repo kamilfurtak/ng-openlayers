@@ -31,8 +31,8 @@ import { MapComponent } from 'ng-openlayers';
       >
       </aol-interaction-modify>
 
-      <aol-view [zoom]="5">
-        <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
+      <aol-view [zoom]="7">
+        <aol-coordinate [x]="1.345" [y]="45.543" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
 
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
