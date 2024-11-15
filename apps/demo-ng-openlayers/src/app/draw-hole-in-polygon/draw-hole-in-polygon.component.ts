@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import OLFeature from 'ol/Feature';
 import Projection from 'ol/proj/Projection';
 import { GeoJSON } from 'ol/format';
@@ -20,6 +20,7 @@ import {
   SourceVectorComponent,
   ViewComponent,
 } from 'ng-openlayers';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-modify-polygon',
@@ -27,12 +28,14 @@ import {
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-interaction-select [wrapX]="true" #select></aol-interaction-select>
-      <aol-interaction-modify
-        #modify
-        [features]="select.instance.getFeatures()"
-        (olModifyEnd)="modifyEnd($event.features.getArray()[0])"
-      >
-      </aol-interaction-modify>
+
+      @if (modifyInteractionEnabled) {
+        <aol-interaction-modify
+          #modify
+          [features]="select.instance.getFeatures()"
+          (olModifyEnd)="modifyEnd($event.features.getArray()[0])"
+        ></aol-interaction-modify>
+      }
 
       @if (isHoleDrawing) {
         <aol-interaction-draw-hole-in-polygon (drawEnd)="endHoleDraw($event)"></aol-interaction-draw-hole-in-polygon>
@@ -62,6 +65,10 @@ import {
       <button (click)="drawHole()">
         {{ isHoleDrawing ? 'End draw hole' : 'Start draw hole' }}
       </button>
+      <label>
+        <input type="checkbox" [(ngModel)]="modifyInteractionEnabled" />
+        Enable Modify Interaction
+      </label>
       <h3>Result</h3>
       <code>
         <pre>{{ feature | json }}</pre>
@@ -102,11 +109,10 @@ import {
     CollectionCoordinatesComponent,
     JsonPipe,
     DrawHoleInPolygonInteractionComponent,
+    FormsModule,
   ],
 })
-export class DrawHoleInPolygonComponent implements OnInit {
-  constructor() {}
-
+export class DrawHoleInPolygonComponent {
   format: GeoJSON = new GeoJSON();
   displayProj = new Projection({ code: 'EPSG:3857' });
   inputProj = new Projection({ code: 'EPSG:4326' });
@@ -128,8 +134,7 @@ export class DrawHoleInPolygonComponent implements OnInit {
     type: 'Feature',
   };
   isHoleDrawing: boolean;
-
-  ngOnInit() {}
+  modifyInteractionEnabled = true;
 
   modifyEnd(feature: OLFeature<Polygon>) {
     this.feature = this.format.writeFeatureObject(feature, {
