@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import OLFeature from 'ol/Feature';
 import Projection from 'ol/proj/Projection';
 import { GeoJSON } from 'ol/format';
@@ -41,7 +41,10 @@ import { FormsModule } from '@angular/forms';
       }
 
       @if (isHoleDrawing) {
-        <aol-interaction-draw-hole-in-polygon (drawEnd)="endHoleDraw($event)"></aol-interaction-draw-hole-in-polygon>
+        <aol-interaction-draw-hole-in-polygon
+          #drawHoleInteraction
+          (drawEnd)="endHoleDraw($event)"
+        ></aol-interaction-draw-hole-in-polygon>
       }
 
       <aol-view [zoom]="7">
@@ -68,6 +71,7 @@ import { FormsModule } from '@angular/forms';
       <button (click)="drawHole()">
         {{ isHoleDrawing ? 'End draw hole' : 'Start draw hole' }}
       </button>
+      <button (click)="removeHoles(drawHoleInteraction)">Remove Holes</button>
       <div>
         <label>
           <input type="checkbox" [(ngModel)]="selectInteractionEnabled" />
@@ -125,6 +129,7 @@ import { FormsModule } from '@angular/forms';
   ],
 })
 export class DrawHoleInPolygonComponent {
+  @ViewChild('drawHoleInteraction', { static: false }) drawHoleInteraction!: DrawHoleInPolygonInteractionComponent;
   format: GeoJSON = new GeoJSON();
   displayProj = new Projection({ code: 'EPSG:3857' });
   inputProj = new Projection({ code: 'EPSG:4326' });
@@ -173,5 +178,9 @@ export class DrawHoleInPolygonComponent {
 
   drawHole() {
     this.isHoleDrawing = !this.isHoleDrawing;
+  }
+
+  removeHoles(drawHoleInteraction: DrawHoleInPolygonInteractionComponent) {
+    console.log(drawHoleInteraction);
   }
 }

@@ -160,4 +160,17 @@ This function will be called when your hole drawing is finished.
   onDrawAbort(e: DrawEvent) {
     console.log('Draw aborted', e);
   }
+
+  removeHoles() {
+    if (this.foundFeaturePolygonToApplyEnclave) {
+      const originalPolygon = this.foundFeaturePolygonToApplyEnclave.getGeometry() as Polygon;
+      const outerRing = originalPolygon.getLinearRing(0);
+      const newPolygon = new Polygon([outerRing.getCoordinates()]);
+
+      this.foundFeaturePolygonToApplyEnclave.setGeometry(newPolygon);
+      console.log('Holes removed from polygon');
+    } else {
+      alert('No polygon with holes found.');
+    }
+  }
 }
