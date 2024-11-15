@@ -182,5 +182,6 @@ export class DrawHoleInPolygonComponent {
 
   removeHoles(drawHoleInteraction: DrawHoleInPolygonInteractionComponent) {
     console.log(drawHoleInteraction);
+    drawHoleInteraction.removeHoles();
   }
 }
