@@ -4,19 +4,22 @@ import Projection from 'ol/proj/Projection';
 import { GeoJSON } from 'ol/format';
 import { Polygon } from 'ol/geom';
 import { JsonPipe } from '@angular/common';
-import { CollectionCoordinatesComponent, DrawHoleInPolygonInteractionComponent } from 'ng-openlayers';
-import { GeometryPolygonComponent } from 'ng-openlayers';
-import { FeatureComponent } from 'ng-openlayers';
-import { SourceVectorComponent } from 'ng-openlayers';
-import { LayerVectorComponent } from 'ng-openlayers';
-import { SourceOsmComponent } from 'ng-openlayers';
-import { LayerTileComponent } from 'ng-openlayers';
-import { CoordinateComponent } from 'ng-openlayers';
-import { ViewComponent } from 'ng-openlayers';
-import { ModifyInteractionComponent } from 'ng-openlayers';
-import { SelectInteractionComponent } from 'ng-openlayers';
-import { DefaultInteractionComponent } from 'ng-openlayers';
-import { MapComponent } from 'ng-openlayers';
+import {
+  CollectionCoordinatesComponent,
+  CoordinateComponent,
+  DefaultInteractionComponent,
+  DrawHoleInPolygonInteractionComponent,
+  FeatureComponent,
+  GeometryPolygonComponent,
+  LayerTileComponent,
+  LayerVectorComponent,
+  MapComponent,
+  ModifyInteractionComponent,
+  SelectInteractionComponent,
+  SourceOsmComponent,
+  SourceVectorComponent,
+  ViewComponent,
+} from 'ng-openlayers';
 
 @Component({
   selector: 'app-modify-polygon',
@@ -56,6 +59,9 @@ import { MapComponent } from 'ng-openlayers';
     </aol-map>
 
     <div class="info">
+      <button (click)="drawHole()">
+        {{ isHoleDrawing ? 'End draw hole' : 'Start draw hole' }}
+      </button>
       <h3>Result</h3>
       <code>
         <pre>{{ feature | json }}</pre>
@@ -145,5 +151,9 @@ export class DrawHoleInPolygonComponent implements OnInit {
     };
 
     console.log(olGeomPolygon.getCoordinates());
+  }
+
+  drawHole() {
+    this.isHoleDrawing = !this.isHoleDrawing;
   }
 }
