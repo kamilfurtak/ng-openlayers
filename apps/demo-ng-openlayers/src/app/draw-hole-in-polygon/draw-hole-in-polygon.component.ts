@@ -27,14 +27,17 @@ import { FormsModule } from '@angular/forms';
   template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
-      <aol-interaction-select [wrapX]="true" #select></aol-interaction-select>
 
-      @if (modifyInteractionEnabled) {
-        <aol-interaction-modify
-          #modify
-          [features]="select.instance.getFeatures()"
-          (olModifyEnd)="modifyEnd($event.features.getArray()[0])"
-        ></aol-interaction-modify>
+      @if (selectInteractionEnabled) {
+        <aol-interaction-select [wrapX]="true" #select></aol-interaction-select>
+
+        @if (modifyInteractionEnabled) {
+          <aol-interaction-modify
+            #modify
+            [features]="select.instance.getFeatures()"
+            (olModifyEnd)="modifyEnd($event.features.getArray()[0])"
+          ></aol-interaction-modify>
+        }
       }
 
       @if (isHoleDrawing) {
@@ -66,7 +69,11 @@ import { FormsModule } from '@angular/forms';
         {{ isHoleDrawing ? 'End draw hole' : 'Start draw hole' }}
       </button>
       <label>
-        <input type="checkbox" [(ngModel)]="modifyInteractionEnabled" />
+        <input type="checkbox" [(ngModel)]="selectInteractionEnabled" />
+        Enable Select Interaction
+      </label>
+      <label>
+        <input type="checkbox" [(ngModel)]="modifyInteractionEnabled" [disabled]="!selectInteractionEnabled" />
         Enable Modify Interaction
       </label>
       <h3>Result</h3>
@@ -133,7 +140,8 @@ export class DrawHoleInPolygonComponent {
     properties: {},
     type: 'Feature',
   };
-  isHoleDrawing: boolean;
+  isHoleDrawing = false;
+  selectInteractionEnabled = true;
   modifyInteractionEnabled = true;
 
   modifyEnd(feature: OLFeature<Polygon>) {
