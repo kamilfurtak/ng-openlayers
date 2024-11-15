@@ -68,14 +68,19 @@ import { FormsModule } from '@angular/forms';
       <button (click)="drawHole()">
         {{ isHoleDrawing ? 'End draw hole' : 'Start draw hole' }}
       </button>
-      <label>
-        <input type="checkbox" [(ngModel)]="selectInteractionEnabled" />
-        Enable Select Interaction
-      </label>
-      <label>
-        <input type="checkbox" [(ngModel)]="modifyInteractionEnabled" [disabled]="!selectInteractionEnabled" />
-        Enable Modify Interaction
-      </label>
+      <div>
+        <label>
+          <input type="checkbox" [(ngModel)]="selectInteractionEnabled" />
+          Enable Select Interaction
+        </label>
+      </div>
+      <div>
+        <label>
+          <input type="checkbox" [(ngModel)]="modifyInteractionEnabled" [disabled]="!selectInteractionEnabled" />
+          Enable Modify Interaction
+        </label>
+      </div>
+
       <h3>Result</h3>
       <code>
         <pre>{{ feature | json }}</pre>
