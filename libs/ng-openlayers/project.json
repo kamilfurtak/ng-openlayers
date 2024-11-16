@@ -5,6 +5,11 @@
   "sourceRoot": "libs/ng-openlayers/src",
   "prefix": "lib",
   "targets": {
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/libs/{projectName}"
+      }
+    },
     "build": {
       "executor": "@nx/angular:package",
       "options": {
