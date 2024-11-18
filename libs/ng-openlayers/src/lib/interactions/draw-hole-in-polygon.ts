@@ -33,7 +33,7 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
   @Output()
   drawEnd = new EventEmitter<Polygon>();
   instance: Draw;
-  private foundFeaturePolygonToApplyEnclave: Feature<Geometry>;
+  foundFeaturePolygonToApplyEnclave: Feature<Geometry>;
   private coordsLength: number;
   private intersectedPolygon: Polygon;
   private vectorLayer: VectorLayer<VectorSource>;
