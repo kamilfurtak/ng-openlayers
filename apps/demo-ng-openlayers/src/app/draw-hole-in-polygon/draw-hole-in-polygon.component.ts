@@ -151,8 +151,8 @@ export class DrawHoleInPolygonComponent {
     type: 'Feature',
   };
   isHoleDrawing = false;
-  selectInteractionEnabled = true;
-  modifyInteractionEnabled = true;
+  selectInteractionEnabled = false;
+  modifyInteractionEnabled = false;
 
   modifyEnd(feature: OLFeature<Polygon>) {
     this.feature = this.format.writeFeatureObject(feature, {

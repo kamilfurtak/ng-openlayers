@@ -47,12 +47,6 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
       .getLayers()
       .getArray()
       .find((l) => l instanceof VectorLayer) as VectorLayer<Vector>;
-    // console.log('Vector Layer', this.vectorLayer);
-
-    // this.drawInteractionComponent.instance.on('drawstart', this.onDrawStart);
-    // this.drawInteractionComponent.instance.on('drawend', (event: DrawEvent) => this.drawEnd.emit(event));
-    // Add click listener to validate vertices as they're added
-    // this.map.instance.on('click', this.onMapClick);
   }
 
   onDrawStart = (e: DrawEvent) => {
@@ -89,11 +83,9 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
  */
   onGeomChange = (e: DrawEvent) => {
     const coordinates = e.target.getCoordinates()[0];
-    // console.log('Invalid Coordinates', coordinates);
 
     // Only proceed if we have valid coordinates within the polygon
     if (coordinates.every((coord) => this.intersectedPolygon.intersectsCoordinate(coord))) {
-      // console.log('Valid coordinates', coordinates);
       const linear_ring = new LinearRing(coordinates);
       const polygonCoordinates = this.intersectedPolygon.getCoordinates();
       const geom = new Polygon(polygonCoordinates.slice(0, this.coordsLength));
@@ -122,15 +114,7 @@ This function will be called when your hole drawing is finished.
     this.isDrawing = false;
     this.map.instance.un('click', this.onMapClick);
 
-    // console.log('Draw hole in polygon', e.feature.clone().getGeometry());
     this.drawEnd.emit(this.intersectedPolygon);
-    // console.log('Draw hole in polygon', this.foundFeaturePolygonToApplyEnclave.getGeometry());
-    // console.log('Draw hole in polygon', this.intersectedPolygon.getCoordinates());
-
-    // setTimeout(() => {
-    //   this.vectorLayer.getSource().removeFeature(e.feature);
-    // }, 1000);
-    // this.foundFeaturePolygonToApplyEnclave = undefined;
   };
 
   onMapClick = (e: MapBrowserEvent<MouseEvent>) => {
@@ -150,8 +134,6 @@ This function will be called when your hole drawing is finished.
 
       return false;
     }
-
-    // this.currentCoordinates.push(coordinate);
   };
 
   removeLastLinearRing() {
@@ -195,7 +177,6 @@ This function will be called when your hole drawing is finished.
   checkIfPolygonHasHoles() {
     if (this.foundFeaturePolygonToApplyEnclave) {
       const originalPolygon = this.foundFeaturePolygonToApplyEnclave?.getGeometry() as Polygon;
-      console.log('Holes', originalPolygon.getLinearRingCount());
       return originalPolygon.getLinearRingCount() > 1;
     }
   }
