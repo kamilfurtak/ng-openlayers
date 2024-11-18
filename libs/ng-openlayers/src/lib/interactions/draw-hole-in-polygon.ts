@@ -128,11 +128,31 @@ This function will be called when your hole drawing is finished.
       e.preventDefault();
       e.stopPropagation();
       console.error('Cannot add vertex outside the polygon boundary');
-      // this.drawInteractionComponent.instance.removeLastPoint();
+      this.drawInteractionComponent.instance.removeLastPoint();
       this.drawInteractionComponent.instance.abortDrawing();
       this.removeLastLinearRing();
 
       return false;
+    }
+  };
+  checkAndRemoveHole = (evt: MapBrowserEvent<MouseEvent>) => {
+    const coordinate = this.map.instance.getCoordinateFromPixel(evt.pixel);
+
+    if (this.foundFeaturePolygonToApplyEnclave) {
+      const polygon = this.foundFeaturePolygonToApplyEnclave.getGeometry() as Polygon;
+      const coordinates = polygon.getCoordinates();
+
+      for (let i = 1; i < coordinates.length; i++) {
+        // Skip the first ring (outer boundary)
+        const ring = new LinearRing(coordinates[i]);
+        if (ring.intersectsCoordinate(coordinate)) {
+          this.removeHole(i);
+          console.log('Hole at index', i, 'removed');
+          evt.preventDefault();
+          evt.stopPropagation();
+          return false;
+        }
+      }
     }
   };
 
@@ -171,6 +191,19 @@ This function will be called when your hole drawing is finished.
       console.log('Holes removed from polygon');
     } else {
       alert('No polygon with holes found.');
+    }
+  }
+
+  removeHole(index: number) {
+    if (this.foundFeaturePolygonToApplyEnclave) {
+      const polygon = this.foundFeaturePolygonToApplyEnclave.getGeometry() as Polygon;
+      const coordinates = polygon.getCoordinates();
+
+      if (index > 0 && index < coordinates.length) {
+        coordinates.splice(index, 1); // Remove the hole at the index
+        const newPolygon = new Polygon(coordinates);
+        this.foundFeaturePolygonToApplyEnclave.setGeometry(newPolygon);
+      }
     }
   }
 
