@@ -118,7 +118,9 @@ This function will be called when your hole drawing is finished.
   };
 
   onMapClick = (e: MapBrowserEvent<MouseEvent>) => {
-    if (!this.isDrawing || !this.intersectedPolygon) return;
+    // if (this.isDrawing && !this.intersectedPolygon) return;
+
+    console.log('is drawing', this.isDrawing);
 
     const coordinate = this.map.instance.getCoordinateFromPixel(e.pixel);
 
@@ -130,7 +132,7 @@ This function will be called when your hole drawing is finished.
       console.error('Cannot add vertex outside the polygon boundary');
       // this.drawInteractionComponent.instance.removeLastPoint();
       this.drawInteractionComponent.instance.abortDrawing();
-      this.removeLastLinearRing();
+      // this.removeLastLinearRing();
 
       return false;
     }
@@ -178,6 +180,7 @@ This function will be called when your hole drawing is finished.
   }
 
   onDrawAbort(e: DrawEvent) {
+    this.isDrawing = false;
     console.log('Draw aborted', e);
   }
 
