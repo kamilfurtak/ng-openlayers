@@ -71,10 +71,7 @@ import { FormsModule } from '@angular/forms';
       <button (click)="drawHole()">
         {{ isHoleDrawing ? 'End draw hole' : 'Start draw hole' }}
       </button>
-      <button
-        [disabled]="!drawHoleInteraction?.foundFeaturePolygonToApplyEnclave"
-        (click)="removeHoles(drawHoleInteraction)"
-      >
+      <button [disabled]="!drawHoleInteraction?.checkIfPolygonHasHoles()" (click)="removeHoles(drawHoleInteraction)">
         Remove Holes
       </button>
       <div>

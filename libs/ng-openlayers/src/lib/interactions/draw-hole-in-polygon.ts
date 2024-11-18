@@ -173,4 +173,12 @@ This function will be called when your hole drawing is finished.
       alert('No polygon with holes found.');
     }
   }
+
+  checkIfPolygonHasHoles() {
+    if (this.foundFeaturePolygonToApplyEnclave) {
+      const originalPolygon = this.foundFeaturePolygonToApplyEnclave?.getGeometry() as Polygon;
+      console.log('Holes', originalPolygon.getLinearRingCount());
+      return originalPolygon.getLinearRingCount() > 1;
+    }
+  }
 }
