@@ -145,13 +145,31 @@ This function will be called when your hole drawing is finished.
       e.stopPropagation();
       console.error('Cannot add vertex outside the polygon boundary');
       // this.drawInteractionComponent.instance.removeLastPoint();
-      this.drawInteractionComponent.instance.finishDrawing();
+      this.drawInteractionComponent.instance.abortDrawing();
+      this.removeLastLinearRing();
 
       return false;
     }
 
     // this.currentCoordinates.push(coordinate);
   };
+
+  removeLastLinearRing() {
+    if (this.foundFeaturePolygonToApplyEnclave) {
+      const polygon = this.foundFeaturePolygonToApplyEnclave.getGeometry() as Polygon;
+      let coordinates = polygon.getCoordinates();
+      if (coordinates.length > 1) {
+        coordinates = coordinates.slice(0, -1); // Remove the last linear ring
+        const newPolygon = new Polygon(coordinates);
+        this.foundFeaturePolygonToApplyEnclave.setGeometry(newPolygon);
+        console.log('Last linear ring removed from polygon');
+      } else {
+        alert('No linear ring to remove.');
+      }
+    } else {
+      alert('No polygon with holes found.');
+    }
+  }
 
   ngOnDestroy(): void {
     this.map.instance.un('click', this.onMapClick);

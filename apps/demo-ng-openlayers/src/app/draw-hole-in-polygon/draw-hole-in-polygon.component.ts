@@ -71,9 +71,7 @@ import { FormsModule } from '@angular/forms';
       <button (click)="drawHole()">
         {{ isHoleDrawing ? 'End draw hole' : 'Start draw hole' }}
       </button>
-      <button [disabled]="!drawHoleInteraction?.checkIfPolygonHasHoles()" (click)="removeHoles(drawHoleInteraction)">
-        Remove Holes
-      </button>
+      <button (click)="removeHoles(drawHoleInteraction)">Remove Holes</button>
       <div>
         <label>
           <input type="checkbox" [(ngModel)]="selectInteractionEnabled" />
@@ -184,6 +182,6 @@ export class DrawHoleInPolygonComponent {
 
   removeHoles(drawHoleInteraction: DrawHoleInPolygonInteractionComponent) {
     console.log(drawHoleInteraction);
-    drawHoleInteraction.removeHoles();
+    drawHoleInteraction?.removeHoles();
   }
 }
