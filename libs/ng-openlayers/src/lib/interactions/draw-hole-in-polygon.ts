@@ -132,7 +132,7 @@ This function will be called when your hole drawing is finished.
       console.error('Cannot add vertex outside the polygon boundary');
       // this.drawInteractionComponent.instance.removeLastPoint();
       this.drawInteractionComponent.instance.abortDrawing();
-      // this.removeLastLinearRing();
+      this.removeLastLinearRing();
 
       return false;
     }
