@@ -118,17 +118,16 @@ This function will be called when your hole drawing is finished.
   };
 
   onMapClick = (e: MapBrowserEvent<MouseEvent>) => {
-    if (!this.isDrawing || !this.intersectedPolygon) return;
-
-    console.log('is drawing', this.isDrawing);
+    if (!this.isDrawing) return;
 
     const coordinate = this.map.instance.getCoordinateFromPixel(e.pixel);
 
     // Check if the coordinate is inside any of the holes
     const polygonHoles = this.intersectedPolygon.getLinearRings().slice(1);
-    const isInsideHole = polygonHoles.some((hole) => hole.intersectsCoordinate(coordinate));
-
-    console.log('isInsideHole', isInsideHole);
+    const isInsideHole = polygonHoles.some((hole) => {
+      const polygonFromLinearRing = new Polygon([hole.getCoordinates()]);
+      return polygonFromLinearRing.intersectsCoordinate(coordinate);
+    });
 
     // Validate if the clicked point is inside the polygon
     if (!this.intersectedPolygon.intersectsCoordinate(coordinate)) {
