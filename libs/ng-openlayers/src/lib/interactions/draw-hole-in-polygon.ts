@@ -47,6 +47,8 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
       .getLayers()
       .getArray()
       .find((l) => l instanceof VectorLayer) as VectorLayer<Vector>;
+    // Add click listener to validate vertices as they're added
+    this.map.instance.on('click', this.onMapClick);
   }
 
   onDrawStart = (e: DrawEvent) => {
@@ -72,8 +74,6 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
     this.coordsLength = this.intersectedPolygon.getCoordinates().length;
     this.isDrawing = true;
 
-    // Add click listener to validate vertices as they're added
-    this.map.instance.on('click', this.onMapClick);
     //Binding onGeomChange function with drawing feature f. This function will be called only when you are drawing holes over a polygon.
     e.feature.getGeometry().on('change', this.onGeomChange);
   };
@@ -112,7 +112,7 @@ This function will be called when your hole drawing is finished.
 */
   onDrawEnd = (e: DrawEvent) => {
     this.isDrawing = false;
-    this.map.instance.un('click', this.onMapClick);
+    // this.map.instance.un('click', this.onMapClick);
 
     this.drawEnd.emit(this.intersectedPolygon);
   };
