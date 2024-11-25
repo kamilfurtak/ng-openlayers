@@ -52,6 +52,9 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
   }
 
   onDrawStart = (e: DrawEvent) => {
+    const coordinates = (e.feature.getGeometry() as Polygon).getCoordinates();
+    console.log('onDrawStart', coordinates);
+
     if (!this.vectorLayer) {
       alert('No vector layer found');
       e.target.abortDrawing();
@@ -118,6 +121,7 @@ This function will be called when your hole drawing is finished.
   };
 
   onMapClick = (e: MapBrowserEvent<MouseEvent>) => {
+    console.log('onMapClick', e);
     if (!this.isDrawing) return;
 
     const coordinate = this.map.instance.getCoordinateFromPixel(e.pixel);
@@ -137,9 +141,9 @@ This function will be called when your hole drawing is finished.
       // Prevent adding the vertex by stopping the event propagation
       e.preventDefault();
       e.stopPropagation();
-      console.error('Cannot add vertex outside the polygon boundary');
-      // this.drawInteractionComponent.instance.removeLastPoint();
-      this.drawInteractionComponent.instance.abortDrawing();
+      console.error('Cannot add vertex outside the polygon');
+      this.drawInteractionComponent.instance.removeLastPoint();
+      // this.drawInteractionComponent.instance.abortDrawing();
       // this.removeLastLinearRing();
 
       return false;
