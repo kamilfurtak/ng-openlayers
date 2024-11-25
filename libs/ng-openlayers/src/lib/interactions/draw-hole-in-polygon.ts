@@ -49,9 +49,6 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
   }
 
   onDrawStart = (e: DrawEvent) => {
-    const coordinates = (e.feature.getGeometry() as Polygon).getCoordinates();
-    console.log('onDrawStart', coordinates);
-
     if (!this.vectorLayer) {
       alert('No vector layer found');
       e.target.abortDrawing();
@@ -120,6 +117,5 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
 
   onDrawAbort(e: DrawEvent) {
     this.isDrawing = false;
-    console.log('Draw aborted', e);
   }
 }
