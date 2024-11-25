@@ -129,6 +129,8 @@ This function will be called when your hole drawing is finished.
       return polygonFromLinearRing.intersectsCoordinate(coordinate);
     });
 
+    console.log('isInsideHole', isInsideHole);
+
     // Validate if the clicked point is inside the polygon
     if (!this.intersectedPolygon.intersectsCoordinate(coordinate)) {
       // Prevent adding the vertex by stopping the event propagation
