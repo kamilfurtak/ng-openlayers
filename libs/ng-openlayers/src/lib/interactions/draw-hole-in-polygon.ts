@@ -38,6 +38,8 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
   private intersectedPolygon: Polygon;
   private vectorLayer: VectorLayer<VectorSource>;
   private isDrawing = false;
+  private drawnVertices: number[] = []; // Array to track drawn vertices
+  private clickedPointCoordinates: Array<number>;
 
   constructor(private map: MapComponent) {}
 
@@ -71,10 +73,30 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
     }
 
     this.intersectedPolygon = this.foundFeaturePolygonToApplyEnclave.getGeometry() as Polygon;
+
+    // Check if the coordinate is inside any of the holes
+    const polygonHoles = this.intersectedPolygon.getLinearRings().slice(1);
+    const isInsideHole = polygonHoles.some((hole) => {
+      const polygonFromLinearRing = new Polygon([hole.getCoordinates()]);
+      return polygonFromLinearRing.intersectsCoordinate(this.clickedPointCoordinates);
+    });
+
+    if (isInsideHole) {
+      console.log('Cannot draw hole inside another hole');
+      e.target.abortDrawing();
+      return;
+    }
+
+    console.log('isInsideHole', isInsideHole);
+    console.log('drawnVertices', this.drawnVertices.length);
+
     this.coordsLength = this.intersectedPolygon.getCoordinates().length;
     this.isDrawing = true;
 
-    //Binding onGeomChange function with drawing feature f. This function will be called only when you are drawing holes over a polygon.
+    // Initialize the vertex count array with the current vertices
+    this.drawnVertices = [];
+
+    // Binding onGeomChange function with drawing feature. This function will be called only when you are drawing holes over a polygon.
     e.feature.getGeometry().on('change', this.onGeomChange);
   };
 
@@ -83,6 +105,10 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
  */
   onGeomChange = (e: DrawEvent) => {
     const coordinates = e.target.getCoordinates()[0];
+
+    // Update the vertex count array with current coordinates
+    this.drawnVertices = coordinates;
+    console.log('drawnVerticesChange', this.drawnVertices.length);
 
     // Only proceed if we have valid coordinates within the polygon
     if (coordinates.every((coord) => this.intersectedPolygon.intersectsCoordinate(coord))) {
@@ -95,6 +121,12 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
       this.foundFeaturePolygonToApplyEnclave.setGeometry(geom);
     }
   };
+
+  // Method to get the current count of vertices
+  getDrawnVerticesCount(): number {
+    return this.drawnVertices.length;
+  }
+
   staticStyle = new Style({
     // Line and Polygon Style
     // stroke: new Stroke({
@@ -120,19 +152,10 @@ This function will be called when your hole drawing is finished.
   onMapClick = (e: MapBrowserEvent<MouseEvent>) => {
     if (!this.isDrawing) return;
 
-    const coordinate = this.map.instance.getCoordinateFromPixel(e.pixel);
-
-    // Check if the coordinate is inside any of the holes
-    const polygonHoles = this.intersectedPolygon.getLinearRings().slice(1);
-    const isInsideHole = polygonHoles.some((hole) => {
-      const polygonFromLinearRing = new Polygon([hole.getCoordinates()]);
-      return polygonFromLinearRing.intersectsCoordinate(coordinate);
-    });
-
-    console.log('isInsideHole', isInsideHole);
+    this.clickedPointCoordinates = this.map.instance.getCoordinateFromPixel(e.pixel);
 
     // Validate if the clicked point is inside the polygon
-    if (!this.intersectedPolygon.intersectsCoordinate(coordinate)) {
+    if (!this.intersectedPolygon.intersectsCoordinate(this.clickedPointCoordinates) && this.drawnVertices.length > 3) {
       // Prevent adding the vertex by stopping the event propagation
       e.preventDefault();
       e.stopPropagation();
