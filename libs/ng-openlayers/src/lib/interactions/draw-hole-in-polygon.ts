@@ -128,13 +128,9 @@ This function will be called when your hole drawing is finished.
       const polygonFromLinearRing = new Polygon([hole.getCoordinates()]);
       return polygonFromLinearRing.intersectsCoordinate(coordinate);
     });
-
-    if (isInsideHole) {
-      console.error('Cannot add vertex inside the hole');
-      return;
-    }
-
     console.log('isInsideHole', isInsideHole);
+
+    console.log('polygonIntersectsCoordinate', this.intersectedPolygon.intersectsCoordinate(coordinate));
 
     // Validate if the clicked point is inside the polygon
     if (!this.intersectedPolygon.intersectsCoordinate(coordinate)) {
@@ -144,7 +140,7 @@ This function will be called when your hole drawing is finished.
       console.error('Cannot add vertex outside the polygon boundary');
       // this.drawInteractionComponent.instance.removeLastPoint();
       this.drawInteractionComponent.instance.abortDrawing();
-      this.removeLastLinearRing();
+      // this.removeLastLinearRing();
 
       return false;
     }
