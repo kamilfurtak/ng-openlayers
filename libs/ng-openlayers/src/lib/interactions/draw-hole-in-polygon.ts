@@ -144,26 +144,6 @@ This function will be called when your hole drawing is finished.
       return false;
     }
   };
-  checkAndRemoveHole = (evt: MapBrowserEvent<MouseEvent>) => {
-    const coordinate = this.map.instance.getCoordinateFromPixel(evt.pixel);
-
-    if (this.foundFeaturePolygonToApplyEnclave) {
-      const polygon = this.foundFeaturePolygonToApplyEnclave.getGeometry() as Polygon;
-      const coordinates = polygon.getCoordinates();
-
-      for (let i = 1; i < coordinates.length; i++) {
-        // Skip the first ring (outer boundary)
-        const ring = new LinearRing(coordinates[i]);
-        if (ring.intersectsCoordinate(coordinate)) {
-          this.removeHole(i);
-          console.log('Hole at index', i, 'removed');
-          evt.preventDefault();
-          evt.stopPropagation();
-          return false;
-        }
-      }
-    }
-  };
 
   removeLastLinearRing() {
     const polygon = this.foundFeaturePolygonToApplyEnclave.getGeometry() as Polygon;
@@ -181,38 +161,5 @@ This function will be called when your hole drawing is finished.
   onDrawAbort(e: DrawEvent) {
     this.isDrawing = false;
     console.log('Draw aborted', e);
-  }
-
-  removeHoles() {
-    if (this.foundFeaturePolygonToApplyEnclave) {
-      const originalPolygon = this.foundFeaturePolygonToApplyEnclave.getGeometry() as Polygon;
-      const outerRing = originalPolygon.getLinearRing(0);
-      const newPolygon = new Polygon([outerRing.getCoordinates()]);
-
-      this.foundFeaturePolygonToApplyEnclave.setGeometry(newPolygon);
-      console.log('Holes removed from polygon');
-    } else {
-      alert('No polygon with holes found.');
-    }
-  }
-
-  removeHole(index: number) {
-    if (this.foundFeaturePolygonToApplyEnclave) {
-      const polygon = this.foundFeaturePolygonToApplyEnclave.getGeometry() as Polygon;
-      const coordinates = polygon.getCoordinates();
-
-      if (index > 0 && index < coordinates.length) {
-        coordinates.splice(index, 1); // Remove the hole at the index
-        const newPolygon = new Polygon(coordinates);
-        this.foundFeaturePolygonToApplyEnclave.setGeometry(newPolygon);
-      }
-    }
-  }
-
-  checkIfPolygonHasHoles() {
-    if (this.foundFeaturePolygonToApplyEnclave) {
-      const originalPolygon = this.foundFeaturePolygonToApplyEnclave?.getGeometry() as Polygon;
-      return originalPolygon.getLinearRingCount() > 1;
-    }
   }
 }
