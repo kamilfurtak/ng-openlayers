@@ -9,6 +9,7 @@ import {
   CoordinateComponent,
   DefaultInteractionComponent,
   DrawHoleInPolygonInteractionComponent,
+  DrawHoleInPolygonInteractionErrorType,
   FeatureComponent,
   GeometryPolygonComponent,
   LayerTileComponent,
@@ -23,7 +24,6 @@ import {
 import { FormsModule } from '@angular/forms';
 import { Feature, MapBrowserEvent } from 'ol';
 import { DrawEvent } from 'ol/interaction/Draw';
-import { DrawHoleInPolygonInteractionErrorType } from '../../../../../libs/ng-openlayers/src/lib/interactions/draw-hole-in-polygon';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -183,9 +183,6 @@ export class DrawHoleInPolygonComponent {
   drawHole() {
     this.isHoleDrawing = !this.isHoleDrawing;
   }
-
-  protected readonly onabort = onabort;
-  protected readonly ondrag = ondrag;
 
   onDrawError($event: {
     type: DrawHoleInPolygonInteractionErrorType;

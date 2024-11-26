@@ -158,8 +158,9 @@ export {
   ContentComponent,
   AttributionsComponent,
   AttributionComponent,
-  DrawHoleInPolygonInteractionComponent,
 };
+
+export * from './lib/interactions/draw-hole-in-polygon';
 
 const COMPONENTS = [
   MapComponent,
@@ -246,7 +247,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-    imports: [CommonModule, ...COMPONENTS],
-    exports: COMPONENTS,
+  imports: [CommonModule, ...COMPONENTS],
+  exports: COMPONENTS,
 })
 export class AngularOpenlayersModule {}
