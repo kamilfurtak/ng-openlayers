@@ -30,7 +30,7 @@ import MapBrowserEvent from 'ol/MapBrowserEvent';
 export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnDestroy {
   @ViewChild('drawInstance') drawInteractionComponent: DrawInteractionComponent;
   @Output()
-  drawEnd = new EventEmitter<Polygon>();
+  drawEnd = new EventEmitter<Feature>();
   instance: Draw;
   foundFeaturePolygonToApplyEnclave: Feature<Geometry>;
   private coordsLength: number;
@@ -41,14 +41,15 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
   constructor(private map: MapComponent) {}
 
   ngAfterViewInit() {
-    this.vectorLayer = this.map.instance
-      .getLayers()
-      .getArray()
-      .find((l) => l instanceof VectorLayer) as VectorLayer<Vector>;
     this.map.instance.on('click', this.onMapClick);
   }
 
   onDrawStart = (e: DrawEvent) => {
+    this.vectorLayer = this.map.instance
+      .getLayers()
+      .getArray()
+      .find((l) => l instanceof VectorLayer) as VectorLayer<Vector>;
+
     if (!this.vectorLayer) {
       alert('No vector layer found');
       e.target.abortDrawing();
@@ -91,9 +92,10 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
   });
 
   onDrawEnd = () => {
+    console.log('onDrawEnd');
     this.isDrawing = false;
 
-    this.drawEnd.emit(this.intersectedPolygon);
+    this.drawEnd.emit(new Feature(this.foundFeaturePolygonToApplyEnclave.getGeometry()));
   };
 
   onMapClick = (e: MapBrowserEvent<MouseEvent>) => {
@@ -116,6 +118,17 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
   }
 
   onDrawAbort(e: DrawEvent) {
+    console.log('onDrawAbort', e);
+    this.removeLastLinearRing();
     this.isDrawing = false;
+  }
+
+  removeLastLinearRing() {
+    const polygon = this.foundFeaturePolygonToApplyEnclave.getGeometry() as Polygon;
+    let coordinates = polygon.getCoordinates();
+    coordinates = coordinates.slice(0, -1); // Remove the last linear ring
+    const newPolygon = new Polygon(coordinates);
+    this.foundFeaturePolygonToApplyEnclave.setGeometry(newPolygon);
+    console.log('Last linear ring removed from polygon');
   }
 }
