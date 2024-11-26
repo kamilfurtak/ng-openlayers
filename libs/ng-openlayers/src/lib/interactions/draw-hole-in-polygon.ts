@@ -56,6 +56,16 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
       return;
     }
 
+    const startCoordinate = (e.feature.getGeometry() as Polygon).getCoordinates()[0][0];
+    const startPixel = this.map.instance.getPixelFromCoordinate(startCoordinate);
+    console.log('startPixel', startPixel);
+
+    const foundFeatureLike = this.map.instance.forEachFeatureAtPixel(startPixel, (feature) => {
+      return feature;
+    });
+
+    console.log('foundFeatureLike', foundFeatureLike);
+
     this.vectorLayer.getSource().forEachFeatureIntersectingExtent(e.feature.getGeometry().getExtent(), (feature) => {
       this.foundFeaturePolygonToApplyEnclave = feature;
     });
