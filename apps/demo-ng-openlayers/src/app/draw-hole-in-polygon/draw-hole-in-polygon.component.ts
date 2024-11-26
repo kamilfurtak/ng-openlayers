@@ -21,7 +21,10 @@ import {
   ViewComponent,
 } from 'ng-openlayers';
 import { FormsModule } from '@angular/forms';
-import { Feature } from 'ol';
+import { Feature, MapBrowserEvent } from 'ol';
+import { DrawEvent } from 'ol/interaction/Draw';
+import { DrawHoleInPolygonInteractionErrorType } from '../../../../../libs/ng-openlayers/src/lib/interactions/draw-hole-in-polygon';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-modify-polygon',
@@ -45,6 +48,7 @@ import { Feature } from 'ol';
         <aol-interaction-draw-hole-in-polygon
           #drawHoleInteraction
           (drawEnd)="endHoleDraw($event)"
+          (drawError)="onDrawError($event)"
         ></aol-interaction-draw-hole-in-polygon>
       }
 
@@ -134,6 +138,8 @@ export class DrawHoleInPolygonComponent {
   displayProj = new Projection({ code: 'EPSG:3857' });
   inputProj = new Projection({ code: 'EPSG:4326' });
 
+  constructor(private toastr: ToastrService) {}
+
   feature = {
     geometry: {
       coordinates: [
@@ -176,5 +182,21 @@ export class DrawHoleInPolygonComponent {
 
   drawHole() {
     this.isHoleDrawing = !this.isHoleDrawing;
+  }
+
+  protected readonly onabort = onabort;
+  protected readonly ondrag = ondrag;
+
+  onDrawError($event: {
+    type: DrawHoleInPolygonInteractionErrorType;
+    event: DrawEvent | MapBrowserEvent<MouseEvent>;
+    message: string;
+  }) {
+    if ($event.type === DrawHoleInPolygonInteractionErrorType.MoPolygonFound) {
+      this.toastr.warning('No polygon found to draw hole.');
+    }
+    if ($event.type === DrawHoleInPolygonInteractionErrorType.DrawVertexOutsidePolygon) {
+      this.toastr.warning('Cannot add vertex outside the polygon');
+    }
   }
 }

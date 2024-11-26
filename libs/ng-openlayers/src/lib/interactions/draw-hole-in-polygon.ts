@@ -1,12 +1,16 @@
 import { Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
 import { Feature } from 'ol';
 import { DrawEvent } from 'ol/interaction/Draw';
-import { Draw } from 'ol/interaction';
 import { Geometry, LinearRing, Polygon } from 'ol/geom';
 import { Fill, Style } from 'ol/style';
 import { DrawInteractionComponent } from './draw.component';
 import { MapComponent } from '../map.component';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
+
+export enum DrawHoleInPolygonInteractionErrorType {
+  MoPolygonFound = 'noPolygonFound',
+  DrawVertexOutsidePolygon = 'drawVertexOutsidePolygon',
+}
 
 @Component({
   selector: 'aol-interaction-draw-hole-in-polygon',
@@ -28,9 +32,20 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
   @ViewChild('drawInstance') drawInteractionComponent: DrawInteractionComponent;
   @Output()
   drawEnd = new EventEmitter<Feature>();
-  instance: Draw;
+  @Output()
+  drawError = new EventEmitter<{
+    type: DrawHoleInPolygonInteractionErrorType;
+    event: DrawEvent | MapBrowserEvent<MouseEvent>;
+    message: string;
+  }>();
+
   foundFeatureToApplyEnclave: Feature<Geometry>;
   foundPolygonToApplyEnclave: Polygon;
+  staticStyle = new Style({
+    fill: new Fill({
+      color: 'rgba(0,0,0,0)',
+    }),
+  });
 
   constructor(private map: MapComponent) {}
 
@@ -50,6 +65,11 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
       this.map.instance.on('click', this.onMapClick);
     } else {
       console.warn('No polygon found to draw hole.');
+      this.drawError.emit({
+        type: DrawHoleInPolygonInteractionErrorType.MoPolygonFound,
+        event: e,
+        message: 'No polygon found to draw hole.',
+      });
       e.target.abortDrawing();
     }
   };
@@ -68,11 +88,6 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
       this.foundFeatureToApplyEnclave.setGeometry(geom);
     }
   };
-  staticStyle = new Style({
-    fill: new Fill({
-      color: 'rgba(0,0,0,0)',
-    }),
-  });
 
   onDrawEnd = () => {
     console.log('onDrawEnd');
@@ -89,6 +104,11 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
       e.preventDefault();
       e.stopPropagation();
       console.warn('Cannot add vertex outside the polygon');
+      this.drawError.emit({
+        type: DrawHoleInPolygonInteractionErrorType.DrawVertexOutsidePolygon,
+        event: e,
+        message: 'Cannot add vertex outside the polygon',
+      });
       this.drawInteractionComponent.instance.removeLastPoint();
 
       return false;
