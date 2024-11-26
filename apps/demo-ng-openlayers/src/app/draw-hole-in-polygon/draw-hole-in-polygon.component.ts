@@ -21,6 +21,7 @@ import {
   ViewComponent,
 } from 'ng-openlayers';
 import { FormsModule } from '@angular/forms';
+import { Feature } from 'ol';
 
 @Component({
   selector: 'app-modify-polygon',
@@ -160,9 +161,9 @@ export class DrawHoleInPolygonComponent {
     }) as any;
   }
 
-  endHoleDraw(polygon: Polygon) {
-    const olGeomPolygon = polygon;
-    olGeomPolygon.transform(new Projection({ code: 'EPSG:3857' }), new Projection({ code: 'EPSG:4326' }));
+  endHoleDraw(feature: Feature) {
+    const olGeomPolygon = feature.getGeometry() as Polygon;
+    // olGeomPolygon.transform(new Projection({ code: 'EPSG:3857' }), new Projection({ code: 'EPSG:4326' }));
     this.feature = {
       type: 'Feature',
       properties: {},
@@ -171,8 +172,6 @@ export class DrawHoleInPolygonComponent {
         coordinates: olGeomPolygon.getCoordinates(),
       },
     };
-
-    console.log(olGeomPolygon.getCoordinates());
   }
 
   drawHole() {

@@ -51,7 +51,7 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
       .find((l) => l instanceof VectorLayer) as VectorLayer<Vector>;
 
     if (!this.vectorLayer) {
-      alert('No vector layer found');
+      console.warn('No vector layer found');
       e.target.abortDrawing();
       return;
     }
@@ -61,7 +61,7 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
     });
 
     if (!this.foundFeaturePolygonToApplyEnclave) {
-      alert('No Feature Found to draw holes');
+      console.warn('No Feature Found to draw holes');
       e.target.abortDrawing();
       return;
     }
@@ -119,7 +119,7 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
 
   onDrawAbort(e: DrawEvent) {
     console.log('onDrawAbort', e);
-    this.removeLastLinearRing();
+    // this.removeLastLinearRing();
     this.isDrawing = false;
   }
 
