@@ -1,14 +1,11 @@
-import { AfterViewInit, Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
 import { Feature } from 'ol';
 import { DrawEvent } from 'ol/interaction/Draw';
 import { Draw } from 'ol/interaction';
-import { Vector } from 'ol/source';
-import VectorLayer from 'ol/layer/Vector';
 import { Geometry, LinearRing, Polygon } from 'ol/geom';
 import { Fill, Style } from 'ol/style';
 import { DrawInteractionComponent } from './draw.component';
 import { MapComponent } from '../map.component';
-import VectorSource from 'ol/source/Vector';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 
 @Component({
@@ -27,7 +24,7 @@ import MapBrowserEvent from 'ol/MapBrowserEvent';
   standalone: true,
   imports: [DrawInteractionComponent],
 })
-export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnDestroy {
+export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
   @ViewChild('drawInstance') drawInteractionComponent: DrawInteractionComponent;
   @Output()
   drawEnd = new EventEmitter<Feature>();
@@ -35,52 +32,30 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
   foundFeaturePolygonToApplyEnclave: Feature<Geometry>;
   private coordsLength: number;
   private intersectedPolygon: Polygon;
-  private vectorLayer: VectorLayer<VectorSource>;
   private isDrawing = false;
 
   constructor(private map: MapComponent) {}
 
-  ngAfterViewInit() {
-    this.map.instance.on('click', this.onMapClick);
-  }
-
   onDrawStart = (e: DrawEvent) => {
-    this.vectorLayer = this.map.instance
-      .getLayers()
-      .getArray()
-      .find((l) => l instanceof VectorLayer) as VectorLayer<Vector>;
-
-    if (!this.vectorLayer) {
-      console.warn('No vector layer found');
-      e.target.abortDrawing();
-      return;
-    }
-
+    console.log('onDrawStart', e);
     const startCoordinate = (e.feature.getGeometry() as Polygon).getCoordinates()[0][0];
     const startPixel = this.map.instance.getPixelFromCoordinate(startCoordinate);
-    console.log('startPixel', startPixel);
 
     const foundFeatureLike = this.map.instance.forEachFeatureAtPixel(startPixel, (feature) => {
       return feature;
     });
 
-    console.log('foundFeatureLike', foundFeatureLike);
-
-    this.vectorLayer.getSource().forEachFeatureIntersectingExtent(e.feature.getGeometry().getExtent(), (feature) => {
-      this.foundFeaturePolygonToApplyEnclave = feature;
-    });
-
-    if (!this.foundFeaturePolygonToApplyEnclave) {
-      console.warn('No Feature Found to draw holes');
+    if (foundFeatureLike?.getGeometry().getType() === 'Polygon') {
+      this.foundFeaturePolygonToApplyEnclave = foundFeatureLike as Feature<Geometry>;
+      this.intersectedPolygon = this.foundFeaturePolygonToApplyEnclave.getGeometry() as Polygon;
+      this.coordsLength = this.intersectedPolygon.getCoordinates().length;
+      e.feature.getGeometry().on('change', this.onGeomChange);
+      this.isDrawing = true;
+      this.map.instance.on('click', this.onMapClick);
+    } else {
+      console.warn('No polygon found to draw hole.');
       e.target.abortDrawing();
-      return;
     }
-
-    this.intersectedPolygon = this.foundFeaturePolygonToApplyEnclave.getGeometry() as Polygon;
-    this.coordsLength = this.intersectedPolygon.getCoordinates().length;
-    this.isDrawing = true;
-
-    e.feature.getGeometry().on('change', this.onGeomChange);
   };
 
   onGeomChange = (e: DrawEvent) => {
@@ -109,14 +84,15 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
   };
 
   onMapClick = (e: MapBrowserEvent<MouseEvent>) => {
+    console.log('onMapClick', e);
     if (!this.isDrawing) return;
 
     const coordinate = this.map.instance.getCoordinateFromPixel(e.pixel);
 
-    if (!this.intersectedPolygon.intersectsCoordinate(coordinate)) {
+    if (!this.intersectedPolygon?.intersectsCoordinate(coordinate)) {
       e.preventDefault();
       e.stopPropagation();
-      console.error('Cannot add vertex outside the polygon');
+      console.warn('Cannot add vertex outside the polygon');
       this.drawInteractionComponent.instance.removeLastPoint();
 
       return false;
@@ -129,13 +105,18 @@ export class DrawHoleInPolygonInteractionComponent implements AfterViewInit, OnD
 
   onDrawAbort(e: DrawEvent) {
     console.log('onDrawAbort', e);
-    // this.removeLastLinearRing();
     this.isDrawing = false;
+    const coordinates = (e.feature.getGeometry() as Polygon).getCoordinates()[0];
+    console.log('coordinates', coordinates.length);
+    if (coordinates.length > 2) {
+      this.removeLastLinearRing();
+    }
   }
 
   removeLastLinearRing() {
     const polygon = this.foundFeaturePolygonToApplyEnclave.getGeometry() as Polygon;
     let coordinates = polygon.getCoordinates();
+    console.log('coordinates', coordinates);
     coordinates = coordinates.slice(0, -1); // Remove the last linear ring
     const newPolygon = new Polygon(coordinates);
     this.foundFeaturePolygonToApplyEnclave.setGeometry(newPolygon);
