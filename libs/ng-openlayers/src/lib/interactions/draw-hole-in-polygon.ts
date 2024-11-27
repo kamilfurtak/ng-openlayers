@@ -8,11 +8,13 @@ import { MapComponent } from '../map.component';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import { Condition, platformModifierKey } from 'ol/events/condition';
 import { containsCoordinate } from 'ol/extent';
+import VectorLayer from 'ol/layer/Vector';
 
 export enum DrawHoleInPolygonInteractionErrorType {
   MoPolygonFound = 'noPolygonFound',
   DrawVertexOutsidePolygon = 'drawVertexOutsidePolygon',
   NoLinearRingFoundToRemove = 'noLinearRingFoundToRemove',
+  NoVectorLayerFound = 'noVectorLayerFound',
 }
 
 @Component({
@@ -67,12 +69,12 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
       e.feature.getGeometry().on('change', this.onGeomChange);
       this.map.instance.on('click', this.onMapClick);
     } else {
-      console.warn('No polygon found to draw hole.');
       this.drawError.emit({
         type: DrawHoleInPolygonInteractionErrorType.MoPolygonFound,
         event: e,
         message: 'No polygon found to draw hole.',
       });
+      console.warn('No polygon found to draw hole.');
       e.target.abortDrawing();
     }
   };
@@ -119,9 +121,32 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
     }
   };
   drawCondition: Condition = (e) => {
+    const vectorLayer = this.map.instance
+      .getLayers()
+      .getArray()
+      .find((l) => l instanceof VectorLayer);
+
+    if (!vectorLayer) {
+      this.drawError.emit({
+        type: DrawHoleInPolygonInteractionErrorType.NoVectorLayerFound,
+        event: e,
+        message: 'No vector layer found',
+      });
+      return false;
+    }
+
+    const foundFeatureToRemoveEnclave = vectorLayer
+      .getSource()
+      .getClosestFeatureToCoordinate(e.coordinate, (feature) => {
+        console.log(feature.getGeometry().intersectsCoordinate(e.coordinate));
+        return feature.getGeometry().getType() === 'Polygon';
+      });
+
+    console.log('foundFeatureToApplyEnclave', foundFeatureToRemoveEnclave);
+
     const isPlatformModifierKey = platformModifierKey(e);
-    if (isPlatformModifierKey && this.foundPolygonToApplyEnclave) {
-      this.checkAndRemoveHole(e);
+    if (isPlatformModifierKey && foundFeatureToRemoveEnclave) {
+      this.checkAndRemoveHole(e, foundFeatureToRemoveEnclave);
       return false;
     }
     return true;
@@ -151,8 +176,8 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
     this.foundFeatureToApplyEnclave.setGeometry(newPolygon);
   }
 
-  checkAndRemoveHole(e: MapBrowserEvent<MouseEvent>) {
-    const polygon = this.foundFeatureToApplyEnclave.getGeometry() as Polygon;
+  checkAndRemoveHole(e: MapBrowserEvent<MouseEvent>, foundFeatureToApplyEnclave: Feature<Geometry>) {
+    const polygon = foundFeatureToApplyEnclave.getGeometry() as Polygon;
     let coordinates = polygon.getCoordinates();
     const coordinateIndex = coordinates.slice(1).findIndex((coordinate) => {
       const polygonFromLinearRing = new Polygon([coordinate], 'XY');
@@ -162,13 +187,19 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
     if (coordinateIndex > -1) {
       coordinates = coordinates.filter((_, index) => index !== coordinateIndex + 1);
       const newPolygon = new Polygon(coordinates);
-      this.foundFeatureToApplyEnclave.setGeometry(newPolygon);
+      foundFeatureToApplyEnclave.setGeometry(newPolygon);
+
+      this.drawEnd.emit(foundFeatureToApplyEnclave);
+
+      return true;
     } else {
       this.drawError.emit({
         type: DrawHoleInPolygonInteractionErrorType.NoLinearRingFoundToRemove,
         event: e,
         message: 'No linear ring found to remove',
       });
+      console.warn('No linear ring found to remove');
+      return false;
     }
   }
 }
