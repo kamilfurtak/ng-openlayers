@@ -6,6 +6,7 @@ import { Fill, Style } from 'ol/style';
 import { DrawInteractionComponent } from './draw.component';
 import { MapComponent } from '../map.component';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
+import { Condition, never, shiftKeyOnly } from 'ol/events/condition';
 
 export enum DrawHoleInPolygonInteractionErrorType {
   MoPolygonFound = 'noPolygonFound',
@@ -22,6 +23,8 @@ export enum DrawHoleInPolygonInteractionErrorType {
       (drawStart)="onDrawStart($event)"
       (olDrawAbort)="onDrawAbort($event)"
       [style]="staticStyle"
+      [condition]="drawCondition"
+      [freehandCondition]="freehandCondition"
     >
     </aol-interaction-draw>
   `,
@@ -50,8 +53,6 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
   constructor(private map: MapComponent) {}
 
   onDrawStart = (e: DrawEvent) => {
-    console.log('onDrawStart', e);
-
     const startCoordinate = (e.feature.getGeometry() as Polygon).getCoordinates()[0][0];
     const startPixel = this.map.instance.getPixelFromCoordinate(startCoordinate);
 
@@ -122,6 +123,15 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
       return false;
     }
   };
+  drawCondition: Condition = (e) => {
+    const isShiftKey = shiftKeyOnly(e);
+    if (isShiftKey) {
+      console.log('Shift key pressed during draw event.');
+      return false;
+    }
+    return true;
+  };
+  freehandCondition: Condition = never;
 
   ngOnDestroy(): void {
     this.map.instance.un('click', this.onMapClick);
