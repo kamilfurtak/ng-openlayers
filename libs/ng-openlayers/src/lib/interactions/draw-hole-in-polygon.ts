@@ -102,12 +102,6 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
   onMapClick = (e: MapBrowserEvent<MouseEvent>) => {
     console.log('onMapClick', e);
 
-    // if (e.originalEvent.shiftKey) {
-    //   console.log('Shift key pressed during map click event.');
-    //   // this.checkAndRemoveHole(e);
-    //   return;
-    // }
-
     const coordinate = this.map.instance.getCoordinateFromPixel(e.pixel);
 
     if (!this.foundPolygonToApplyEnclave?.intersectsCoordinate(coordinate)) {
@@ -165,7 +159,6 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
     let coordinates = polygon.getCoordinates();
     const coordinateIndex = coordinates.slice(1).findIndex((coordinate) => {
       const polygonFromLinearRing = new Polygon([coordinate], 'XY');
-
       return containsCoordinate(polygonFromLinearRing.getExtent(), e.coordinate);
     });
 
