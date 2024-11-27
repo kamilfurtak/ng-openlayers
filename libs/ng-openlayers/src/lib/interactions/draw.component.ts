@@ -64,7 +64,6 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   propertyChange = new EventEmitter<ObjectEvent>();
 
   instance: Draw;
-  sketchFeature: Feature;
 
   constructor(private map: MapComponent) {}
 
@@ -74,10 +73,7 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
     this.instance.on('drawabort', (event: DrawEvent) => this.olDrawAbort.emit(event));
     this.instance.on('drawend', (event: DrawEvent) => this.drawEnd.emit(event));
-    this.instance.on('drawstart', (event: DrawEvent) => {
-      this.sketchFeature = event.feature;
-      this.drawStart.emit(event);
-    });
+    this.instance.on('drawstart', (event: DrawEvent) => this.drawStart.emit(event));
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
     this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
     this.map.instance.addInteraction(this.instance);
