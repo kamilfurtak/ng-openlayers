@@ -51,6 +51,7 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
 
   onDrawStart = (e: DrawEvent) => {
     console.log('onDrawStart', e);
+
     const startCoordinate = (e.feature.getGeometry() as Polygon).getCoordinates()[0][0];
     const startPixel = this.map.instance.getPixelFromCoordinate(startCoordinate);
 
@@ -91,12 +92,19 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
 
   onDrawEnd = () => {
     console.log('onDrawEnd');
+    this.map.instance.un('click', this.onMapClick);
 
     this.drawEnd.emit(new Feature(this.foundFeatureToApplyEnclave.getGeometry()));
   };
 
   onMapClick = (e: MapBrowserEvent<MouseEvent>) => {
     console.log('onMapClick', e);
+
+    // if (e.originalEvent.shiftKey) {
+    //   console.log('Shift key pressed during map click event.');
+    //   // this.checkAndRemoveHole(e);
+    //   return;
+    // }
 
     const coordinate = this.map.instance.getCoordinateFromPixel(e.pixel);
 
@@ -120,6 +128,8 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
   }
 
   onDrawAbort(e: DrawEvent) {
+    this.map.instance.un('click', this.onMapClick);
+
     console.log('onDrawAbort', e);
     const coordinates = (e.feature.getGeometry() as Polygon).getCoordinates()[0];
     console.log('coordinates', coordinates.length);
