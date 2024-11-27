@@ -195,5 +195,8 @@ export class DrawHoleInPolygonComponent {
     if ($event.type === DrawHoleInPolygonInteractionErrorType.DrawVertexOutsidePolygon) {
       this.toastr.warning('Cannot add vertex outside the polygon');
     }
+    if ($event.type === DrawHoleInPolygonInteractionErrorType.NoLinearRingFoundToRemove) {
+      this.toastr.warning('No linear ring found to remove.');
+    }
   }
 }

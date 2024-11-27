@@ -6,12 +6,13 @@ import { Fill, Style } from 'ol/style';
 import { DrawInteractionComponent } from './draw.component';
 import { MapComponent } from '../map.component';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
-import { Condition, never, shiftKeyOnly } from 'ol/events/condition';
+import { Condition, platformModifierKey } from 'ol/events/condition';
 import { containsCoordinate } from 'ol/extent';
 
 export enum DrawHoleInPolygonInteractionErrorType {
   MoPolygonFound = 'noPolygonFound',
   DrawVertexOutsidePolygon = 'drawVertexOutsidePolygon',
+  NoLinearRingFoundToRemove = 'noLinearRingFoundToRemove',
 }
 
 @Component({
@@ -25,7 +26,6 @@ export enum DrawHoleInPolygonInteractionErrorType {
       (olDrawAbort)="onDrawAbort($event)"
       [style]="staticStyle"
       [condition]="drawCondition"
-      [freehandCondition]="freehandCondition"
     >
     </aol-interaction-draw>
   `,
@@ -119,15 +119,13 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
     }
   };
   drawCondition: Condition = (e) => {
-    const isShiftKey = shiftKeyOnly(e);
-    if (isShiftKey) {
-      console.log('Shift key pressed during draw event.');
+    const isPlatformModifierKey = platformModifierKey(e);
+    if (isPlatformModifierKey && this.foundPolygonToApplyEnclave) {
       this.checkAndRemoveHole(e);
       return false;
     }
     return true;
   };
-  freehandCondition: Condition = never;
 
   ngOnDestroy(): void {
     this.map.instance.un('click', this.onMapClick);
@@ -151,7 +149,6 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
     coordinates = coordinates.slice(0, -1); // Remove the last linear ring
     const newPolygon = new Polygon(coordinates);
     this.foundFeatureToApplyEnclave.setGeometry(newPolygon);
-    console.log('Last linear ring removed from polygon');
   }
 
   checkAndRemoveHole(e: MapBrowserEvent<MouseEvent>) {
@@ -162,11 +159,16 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
       return containsCoordinate(polygonFromLinearRing.getExtent(), e.coordinate);
     });
 
-    console.log('coordinateIndex', coordinateIndex);
     if (coordinateIndex > -1) {
       coordinates = coordinates.filter((_, index) => index !== coordinateIndex + 1);
       const newPolygon = new Polygon(coordinates);
       this.foundFeatureToApplyEnclave.setGeometry(newPolygon);
+    } else {
+      this.drawError.emit({
+        type: DrawHoleInPolygonInteractionErrorType.NoLinearRingFoundToRemove,
+        event: e,
+        message: 'No linear ring found to remove',
+      });
     }
   }
 }
