@@ -7,6 +7,7 @@ import { DrawInteractionComponent } from './draw.component';
 import { MapComponent } from '../map.component';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import { Condition, never, shiftKeyOnly } from 'ol/events/condition';
+import { containsCoordinate } from 'ol/extent';
 
 export enum DrawHoleInPolygonInteractionErrorType {
   MoPolygonFound = 'noPolygonFound',
@@ -127,6 +128,7 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
     const isShiftKey = shiftKeyOnly(e);
     if (isShiftKey) {
       console.log('Shift key pressed during draw event.');
+      this.checkAndRemoveHole(e);
       return false;
     }
     return true;
@@ -156,5 +158,22 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
     const newPolygon = new Polygon(coordinates);
     this.foundFeatureToApplyEnclave.setGeometry(newPolygon);
     console.log('Last linear ring removed from polygon');
+  }
+
+  checkAndRemoveHole(e: MapBrowserEvent<MouseEvent>) {
+    const polygon = this.foundFeatureToApplyEnclave.getGeometry() as Polygon;
+    let coordinates = polygon.getCoordinates();
+    const coordinateIndex = coordinates.slice(1).findIndex((coordinate) => {
+      const polygonFromLinearRing = new Polygon([coordinate], 'XY');
+
+      return containsCoordinate(polygonFromLinearRing.getExtent(), e.coordinate);
+    });
+
+    console.log('coordinateIndex', coordinateIndex);
+    if (coordinateIndex > -1) {
+      coordinates = coordinates.filter((_, index) => index !== coordinateIndex + 1);
+      const newPolygon = new Polygon(coordinates);
+      this.foundFeatureToApplyEnclave.setGeometry(newPolygon);
+    }
   }
 }
