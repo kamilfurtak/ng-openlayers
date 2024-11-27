@@ -95,9 +95,11 @@ import { ToastrService } from 'ngx-toastr';
       </div>
 
       <h3>Result</h3>
-      <code>
-        <pre>{{ feature | json }}</pre>
-      </code>
+      <div class="code-container">
+        <div>
+          <pre>{{ feature | json }}</pre>
+        </div>
+      </div>
     </div>
   `,
   styles: [

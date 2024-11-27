@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { createBox } from 'ol/interaction/Draw';
 import { Feature } from 'ol';
 import Projection from 'ol/proj/Projection';
@@ -8,7 +8,6 @@ import {
   CollectionCoordinatesComponent,
   CoordinateComponent,
   DefaultInteractionComponent,
-  DrawHoleInPolygonInteractionComponent,
   DrawInteractionComponent,
   FeatureComponent,
   GeometryPolygonComponent,
@@ -19,7 +18,6 @@ import {
   SourceVectorComponent,
   ViewComponent,
 } from 'ng-openlayers';
-import { Polygon } from 'ol/geom';
 
 @Component({
   selector: 'app-draw-polygon',
@@ -33,10 +31,6 @@ import { Polygon } from 'ol/geom';
           (drawEnd)="endDraw($event.feature)"
         >
         </aol-interaction-draw>
-      }
-
-      @if (isHoleDrawing) {
-        <aol-interaction-draw-hole-in-polygon (drawEnd)="endHoleDraw($event)"></aol-interaction-draw-hole-in-polygon>
       }
 
       <aol-view [zoom]="5">
@@ -61,10 +55,7 @@ import { Polygon } from 'ol/geom';
 
     <div class="info">
       <div class="draw-section">
-        <button (click)="drawMode()" [disabled]="isHoleDrawing">{{ isDrawing ? 'End draw' : 'Start draw' }}</button>
-        <button (click)="drawHole()" [disabled]="isDrawing">
-          {{ isHoleDrawing ? 'End draw hole' : 'Start draw hole' }}
-        </button>
+        <button (click)="drawMode()">{{ isDrawing ? 'End draw' : 'Start draw' }}</button>
         <h3>Result</h3>
         <code>
           <pre>{{ feature | json }}</pre>
@@ -94,7 +85,6 @@ import { Polygon } from 'ol/geom';
     MapComponent,
     DefaultInteractionComponent,
     DrawInteractionComponent,
-    DrawHoleInPolygonInteractionComponent,
     ViewComponent,
     CoordinateComponent,
     LayerTileComponent,
@@ -107,15 +97,10 @@ import { Polygon } from 'ol/geom';
     JsonPipe,
   ],
 })
-export class DrawPolygonComponent implements OnInit {
-  constructor() {}
-
+export class DrawPolygonComponent {
   isDrawing = false;
   drawBoxGeometryFunction = createBox();
   feature;
-  isHoleDrawing = false;
-
-  ngOnInit() {}
 
   drawMode() {
     this.isDrawing = !this.isDrawing;
@@ -132,26 +117,5 @@ export class DrawPolygonComponent implements OnInit {
         coordinates: olGeomPolygon.getCoordinates(),
       },
     };
-  }
-
-  drawHole() {
-    this.isDrawing = false;
-    // console.log(this.feature);
-    this.isHoleDrawing = !this.isHoleDrawing;
-  }
-
-  endHoleDraw(polygon: Polygon) {
-    const olGeomPolygon = polygon;
-    olGeomPolygon.transform(new Projection({ code: 'EPSG:3857' }), new Projection({ code: 'EPSG:4326' }));
-    this.feature = {
-      type: 'Feature',
-      properties: {},
-      geometry: {
-        type: 'Polygon',
-        coordinates: olGeomPolygon.getCoordinates(),
-      },
-    };
-
-    console.log(olGeomPolygon.getCoordinates());
   }
 }
