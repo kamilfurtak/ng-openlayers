@@ -17,6 +17,12 @@ export enum DrawHoleInPolygonInteractionErrorType {
   NoVectorLayerFound = 'noVectorLayerFound',
 }
 
+export interface DrawHoleInPolygonInteractionError {
+  type: DrawHoleInPolygonInteractionErrorType;
+  event: DrawEvent | MapBrowserEvent<MouseEvent>;
+  message: string;
+}
+
 @Component({
   selector: 'aol-interaction-draw-hole-in-polygon',
   template: `
@@ -39,11 +45,7 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
   @Output()
   drawEnd = new EventEmitter<Feature>();
   @Output()
-  drawError = new EventEmitter<{
-    type: DrawHoleInPolygonInteractionErrorType;
-    event: DrawEvent | MapBrowserEvent<MouseEvent>;
-    message: string;
-  }>();
+  drawError = new EventEmitter<DrawHoleInPolygonInteractionError>();
 
   foundFeatureToApplyEnclave: Feature<Geometry>;
   foundPolygonToApplyEnclave: Polygon;

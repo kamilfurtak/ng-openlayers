@@ -9,6 +9,7 @@ import {
   CoordinateComponent,
   DefaultInteractionComponent,
   DrawHoleInPolygonInteractionComponent,
+  DrawHoleInPolygonInteractionError,
   DrawHoleInPolygonInteractionErrorType,
   FeatureComponent,
   GeometryPolygonComponent,
@@ -22,8 +23,7 @@ import {
   ViewComponent,
 } from 'ng-openlayers';
 import { FormsModule } from '@angular/forms';
-import { Feature, MapBrowserEvent } from 'ol';
-import { DrawEvent } from 'ol/interaction/Draw';
+import { Feature } from 'ol';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -192,11 +192,7 @@ export class DrawHoleInPolygonComponent {
     this.isHoleDrawing = !this.isHoleDrawing;
   }
 
-  onDrawError($event: {
-    type: DrawHoleInPolygonInteractionErrorType;
-    event: DrawEvent | MapBrowserEvent<MouseEvent>;
-    message: string;
-  }) {
+  onDrawError($event: DrawHoleInPolygonInteractionError) {
     if ($event.type === DrawHoleInPolygonInteractionErrorType.MoPolygonFound) {
       this.toastr.warning('No polygon found to draw hole.');
     }
