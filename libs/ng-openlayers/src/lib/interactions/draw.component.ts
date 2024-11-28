@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MapComponent } from '../map.component';
 import { Draw } from 'ol/interaction';
 import { Collection, Feature } from 'ol';
@@ -12,9 +12,9 @@ import { ObjectEvent } from 'ol/Object';
 import BaseEvent from 'ol/events/Event';
 
 @Component({
-    selector: 'aol-interaction-draw',
-    template: '',
-    standalone: true,
+  selector: 'aol-interaction-draw',
+  template: '',
+  standalone: true,
 })
 export class DrawInteractionComponent implements OnInit, OnDestroy {
   @Input()
@@ -68,7 +68,6 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    console.log('DrawInteractionComponent ngOnInit');
     this.instance = new Draw(this);
     this.instance.on('change', (event: DrawEvent) => this.olChange.emit(event));
     this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
@@ -78,6 +77,11 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
     this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
     this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
     this.map.instance.addInteraction(this.instance);
+  }
+
+  @HostListener('window:keydown.control.z', ['$event'])
+  handleKeydown() {
+    this.instance.removeLastPoint();
   }
 
   ngOnDestroy() {

@@ -135,4 +135,10 @@ export const examplesList = [
     routerLink: 'graticule',
     openLayersLink: 'https://openlayers.org/en/latest/examples/graticule.html',
   },
+  {
+    title: 'Draw hole in polygon',
+    description:
+      'Example of using aol-interaction-draw-hole-in-polygon. This example shows how to draw a hole in a polygon. To remove a hole, click on the hole with Ctrl key pressed.',
+    routerLink: 'draw-hole-in-polygon',
+  },
 ];
