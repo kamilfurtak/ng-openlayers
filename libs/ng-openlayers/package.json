@@ -2,8 +2,8 @@
   "name": "ng-openlayers",
   "version": "18.1.0",
   "peerDependencies": {
-    "@angular/common": "^18.2.1",
-    "@angular/core": "^18.2.1",
+    "@angular/common": "16 - 18",
+    "@angular/core": "16 - 18",
     "ol": "^8.2.0",
     "proj4": "^2.11.0"
   },
