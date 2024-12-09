@@ -5,7 +5,7 @@
     ],
     "version": {
       "conventionalCommits": true,
-      "preVersionCommand": "npm run copy:lib:docs"
+      "preVersionCommand": "npm run copy:lib:docss"
     },
     "changelog": {
       "projectChangelogs": {

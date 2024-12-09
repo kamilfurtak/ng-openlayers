@@ -101,6 +101,7 @@ jobs:
         run: |
           git config --global user.email "kamil@fcomp.dev"
           git config --global user.name "Kamil Furtak"
+          npm run copy:lib:docs
           npx nx release publish
         shell: bash
         env:
