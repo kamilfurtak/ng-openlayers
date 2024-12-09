@@ -39,7 +39,6 @@ import { MapComponent } from 'ng-openlayers';
       </aol-layer-group>
     </aol-map>
   `,
-    standalone: true,
     imports: [
         MapComponent,
         DefaultInteractionComponent,
@@ -53,7 +52,7 @@ import { MapComponent } from 'ng-openlayers';
         SourceVectorComponent,
         FeatureComponent,
         SourceGeoJSONComponent,
-    ],
+    ]
 })
 export class DisplayGeojsonSourceComponent implements OnInit {
   constructor() {}

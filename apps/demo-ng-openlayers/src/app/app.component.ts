@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  template: `
+    selector: 'app-root',
+    template: `
     <header><h1 routerLink="/">ng-openlayers demo</h1></header>
     <div class="main-container"><router-outlet></router-outlet></div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       header {
         top: 0;
         height: 75px;
@@ -41,6 +41,7 @@ import { Component } from '@angular/core';
         overflow: auto;
       }
     `,
-  ],
+    ],
+    standalone: false
 })
 export class AppComponent {}

@@ -10,8 +10,8 @@ import {
 } from 'ng-openlayers';
 
 @Component({
-  selector: 'app-swipe',
-  template: `
+    selector: 'app-swipe',
+    template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
 
@@ -37,8 +37,8 @@ import {
       <>
     </button>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .swipe-button {
         box-shadow:
           0 3px 5px -1px rgba(0, 0, 0, 0.2),
@@ -65,17 +65,16 @@ import {
         height: 40px;
       }
     `,
-  ],
-  standalone: true,
-  imports: [
-    MapComponent,
-    DefaultInteractionComponent,
-    ViewComponent,
-    CoordinateComponent,
-    LayerTileComponent,
-    SourceOsmComponent,
-    SourceXYZComponent,
-  ],
+    ],
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        SourceXYZComponent,
+    ]
 })
 export class SwipeComponent implements OnInit {
   constructor() {}

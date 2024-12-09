@@ -14,8 +14,8 @@ import {
 } from 'ng-openlayers';
 
 @Component({
-  selector: 'app-root',
-  template: `
+    selector: 'app-root',
+    template: `
     <aol-map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -36,8 +36,8 @@ import {
       <label for="graticule">Toggle graticule</label>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -52,20 +52,19 @@ import {
         padding: 1rem;
       }
     `,
-  ],
-  standalone: true,
-  imports: [
-    MapComponent,
-    DefaultInteractionComponent,
-    DefaultControlComponent,
-    ControlFullScreenComponent,
-    ViewComponent,
-    CoordinateComponent,
-    LayerTileComponent,
-    SourceOsmComponent,
-    FormsModule,
-    GraticuleComponent,
-  ],
+    ],
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        DefaultControlComponent,
+        ControlFullScreenComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        FormsModule,
+        GraticuleComponent,
+    ]
 })
 export class GraticuleDemoComponent {
   public zoom = 4;

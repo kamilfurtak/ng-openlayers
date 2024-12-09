@@ -59,8 +59,7 @@ import { Router, RouterOutlet } from '@angular/router';
       }
     `,
     ],
-    standalone: true,
-    imports: [RouterOutlet],
+    imports: [RouterOutlet]
 })
 export class ExamplesItemComponent implements OnInit {
   constructor(private router: Router) {}

@@ -24,8 +24,8 @@ export interface DrawHoleInPolygonInteractionError {
 }
 
 @Component({
-  selector: 'aol-interaction-draw-hole-in-polygon',
-  template: `
+    selector: 'aol-interaction-draw-hole-in-polygon',
+    template: `
     <aol-interaction-draw
       #drawInstance
       type="Polygon"
@@ -37,8 +37,7 @@ export interface DrawHoleInPolygonInteractionError {
     >
     </aol-interaction-draw>
   `,
-  standalone: true,
-  imports: [DrawInteractionComponent],
+    imports: [DrawInteractionComponent]
 })
 export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
   @ViewChild('drawInstance') drawInteractionComponent: DrawInteractionComponent;

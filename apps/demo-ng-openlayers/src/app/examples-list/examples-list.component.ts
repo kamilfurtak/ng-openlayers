@@ -76,12 +76,11 @@ import { RouterLink } from '@angular/router';
       }
     `,
     ],
-    standalone: true,
     imports: [
         FormsModule,
         ReactiveFormsModule,
         RouterLink,
-    ],
+    ]
 })
 export class ExamplesListComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder) {}

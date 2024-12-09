@@ -84,7 +84,6 @@ import { MapComponent } from 'ng-openlayers';
       }
     `,
     ],
-    standalone: true,
     imports: [
         MapComponent,
         ViewComponent,
@@ -100,7 +99,7 @@ import { MapComponent } from 'ng-openlayers';
         StyleStrokeComponent,
         StyleFillComponent,
         StyleIconComponent,
-    ],
+    ]
 })
 export class BasicComponent {
   public zoom = 15;

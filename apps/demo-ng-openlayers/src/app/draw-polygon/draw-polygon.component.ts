@@ -20,8 +20,8 @@ import {
 } from 'ng-openlayers';
 
 @Component({
-  selector: 'app-draw-polygon',
-  template: `
+    selector: 'app-draw-polygon',
+    template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       @if (isDrawing) {
@@ -63,8 +63,8 @@ import {
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -79,23 +79,22 @@ import {
         padding: 1rem;
       }
     `,
-  ],
-  standalone: true,
-  imports: [
-    MapComponent,
-    DefaultInteractionComponent,
-    DrawInteractionComponent,
-    ViewComponent,
-    CoordinateComponent,
-    LayerTileComponent,
-    SourceOsmComponent,
-    LayerVectorComponent,
-    SourceVectorComponent,
-    FeatureComponent,
-    GeometryPolygonComponent,
-    CollectionCoordinatesComponent,
-    JsonPipe,
-  ],
+    ],
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        DrawInteractionComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        LayerVectorComponent,
+        SourceVectorComponent,
+        FeatureComponent,
+        GeometryPolygonComponent,
+        CollectionCoordinatesComponent,
+        JsonPipe,
+    ]
 })
 export class DrawPolygonComponent {
   isDrawing = false;

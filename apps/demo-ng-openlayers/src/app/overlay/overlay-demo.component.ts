@@ -18,8 +18,8 @@ import {
 } from 'ng-openlayers';
 
 @Component({
-  selector: 'app-display-overlay',
-  template: `
+    selector: 'app-display-overlay',
+    template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -51,8 +51,8 @@ import {
       </aol-overlay>
     </aol-map>
   `,
-  styles: [
-    `
+    styles: [
+        `
       .tooltip {
         margin-top: 35%;
         right: 50%;
@@ -69,24 +69,23 @@ import {
         border: 1px solid white;
       }
     `,
-  ],
-  standalone: true,
-  imports: [
-    MapComponent,
-    DefaultInteractionComponent,
-    DefaultControlComponent,
-    ViewComponent,
-    CoordinateComponent,
-    LayerTileComponent,
-    SourceOsmComponent,
-    LayerVectorComponent,
-    SourceVectorComponent,
-    FeatureComponent,
-    GeometryPolygonComponent,
-    CollectionCoordinatesComponent,
-    ContentComponent,
-    OverlayComponent,
-  ],
+    ],
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        DefaultControlComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        LayerVectorComponent,
+        SourceVectorComponent,
+        FeatureComponent,
+        GeometryPolygonComponent,
+        CollectionCoordinatesComponent,
+        ContentComponent,
+        OverlayComponent,
+    ]
 })
 export class OverlayDemoComponent {
   geoJsonFormat = new GeoJSON();
