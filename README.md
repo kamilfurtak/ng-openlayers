@@ -1,7 +1,7 @@
 # OpenLayers library for Angular
 
 ## Demo
-https://kamilfurtak.github.io/ng-openlayers/
+https://kamilfurtak.github.io/ng-openlayers/ 
 
 ## Installation
 Hiere is a link to the blog post with the tutorial on how to create interactive maps with Angular 17 and latest OpenLayers using this library:
