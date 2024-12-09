@@ -1,3 +1,13 @@
+# 19.0.0 (2024-12-09)
+
+### 🚀 Features
+
+- ⚠️  Update to Angular 19
+
+### ⚠️  Breaking Changes
+
+- ⚠️  Update to Angular 19
+
 ## 18.1.0 (2024-11-29)
 
 
