@@ -5,7 +5,7 @@
     ],
     "version": {
       "conventionalCommits": true,
-      "preVersionCommand": "cp README.md dist/libs/ng-openlayers/README.md && cp CHANGELOG.md dist/libs/ng-openlayers/CHANGELOG.md"
+      "preVersionCommand": "npm run copy:lib:docs"
     },
     "changelog": {
       "projectChangelogs": {
