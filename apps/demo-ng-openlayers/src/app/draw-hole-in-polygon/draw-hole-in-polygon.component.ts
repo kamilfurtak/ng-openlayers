@@ -27,8 +27,8 @@ import { Feature } from 'ol';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-modify-polygon',
-  template: `
+    selector: 'app-modify-polygon',
+    template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
 
@@ -103,8 +103,8 @@ import { ToastrService } from 'ngx-toastr';
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -119,26 +119,25 @@ import { ToastrService } from 'ngx-toastr';
         padding: 1rem;
       }
     `,
-  ],
-  standalone: true,
-  imports: [
-    MapComponent,
-    DefaultInteractionComponent,
-    SelectInteractionComponent,
-    ModifyInteractionComponent,
-    ViewComponent,
-    CoordinateComponent,
-    LayerTileComponent,
-    SourceOsmComponent,
-    LayerVectorComponent,
-    SourceVectorComponent,
-    FeatureComponent,
-    GeometryPolygonComponent,
-    CollectionCoordinatesComponent,
-    JsonPipe,
-    DrawHoleInPolygonInteractionComponent,
-    FormsModule,
-  ],
+    ],
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        SelectInteractionComponent,
+        ModifyInteractionComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        LayerVectorComponent,
+        SourceVectorComponent,
+        FeatureComponent,
+        GeometryPolygonComponent,
+        CollectionCoordinatesComponent,
+        JsonPipe,
+        DrawHoleInPolygonInteractionComponent,
+        FormsModule,
+    ]
 })
 export class DrawHoleInPolygonComponent {
   @ViewChild('drawHoleInteraction', { static: false }) drawHoleInteraction!: DrawHoleInPolygonInteractionComponent;

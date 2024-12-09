@@ -146,7 +146,6 @@ import { MapComponent } from 'ng-openlayers';
       </aol-layer-group>
     </aol-map>
     `,
-    standalone: true,
     imports: [
         MapComponent,
         DefaultInteractionComponent,
@@ -171,7 +170,7 @@ import { MapComponent } from 'ng-openlayers';
         GeometryMultiPointComponent,
         GeometryMultiLinestringComponent,
         GeometryMultiPolygonComponent,
-    ],
+    ]
 })
 export class DisplayGeometryComponent implements OnInit {
   constructor() {}

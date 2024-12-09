@@ -45,14 +45,13 @@ import { MapComponent } from 'ng-openlayers';
       }
     `,
     ],
-    standalone: true,
     imports: [
         MapComponent,
         ViewComponent,
         LayerImageComponent,
         SourceImageStaticComponent,
         FormsModule,
-    ],
+    ]
 })
 export class ImageStaticComponent {
   public url = 'https://imgs.xkcd.com/comics/online_communities.png';

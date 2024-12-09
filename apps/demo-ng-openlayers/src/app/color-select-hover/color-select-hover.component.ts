@@ -23,8 +23,8 @@ import { Layer } from 'ol/layer';
 import { Feature } from 'ol';
 
 @Component({
-  selector: 'app-color-select-hover',
-  template: `
+    selector: 'app-color-select-hover',
+    template: `
     <aol-map #map (pointerMove)="changeFeatureHovered($event)" width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -65,26 +65,25 @@ import { Feature } from 'ol';
       </aol-layer-group>
     </aol-map>
   `,
-  standalone: true,
-  imports: [
-    MapComponent,
-    DefaultInteractionComponent,
-    DefaultControlComponent,
-    SelectInteractionComponent,
-    ViewComponent,
-    CoordinateComponent,
-    LayerTileComponent,
-    SourceOsmComponent,
-    LayerGroupComponent,
-    LayerVectorComponent,
-    StyleComponent,
-    StyleStrokeComponent,
-    StyleFillComponent,
-    SourceVectorComponent,
-    FeatureComponent,
-    GeometryPolygonComponent,
-    CollectionCoordinatesComponent,
-  ],
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        DefaultControlComponent,
+        SelectInteractionComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        LayerGroupComponent,
+        LayerVectorComponent,
+        StyleComponent,
+        StyleStrokeComponent,
+        StyleFillComponent,
+        SourceVectorComponent,
+        FeatureComponent,
+        GeometryPolygonComponent,
+        CollectionCoordinatesComponent,
+    ]
 })
 export class ColorSelectHoverComponent implements OnInit {
   @ViewChild('map', { static: true })

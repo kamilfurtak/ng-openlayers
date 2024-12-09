@@ -5,11 +5,11 @@
     ],
     "version": {
       "conventionalCommits": true,
-      "preVersionCommand": "npm run copy:lib:docss"
+      "preVersionCommand": "npm run copy:lib:docs"
     },
     "changelog": {
       "projectChangelogs": {
-        "renderOptions":    {
+        "renderOptions": {
           "authors": false,
           "commitReferences": false,
           "versionTitleDate": true
@@ -83,5 +83,6 @@
       ]
     }
   },
-  "defaultBase": "main"
+  "defaultBase": "main",
+  "useLegacyCache": true
 }

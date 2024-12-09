@@ -15,8 +15,8 @@ import {
 import { Coordinate } from 'ol/coordinate';
 
 @Component({
-  selector: 'app-root',
-  template: `
+    selector: 'app-root',
+    template: `
     <aol-map (pointerMove)="displayInfo($event.coordinate)">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -39,8 +39,8 @@ import { Coordinate } from 'ol/coordinate';
       }
     </aol-map>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -51,21 +51,20 @@ import { Coordinate } from 'ol/coordinate';
         height: 100%;
       }
     `,
-  ],
-  standalone: true,
-  imports: [
-    MapComponent,
-    DefaultInteractionComponent,
-    DefaultControlComponent,
-    ControlFullScreenComponent,
-    ViewComponent,
-    LayerTileComponent,
-    SourceOsmComponent,
-    SourceUTFGridComponent,
-    OverlayComponent,
-    CoordinateComponent,
-    ContentComponent,
-  ],
+    ],
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        DefaultControlComponent,
+        ControlFullScreenComponent,
+        ViewComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        SourceUTFGridComponent,
+        OverlayComponent,
+        CoordinateComponent,
+        ContentComponent,
+    ]
 })
 export class UTFGridComponent {
   @ViewChild('UTFGrid', { static: true }) UTFGrid: SourceUTFGridComponent;

@@ -22,7 +22,6 @@ import { MapComponent } from 'ng-openlayers';
       </aol-layer-tile>
     </aol-map>
   `,
-    standalone: true,
     imports: [
         MapComponent,
         ViewComponent,
@@ -31,7 +30,7 @@ import { MapComponent } from 'ng-openlayers';
         DefaultControlComponent,
         LayerTileComponent,
         SourceTileJSONComponent,
-    ],
+    ]
 })
 export class TileJsonComponent {
   constructor() {}

@@ -51,7 +51,6 @@ import { MapComponent } from 'ng-openlayers';
       }
     `,
     ],
-    standalone: true,
     imports: [
         MapComponent,
         DefaultInteractionComponent,
@@ -60,7 +59,7 @@ import { MapComponent } from 'ng-openlayers';
         CoordinateComponent,
         LayerTileComponent,
         SourceOsmComponent,
-    ],
+    ]
 })
 export class CursorPositionComponent implements OnInit {
   constructor() {}

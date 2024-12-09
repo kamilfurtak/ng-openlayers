@@ -10,8 +10,8 @@ import {
 } from 'ng-openlayers';
 
 @Component({
-  selector: 'app-side-by-side',
-  template: `
+    selector: 'app-side-by-side',
+    template: `
     <aol-map #map [width]="'100%'" [height]="'100%'">
       <aol-interaction-default></aol-interaction-default>
 
@@ -32,8 +32,8 @@ import {
       </aol-layer-tile>
     </aol-map>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -43,17 +43,16 @@ import {
         width: 50%;
       }
     `,
-  ],
-  standalone: true,
-  imports: [
-    MapComponent,
-    DefaultInteractionComponent,
-    ViewComponent,
-    CoordinateComponent,
-    LayerTileComponent,
-    SourceOsmComponent,
-    SourceXYZComponent,
-  ],
+    ],
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        SourceXYZComponent,
+    ]
 })
 export class SideBySideComponent implements OnInit, AfterViewInit {
   constructor() {}

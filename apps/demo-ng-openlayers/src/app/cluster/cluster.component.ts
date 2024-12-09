@@ -108,7 +108,6 @@ import { MapComponent } from 'ng-openlayers';
       }
     `,
     ],
-    standalone: true,
     imports: [
         MapComponent,
         DefaultInteractionComponent,
@@ -130,7 +129,7 @@ import { MapComponent } from 'ng-openlayers';
         GeometryPolygonComponent,
         CollectionCoordinatesComponent,
         FormsModule,
-    ],
+    ]
 })
 export class ClusterComponent implements OnInit {
   distance = 60;

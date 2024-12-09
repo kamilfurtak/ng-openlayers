@@ -30,7 +30,6 @@ import { MapComponent } from 'ng-openlayers';
       }
     `,
     ],
-    standalone: true,
     imports: [
         MapComponent,
         DefaultInteractionComponent,
@@ -38,7 +37,7 @@ import { MapComponent } from 'ng-openlayers';
         CoordinateComponent,
         LayerImageComponent,
         SourceImageWMSComponent,
-    ],
+    ]
 })
 export class ImageWMSComponent implements OnInit {
   constructor() {}

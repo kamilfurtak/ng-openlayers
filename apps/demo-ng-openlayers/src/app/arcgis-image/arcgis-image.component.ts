@@ -44,7 +44,6 @@ import { MapComponent } from 'ng-openlayers';
       }
     `,
     ],
-    standalone: true,
     imports: [
         MapComponent,
         DefaultInteractionComponent,
@@ -56,7 +55,7 @@ import { MapComponent } from 'ng-openlayers';
         SourceOsmComponent,
         LayerImageComponent,
         SourceImageArcGISRestComponent,
-    ],
+    ]
 })
 export class ArcgisImageComponent {
   public zoom = 4;
