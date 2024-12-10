@@ -29,6 +29,44 @@
   "prefix": "app",
   "targets": {
     "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/apps/demo-ng-openlayers",
+        "index": "apps/demo-ng-openlayers/src/index.html",
+        "browser": "apps/demo-ng-openlayers/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
+        "tsConfig": "apps/demo-ng-openlayers/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/demo-ng-openlayers/public"
+          },
+          "apps/demo-ng-openlayers/src/favicon.ico",
+          "apps/demo-ng-openlayers/src/assets"
+        ],
+        "styles": [
+          "apps/demo-ng-openlayers/src/styles.css"
+        ],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "build_old": {
       "executor": "@angular-devkit/build-angular:browser",
       "options": {
         "outputPath": "dist/apps/demo-ng-openlayers",
