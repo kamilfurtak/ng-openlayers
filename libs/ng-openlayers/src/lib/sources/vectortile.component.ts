@@ -1,4 +1,4 @@
-import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
+import { AfterContentInit, Component, ContentChild, forwardRef, Host, Input } from '@angular/core';
 import { VectorTile } from 'ol/source';
 import Feature from 'ol/format/Feature';
 import TileGrid from 'ol/tilegrid/TileGrid';
@@ -10,10 +10,10 @@ import { ProjectionLike } from 'ol/proj';
 import { UrlFunction } from 'ol/Tile';
 
 @Component({
-    selector: 'aol-source-vectortile',
-    template: ` <ng-content></ng-content> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceVectorTileComponent) }],
-    standalone: true,
+  selector: 'aol-source-vectortile',
+  template: ` <ng-content></ng-content> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceVectorTileComponent) }],
+  standalone: true,
 })
 export class SourceVectorTileComponent extends SourceComponent implements AfterContentInit {
   @Input()
@@ -48,10 +48,10 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
 
   /* need the children to construct the OL3 object */
   ngAfterContentInit() {
-    this.format = this.formatComponent.instance;
+    this.format = this.formatComponent.instance as any;
     this.tileGrid = this.tileGridComponent.instance;
     // console.log('creating ol.source.VectorTile instance with:', this);
-    this.instance = new VectorTile(this);
+    this.instance = new VectorTile(this as any);
     this.host.instance.setSource(this.instance);
   }
 }

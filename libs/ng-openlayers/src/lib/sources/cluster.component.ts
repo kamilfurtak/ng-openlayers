@@ -33,7 +33,7 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   @ContentChild(SourceVectorComponent, { static: false })
   sourceVectorComponent: SourceVectorComponent;
 
-  instance: Cluster;
+  instance: any;
   source: Vector;
 
   constructor(@Host() layer: LayerVectorComponent) {
