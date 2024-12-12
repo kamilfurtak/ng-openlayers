@@ -4,7 +4,7 @@ import { LayerTileComponent } from '../layers/layertile.component';
 import { XYZ } from 'ol/source';
 import { TileGridComponent } from '../tilegrid.component';
 
-fdescribe('SourceXYZComponent', () => {
+describe('SourceXYZComponent', () => {
   let component: SourceXYZComponent;
   let fixture: ComponentFixture<SourceXYZComponent>;
   let mockLayerComponent: Partial<LayerTileComponent>;

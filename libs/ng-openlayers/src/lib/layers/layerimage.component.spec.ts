@@ -13,14 +13,12 @@ describe('LayerImageComponent', () => {
     mockMapComponent = {
       instance: {
         getLayers: () => new Collection(),
-      } as any
+      } as any,
     };
 
     await TestBed.configureTestingModule({
       imports: [LayerImageComponent],
-      providers: [
-        { provide: MapComponent, useValue: mockMapComponent }
-      ]
+      providers: [{ provide: MapComponent, useValue: mockMapComponent }],
     }).compileComponents();
   });
 
