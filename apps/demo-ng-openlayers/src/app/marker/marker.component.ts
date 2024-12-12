@@ -52,7 +52,6 @@ import { MapComponent } from 'ng-openlayers';
       }
     </aol-map>
   `,
-    standalone: true,
     imports: [
         MapComponent,
         DefaultInteractionComponent,
@@ -67,7 +66,7 @@ import { MapComponent } from 'ng-openlayers';
         GeometryPointComponent,
         StyleComponent,
         StyleIconComponent,
-    ],
+    ]
 })
 export class MarkerComponent implements OnInit {
   constructor() {}

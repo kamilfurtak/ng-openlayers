@@ -82,7 +82,6 @@ import { MapComponent } from 'ng-openlayers';
       }
     `,
     ],
-    standalone: true,
     imports: [
         MapComponent,
         DefaultInteractionComponent,
@@ -100,7 +99,7 @@ import { MapComponent } from 'ng-openlayers';
         StyleFillComponent,
         StyleIconComponent,
         FormsModule,
-    ],
+    ]
 })
 export class ViewProjectionUpdateComponent {
   public viewProjection = 'EPSG:3857';

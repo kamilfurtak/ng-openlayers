@@ -13,8 +13,8 @@ import { transform } from 'ol/proj';
 import Projection from 'ol/proj/Projection';
 
 @Component({
-  selector: 'app-map-position',
-  template: `
+    selector: 'app-map-position',
+    template: `
     <aol-map #map width="100%" height="100%" (moveStart)="startMoving()" (moveEnd)="displayCoordinates()">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -43,8 +43,8 @@ import Projection from 'ol/proj/Projection';
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -85,19 +85,18 @@ import Projection from 'ol/proj/Projection';
         float: left;
       }
     `,
-  ],
-  standalone: true,
-  imports: [
-    MapComponent,
-    DefaultInteractionComponent,
-    DefaultControlComponent,
-    ViewComponent,
-    CoordinateComponent,
-    LayerTileComponent,
-    SourceOsmComponent,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
+    ],
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        DefaultControlComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerTileComponent,
+        SourceOsmComponent,
+        FormsModule,
+        ReactiveFormsModule,
+    ]
 })
 export class MapPositionComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder) {}

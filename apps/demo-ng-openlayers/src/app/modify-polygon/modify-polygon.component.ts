@@ -75,7 +75,6 @@ import { MapComponent } from 'ng-openlayers';
       }
     `,
     ],
-    standalone: true,
     imports: [
         MapComponent,
         DefaultInteractionComponent,
@@ -91,7 +90,7 @@ import { MapComponent } from 'ng-openlayers';
         GeometryPolygonComponent,
         CollectionCoordinatesComponent,
         JsonPipe,
-    ],
+    ]
 })
 export class ModifyPolygonComponent implements OnInit {
   constructor() {}

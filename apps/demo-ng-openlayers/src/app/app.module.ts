@@ -30,10 +30,14 @@ import { ViewProjectionUpdateComponent } from './view-projection-update/view-pro
 import { AngularOpenlayersModule } from 'ng-openlayers';
 import { GraticuleDemoComponent } from './graticule/graticule-demo.component';
 import { OverlayDemoComponent } from './overlay/overlay-demo.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     BrowserModule,
     FormsModule,
     AppRoutingModule,

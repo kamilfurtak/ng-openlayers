@@ -45,7 +45,6 @@ import {
       </aol-layer-vector>
     </aol-map>
   `,
-  standalone: true,
   imports: [
     MapComponent,
     DefaultInteractionComponent,
@@ -57,8 +56,6 @@ import {
     SourceVectorComponent,
     FeatureComponent,
     GeometryPointComponent,
-    SelectInteractionComponent,
-    SelectInteractionComponent,
   ],
 })
 export class SelectInteractionComponent {

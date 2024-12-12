@@ -19,8 +19,8 @@ interface RasterData {
 }
 
 @Component({
-  selector: 'app-raster',
-  template: `
+    selector: 'app-raster',
+    template: `
     <aol-map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -68,8 +68,8 @@ interface RasterData {
       </div>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         height: 100%;
         display: flex;
@@ -91,21 +91,20 @@ interface RasterData {
         margin: 20px;
       }
     `,
-  ],
-  standalone: true,
-  imports: [
-    MapComponent,
-    DefaultInteractionComponent,
-    DefaultControlComponent,
-    ControlFullScreenComponent,
-    ViewComponent,
-    CoordinateComponent,
-    LayerImageComponent,
-    SourceRasterComponent,
-    SourceOsmComponent,
-    SourceXYZComponent,
-    FormsModule,
-  ],
+    ],
+    imports: [
+        MapComponent,
+        DefaultInteractionComponent,
+        DefaultControlComponent,
+        ControlFullScreenComponent,
+        ViewComponent,
+        CoordinateComponent,
+        LayerImageComponent,
+        SourceRasterComponent,
+        SourceOsmComponent,
+        SourceXYZComponent,
+        FormsModule,
+    ]
 })
 export class RasterComponent {
   operation = rasterOperation;
