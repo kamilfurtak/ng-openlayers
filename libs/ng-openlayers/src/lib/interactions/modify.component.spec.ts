@@ -2,8 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModifyInteractionComponent } from './modify.component';
 import { MapComponent } from '../map.component';
 import { Modify } from 'ol/interaction';
-import { Collection } from 'ol';
-import { Feature } from 'ol';
+import { Collection, Feature } from 'ol';
 
 describe('ModifyInteractionComponent', () => {
   let component: ModifyInteractionComponent;
@@ -14,15 +13,13 @@ describe('ModifyInteractionComponent', () => {
     mockMapComponent = {
       instance: {
         addInteraction: jasmine.createSpy('addInteraction'),
-        removeInteraction: jasmine.createSpy('removeInteraction')
-      } as any
+        removeInteraction: jasmine.createSpy('removeInteraction'),
+      } as any,
     };
 
     await TestBed.configureTestingModule({
       imports: [ModifyInteractionComponent],
-      providers: [
-        { provide: MapComponent, useValue: mockMapComponent }
-      ]
+      providers: [{ provide: MapComponent, useValue: mockMapComponent }],
     }).compileComponents();
   });
 
@@ -45,13 +42,13 @@ describe('ModifyInteractionComponent', () => {
   it('should emit modify events', () => {
     const modifyEndSpy = spyOn(component.olModifyEnd, 'emit');
     const modifyStartSpy = spyOn(component.olModifyStart, 'emit');
-    
+
     component.features = new Collection<Feature>();
     fixture.detectChanges();
-    
-    const mockEvent = { type: 'modifyend' };
+
+    const mockEvent = { type: 'modifyend' } as any;
     component.instance.dispatchEvent(mockEvent);
-    
+
     expect(modifyEndSpy).toHaveBeenCalledWith(mockEvent);
   });
 

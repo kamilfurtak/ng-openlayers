@@ -11,15 +11,13 @@ describe('SourceOsmComponent', () => {
   beforeEach(async () => {
     mockLayerComponent = {
       instance: {
-        setSource: jasmine.createSpy('setSource')
-      } as any
+        setSource: jasmine.createSpy('setSource'),
+      } as any,
     };
 
     await TestBed.configureTestingModule({
       imports: [SourceOsmComponent],
-      providers: [
-        { provide: LayerTileComponent, useValue: mockLayerComponent }
-      ]
+      providers: [{ provide: LayerTileComponent, useValue: mockLayerComponent }],
     }).compileComponents();
   });
 
@@ -57,12 +55,12 @@ describe('SourceOsmComponent', () => {
   it('should emit tile load events', () => {
     const loadStartSpy = spyOn(component.tileLoadStart, 'emit');
     const loadEndSpy = spyOn(component.tileLoadEnd, 'emit');
-    
+
     fixture.detectChanges();
-    
-    const mockEvent = { type: 'tileloadstart' };
+
+    const mockEvent = { type: 'tileloadstart' } as any;
     component.instance.dispatchEvent(mockEvent);
-    
+
     expect(loadStartSpy).toHaveBeenCalledWith(mockEvent);
   });
 });

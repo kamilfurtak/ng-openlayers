@@ -11,15 +11,13 @@ describe('SourceImageWMSComponent', () => {
   beforeEach(async () => {
     mockLayerComponent = {
       instance: {
-        setSource: jasmine.createSpy('setSource')
-      } as any
+        setSource: jasmine.createSpy('setSource'),
+      } as any,
     };
 
     await TestBed.configureTestingModule({
       imports: [SourceImageWMSComponent],
-      providers: [
-        { provide: LayerImageComponent, useValue: mockLayerComponent }
-      ]
+      providers: [{ provide: LayerImageComponent, useValue: mockLayerComponent }],
     }).compileComponents();
   });
 
@@ -40,28 +38,28 @@ describe('SourceImageWMSComponent', () => {
   it('should emit image load events', () => {
     const loadStartSpy = spyOn(component.imageLoadStart, 'emit');
     const loadEndSpy = spyOn(component.imageLoadEnd, 'emit');
-    
+
     fixture.detectChanges();
-    
-    const mockEvent = { type: 'imageloadstart' };
+
+    const mockEvent = { type: 'imageloadstart' } as any;
     component.instance.dispatchEvent(mockEvent);
-    
+
     expect(loadStartSpy).toHaveBeenCalledWith(mockEvent);
   });
 
   it('should handle params changes', () => {
     fixture.detectChanges();
-    
+
     const updateParamsSpy = spyOn(component.instance, 'updateParams');
     component.ngOnChanges({
       params: {
         currentValue: { LAYERS: 'newLayer' },
         previousValue: { LAYERS: 'oldLayer' },
         firstChange: false,
-        isFirstChange: () => false
-      }
+        isFirstChange: () => false,
+      },
     });
-    
+
     expect(updateParamsSpy).toHaveBeenCalledWith({ LAYERS: 'newLayer' });
   });
 

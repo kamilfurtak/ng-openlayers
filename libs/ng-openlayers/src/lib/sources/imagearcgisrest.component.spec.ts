@@ -11,15 +11,13 @@ describe('SourceImageArcGISRestComponent', () => {
   beforeEach(async () => {
     mockLayerComponent = {
       instance: {
-        setSource: jasmine.createSpy('setSource')
-      } as any
+        setSource: jasmine.createSpy('setSource'),
+      } as any,
     };
 
     await TestBed.configureTestingModule({
       imports: [SourceImageArcGISRestComponent],
-      providers: [
-        { provide: LayerImageComponent, useValue: mockLayerComponent }
-      ]
+      providers: [{ provide: LayerImageComponent, useValue: mockLayerComponent }],
     }).compileComponents();
   });
 
@@ -40,28 +38,28 @@ describe('SourceImageArcGISRestComponent', () => {
   it('should emit image load events', () => {
     const loadStartSpy = spyOn(component.imageLoadStart, 'emit');
     const loadEndSpy = spyOn(component.imageLoadEnd, 'emit');
-    
+
     fixture.detectChanges();
-    
-    const mockEvent = { type: 'imageloadstart' };
+
+    const mockEvent = { type: 'imageloadstart' } as any;
     component.instance.dispatchEvent(mockEvent);
-    
+
     expect(loadStartSpy).toHaveBeenCalledWith(mockEvent);
   });
 
   it('should handle params changes', () => {
     fixture.detectChanges();
-    
+
     const updateParamsSpy = spyOn(component.instance, 'updateParams');
     component.ngOnChanges({
       params: {
         currentValue: { LAYERS: 'show:0,1,2' },
         previousValue: { LAYERS: 'show:0' },
         firstChange: false,
-        isFirstChange: () => false
-      }
+        isFirstChange: () => false,
+      },
     });
-    
+
     expect(updateParamsSpy).toHaveBeenCalledWith({ LAYERS: 'show:0,1,2' });
   });
 

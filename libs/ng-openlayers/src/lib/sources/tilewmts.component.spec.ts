@@ -64,7 +64,7 @@ describe('SourceTileWMTSComponent', () => {
 
     fixture.detectChanges();
 
-    const mockEvent = { type: 'tileloadstart' };
+    const mockEvent = { type: 'tileloadstart' } as any;
     component.instance.dispatchEvent(mockEvent);
 
     expect(loadStartSpy).toHaveBeenCalledWith(mockEvent);

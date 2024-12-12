@@ -12,15 +12,13 @@ describe('DrawInteractionComponent', () => {
     mockMapComponent = {
       instance: {
         addInteraction: jasmine.createSpy('addInteraction'),
-        removeInteraction: jasmine.createSpy('removeInteraction')
-      } as any
+        removeInteraction: jasmine.createSpy('removeInteraction'),
+      } as any,
     };
 
     await TestBed.configureTestingModule({
       imports: [DrawInteractionComponent],
-      providers: [
-        { provide: MapComponent, useValue: mockMapComponent }
-      ]
+      providers: [{ provide: MapComponent, useValue: mockMapComponent }],
     }).compileComponents();
   });
 
@@ -36,7 +34,7 @@ describe('DrawInteractionComponent', () => {
   it('should create draw interaction', () => {
     component.type = 'Point';
     fixture.detectChanges();
-    
+
     expect(component.instance instanceof Draw).toBeTruthy();
     expect(mockMapComponent.instance.addInteraction).toHaveBeenCalledWith(component.instance);
   });
@@ -44,7 +42,7 @@ describe('DrawInteractionComponent', () => {
   it('should remove interaction on destroy', () => {
     component.type = 'Point';
     fixture.detectChanges();
-    
+
     component.ngOnDestroy();
     expect(mockMapComponent.instance.removeInteraction).toHaveBeenCalledWith(component.instance);
   });
@@ -52,13 +50,13 @@ describe('DrawInteractionComponent', () => {
   it('should emit draw events', () => {
     const drawEndSpy = spyOn(component.drawEnd, 'emit');
     const drawStartSpy = spyOn(component.drawStart, 'emit');
-    
+
     component.type = 'Point';
     fixture.detectChanges();
-    
-    const mockEvent = { type: 'drawend' };
+
+    const mockEvent = { type: 'drawend' } as any;
     component.instance.dispatchEvent(mockEvent);
-    
+
     expect(drawEndSpy).toHaveBeenCalledWith(mockEvent);
   });
 });

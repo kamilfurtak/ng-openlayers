@@ -11,15 +11,13 @@ describe('SourceImageStaticComponent', () => {
   beforeEach(async () => {
     mockLayerComponent = {
       instance: {
-        setSource: jasmine.createSpy('setSource')
-      } as any
+        setSource: jasmine.createSpy('setSource'),
+      } as any,
     };
 
     await TestBed.configureTestingModule({
       imports: [SourceImageStaticComponent],
-      providers: [
-        { provide: LayerImageComponent, useValue: mockLayerComponent }
-      ]
+      providers: [{ provide: LayerImageComponent, useValue: mockLayerComponent }],
     }).compileComponents();
   });
 
@@ -42,14 +40,14 @@ describe('SourceImageStaticComponent', () => {
   it('should emit image load events', () => {
     const loadStartSpy = spyOn(component.imageLoadStart, 'emit');
     const loadEndSpy = spyOn(component.imageLoadEnd, 'emit');
-    
+
     component.url = 'https://example.com/image.png';
     component.imageExtent = [0, 0, 100, 100];
     fixture.detectChanges();
-    
-    const mockEvent = { type: 'imageloadstart' };
+
+    const mockEvent = { type: 'imageloadstart' } as any;
     component.instance.dispatchEvent(mockEvent);
-    
+
     expect(loadStartSpy).toHaveBeenCalledWith(mockEvent);
   });
 
@@ -57,17 +55,17 @@ describe('SourceImageStaticComponent', () => {
     component.url = 'https://example.com/image.png';
     component.imageExtent = [0, 0, 100, 100];
     fixture.detectChanges();
-    
+
     const setLayerSourceSpy = spyOn(component, 'setLayerSource');
     component.ngOnChanges({
       url: {
         currentValue: 'https://example.com/new-image.png',
         previousValue: 'https://example.com/image.png',
         firstChange: false,
-        isFirstChange: () => false
-      }
+        isFirstChange: () => false,
+      },
     });
-    
+
     expect(setLayerSourceSpy).toHaveBeenCalled();
   });
 });

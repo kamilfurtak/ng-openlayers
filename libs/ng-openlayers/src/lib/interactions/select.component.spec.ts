@@ -14,15 +14,13 @@ describe('SelectInteractionComponent', () => {
     mockMapComponent = {
       instance: {
         addInteraction: jasmine.createSpy('addInteraction'),
-        removeInteraction: jasmine.createSpy('removeInteraction')
-      } as any
+        removeInteraction: jasmine.createSpy('removeInteraction'),
+      } as any,
     };
 
     await TestBed.configureTestingModule({
       imports: [SelectInteractionComponent],
-      providers: [
-        { provide: MapComponent, useValue: mockMapComponent }
-      ]
+      providers: [{ provide: MapComponent, useValue: mockMapComponent }],
     }).compileComponents();
   });
 
@@ -63,10 +61,10 @@ describe('SelectInteractionComponent', () => {
   it('should emit select events', () => {
     const selectSpy = spyOn(component.olSelect, 'emit');
     fixture.detectChanges();
-    
-    const mockEvent = { type: 'select' };
+
+    const mockEvent = { type: 'select' } as any;
     component.instance.dispatchEvent(mockEvent);
-    
+
     expect(selectSpy).toHaveBeenCalledWith(mockEvent);
   });
 

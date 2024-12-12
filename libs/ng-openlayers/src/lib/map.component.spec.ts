@@ -1,8 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MapComponent } from './map.component';
 import { Map } from 'ol';
-import { Control } from 'ol/control';
-import { Interaction } from 'ol/interaction';
 
 describe('MapComponent', () => {
   let component: MapComponent;
@@ -45,16 +43,16 @@ describe('MapComponent', () => {
     const newWidth = '500px';
     component.width = newWidth;
     fixture.detectChanges();
-    
+
     expect(component.width).toBe(newWidth);
   });
 
   it('should emit click events', () => {
     const spy = spyOn(component.olClick, 'emit');
-    const mockEvent = { type: 'click' };
-    
+    const mockEvent = { type: 'click' } as any;
+
     component.instance.dispatchEvent(mockEvent);
-    
+
     expect(spy).toHaveBeenCalledWith(mockEvent);
   });
 });

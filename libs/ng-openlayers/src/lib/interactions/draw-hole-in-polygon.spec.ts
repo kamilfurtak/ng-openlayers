@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DrawHoleInPolygonInteractionComponent } from './draw-hole-in-polygon';
 import { MapComponent } from '../map.component';
-import { DrawInteractionComponent } from './draw.component';
 import { Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource } from 'ol/source';
 import { Feature } from 'ol';
@@ -16,20 +15,20 @@ describe('DrawHoleInPolygonInteractionComponent', () => {
     mockMapComponent = {
       instance: {
         getLayers: () => ({
-          getArray: () => [new VectorLayer({
-            source: new VectorSource()
-          })]
+          getArray: () => [
+            new VectorLayer({
+              source: new VectorSource(),
+            }),
+          ],
         }),
         on: jasmine.createSpy('on'),
-        un: jasmine.createSpy('un')
-      } as any
+        un: jasmine.createSpy('un'),
+      } as any,
     };
 
     await TestBed.configureTestingModule({
       imports: [DrawHoleInPolygonInteractionComponent],
-      providers: [
-        { provide: MapComponent, useValue: mockMapComponent }
-      ]
+      providers: [{ provide: MapComponent, useValue: mockMapComponent }],
     }).compileComponents();
   });
 
@@ -44,18 +43,26 @@ describe('DrawHoleInPolygonInteractionComponent', () => {
 
   it('should initialize with vector layer', () => {
     fixture.detectChanges();
-    expect(component.vectorLayer instanceof VectorLayer).toBeTruthy();
+    const vectorLayer = mockMapComponent.instance.getLayers().getArray()[0] as VectorLayer<any>;
+    expect(vectorLayer instanceof VectorLayer).toBeTruthy();
   });
 
   it('should handle draw start', () => {
     const mockEvent = {
       feature: new Feature({
-        geometry: new Polygon([[[0, 0], [1, 1], [1, 0], [0, 0]]])
+        geometry: new Polygon([
+          [
+            [0, 0],
+            [1, 1],
+            [1, 0],
+            [0, 0],
+          ],
+        ]),
       }),
       target: {
-        abortDrawing: jasmine.createSpy('abortDrawing')
-      }
-    };
+        abortDrawing: jasmine.createSpy('abortDrawing'),
+      },
+    } as any;
 
     fixture.detectChanges();
     component.onDrawStart(mockEvent);
@@ -66,12 +73,19 @@ describe('DrawHoleInPolygonInteractionComponent', () => {
     const drawEndSpy = spyOn(component.drawEnd, 'emit');
     const mockEvent = {
       feature: new Feature({
-        geometry: new Polygon([[[0, 0], [1, 1], [1, 0], [0, 0]]])
-      })
-    };
+        geometry: new Polygon([
+          [
+            [0, 0],
+            [1, 1],
+            [1, 0],
+            [0, 0],
+          ],
+        ]),
+      }),
+    } as any;
 
     fixture.detectChanges();
-    component.onDrawEnd(mockEvent);
+    component.onDrawEnd();
     expect(component['isDrawing']).toBeFalsy();
     expect(drawEndSpy).toHaveBeenCalled();
   });
@@ -80,11 +94,18 @@ describe('DrawHoleInPolygonInteractionComponent', () => {
     const mockEvent = {
       pixel: [100, 100],
       preventDefault: jasmine.createSpy('preventDefault'),
-      stopPropagation: jasmine.createSpy('stopPropagation')
-    };
+      stopPropagation: jasmine.createSpy('stopPropagation'),
+    } as any;
 
     component['isDrawing'] = true;
-    component['intersectedPolygon'] = new Polygon([[[0, 0], [1, 1], [1, 0], [0, 0]]]);
+    component['intersectedPolygon'] = new Polygon([
+      [
+        [0, 0],
+        [1, 1],
+        [1, 0],
+        [0, 0],
+      ],
+    ]);
     mockMapComponent.instance.getCoordinateFromPixel = () => [0.5, 0.5];
 
     fixture.detectChanges();
@@ -95,6 +116,6 @@ describe('DrawHoleInPolygonInteractionComponent', () => {
   it('should clean up on destroy', () => {
     fixture.detectChanges();
     component.ngOnDestroy();
-    expect(mockMapComponent.instance.un).toHaveBeenCalledWith('click', component.onMapClick);
+    expect(mockMapComponent.instance.un).toHaveBeenCalledWith(['click'], component.onMapClick);
   });
 });

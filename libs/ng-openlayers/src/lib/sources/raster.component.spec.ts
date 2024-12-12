@@ -37,13 +37,13 @@ describe('SourceRasterComponent', () => {
   });
 
   it('should emit raster operation events', () => {
-    const beforeOperationsSpy = jest.spyOn(component.beforeOperations, 'emit');
-    const afterOperationsSpy = jest.spyOn(component.afterOperations, 'emit');
+    const beforeOperationsSpy = spyOn(component.beforeOperations, 'emit');
+    const afterOperationsSpy = spyOn(component.afterOperations, 'emit');
 
     component.sources = [new Source({})];
     fixture.detectChanges();
 
-    const mockEvent = { type: 'beforeoperations' };
+    const mockEvent = { type: 'beforeoperations' } as any;
     component.instance.dispatchEvent(mockEvent);
 
     expect(beforeOperationsSpy).toHaveBeenCalledWith(mockEvent);

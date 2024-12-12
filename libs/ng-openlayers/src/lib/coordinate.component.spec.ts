@@ -89,7 +89,7 @@ describe('CoordinateComponent', () => {
       key: 'view',
     };
 
-    component.onMapViewChanged(mockEvent);
+    component['onMapViewChanged'](mockEvent);
     expect(mockViewComponent.instance.setCenter).toHaveBeenCalled();
   });
 });

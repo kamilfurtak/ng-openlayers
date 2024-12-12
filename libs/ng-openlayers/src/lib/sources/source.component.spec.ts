@@ -1,4 +1,3 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SourceComponent } from './source.component';
 import { LayerComponent } from '../layers/layer.component';
 import Source from 'ol/source/Source';
@@ -16,8 +15,8 @@ describe('SourceComponent', () => {
   beforeEach(() => {
     mockLayerComponent = {
       instance: {
-        setSource: jasmine.createSpy('setSource')
-      } as any
+        setSource: jasmine.createSpy('setSource'),
+      } as any,
     };
 
     component = new TestSourceComponent(mockLayerComponent as LayerComponent);
@@ -38,7 +37,7 @@ describe('SourceComponent', () => {
 
   it('should register source with layer', () => {
     const source = new Source({});
-    component.register(source);
+    component['register'](source);
     expect(mockLayerComponent.instance.setSource).toHaveBeenCalledWith(source);
   });
 });

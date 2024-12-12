@@ -2,8 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateInteractionComponent } from './translate.component';
 import { MapComponent } from '../map.component';
 import { Translate } from 'ol/interaction';
-import { Collection } from 'ol';
-import { Feature } from 'ol';
+import { Collection, Feature } from 'ol';
 
 describe('TranslateInteractionComponent', () => {
   let component: TranslateInteractionComponent;
@@ -14,15 +13,13 @@ describe('TranslateInteractionComponent', () => {
     mockMapComponent = {
       instance: {
         addInteraction: jasmine.createSpy('addInteraction'),
-        removeInteraction: jasmine.createSpy('removeInteraction')
-      } as any
+        removeInteraction: jasmine.createSpy('removeInteraction'),
+      } as any,
     };
 
     await TestBed.configureTestingModule({
       imports: [TranslateInteractionComponent],
-      providers: [
-        { provide: MapComponent, useValue: mockMapComponent }
-      ]
+      providers: [{ provide: MapComponent, useValue: mockMapComponent }],
     }).compileComponents();
   });
 
@@ -56,12 +53,12 @@ describe('TranslateInteractionComponent', () => {
   it('should emit translate events', () => {
     const translateEndSpy = spyOn(component.translateEnd, 'emit');
     const translateStartSpy = spyOn(component.translateStart, 'emit');
-    
+
     fixture.detectChanges();
-    
-    const mockEvent = { type: 'translateend' };
+
+    const mockEvent = { type: 'translateend' } as any;
     component.instance.dispatchEvent(mockEvent);
-    
+
     expect(translateEndSpy).toHaveBeenCalledWith(mockEvent);
   });
 

@@ -45,7 +45,7 @@ describe('SourceClusterComponent', () => {
 
   it('should handle geometryFunction option', () => {
     component.source = new Vector();
-    component.geometryFunction = (feature) => feature.getGeometry();
+    component.geometryFunction = (feature) => (feature as any).getGeometry();
     fixture.detectChanges();
     expect(component.instance instanceof Cluster).toBeTruthy();
   });

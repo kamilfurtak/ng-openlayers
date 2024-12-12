@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DragAndDropInteractionComponent } from './draganddrop.component';
 import { MapComponent } from '../map.component';
 import { DragAndDrop } from 'ol/interaction';
-import { GeoJSON } from 'ol/format';
+import GeoJSON from 'ol/format/GeoJSON';
 
 describe('DragAndDropInteractionComponent', () => {
   let component: DragAndDropInteractionComponent;
@@ -13,15 +13,13 @@ describe('DragAndDropInteractionComponent', () => {
     mockMapComponent = {
       instance: {
         addInteraction: jasmine.createSpy('addInteraction'),
-        removeInteraction: jasmine.createSpy('removeInteraction')
-      } as any
+        removeInteraction: jasmine.createSpy('removeInteraction'),
+      } as any,
     };
 
     await TestBed.configureTestingModule({
       imports: [DragAndDropInteractionComponent],
-      providers: [
-        { provide: MapComponent, useValue: mockMapComponent }
-      ]
+      providers: [{ provide: MapComponent, useValue: mockMapComponent }],
     }).compileComponents();
   });
 
@@ -41,7 +39,7 @@ describe('DragAndDropInteractionComponent', () => {
   });
 
   it('should handle formatConstructors option', () => {
-    component.formatConstructors = [GeoJSON];
+    component.formatConstructors = [new GeoJSON()];
     fixture.detectChanges();
     expect(component.instance instanceof DragAndDrop).toBeTruthy();
   });
