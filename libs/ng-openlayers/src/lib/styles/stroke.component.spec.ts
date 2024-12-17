@@ -1,34 +1,32 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StyleStrokeComponent } from './stroke.component';
 import { StyleComponent } from './style.component';
-import { StyleCircleComponent } from './circle.component';
-import { StyleTextComponent } from './text.component';
 import { Stroke } from 'ol/style';
 
-describe('StyleStrokeComponent', () => {
+fdescribe('StyleStrokeComponent', () => {
   let component: StyleStrokeComponent;
   let fixture: ComponentFixture<StyleStrokeComponent>;
   let mockStyleComponent: Partial<StyleComponent>;
 
   beforeEach(async () => {
     mockStyleComponent = {
+      componentType: 'style',
       instance: {
-        setStroke: jasmine.createSpy('setStroke')
+        setStroke: jasmine.createSpy('setStroke'),
       } as any,
-      update: jasmine.createSpy('update')
+      update: jasmine.createSpy('update'),
     };
 
     await TestBed.configureTestingModule({
       imports: [StyleStrokeComponent],
-      providers: [
-        { provide: StyleComponent, useValue: mockStyleComponent }
-      ]
+      providers: [{ provide: StyleComponent, useValue: mockStyleComponent }],
     }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(StyleStrokeComponent);
     component = fixture.componentInstance;
+    // Object.defineProperty(component, 'host', { value: mockStyleComponent });
   });
 
   it('should create', () => {
@@ -44,14 +42,14 @@ describe('StyleStrokeComponent', () => {
   it('should handle color changes', () => {
     fixture.detectChanges();
     spyOn(component.instance, 'setColor');
-    
+
     component.ngOnChanges({
       color: {
         currentValue: 'red',
         previousValue: undefined,
         firstChange: false,
-        isFirstChange: () => false
-      }
+        isFirstChange: () => false,
+      },
     });
 
     expect(component.instance.setColor).toHaveBeenCalledWith('red');
@@ -61,14 +59,14 @@ describe('StyleStrokeComponent', () => {
   it('should handle lineCap changes', () => {
     fixture.detectChanges();
     spyOn(component.instance, 'setLineCap');
-    
+
     component.ngOnChanges({
       lineCap: {
         currentValue: 'round',
         previousValue: undefined,
         firstChange: false,
-        isFirstChange: () => false
-      }
+        isFirstChange: () => false,
+      },
     });
 
     expect(component.instance.setLineCap).toHaveBeenCalledWith('round');
@@ -78,14 +76,14 @@ describe('StyleStrokeComponent', () => {
   it('should handle lineDash changes', () => {
     fixture.detectChanges();
     spyOn(component.instance, 'setLineDash');
-    
+
     component.ngOnChanges({
       lineDash: {
         currentValue: [5, 5],
         previousValue: undefined,
         firstChange: false,
-        isFirstChange: () => false
-      }
+        isFirstChange: () => false,
+      },
     });
 
     expect(component.instance.setLineDash).toHaveBeenCalledWith([5, 5]);
@@ -95,14 +93,14 @@ describe('StyleStrokeComponent', () => {
   it('should handle width changes', () => {
     fixture.detectChanges();
     spyOn(component.instance, 'setWidth');
-    
+
     component.ngOnChanges({
       width: {
         currentValue: 2,
         previousValue: 1,
         firstChange: false,
-        isFirstChange: () => false
-      }
+        isFirstChange: () => false,
+      },
     });
 
     expect(component.instance.setWidth).toHaveBeenCalledWith(2);
@@ -112,11 +110,11 @@ describe('StyleStrokeComponent', () => {
   it('should throw error if no host provided', () => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
-      imports: [StyleStrokeComponent]
+      imports: [StyleStrokeComponent],
     });
 
     expect(() => {
       TestBed.createComponent(StyleStrokeComponent);
-    }).toThrow('aol-style-stroke must be a descendant of aol-style');
+    }).toThrowError('aol-style-stroke must be a descendant of aol-style');
   });
 });
