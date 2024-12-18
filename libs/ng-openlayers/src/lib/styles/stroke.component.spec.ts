@@ -33,88 +33,99 @@ fdescribe('StyleStrokeComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create Stroke style instance', () => {
-    fixture.detectChanges();
-    expect(component.instance instanceof Stroke).toBeTruthy();
-    expect(mockStyleComponent.instance.setStroke).toHaveBeenCalledWith(component.instance);
-  });
-
-  it('should handle color changes', () => {
-    fixture.detectChanges();
-    spyOn(component.instance, 'setColor');
-
-    component.ngOnChanges({
-      color: {
-        currentValue: 'red',
-        previousValue: undefined,
-        firstChange: false,
-        isFirstChange: () => false,
-      },
+  describe('ngOnInit', () => {
+    it('should create Stroke style instance, when component type is style', () => {
+      fixture.detectChanges();
+      expect(component.instance instanceof Stroke).toBeTruthy();
+      expect(mockStyleComponent.instance.setStroke).toHaveBeenCalledWith(component.instance);
     });
 
-    expect(component.instance.setColor).toHaveBeenCalledWith('red');
-    expect(mockStyleComponent.update).toHaveBeenCalled();
+    it('should create Stroke style instance, when component type is style-text', () => {
+      mockStyleComponent.componentType = 'style-text';
+      fixture.detectChanges();
+      expect(component.instance instanceof Stroke).toBeTruthy();
+      expect(mockStyleComponent.instance.setStroke).toHaveBeenCalledWith(component.instance);
+    });
   });
 
-  it('should handle lineCap changes', () => {
-    fixture.detectChanges();
-    spyOn(component.instance, 'setLineCap');
+  describe('ngOnChanges', () => {
+    it('should handle color changes', () => {
+      fixture.detectChanges();
+      spyOn(component.instance, 'setColor');
 
-    component.ngOnChanges({
-      lineCap: {
-        currentValue: 'round',
-        previousValue: undefined,
-        firstChange: false,
-        isFirstChange: () => false,
-      },
+      component.ngOnChanges({
+        color: {
+          currentValue: 'red',
+          previousValue: undefined,
+          firstChange: false,
+          isFirstChange: () => false,
+        },
+      });
+
+      expect(component.instance.setColor).toHaveBeenCalledWith('red');
+      expect(mockStyleComponent.update).toHaveBeenCalled();
     });
 
-    expect(component.instance.setLineCap).toHaveBeenCalledWith('round');
-    expect(mockStyleComponent.update).toHaveBeenCalled();
-  });
+    it('should handle lineCap changes', () => {
+      fixture.detectChanges();
+      spyOn(component.instance, 'setLineCap');
 
-  it('should handle lineDash changes', () => {
-    fixture.detectChanges();
-    spyOn(component.instance, 'setLineDash');
+      component.ngOnChanges({
+        lineCap: {
+          currentValue: 'round',
+          previousValue: undefined,
+          firstChange: false,
+          isFirstChange: () => false,
+        },
+      });
 
-    component.ngOnChanges({
-      lineDash: {
-        currentValue: [5, 5],
-        previousValue: undefined,
-        firstChange: false,
-        isFirstChange: () => false,
-      },
+      expect(component.instance.setLineCap).toHaveBeenCalledWith('round');
+      expect(mockStyleComponent.update).toHaveBeenCalled();
     });
 
-    expect(component.instance.setLineDash).toHaveBeenCalledWith([5, 5]);
-    expect(mockStyleComponent.update).toHaveBeenCalled();
-  });
+    it('should handle lineDash changes', () => {
+      fixture.detectChanges();
+      spyOn(component.instance, 'setLineDash');
 
-  it('should handle width changes', () => {
-    fixture.detectChanges();
-    spyOn(component.instance, 'setWidth');
+      component.ngOnChanges({
+        lineDash: {
+          currentValue: [5, 5],
+          previousValue: undefined,
+          firstChange: false,
+          isFirstChange: () => false,
+        },
+      });
 
-    component.ngOnChanges({
-      width: {
-        currentValue: 2,
-        previousValue: 1,
-        firstChange: false,
-        isFirstChange: () => false,
-      },
+      expect(component.instance.setLineDash).toHaveBeenCalledWith([5, 5]);
+      expect(mockStyleComponent.update).toHaveBeenCalled();
     });
 
-    expect(component.instance.setWidth).toHaveBeenCalledWith(2);
-    expect(mockStyleComponent.update).toHaveBeenCalled();
-  });
+    it('should handle width changes', () => {
+      fixture.detectChanges();
+      spyOn(component.instance, 'setWidth');
 
-  it('should throw error if no host provided', () => {
-    TestBed.resetTestingModule();
-    TestBed.configureTestingModule({
-      imports: [StyleStrokeComponent],
+      component.ngOnChanges({
+        width: {
+          currentValue: 2,
+          previousValue: 1,
+          firstChange: false,
+          isFirstChange: () => false,
+        },
+      });
+
+      expect(component.instance.setWidth).toHaveBeenCalledWith(2);
+      expect(mockStyleComponent.update).toHaveBeenCalled();
     });
 
-    expect(() => {
-      TestBed.createComponent(StyleStrokeComponent);
-    }).toThrowError('aol-style-stroke must be a descendant of aol-style');
+    it('should throw error if no host provided', () => {
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({
+        imports: [StyleStrokeComponent],
+      });
+
+      expect(() => {
+        TestBed.createComponent(StyleStrokeComponent);
+      }).toThrowError('aol-style-stroke must be a descendant of aol-style');
+    });
   });
 });
