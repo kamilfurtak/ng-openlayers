@@ -3,7 +3,7 @@ import { StyleStrokeComponent } from './stroke.component';
 import { StyleComponent } from './style.component';
 import { Stroke } from 'ol/style';
 
-fdescribe('StyleStrokeComponent', () => {
+describe('StyleStrokeComponent', () => {
   let component: StyleStrokeComponent;
   let fixture: ComponentFixture<StyleStrokeComponent>;
   let mockStyleComponent: Partial<StyleComponent>;
