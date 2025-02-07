@@ -1,0 +1,3 @@
+# Unit testing
+- Use Jasmine
+- Create only test cases with `describe()` block for every public method.
