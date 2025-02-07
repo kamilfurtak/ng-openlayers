@@ -17,9 +17,7 @@ fdescribe('ViewComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [ViewComponent],
-      providers: [
-        { provide: MapComponent, useValue: mockMapComponent }
-      ]
+      providers: [{ provide: MapComponent, useValue: mockMapComponent }],
     }).compileComponents();
   });
 
