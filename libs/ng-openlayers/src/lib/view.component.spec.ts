@@ -3,7 +3,7 @@ import { ViewComponent } from './view.component';
 import { MapComponent } from './map.component';
 import { View } from 'ol';
 
-fdescribe('ViewComponent', () => {
+describe('ViewComponent', () => {
   let component: ViewComponent;
   let fixture: ComponentFixture<ViewComponent>;
   let mockMapComponent: Partial<MapComponent>;
