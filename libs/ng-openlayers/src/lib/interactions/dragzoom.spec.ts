@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { DragZoom } from 'ol/interaction';
 import { DragZoomInteractionComponent, MapComponent } from 'ng-openlayers';
 
-fdescribe('DragZoomInteractionComponent', () => {
+describe('DragZoomInteractionComponent', () => {
   let component: DragZoomInteractionComponent;
   let mapInstanceMock: any;
 

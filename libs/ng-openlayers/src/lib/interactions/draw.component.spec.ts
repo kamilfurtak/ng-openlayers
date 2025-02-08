@@ -3,7 +3,7 @@ import { DrawInteractionComponent } from './draw.component';
 import { MapComponent } from '../map.component';
 import { Draw } from 'ol/interaction';
 
-fdescribe('DrawInteractionComponent', () => {
+describe('DrawInteractionComponent', () => {
   let component: DrawInteractionComponent;
   let fixture: ComponentFixture<DrawInteractionComponent>;
   let mockMapComponent: Partial<MapComponent>;
