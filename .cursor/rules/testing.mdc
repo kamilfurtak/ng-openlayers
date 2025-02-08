@@ -1,3 +1,7 @@
+---
+description: Unit testing 
+globs: *.spec.ts
+---
 # Unit testing
 - Use Jasmine
 - Create only test cases with `describe()` block for every public functions/methods.
