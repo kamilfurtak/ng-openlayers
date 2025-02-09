@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, Optional, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Optional } from '@angular/core';
 import { MapComponent } from './map.component';
 import { GeometryLinestringComponent } from './geom/geometrylinestring.component';
 import { GeometryPolygonComponent } from './geom/geometrypolygon.component';
@@ -7,6 +7,7 @@ import { GeometryMultiLinestringComponent } from './geom/geometrymultilinestring
 import { GeometryMultiPolygonComponent } from './geom/geometrymultipolygon.component';
 import { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
+import { SimpleGeometryComponent } from './geom/simplegeometry.component';
 
 @Component({
   selector: 'aol-collection-coordinates',
@@ -19,7 +20,7 @@ export class CollectionCoordinatesComponent implements OnChanges, OnInit {
   @Input()
   srid = 'EPSG:3857';
 
-  private host: any;
+  private host: SimpleGeometryComponent;
   private mapSrid = 'EPSG:3857';
 
   constructor(
@@ -51,7 +52,7 @@ export class CollectionCoordinatesComponent implements OnChanges, OnInit {
     this.transformCoordinates();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     this.transformCoordinates();
   }
 
