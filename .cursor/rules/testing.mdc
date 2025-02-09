@@ -1,5 +1,5 @@
 ---
-description: Unit testing 
+description: Unit testing
 globs: *.spec.ts
 ---
 # Unit testing
@@ -7,3 +7,4 @@ globs: *.spec.ts
 - Create only test cases with `describe()` block for every public functions/methods.
 - Use function/method names without parentheses in the describe blocks
 - Cover all code paths in testing public functions/methods
+- Don't test private
