@@ -30,15 +30,15 @@ export class CollectionCoordinatesComponent implements OnChanges, OnInit {
     @Optional() geometryMultilinestring: GeometryMultiLinestringComponent,
     @Optional() geometryMultipolygon: GeometryMultiPolygonComponent
   ) {
-    if (!!geometryLinestring) {
+    if (geometryLinestring) {
       this.host = geometryLinestring;
-    } else if (!!geometryPolygon) {
+    } else if (geometryPolygon) {
       this.host = geometryPolygon;
-    } else if (!!geometryMultipoint) {
+    } else if (geometryMultipoint) {
       this.host = geometryMultipoint;
-    } else if (!!geometryMultilinestring) {
+    } else if (geometryMultilinestring) {
       this.host = geometryMultilinestring;
-    } else if (!!geometryMultipolygon) {
+    } else if (geometryMultipolygon) {
       this.host = geometryMultipolygon;
     } else {
       throw new Error('aol-collection-coordinates must be a child of a geometry component');

@@ -23,12 +23,12 @@ import { register } from 'ol/proj/proj4';
 import proj4 from 'proj4';
 
 @Component({
-    selector: 'aol-map',
-    template: `
+  selector: 'aol-map',
+  template: `
     <div [style.width]="width" [style.height]="height"></div>
     <ng-content></ng-content>
   `,
-    standalone: true,
+  standalone: true,
 })
 export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Input()
@@ -133,7 +133,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
       return;
     }
     for (const key in changes) {
-      if (changes.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(changes, key)) {
         properties[key] = changes[key].currentValue;
       }
     }

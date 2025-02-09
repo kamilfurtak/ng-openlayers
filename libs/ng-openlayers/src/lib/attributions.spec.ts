@@ -7,7 +7,7 @@ import { SourceComponent } from '../public-api';
 class MockSourceComponent {
   instance = { setAttributions: jasmine.createSpy('setAttributions') } as any;
 }
-
+ 
 describe('AttributionsComponent', () => {
   let component: AttributionsComponent;
   let fixture: ComponentFixture<AttributionsComponent>;
