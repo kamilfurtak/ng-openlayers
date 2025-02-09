@@ -96,6 +96,21 @@ describe('CollectionCoordinatesComponent', () => {
       expect(component['mapSrid']).toBe('EPSG:3857');
     });
 
+    it('should register "change:view" event and call onMapViewChanged when the event is triggered', () => {
+      const mockEvent = { testEventProperty: 'testValue' };
+      spyOn<any>(component, 'onMapViewChanged');
+
+      // Simulate ngOnInit to set up the event listener
+      component.ngOnInit();
+
+      // Simulate that the registered event listener is manually triggered
+      const eventHandler = mockMapComponent.instance.on.calls.argsFor(0)[1];
+      eventHandler(mockEvent);
+
+      // Check that the onMapViewChanged method is called with the mock event
+      expect(component['onMapViewChanged']).toHaveBeenCalledWith(mockEvent);
+    });
+
     it('should call transformCoordinates', () => {
       spyOn<any>(component, 'transformCoordinates');
       component.ngOnInit();
