@@ -1,6 +1,7 @@
 # Unit testing
-- Use Jasmine
-- Create only test cases with `describe()` block for every public functions/methods.
+- Use Jasmine e.g. for spies
+- Create test cases with `describe()` block for every contructor/function/method.
 - Use function/method names without parentheses in the describe blocks
-- Cover all code paths in testing public functions/methods
-- Don't test private
+- Cover all code paths
+- Don't provide standalone component in declarations
+- Access private component methods/members/properties using square bracket notation
