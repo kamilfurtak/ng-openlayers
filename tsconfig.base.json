@@ -19,11 +19,6 @@
       "es2018",
       "dom"
     ],
-    "paths": {
-      "ng-openlayers": [
-        "libs/ng-openlayers/src/public-api.ts"
-      ]
-    },
     "useDefineForClassFields": false,
     "rootDir": ".",
     "allowSyntheticDefaultImports": true
