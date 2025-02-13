@@ -91,7 +91,7 @@ import { ToastrService } from 'ngx-toastr';
         Mode: ADD/REMOVE ENCLAVE. Start sketch by clicking inside the polygon area. To undo the drawn vertex, press the
         Ctrl+Z key. Finish sketch by moving the pointer closer to the first point and clicking once with left mouse
         button. Click on the selected enclave with the Ctrl key pressed to remove it. To remove the last drawn vertex,
-        press the Ctrl+Z key.
+        press the Ctrl+Z key .
       </p>
       <!-- Button to toggle the hole drawing mode -->
       <button (click)="drawHole()">
