@@ -104,7 +104,7 @@ import { ToastrService } from 'ngx-toastr';
           Enable Select Interaction
         </label>
       </div>
-      <!-- Checkbox to enable modify interaction (only enabled if select is enabled) -->
+      <!-- cCheckbox to enable modify interaction (only enabled if select is enabled) -->
       <div>
         <label>
           <input type="checkbox" [(ngModel)]="modifyInteractionEnabled" [disabled]="!selectInteractionEnabled" />
