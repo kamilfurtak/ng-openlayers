@@ -5,8 +5,7 @@ on:
     branches:
       - master
   pull_request:
-#    types: [opened, synchronize, reopened, ready_for_review]
-    types: [ready_for_review]
+    types: [opened, synchronize, reopened, ready_for_review]
     branches: [ "master" ]
   workflow_dispatch:
   workflow_call:
@@ -87,6 +86,8 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps --include=optional
         shell: bash
+
+      - run: npm run test-ci
 
       - run: npm run build:lib
 
