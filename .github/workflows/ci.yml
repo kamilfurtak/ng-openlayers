@@ -90,6 +90,8 @@ jobs:
 
       - run: npm run build:lib
 
+      - run: npm run test-ci
+
       - name: Print Environment Info
         run: npx nx report
         shell: bash
