@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy, OnChanges, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Feature } from 'ol';
 import { SourceVectorComponent } from './sources/vector.component';
 
 @Component({
-    selector: 'aol-feature',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-feature',
+  template: ` <ng-content></ng-content> `,
+  standalone: true,
 })
 export class FeatureComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
