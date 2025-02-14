@@ -88,9 +88,9 @@ jobs:
         run: npm ci --legacy-peer-deps --include=optional
         shell: bash
 
-      - run: npm run build:lib
-
       - run: npm run test-ci
+
+      - run: npm run build:lib
 
       - name: Print Environment Info
         run: npx nx report
