@@ -51,6 +51,7 @@ import {
           <button (click)="setMeasureType(MeasureType.Polygon)" [class.active]="measureType === MeasureType.Polygon">
             Measure Area
           </button>
+          <button class="clear-btn" (click)="clearMeasurements()">Clear Measurements</button>
         </div>
         <div class="options">
           <label>
@@ -110,6 +111,12 @@ import {
         color: white;
         border-color: #4285f4;
       }
+      button.clear-btn {
+        background: #f44336;
+        color: white;
+        border-color: #d32f2f;
+        margin-left: auto;
+      }
       .result {
         margin-top: 10px;
         padding: 10px;
@@ -168,6 +175,13 @@ export class MeasureComponent implements AfterViewInit {
   toggleHelpTooltip() {
     if (this.measureInteraction) {
       this.measureInteraction.toggleHelpTooltip(this.showHelpTooltip);
+    }
+  }
+
+  clearMeasurements() {
+    if (this.measureInteraction) {
+      this.measureInteraction.clearMeasurements();
+      this.lastMeasurement = '';
     }
   }
 }

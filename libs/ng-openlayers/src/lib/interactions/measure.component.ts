@@ -5,6 +5,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  AfterViewInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -18,9 +19,14 @@ import { DrawEvent } from 'ol/interaction/Draw';
 import { unByKey } from 'ol/Observable';
 import { getArea, getLength } from 'ol/sphere';
 import VectorSource from 'ol/source/Vector';
-import VectorLayer from 'ol/layer/Vector';
 import { DrawInteractionComponent } from './draw.component';
 import { Type } from 'ol/geom/Geometry';
+import { LayerVectorComponent } from '../layers/layervector.component';
+import { SourceVectorComponent } from '../sources/vector.component';
+import { StyleStrokeComponent } from '../styles/stroke.component';
+import { StyleCircleComponent } from '../styles/circle.component';
+import { StyleFillComponent } from '../styles/fill.component';
+import { StyleComponent } from '../styles/style.component';
 
 export enum MeasureType {
   LineString = 'LineString',
@@ -30,10 +36,21 @@ export enum MeasureType {
 @Component({
   selector: 'aol-interaction-measure',
   template: `
+    <aol-layer-vector>
+      <aol-source-vector #vectorSource></aol-source-vector>
+      <aol-style>
+        <aol-style-fill [color]="'rgba(255, 255, 255, 0.2)'"></aol-style-fill>
+        <aol-style-stroke [color]="'#ffcc33'" [width]="2"></aol-style-stroke>
+        <aol-style-circle [radius]="7">
+          <aol-style-fill [color]="'#ffcc33'"></aol-style-fill>
+        </aol-style-circle>
+      </aol-style>
+    </aol-layer-vector>
+
     <aol-interaction-draw
       #drawInstance
       [type]="type"
-      [source]="source"
+      [source]="source || internalSource"
       (drawEnd)="onDrawEnd($event)"
       (drawStart)="onDrawStart($event)"
       [style]="staticStyle"
@@ -42,11 +59,20 @@ export enum MeasureType {
   `,
   standalone: true,
   styleUrls: ['./measure.component.css'],
-  imports: [DrawInteractionComponent],
+  imports: [
+    DrawInteractionComponent,
+    LayerVectorComponent,
+    SourceVectorComponent,
+    StyleStrokeComponent,
+    StyleCircleComponent,
+    StyleFillComponent,
+    StyleComponent,
+  ],
   encapsulation: ViewEncapsulation.None,
 })
-export class MeasureInteractionComponent implements OnInit, OnChanges, OnDestroy {
+export class MeasureInteractionComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @ViewChild('drawInstance') drawInteractionComponent: DrawInteractionComponent;
+  @ViewChild('vectorSource') vectorSourceComponent: SourceVectorComponent;
 
   @Input() type: Type = MeasureType.Polygon;
   @Input() source?: VectorSource;
@@ -55,6 +81,8 @@ export class MeasureInteractionComponent implements OnInit, OnChanges, OnDestroy
 
   @Output() measureComplete = new EventEmitter<{ feature: Feature; measure: number; formattedMeasure: string }>();
   @Output() measureStart = new EventEmitter<Feature>();
+
+  internalSource: VectorSource;
 
   staticStyle = new Style({
     fill: new Fill({
@@ -82,27 +110,10 @@ export class MeasureInteractionComponent implements OnInit, OnChanges, OnDestroy
   private helpTooltip: Overlay;
   private sketch: Feature<Geometry> | null;
   private listener: any;
-  private vector: VectorLayer<VectorSource>;
 
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
-    // Create vector layer if not provided
-    if (!this.source) {
-      this.source = new VectorSource();
-      this.vector = new VectorLayer({
-        source: this.source,
-        style: {
-          'fill-color': 'rgba(255, 255, 255, 0.2)',
-          'stroke-color': '#ffcc33',
-          'stroke-width': 2,
-          'circle-radius': 7,
-          'circle-fill-color': '#ffcc33',
-        },
-      });
-      this.map.instance.addLayer(this.vector);
-    }
-
     this.createMeasureTooltip();
 
     if (this.showHelpTooltip) {
@@ -112,6 +123,30 @@ export class MeasureInteractionComponent implements OnInit, OnChanges, OnDestroy
 
       // Handle mouseout event
       this.map.instance.getViewport().addEventListener('mouseout', this.onMouseOut);
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.vectorSourceComponent) {
+      this.internalSource = this.vectorSourceComponent.instance;
+
+      // If external source is provided, sync features between sources
+      if (this.source) {
+        // Copy existing features from external source to internal source
+        const features = this.source.getFeatures();
+        if (features.length > 0) {
+          this.internalSource.addFeatures(features);
+        }
+
+        // Listen for feature additions to external source
+        this.source.on('addfeature', (event) => {
+          if (event.feature && !this.internalSource.hasFeature(event.feature)) {
+            // Clone the feature to avoid reference issues
+            const featureClone = event.feature.clone();
+            this.internalSource.addFeature(featureClone);
+          }
+        });
+      }
     }
   }
 
@@ -179,6 +214,11 @@ export class MeasureInteractionComponent implements OnInit, OnChanges, OnDestroy
     } else if (geometry instanceof LineString) {
       measure = getLength(geometry);
       formattedMeasure = this.formatLength(measure);
+    }
+
+    // If using external source, add feature to internal source as well
+    if (this.source && this.internalSource && !this.internalSource.hasFeature(e.feature)) {
+      this.internalSource.addFeature(e.feature.clone());
     }
 
     this.measureComplete.emit({
@@ -345,6 +385,27 @@ export class MeasureInteractionComponent implements OnInit, OnChanges, OnDestroy
     }
   }
 
+  /**
+   * Clear all measurements and tooltips
+   */
+  public clearMeasurements() {
+    // Clear all features from the vector source
+    if (this.internalSource) {
+      this.internalSource.clear();
+    }
+
+    // Remove all existing static tooltips from the map
+    const tooltips = document.querySelectorAll('.ol-tooltip-static');
+    for (let i = 0; i < tooltips.length; i++) {
+      tooltips[i].remove();
+    }
+
+    // Reset current measurement tooltip
+    if (this.measureTooltipElement) {
+      this.measureTooltipElement.className = 'ol-tooltip ol-tooltip-measure';
+    }
+  }
+
   ngOnDestroy() {
     if (this.showHelpTooltip) {
       this.map.instance.un('pointermove', this.pointerMoveHandler);
@@ -365,10 +426,6 @@ export class MeasureInteractionComponent implements OnInit, OnChanges, OnDestroy
 
     if (this.helpTooltipElement) {
       this.helpTooltipElement.remove();
-    }
-
-    if (this.vector && !this.source) {
-      this.map.instance.removeLayer(this.vector);
     }
   }
 }
