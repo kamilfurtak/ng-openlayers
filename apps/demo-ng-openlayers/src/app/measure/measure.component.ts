@@ -1,6 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { Feature } from 'ol';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import {
   MapComponent,
   ViewComponent,
@@ -15,6 +16,7 @@ import {
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     MapComponent,
     ViewComponent,
     LayerTileComponent,
@@ -32,6 +34,7 @@ import {
           <aol-interaction-measure
             #measureInteraction
             [type]="measureType"
+            [showHelpTooltip]="showHelpTooltip"
             (measureComplete)="onMeasureComplete($event)"
           ></aol-interaction-measure>
         </aol-map>
@@ -48,6 +51,12 @@ import {
           <button (click)="setMeasureType(MeasureType.Polygon)" [class.active]="measureType === MeasureType.Polygon">
             Measure Area
           </button>
+        </div>
+        <div class="options">
+          <label>
+            <input type="checkbox" [(ngModel)]="showHelpTooltip" (change)="toggleHelpTooltip()" />
+            Show help tooltips
+          </label>
         </div>
         <div *ngIf="lastMeasurement" class="result">
           <h4>Last Measurement:</h4>
@@ -86,6 +95,9 @@ import {
         gap: 10px;
         margin-bottom: 10px;
       }
+      .options {
+        margin-bottom: 10px;
+      }
       button {
         padding: 8px 16px;
         background: #fff;
@@ -115,12 +127,23 @@ import {
     `,
   ],
 })
-export class MeasureComponent {
+export class MeasureComponent implements AfterViewInit {
   @ViewChild('measureInteraction') measureInteraction: MeasureInteractionComponent;
 
   measureType = MeasureType.LineString;
   lastMeasurement: string;
+  showHelpTooltip = false;
   MeasureType = MeasureType; // Make enum available in the template
+
+  ngAfterViewInit() {
+    // Ensure the component is properly initialized with the correct type
+    setTimeout(() => {
+      if (this.measureInteraction) {
+        console.log('Initializing measure type:', this.measureType);
+        this.measureInteraction.setMeasureType(this.measureType);
+      }
+    });
+  }
 
   onMeasureComplete(event: { feature: Feature; measure: number; formattedMeasure: string }) {
     console.log('Measurement completed:', event);
@@ -128,9 +151,23 @@ export class MeasureComponent {
   }
 
   setMeasureType(type: MeasureType) {
+    console.log('Changing measure type from', this.measureType, 'to', type);
     this.measureType = type;
+
+    // Need to wait for the view to be initialized if this is called early
+    setTimeout(() => {
+      if (this.measureInteraction) {
+        console.log('Calling setMeasureType on interaction component');
+        this.measureInteraction.setMeasureType(type);
+      } else {
+        console.warn('MeasureInteraction component reference not available');
+      }
+    });
+  }
+
+  toggleHelpTooltip() {
     if (this.measureInteraction) {
-      this.measureInteraction.setMeasureType(type);
+      this.measureInteraction.toggleHelpTooltip(this.showHelpTooltip);
     }
   }
 }

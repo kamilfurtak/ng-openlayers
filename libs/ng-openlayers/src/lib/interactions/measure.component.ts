@@ -1,11 +1,20 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { MapComponent } from '../map.component';
-import { Feature } from 'ol';
+import { Feature, Overlay } from 'ol';
 import { Geometry, LineString, Polygon } from 'ol/geom';
-import { Fill, Stroke, Style } from 'ol/style';
-import { Circle as CircleStyle } from 'ol/style';
+import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
 import { DrawEvent } from 'ol/interaction/Draw';
-import { Overlay } from 'ol';
 import { unByKey } from 'ol/Observable';
 import { getArea, getLength } from 'ol/sphere';
 import VectorSource from 'ol/source/Vector';
@@ -34,13 +43,15 @@ export enum MeasureType {
   standalone: true,
   styleUrls: ['./measure.component.css'],
   imports: [DrawInteractionComponent],
+  encapsulation: ViewEncapsulation.None,
 })
-export class MeasureInteractionComponent implements OnInit, OnDestroy {
+export class MeasureInteractionComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('drawInstance') drawInteractionComponent: DrawInteractionComponent;
 
-  @Input() type: Type = MeasureType.LineString;
+  @Input() type: Type = MeasureType.Polygon;
   @Input() source?: VectorSource;
   @Input() unit: 'metric' | 'imperial' = 'metric';
+  @Input() showHelpTooltip = false;
 
   @Output() measureComplete = new EventEmitter<{ feature: Feature; measure: number; formattedMeasure: string }>();
   @Output() measureStart = new EventEmitter<Feature>();
@@ -93,20 +104,43 @@ export class MeasureInteractionComponent implements OnInit, OnDestroy {
     }
 
     this.createMeasureTooltip();
-    this.createHelpTooltip();
 
-    // Add pointer move handler to show help messages
-    this.map.instance.on('pointermove', this.pointerMoveHandler);
+    if (this.showHelpTooltip) {
+      this.createHelpTooltip();
+      // Add pointer move handler to show help messages
+      this.map.instance.on('pointermove', this.pointerMoveHandler);
 
-    // Handle mouseout event
-    this.map.instance.getViewport().addEventListener('mouseout', () => {
-      if (this.helpTooltipElement) {
-        this.helpTooltipElement.classList.add('hidden');
-      }
-    });
+      // Handle mouseout event
+      this.map.instance.getViewport().addEventListener('mouseout', this.onMouseOut);
+    }
   }
 
-  onDrawStart = (e: DrawEvent) => {
+  ngOnChanges(changes: SimpleChanges) {
+    // Monitor changes to the type input
+    if (changes.type && !changes.type.firstChange && this.drawInteractionComponent) {
+      console.log('Measure type changed to:', this.type);
+
+      // We need to recreate the draw interaction with the new type
+      setTimeout(() => {
+        // First remove the existing interaction from the map
+        if (this.drawInteractionComponent.instance) {
+          this.map.instance.removeInteraction(this.drawInteractionComponent.instance);
+        }
+
+        // Then recreate it with the new type
+        this.drawInteractionComponent.ngOnDestroy();
+        this.drawInteractionComponent.ngOnInit();
+      });
+    }
+  }
+
+  private onMouseOut = () => {
+    if (this.helpTooltipElement) {
+      this.helpTooltipElement.classList.add('hidden');
+    }
+  };
+
+  onDrawStart(e: DrawEvent) {
     this.sketch = e.feature;
     this.measureStart.emit(this.sketch);
 
@@ -132,9 +166,9 @@ export class MeasureInteractionComponent implements OnInit, OnDestroy {
         this.measureTooltip.setPosition(tooltipCoord);
       }
     });
-  };
+  }
 
-  onDrawEnd = (e: DrawEvent) => {
+  onDrawEnd(e: DrawEvent) {
     let measure = 0;
     let formattedMeasure = '';
     const geometry = e.feature.getGeometry();
@@ -167,7 +201,7 @@ export class MeasureInteractionComponent implements OnInit, OnDestroy {
     // Create a new tooltip
     this.measureTooltipElement = null;
     this.createMeasureTooltip();
-  };
+  }
 
   private formatLength(length: number): string {
     let output;
@@ -216,7 +250,7 @@ export class MeasureInteractionComponent implements OnInit, OnDestroy {
   }
 
   private pointerMoveHandler = (evt) => {
-    if (evt.dragging) {
+    if (evt.dragging || !this.showHelpTooltip) {
       return;
     }
 
@@ -268,12 +302,54 @@ export class MeasureInteractionComponent implements OnInit, OnDestroy {
     this.map.instance.addOverlay(this.helpTooltip);
   }
 
+  /**
+   * Updates the measure type (LineString or Polygon)
+   */
   public setMeasureType(type: MeasureType) {
+    console.log('Setting measure type to:', type);
     this.type = type;
+
+    // We need to force re-creation of the draw interaction when type changes
+    if (this.drawInteractionComponent && this.drawInteractionComponent.instance) {
+      // Remove existing interaction
+      this.map.instance.removeInteraction(this.drawInteractionComponent.instance);
+
+      // Create a new one with the updated type
+      setTimeout(() => {
+        this.drawInteractionComponent.ngOnDestroy();
+        this.drawInteractionComponent.ngOnInit();
+      });
+    }
+  }
+
+  /**
+   * Toggle the help tooltip visibility
+   */
+  public toggleHelpTooltip(show: boolean) {
+    const wasShowing = this.showHelpTooltip;
+    this.showHelpTooltip = show;
+
+    if (show && !wasShowing) {
+      this.createHelpTooltip();
+      this.map.instance.on('pointermove', this.pointerMoveHandler);
+      this.map.instance.getViewport().addEventListener('mouseout', this.onMouseOut);
+    } else if (!show && wasShowing) {
+      if (this.helpTooltip) {
+        this.map.instance.removeOverlay(this.helpTooltip);
+      }
+      if (this.helpTooltipElement) {
+        this.helpTooltipElement.remove();
+      }
+      this.map.instance.un('pointermove', this.pointerMoveHandler);
+      this.map.instance.getViewport().removeEventListener('mouseout', this.onMouseOut);
+    }
   }
 
   ngOnDestroy() {
-    this.map.instance.un('pointermove', this.pointerMoveHandler);
+    if (this.showHelpTooltip) {
+      this.map.instance.un('pointermove', this.pointerMoveHandler);
+      this.map.instance.getViewport().removeEventListener('mouseout', this.onMouseOut);
+    }
 
     if (this.measureTooltip) {
       this.map.instance.removeOverlay(this.measureTooltip);
