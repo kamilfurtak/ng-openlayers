@@ -1,0 +1,136 @@
+import { Component, ViewChild } from '@angular/core';
+import { Feature } from 'ol';
+import { CommonModule } from '@angular/common';
+import {
+  MapComponent,
+  ViewComponent,
+  LayerTileComponent,
+  SourceOsmComponent,
+  MeasureInteractionComponent,
+  MeasureType,
+} from 'ng-openlayers';
+
+@Component({
+  selector: 'app-measure',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MapComponent,
+    ViewComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    MeasureInteractionComponent,
+  ],
+  template: `
+    <div class="container">
+      <div class="map-container">
+        <aol-map width="100%" height="100%">
+          <aol-view [zoom]="4" [center]="[0, 0]"></aol-view>
+          <aol-layer-tile>
+            <aol-source-osm></aol-source-osm>
+          </aol-layer-tile>
+          <aol-interaction-measure
+            #measureInteraction
+            [type]="measureType"
+            (measureComplete)="onMeasureComplete($event)"
+          ></aol-interaction-measure>
+        </aol-map>
+      </div>
+      <div class="controls">
+        <h3>Measurement Controls</h3>
+        <div class="buttons">
+          <button
+            (click)="setMeasureType(MeasureType.LineString)"
+            [class.active]="measureType === MeasureType.LineString"
+          >
+            Measure Distance
+          </button>
+          <button (click)="setMeasureType(MeasureType.Polygon)" [class.active]="measureType === MeasureType.Polygon">
+            Measure Area
+          </button>
+        </div>
+        <div *ngIf="lastMeasurement" class="result">
+          <h4>Last Measurement:</h4>
+          <p [innerHTML]="lastMeasurement"></p>
+        </div>
+        <div class="info">
+          <h4>How to use:</h4>
+          <p>
+            Select the type of measurement (distance or area), then click on the map to start measuring. Click again to
+            add more points. Double-click to finish.
+          </p>
+          <p>Press Ctrl+Z to undo the last point.</p>
+        </div>
+      </div>
+    </div>
+  `,
+  styles: [
+    `
+      .container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      .map-container {
+        flex: 1;
+        width: 100%;
+        min-height: 400px;
+      }
+      .controls {
+        padding: 10px;
+        background: #f5f5f5;
+        border-top: 1px solid #ddd;
+      }
+      .buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      button {
+        padding: 8px 16px;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button.active {
+        background: #4285f4;
+        color: white;
+        border-color: #4285f4;
+      }
+      .result {
+        margin-top: 10px;
+        padding: 10px;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      .info {
+        margin-top: 10px;
+        padding: 10px;
+        background: #e1f5fe;
+        border: 1px solid #81d4fa;
+        border-radius: 4px;
+      }
+    `,
+  ],
+})
+export class MeasureComponent {
+  @ViewChild('measureInteraction') measureInteraction: MeasureInteractionComponent;
+
+  measureType = MeasureType.LineString;
+  lastMeasurement: string;
+  MeasureType = MeasureType; // Make enum available in the template
+
+  onMeasureComplete(event: { feature: Feature; measure: number; formattedMeasure: string }) {
+    console.log('Measurement completed:', event);
+    this.lastMeasurement = event.formattedMeasure;
+  }
+
+  setMeasureType(type: MeasureType) {
+    this.measureType = type;
+    if (this.measureInteraction) {
+      this.measureInteraction.setMeasureType(type);
+    }
+  }
+}

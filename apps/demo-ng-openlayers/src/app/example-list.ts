@@ -141,4 +141,11 @@ export const examplesList = [
       'Example of using aol-interaction-draw-hole-in-polygon. This example shows how to draw a hole in a polygon. To remove a hole, click on the hole with Ctrl key pressed.',
     routerLink: 'draw-hole-in-polygon',
   },
+  {
+    title: 'Measure',
+    description:
+      'Example of using aol-interaction-measure. This example shows how to measure distances and areas on the map.',
+    routerLink: 'measure',
+    openLayersLink: 'https://openlayers.org/en/latest/examples/measure.html',
+  },
 ];
