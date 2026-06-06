@@ -43,10 +43,10 @@ The goal is not to hide OpenLayers. The goal is to make OpenLayers fit naturally
 
 ## Quick Start
 
-Install the package and OpenLayers:
+Install the package, OpenLayers, and Proj4:
 
 ```bash
-npm install ng-openlayers ol
+npm install ng-openlayers ol proj4
 ```
 
 Add the OpenLayers stylesheet to your application styles:
@@ -121,8 +121,8 @@ Live demo: https://kamilfurtak.github.io/ng-openlayers/
 | Package | Supported range |
 |---|---|
 | Angular | 19 - 21 |
-| OpenLayers | `^8.2.0` |
-| Proj4 | `^2.11.0` |
+| OpenLayers | `^10.9.0` |
+| Proj4 | `^2.20.8` |
 
 ## Repository Map
 
