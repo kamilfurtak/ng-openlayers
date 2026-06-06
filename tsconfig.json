@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.base.json",
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/demo-ng-openlayers/tsconfig.app.json"
+    },
+    {
+      "path": "./apps/demo-ng-openlayers/tsconfig.spec.json"
+    },
+    {
+      "path": "./apps/demo-ng-openlayers-e2e/tsconfig.json"
+    },
+    {
+      "path": "./libs/ng-openlayers/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/ng-openlayers/tsconfig.spec.json"
+    },
+    {
+      "path": "./tools/tsconfig.tools.json"
+    }
+  ]
+}

@@ -1,3 +1,10 @@
 {
-    "nxConsole.generateAiAgentRules": true
+    "nxConsole.generateAiAgentRules": true,
+    "angular.enable-strict-mode-prompt": false,
+    "eslint.useFlatConfig": false,
+    "eslint.workingDirectories": [
+        {
+            "mode": "auto"
+        }
+    ]
 }
