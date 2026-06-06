@@ -1,9 +1,9 @@
 {
   "name": "ng-openlayers",
-  "version": "20.0.0",
+  "version": "21.0.0",
   "peerDependencies": {
-    "@angular/common": "^20.0.0",
-    "@angular/core": "^20.0.0",
+    "@angular/common": "^21.0.0",
+    "@angular/core": "^21.0.0",
     "ol": "^10.9.0",
     "proj4": "^2.20.8"
   },
