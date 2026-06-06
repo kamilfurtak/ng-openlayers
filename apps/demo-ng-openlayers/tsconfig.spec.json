@@ -5,7 +5,14 @@
     "types": [
       "jasmine",
       "node"
-    ]
+    ],
+    "moduleResolution": "bundler",
+    "module": "preserve",
+    "lib": [
+      "dom",
+      "es2022"
+    ],
+    "isolatedModules": true
   },
   "files": [
     "src/test.ts",

@@ -2,6 +2,8 @@
   "name": "demo-ng-openlayers",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
+  "sourceRoot": "apps/demo-ng-openlayers/src",
+  "prefix": "app",
   "generators": {
     "@schematics/angular:component": {
       "inlineTemplate": true,
@@ -25,8 +27,6 @@
       "skipTests": true
     }
   },
-  "sourceRoot": "apps/demo-ng-openlayers/src",
-  "prefix": "app",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -87,7 +87,8 @@
         "production": {
           "buildTarget": "demo-ng-openlayers:build:production"
         }
-      }
+      },
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",

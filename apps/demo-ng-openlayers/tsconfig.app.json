@@ -8,6 +8,12 @@
         "libs/ng-openlayers/src/public-api.ts"
       ]
     },
+    "moduleResolution": "bundler",
+    "module": "preserve",
+    "lib": [
+      "dom",
+      "es2022"
+    ]
   },
   "files": [
     "src/main.ts",
@@ -15,5 +21,5 @@
   ],
   "include": [
     "src/**/*.d.ts"
-  ],
+  ]
 }

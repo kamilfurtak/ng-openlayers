@@ -32,6 +32,8 @@ import { GraticuleDemoComponent } from './graticule/graticule-demo.component';
 import { OverlayDemoComponent } from './overlay/overlay-demo.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { SnapInteractionComponent } from './snap-interaction/snap-interaction.component';
+import { StylesCompositionComponent } from './styles-composition/styles-composition.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -70,6 +72,8 @@ import { ToastrModule } from 'ngx-toastr';
     OverviewComponent,
     ViewProjectionUpdateComponent,
     GraticuleDemoComponent,
+    SnapInteractionComponent,
+    StylesCompositionComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

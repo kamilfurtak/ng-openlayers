@@ -26,6 +26,8 @@ import { ImageStaticComponent } from './image-static/image-static.component';
 import { OverlayDemoComponent } from './overlay/overlay-demo.component';
 import { GraticuleDemoComponent } from './graticule/graticule-demo.component';
 import { DrawHoleInPolygonComponent } from './draw-hole-in-polygon/draw-hole-in-polygon.component';
+import { SnapInteractionComponent } from './snap-interaction/snap-interaction.component';
+import { StylesCompositionComponent } from './styles-composition/styles-composition.component';
 
 const routes: Routes = [
   { path: '', component: ExamplesListComponent },
@@ -57,6 +59,8 @@ const routes: Routes = [
       { path: 'tile-json', component: TileJsonComponent },
       { path: 'graticule', component: GraticuleDemoComponent },
       { path: 'draw-hole-in-polygon', component: DrawHoleInPolygonComponent },
+      { path: 'snap-interaction', component: SnapInteractionComponent },
+      { path: 'styles-composition', component: StylesCompositionComponent },
     ],
   },
   { path: '**', redirectTo: '' },

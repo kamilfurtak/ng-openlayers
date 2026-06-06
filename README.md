@@ -109,7 +109,8 @@ The demo includes examples for:
 
 - basic OSM maps and view updates;
 - markers, vector features, geometry display, and GeoJSON;
-- draw, modify, select, hover, and polygon-hole interactions;
+- draw, modify, select, hover, snap, and polygon-hole interactions;
+- single and composed vector styles;
 - overlays, controls, cursor position, overview map, and graticule;
 - raster, WMS, ArcGIS image, static image, tile JSON, cluster, swipe, and side-by-side maps.
 
@@ -119,7 +120,7 @@ Live demo: https://kamilfurtak.github.io/ng-openlayers/
 
 | Package | Supported range |
 |---|---|
-| Angular | 16 - 19 |
+| Angular | 19 - 21 |
 | OpenLayers | `^8.2.0` |
 | Proj4 | `^2.11.0` |
 

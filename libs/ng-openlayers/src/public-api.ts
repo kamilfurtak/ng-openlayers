@@ -37,6 +37,7 @@ import { GeometryPointComponent } from './lib/geom/geometrypoint.component';
 import { GeometryPolygonComponent } from './lib/geom/geometrypolygon.component';
 import { CoordinateComponent } from './lib/coordinate.component';
 import { CollectionCoordinatesComponent } from './lib/collectioncoordinates.component';
+import { StylesComponent } from './lib/styles/styles.component';
 import { StyleComponent } from './lib/styles/style.component';
 import { StyleCircleComponent } from './lib/styles/circle.component';
 import { StyleStrokeComponent } from './lib/styles/stroke.component';
@@ -73,6 +74,7 @@ import { KeyboardZoomInteractionComponent } from './lib/interactions/keyboardzoo
 import { SelectInteractionComponent } from './lib/interactions/select.component';
 import { ModifyInteractionComponent } from './lib/interactions/modify.component';
 import { TranslateInteractionComponent } from './lib/interactions/translate.component';
+import { SnapInteractionComponent } from './lib/interactions/snap.component';
 import { OverlayComponent } from './lib/overlay.component';
 import { ContentComponent } from './lib/content.component';
 import { AttributionsComponent } from './lib/attributions.component';
@@ -118,6 +120,7 @@ export {
   GeometryCircleComponent,
   CoordinateComponent,
   CollectionCoordinatesComponent,
+  StylesComponent,
   StyleComponent,
   StyleCircleComponent,
   StyleFillComponent,
@@ -154,6 +157,7 @@ export {
   SelectInteractionComponent,
   ModifyInteractionComponent,
   TranslateInteractionComponent,
+  SnapInteractionComponent,
   OverlayComponent,
   ContentComponent,
   AttributionsComponent,
@@ -201,6 +205,7 @@ const COMPONENTS = [
   CoordinateComponent,
   CollectionCoordinatesComponent,
 
+  StylesComponent,
   StyleComponent,
   StyleCircleComponent,
   StyleFillComponent,
@@ -238,6 +243,7 @@ const COMPONENTS = [
   SelectInteractionComponent,
   ModifyInteractionComponent,
   TranslateInteractionComponent,
+  SnapInteractionComponent,
   DrawHoleInPolygonInteractionComponent,
 
   OverlayComponent,

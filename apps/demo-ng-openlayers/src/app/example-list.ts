@@ -141,4 +141,16 @@ export const examplesList = [
       'Example of using aol-interaction-draw-hole-in-polygon. This example shows how to draw a hole in a polygon. To remove a hole, click on the hole with Ctrl key pressed.',
     routerLink: 'draw-hole-in-polygon',
   },
+  {
+    title: 'Snap interaction',
+    description: 'Example of using aol-interaction-snap.',
+    routerLink: 'snap-interaction',
+    openLayersLink: 'https://openlayers.org/en/latest/examples/snap.html',
+  },
+  {
+    title: 'Styles composition',
+    description: 'Example of composing multiple aol-style components with aol-styles.',
+    routerLink: 'styles-composition',
+    openLayersLink: 'https://openlayers.org/en/latest/examples/polygon-styles.html',
+  },
 ];

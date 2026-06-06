@@ -80,7 +80,7 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('window:keydown.control.z', ['$event'])
-  handleKeydown() {
+  handleKeydown(_event?: KeyboardEvent) {
     this.instance.removeLastPoint();
   }
 

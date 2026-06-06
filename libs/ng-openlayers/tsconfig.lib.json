@@ -8,8 +8,10 @@
     "types": [],
     "lib": [
       "dom",
-      "es2018"
-    ]
+      "es2022"
+    ],
+    "moduleResolution": "bundler",
+    "module": "preserve"
   },
   "angularCompilerOptions": {
     "skipLibCheck": true,
