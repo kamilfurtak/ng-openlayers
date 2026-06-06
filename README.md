@@ -121,7 +121,7 @@ Live demo: https://kamilfurtak.github.io/ng-openlayers/
 
 | Package | Supported range |
 |---|---|
-| Angular | 19 - 21 |
+| Angular | 20 |
 | OpenLayers | `^10.9.0` |
 | Proj4 | `^2.20.8` |
 
