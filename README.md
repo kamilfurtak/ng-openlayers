@@ -1,54 +1,135 @@
-# OpenLayers library for Angular
+# ng-openlayers
 
-## Demo
-https://kamilfurtak.github.io/ng-openlayers/ 
+Declarative OpenLayers components for Angular.
 
-## Installation
-Hiere is a link to the blog post with the tutorial on how to create interactive maps with Angular 17 and latest OpenLayers using this library:
+[![npm version](https://img.shields.io/npm/v/ng-openlayers.svg)](https://www.npmjs.com/package/ng-openlayers)
+[![GitHub Pages demo](https://img.shields.io/badge/demo-GitHub%20Pages-2ea44f)](https://kamilfurtak.github.io/ng-openlayers/)
+[![License: MPL--2.0](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](LICENSE.md)
 
-https://blog.furtak.dev/create-interactive-maps-with-angular-17-and-latest-openlayers-7ae9b7fdb7ec
+[Demo](https://kamilfurtak.github.io/ng-openlayers/) · [Tutorial](https://medium.com/@kamilfurtak/create-interactive-maps-with-angular-17-and-latest-openlayers-7ae9b7fdb7ec) · [OpenLayers API](https://openlayers.org/en/latest/apidoc/)
 
-To install this library, run:
+`ng-openlayers` lets Angular applications describe OpenLayers maps with templates instead of imperative map setup code. Layers, sources, geometries, styles, controls, interactions, overlays, and coordinates become Angular components with typed inputs and outputs.
 
-```bash
-npm install ng-openlayers --save
-```
-Import AngularOpenlayersModule ex. to your AppComponent in standalone mode.
+## Case Study: Declarative Maps In Angular
 
-Now add OpenLayers CSS styles to your project. Open angular.json and add "node_modules/ol/ol.css" next to existing css styles.
-```bash
-"styles": [
-"src/styles.css",
-"node_modules/ol/ol.css"
-],
-````
+Interactive maps often enter Angular apps as a separate imperative island: create a map instance, keep references to sources/layers/features, wire events manually, and synchronize that state with Angular components later.
 
-## Example
+This library explores a different boundary:
 
-Here is a "minimal" map example with default interactions and controls:
+- Angular templates describe the map structure.
+- Components own OpenLayers instance creation and lifecycle.
+- Inputs map to OpenLayers configuration.
+- Outputs expose map, view, interaction, and feature events back to Angular.
+- The application remains free to compose maps with ordinary Angular state, bindings, and reusable components.
 
-```html
-<div style="height: 500px">
-  <aol-map>
-    <aol-view [zoom]="2">
-      <aol-coordinate [x]="5.795122" [y]="45.210225" [srid]="'EPSG:4326'"></aol-coordinate>
-    </aol-view>
-    <aol-layer-tile>
-      <aol-source-osm></aol-source-osm>
-    </aol-layer-tile>
-    <aol-interaction-default></aol-interaction-default>
-    <aol-control-scaleline></aol-control-scaleline>
-    <aol-control-zoomslider></aol-control-zoomslider>
-    <aol-control-zoom></aol-control-zoom>
-  </aol-map>
-</div>
-
+```mermaid
+flowchart LR
+  Template["Angular template"] --> Components["ng-openlayers components"]
+  Components --> Instances["OpenLayers instances"]
+  Instances --> Map["Interactive map"]
+  Instances --> Events["Angular outputs"]
+  Events --> AppState["Application state"]
 ```
 
-### Online example
-https://stackblitz.com/edit/stackblitz-starters-amwibo?file=src%2Fmain.ts
+The goal is not to hide OpenLayers. The goal is to make OpenLayers fit naturally into Angular architecture while keeping the underlying instances accessible when advanced use cases need them.
 
-## Foreword
+## Why It Helps
+
+- Build maps declaratively with Angular component composition.
+- Keep map layers, sources, styles, features, controls, and interactions visible in the template.
+- Use standalone imports for modern Angular apps or `AngularOpenlayersModule` for module-based apps.
+- Keep access to the underlying OpenLayers instance through each component's public `instance` property.
+- Use one mental model across simple OSM maps, vector features, GeoJSON, draw/modify interactions, overlays, WMS/ArcGIS/image sources, and projection-oriented workflows.
+
+## Quick Start
+
+Install the package and OpenLayers:
+
+```bash
+npm install ng-openlayers ol
+```
+
+Add the OpenLayers stylesheet to your application styles:
+
+```json
+{
+  "styles": ["src/styles.css", "node_modules/ol/ol.css"]
+}
+```
+
+## Minimal Standalone Example
+
+```ts
+import { Component } from '@angular/core';
+import {
+  CoordinateComponent,
+  DefaultControlComponent,
+  DefaultInteractionComponent,
+  LayerTileComponent,
+  MapComponent,
+  SourceOsmComponent,
+  ViewComponent,
+} from 'ng-openlayers';
+
+@Component({
+  selector: 'app-map-example',
+  standalone: true,
+  imports: [
+    MapComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+  ],
+  template: `
+    <aol-map [width]="'100%'" [height]="'500px'">
+      <aol-view [zoom]="12">
+        <aol-coordinate [x]="19.94498" [y]="50.06465" [srid]="'EPSG:4326'"></aol-coordinate>
+      </aol-view>
+
+      <aol-layer-tile>
+        <aol-source-osm></aol-source-osm>
+      </aol-layer-tile>
+
+      <aol-interaction-default></aol-interaction-default>
+      <aol-control-defaults></aol-control-defaults>
+    </aol-map>
+  `,
+})
+export class MapExampleComponent {}
+```
+
+Module-based applications can import `AngularOpenlayersModule` from `ng-openlayers`.
+
+## Demo Examples
+
+The demo includes examples for:
+
+- basic OSM maps and view updates;
+- markers, vector features, geometry display, and GeoJSON;
+- draw, modify, select, hover, and polygon-hole interactions;
+- overlays, controls, cursor position, overview map, and graticule;
+- raster, WMS, ArcGIS image, static image, tile JSON, cluster, swipe, and side-by-side maps.
+
+Live demo: https://kamilfurtak.github.io/ng-openlayers/
+
+## Compatibility
+
+| Package | Supported range |
+|---|---|
+| Angular | 16 - 19 |
+| OpenLayers | `^8.2.0` |
+| Proj4 | `^2.11.0` |
+
+## Repository Map
+
+- `libs/ng-openlayers` - publishable Angular library.
+- `apps/demo-ng-openlayers` - GitHub Pages demo application.
+- `apps/demo-ng-openlayers-e2e` - legacy e2e project.
+
+## Reference Documentation
 
 Most of the following documentation is an adaptation of OpenLayers' own documentation: https://openlayers.org/en/latest/apidoc/.
 While trying to cover most important aspects in here, this documentation is by no means exhaustive,
@@ -507,30 +588,38 @@ Exposed events are:
 
 ## Development
 
-To generate all `*.js`, `*.js.map` and `*.d.ts` files:
+Install dependencies:
 
 ```bash
-npm run ngc
+npm ci --legacy-peer-deps --include=optional
 ```
 
-To lint all `*.ts` files:
+Build the library:
 
 ```bash
-npm run lint
+npm run build:lib
 ```
 
-Live example (reload on code changes):
+Build the demo:
 
 ```bash
-npm install -g @angular/cli
-cd example
-npm install
-ng serve
+npm run build:demo
 ```
 
-Live example will be viewable at locahost:4200
+Run library tests in CI mode:
 
+```bash
+npm run test-ci
+```
+
+Run the local demo:
+
+```bash
+npm start
+```
+
+The local demo is served from `http://localhost:4200/`.
 
 ## License
 
-MPL-2.0 - Kamil Furtak <kamil@fcomp.dev> Copyright 2024 FComp
+MPL-2.0. See [LICENSE.md](LICENSE.md).

@@ -7,8 +7,8 @@
     "ol": "^8.2.0",
     "proj4": "^2.11.0"
   },
-  "description": "OpenLayers library for Angular",
-  "author": "Kamil Furtak (kamil@fcomp.dev)",
+  "description": "Declarative OpenLayers components for Angular",
+  "author": "Kamil Furtak",
   "repository": {
     "type": "git",
     "url": "https://github.com/kamilfurtak/ng-openlayers.git"
@@ -16,11 +16,17 @@
   "bugs": {
     "url": "https://github.com/kamilfurtak/ng-openlayers/issues"
   },
-  "homepage": "https://github.com/kamilfurtak/ng-openlayers",
+  "homepage": "https://kamilfurtak.github.io/ng-openlayers/",
   "keywords": [
-    "ngx-openlayers",
     "angular",
-    "openlayers"
+    "angular-library",
+    "geospatial",
+    "gis",
+    "maps",
+    "ng-openlayers",
+    "openlayers",
+    "typescript",
+    "web-mapping"
   ],
   "license": "MPL-2.0",
   "private": false,
