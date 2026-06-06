@@ -1,0 +1,44 @@
+.aol-measure-tooltip {
+  background: rgba(0, 0, 0, 0.68);
+  border-radius: 4px;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  pointer-events: none;
+  position: relative;
+  white-space: nowrap;
+}
+
+.aol-measure-tooltip::before {
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid rgba(0, 0, 0, 0.68);
+  bottom: -6px;
+  content: '';
+  left: 50%;
+  margin-left: -6px;
+  position: absolute;
+}
+
+.aol-measure-tooltip-static {
+  background: #fff;
+  border: 1px solid #2f6fed;
+  color: #1f2937;
+}
+
+.aol-measure-tooltip-static::before {
+  border-top-color: #2f6fed;
+}
+
+.aol-measure-tooltip-help {
+  background: rgba(255, 255, 255, 0.9);
+  color: #1f2937;
+}
+
+.aol-measure-tooltip-help::before {
+  display: none;
+}
+
+.aol-measure-hidden {
+  display: none;
+}
