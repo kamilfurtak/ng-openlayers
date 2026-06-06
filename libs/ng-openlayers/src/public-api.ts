@@ -69,6 +69,7 @@ import { DragZoomInteractionComponent } from './lib/interactions/dragzoom.compon
 import { MouseWheelZoomInteractionComponent } from './lib/interactions/mousewheelzoom.component';
 import { PinchZoomInteractionComponent } from './lib/interactions/pinchzoom.component';
 import { DrawInteractionComponent } from './lib/interactions/draw.component';
+import { MeasureInteractionComponent } from './lib/interactions/measure.component';
 import { KeyboardPanInteractionComponent } from './lib/interactions/keyboardpan.component';
 import { KeyboardZoomInteractionComponent } from './lib/interactions/keyboardzoom.component';
 import { SelectInteractionComponent } from './lib/interactions/select.component';
@@ -152,6 +153,7 @@ export {
   MouseWheelZoomInteractionComponent,
   PinchZoomInteractionComponent,
   DrawInteractionComponent,
+  MeasureInteractionComponent,
   KeyboardPanInteractionComponent,
   KeyboardZoomInteractionComponent,
   SelectInteractionComponent,
@@ -165,6 +167,7 @@ export {
 };
 
 export * from './lib/interactions/draw-hole-in-polygon';
+export * from './lib/interactions/measure.component';
 
 const COMPONENTS = [
   MapComponent,
@@ -240,6 +243,7 @@ const COMPONENTS = [
   MouseWheelZoomInteractionComponent,
   PinchZoomInteractionComponent,
   DrawInteractionComponent,
+  MeasureInteractionComponent,
   SelectInteractionComponent,
   ModifyInteractionComponent,
   TranslateInteractionComponent,

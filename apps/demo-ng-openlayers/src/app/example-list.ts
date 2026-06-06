@@ -142,6 +142,12 @@ export const examplesList = [
     routerLink: 'draw-hole-in-polygon',
   },
   {
+    title: 'Measure',
+    description: 'Example of measuring distance and area with aol-interaction-measure.',
+    routerLink: 'measure',
+    openLayersLink: 'https://openlayers.org/en/latest/examples/measure.html',
+  },
+  {
     title: 'Snap interaction',
     description: 'Example of using aol-interaction-snap.',
     routerLink: 'snap-interaction',
