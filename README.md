@@ -3,6 +3,7 @@
 Declarative OpenLayers components for Angular.
 
 [![npm version](https://img.shields.io/npm/v/ng-openlayers.svg)](https://www.npmjs.com/package/ng-openlayers)
+[![npm downloads](https://img.shields.io/npm/dw/ng-openlayers.svg)](https://www.npmjs.com/package/ng-openlayers)
 [![GitHub Pages demo](https://img.shields.io/badge/demo-GitHub%20Pages-2ea44f)](https://kamilfurtak.github.io/ng-openlayers/)
 [![License: MPL--2.0](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](LICENSE.md)
 
