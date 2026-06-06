@@ -128,7 +128,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
+    const properties: Record<string, unknown> = {};
     if (!this.instance) {
       return;
     }

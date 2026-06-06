@@ -6,13 +6,33 @@ import {
   GeometryMultiPointComponent,
   GeometryMultiPolygonComponent,
   GeometryPolygonComponent,
+  FeatureComponent,
   MapComponent,
 } from '../public-api';
 
+type MockMapComponent = {
+  instance: {
+    on: jasmine.Spy;
+    getView: jasmine.Spy;
+  };
+};
+
+type MockHostComponent = {
+  instance: {
+    setCoordinates: jasmine.Spy;
+  };
+  componentType: string;
+};
+
+type CollectionCoordinatesComponentInternals = CollectionCoordinatesComponent & {
+  onMapViewChanged: (event: unknown) => void;
+  transformCoordinates: () => void;
+};
+
 describe('CollectionCoordinatesComponent', () => {
   let component: CollectionCoordinatesComponent;
-  let mockMapComponent: any;
-  let mockHostComponent: any;
+  let mockMapComponent: MockMapComponent;
+  let mockHostComponent: MockHostComponent;
 
   beforeEach(() => {
     mockMapComponent = {
@@ -46,32 +66,82 @@ describe('CollectionCoordinatesComponent', () => {
 
   describe('constructor', () => {
     it('should initialize with a GeometryLineStringComponent host', () => {
-      const geometryHostMock = new GeometryLinestringComponent(mockHostComponent, {} as any);
-      component = new CollectionCoordinatesComponent(mockHostComponent, geometryHostMock, null, null, null, null);
+      const geometryHostMock = new GeometryLinestringComponent(
+        mockMapComponent as unknown as MapComponent,
+        mockHostComponent as unknown as FeatureComponent
+      );
+      component = new CollectionCoordinatesComponent(
+        mockMapComponent as unknown as MapComponent,
+        geometryHostMock,
+        null,
+        null,
+        null,
+        null
+      );
       expect(component['host']).toBe(geometryHostMock);
     });
 
     it('should initialize with a GeometryPolygonComponent host', () => {
-      const geometryHostMock = new GeometryPolygonComponent(mockHostComponent, {} as any);
-      component = new CollectionCoordinatesComponent(mockHostComponent, null, geometryHostMock, null, null, null);
+      const geometryHostMock = new GeometryPolygonComponent(
+        mockMapComponent as unknown as MapComponent,
+        mockHostComponent as unknown as FeatureComponent
+      );
+      component = new CollectionCoordinatesComponent(
+        mockMapComponent as unknown as MapComponent,
+        null,
+        geometryHostMock,
+        null,
+        null,
+        null
+      );
       expect(component['host']).toBe(geometryHostMock);
     });
 
     it('should initialize with a GeometryMultiPointComponent host', () => {
-      const geometryHostMock = new GeometryMultiPointComponent(mockHostComponent, {} as any);
-      component = new CollectionCoordinatesComponent(mockHostComponent, null, null, geometryHostMock, null, null);
+      const geometryHostMock = new GeometryMultiPointComponent(
+        mockMapComponent as unknown as MapComponent,
+        mockHostComponent as unknown as FeatureComponent
+      );
+      component = new CollectionCoordinatesComponent(
+        mockMapComponent as unknown as MapComponent,
+        null,
+        null,
+        geometryHostMock,
+        null,
+        null
+      );
       expect(component['host']).toBe(geometryHostMock);
     });
 
     it('should initialize with a GeometryMultiLinestringComponent host', () => {
-      const geometryHostMock = new GeometryMultiLinestringComponent(mockHostComponent, {} as any);
-      component = new CollectionCoordinatesComponent(mockHostComponent, null, null, null, geometryHostMock, null);
+      const geometryHostMock = new GeometryMultiLinestringComponent(
+        mockMapComponent as unknown as MapComponent,
+        mockHostComponent as unknown as FeatureComponent
+      );
+      component = new CollectionCoordinatesComponent(
+        mockMapComponent as unknown as MapComponent,
+        null,
+        null,
+        null,
+        geometryHostMock,
+        null
+      );
       expect(component['host']).toBe(geometryHostMock);
     });
 
     it('should initialize with a GeometryMultiPolygonComponent host', () => {
-      const geometryHostMock = new GeometryMultiPolygonComponent(mockHostComponent, {} as any);
-      component = new CollectionCoordinatesComponent(mockHostComponent, null, null, null, null, geometryHostMock);
+      const geometryHostMock = new GeometryMultiPolygonComponent(
+        mockMapComponent as unknown as MapComponent,
+        mockHostComponent as unknown as FeatureComponent
+      );
+      component = new CollectionCoordinatesComponent(
+        mockMapComponent as unknown as MapComponent,
+        null,
+        null,
+        null,
+        null,
+        geometryHostMock
+      );
       expect(component['host']).toBe(geometryHostMock);
     });
 
@@ -98,7 +168,7 @@ describe('CollectionCoordinatesComponent', () => {
 
     it('should register "change:view" event and call onMapViewChanged when the event is triggered', () => {
       const mockEvent = { testEventProperty: 'testValue' };
-      spyOn<any>(component, 'onMapViewChanged');
+      spyOn(component as unknown as CollectionCoordinatesComponentInternals, 'onMapViewChanged');
 
       // Simulate ngOnInit to set up the event listener
       component.ngOnInit();
@@ -112,7 +182,7 @@ describe('CollectionCoordinatesComponent', () => {
     });
 
     it('should call transformCoordinates', () => {
-      spyOn<any>(component, 'transformCoordinates');
+      spyOn(component as unknown as CollectionCoordinatesComponentInternals, 'transformCoordinates');
       component.ngOnInit();
       expect(component['transformCoordinates']).toHaveBeenCalled();
     });
@@ -120,7 +190,7 @@ describe('CollectionCoordinatesComponent', () => {
 
   describe('ngOnChanges', () => {
     it('should call transformCoordinates when inputs change', () => {
-      spyOn<any>(component, 'transformCoordinates');
+      spyOn(component as unknown as CollectionCoordinatesComponentInternals, 'transformCoordinates');
       component.ngOnChanges();
       expect(component['transformCoordinates']).toHaveBeenCalled();
     });
@@ -128,7 +198,7 @@ describe('CollectionCoordinatesComponent', () => {
 
   describe('onMapViewChanged', () => {
     it('should update mapSrid and call transformCoordinates', () => {
-      spyOn<any>(component, 'transformCoordinates');
+      spyOn(component as unknown as CollectionCoordinatesComponentInternals, 'transformCoordinates');
       const mockEvent = {
         target: {
           get: jasmine.createSpy().and.returnValue({

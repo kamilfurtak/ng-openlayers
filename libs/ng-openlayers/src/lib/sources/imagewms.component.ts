@@ -36,7 +36,7 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
   @Input()
   imageLoadFunction?: LoadFunction;
   @Input()
-  params: { [key: string]: any };
+  params: Record<string, unknown>;
   @Input()
   projection: ProjectionLike | string;
   @Input()

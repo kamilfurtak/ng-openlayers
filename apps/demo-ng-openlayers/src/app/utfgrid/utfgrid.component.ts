@@ -70,16 +70,20 @@ export class UTFGridComponent {
   @ViewChild('UTFGrid', { static: true }) UTFGrid: SourceUTFGridComponent;
   @ViewChild('view', { static: true }) view: ViewComponent;
 
-  info: any;
+  info: Record<string, string> | null = null;
   coords: Coordinate;
   key = 'pk.eyJ1IjoieWFrb3VzdCIsImEiOiJjanVkc3Y0b2cwNWppM3lwaXd5M3JidHRzIn0.rJmuWPJnuKA9MJ9z5RPKZw';
 
-  displayInfo(c) {
+  displayInfo(c: Coordinate) {
     this.UTFGrid.instance.forDataAtCoordinateAndResolution(c, this.view.instance.getResolution(), (data) => {
-      if (data !== null && data !== undefined && data !== '') {
+      if (this.isUtfGridInfo(data)) {
         this.info = data;
         this.coords = c;
       }
     });
+  }
+
+  private isUtfGridInfo(data: unknown): data is Record<string, string> {
+    return typeof data === 'object' && data !== null && typeof data['flag_png'] === 'string';
   }
 }

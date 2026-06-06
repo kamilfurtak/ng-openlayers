@@ -67,7 +67,7 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
+    const properties: Record<string, unknown> = {};
     if (!this.instance) {
       return;
     }

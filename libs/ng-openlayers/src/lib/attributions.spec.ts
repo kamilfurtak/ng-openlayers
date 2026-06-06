@@ -3,9 +3,12 @@ import { AttributionsComponent } from './attributions.component';
 import { AttributionComponent } from './attribution.component';
 import { QueryList } from '@angular/core';
 import { SourceComponent } from '../public-api';
+import { AttributionLike } from 'ol/source/Source';
 
 class MockSourceComponent {
-  instance = { setAttributions: jasmine.createSpy('setAttributions') } as any;
+  instance = {
+    setAttributions: jasmine.createSpy<(attributions: AttributionLike | undefined) => void>('setAttributions'),
+  };
 }
  
 describe('AttributionsComponent', () => {

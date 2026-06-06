@@ -87,7 +87,7 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
+    const properties: Record<string, unknown> = {};
 
     if (!this.instance) {
       return;

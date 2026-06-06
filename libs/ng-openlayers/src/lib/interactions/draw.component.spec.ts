@@ -13,7 +13,7 @@ describe('DrawInteractionComponent', () => {
       instance: {
         addInteraction: jasmine.createSpy('addInteraction'),
         removeInteraction: jasmine.createSpy('removeInteraction'),
-      } as any,
+      } as unknown as MapComponent['instance'],
     };
 
     await TestBed.configureTestingModule({

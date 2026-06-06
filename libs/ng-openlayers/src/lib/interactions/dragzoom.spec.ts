@@ -5,7 +5,10 @@ import { MapComponent } from '../../public-api';
 
 describe('DragZoomInteractionComponent', () => {
   let component: DragZoomInteractionComponent;
-  let mapInstanceMock: any;
+  let mapInstanceMock: {
+    addInteraction: jasmine.Spy;
+    removeInteraction: jasmine.Spy;
+  };
 
   beforeEach(() => {
     mapInstanceMock = {

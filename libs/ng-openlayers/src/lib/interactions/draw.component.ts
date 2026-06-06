@@ -79,8 +79,8 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
     this.map.instance.addInteraction(this.instance);
   }
 
-  @HostListener('window:keydown.control.z', ['$event'])
-  handleKeydown(_event?: KeyboardEvent) {
+  @HostListener('window:keydown.control.z')
+  handleKeydown() {
     this.instance.removeLastPoint();
   }
 

@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import OLFeature from 'ol/Feature';
 import Projection from 'ol/proj/Projection';
 import { GeoJSON } from 'ol/format';
+import { Feature as GeoJsonFeature, Polygon as GeoJsonPolygon } from 'geojson';
 import { Polygon } from 'ol/geom';
 import { JsonPipe } from '@angular/common';
 import {
@@ -169,7 +170,7 @@ export class DrawHoleInPolygonComponent {
   displayProj = new Projection({ code: 'EPSG:3857' });
   inputProj = new Projection({ code: 'EPSG:4326' });
   // Define the initial polygon feature (GeoJSON) as the base shape on the map
-  feature = {
+  feature: GeoJsonFeature<GeoJsonPolygon> = {
     geometry: {
       coordinates: [
         [
@@ -204,7 +205,7 @@ export class DrawHoleInPolygonComponent {
     this.feature = this.format.writeFeatureObject(feature, {
       dataProjection: this.inputProj, // Source projection of the feature
       featureProjection: this.displayProj, // Projection used by the map
-    }) as any;
+    }) as GeoJsonFeature<GeoJsonPolygon>;
   }
 
   /**

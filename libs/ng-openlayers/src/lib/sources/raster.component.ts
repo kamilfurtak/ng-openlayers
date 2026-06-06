@@ -31,7 +31,7 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
   @Input()
   threads?: number;
   @Input()
-  lib?: any;
+  lib?: Record<string, unknown>;
   @Input()
   operationType?: 'pixel' | 'image';
 

@@ -89,7 +89,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
+    const properties: Record<string, unknown> = {};
     if (!this.instance) {
       return;
     }

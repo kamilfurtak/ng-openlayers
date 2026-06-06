@@ -1,8 +1,14 @@
 import { OnDestroy, OnInit, OnChanges, Input, SimpleChanges, Directive } from '@angular/core';
+import BaseLayer from 'ol/layer/Base';
 import Event from 'ol/events/Event';
 import { MapComponent } from '../map.component';
 import { LayerGroupComponent } from './layergroup.component';
 import { Extent } from 'ol/extent';
+
+type RenderableLayer = BaseLayer & {
+  on(type: 'prerender' | 'postrender', listener: (evt: Event) => void): unknown;
+  un(type: 'prerender' | 'postrender', listener: (evt: Event) => void): void;
+};
 
 @Directive()
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
@@ -25,17 +31,17 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   postrender: (evt: Event) => void;
 
-  public instance: any;
+  public instance: BaseLayer;
   public componentType = 'layer';
 
   protected constructor(protected host: MapComponent | LayerGroupComponent) {}
 
   ngOnInit() {
     if (this.prerender !== null && this.prerender !== undefined) {
-      this.instance.on('prerender', this.prerender);
+      (this.instance as RenderableLayer).on('prerender', this.prerender);
     }
     if (this.postrender !== null && this.postrender !== undefined) {
-      this.instance.on('postrender', this.postrender);
+      (this.instance as RenderableLayer).on('postrender', this.postrender);
     }
     this.host.instance.getLayers().push(this.instance);
   }
@@ -45,7 +51,7 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
+    const properties: Record<string, unknown> = {};
     if (!this.instance) {
       return;
     }
@@ -53,12 +59,12 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
       if (changes.hasOwnProperty(key)) {
         properties[key] = changes[key].currentValue;
         if (key === 'prerender') {
-          this.instance.un('prerender', changes[key].previousValue);
-          this.instance.on('prerender', changes[key].currentValue);
+          (this.instance as RenderableLayer).un('prerender', changes[key].previousValue);
+          (this.instance as RenderableLayer).on('prerender', changes[key].currentValue);
         }
         if (key === 'postrender') {
-          this.instance.un('postrender', changes[key].previousValue);
-          this.instance.on('postrender', changes[key].currentValue);
+          (this.instance as RenderableLayer).un('postrender', changes[key].previousValue);
+          (this.instance as RenderableLayer).on('postrender', changes[key].currentValue);
         }
       }
     }

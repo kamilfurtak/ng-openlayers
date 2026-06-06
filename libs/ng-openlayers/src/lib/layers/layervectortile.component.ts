@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Optional, SimpleChanges, OnChanges } from '@angular/core';
 import { VectorTile } from 'ol/layer';
+import VectorTileSource from 'ol/source/VectorTile';
 import { Style } from 'ol/style';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
@@ -15,6 +16,8 @@ import { BackgroundColor } from 'ol/layer/Base';
     standalone: true,
 })
 export class LayerVectorTileComponent extends LayerComponent implements OnInit, OnChanges {
+  public override instance: VectorTile<VectorTileSource>;
+
   @Input()
   renderBuffer: number;
   @Input()

@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, Input, Optional, OnChanges, SimpleChanges } from '@angular/core';
 import { Tile } from 'ol/layer';
+import TileSource from 'ol/source/Tile';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
@@ -10,6 +11,8 @@ import { LayerGroupComponent } from './layergroup.component';
     standalone: true,
 })
 export class LayerTileComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
+  public override instance: Tile<TileSource>;
+
   @Input()
   preload: number;
   @Input()

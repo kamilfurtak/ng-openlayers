@@ -8,6 +8,15 @@ import {
   SourceXYZComponent,
   ViewComponent,
 } from 'ng-openlayers';
+import RenderEvent from 'ol/render/Event';
+
+type SwipePanEvent = {
+  preventDefault: () => void;
+  deltaX: number;
+  srcEvent: {
+    view: Window | null;
+  };
+};
 
 @Component({
     selector: 'app-swipe',
@@ -82,8 +91,8 @@ export class SwipeComponent implements OnInit {
   @ViewChild('map', { static: true })
   map: MapComponent;
 
-  public prerenderFunction: (event) => void;
-  public postrenderFunction: (event) => void;
+  public prerenderFunction: (event: RenderEvent) => void;
+  public postrenderFunction: (event: RenderEvent) => void;
 
   swipeValue = 50;
   swipeOffsetToCenter = 0;
@@ -97,14 +106,17 @@ export class SwipeComponent implements OnInit {
     this.postrenderFunction = this.postrender();
   }
 
-  @HostListener('window:resize', ['$event'])
-  onWindowResize(event) {
+  @HostListener('window:resize')
+  onWindowResize() {
     this.resetSwipeValues();
   }
 
   prerender() {
-    return (event) => {
-      const ctx = event.context;
+    return (event: RenderEvent) => {
+      const ctx = event.context as CanvasRenderingContext2D | undefined;
+      if (!ctx) {
+        return;
+      }
       const width = ctx.canvas.width * (this.swipeValue / 100);
 
       ctx.save();
@@ -115,8 +127,11 @@ export class SwipeComponent implements OnInit {
   }
 
   postrender() {
-    return (event) => {
-      const ctx = event.context;
+    return (event: RenderEvent) => {
+      const ctx = event.context as CanvasRenderingContext2D | undefined;
+      if (!ctx) {
+        return;
+      }
       ctx.restore();
     };
   }
@@ -132,14 +147,14 @@ export class SwipeComponent implements OnInit {
     this.startX = this.swipeOffsetToCenter;
   }
 
-  onPan(event: any): void {
+  onPan(event: SwipePanEvent): void {
     event.preventDefault();
     const swipePercentageMax = 98;
     const swipePercentageMin = 2;
     const maxPercentage = 0.48;
 
     this.swipeOffsetToCenter = this.startX + event.deltaX;
-    const screenSizePx = event.srcEvent.view.innerWidth - this.paddingSize;
+    const screenSizePx = (event.srcEvent.view?.innerWidth ?? window.innerWidth) - this.paddingSize;
     this.positionPx = screenSizePx / 2 + this.swipeOffsetToCenter;
     this.swipeValue = (this.positionPx / screenSizePx) * 100;
 

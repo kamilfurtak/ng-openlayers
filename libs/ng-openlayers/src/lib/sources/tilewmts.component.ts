@@ -19,6 +19,7 @@ import { ProjectionLike } from 'ol/proj';
 import { LoadFunction } from 'ol/Tile';
 import { TileSourceEvent } from 'ol/source/Tile';
 import { RequestEncoding } from 'ol/source/WMTS';
+import ImageTile from 'ol/ImageTile';
 
 @Component({
     selector: 'aol-source-tilewmts',
@@ -44,7 +45,7 @@ export class SourceTileWMTSComponent extends SourceComponent implements AfterCon
   @Input()
   style: string;
   @Input()
-  tileClass?: any;
+  tileClass?: typeof ImageTile;
   @Input()
   tilePixelRatio?: number;
   @Input()
@@ -54,7 +55,7 @@ export class SourceTileWMTSComponent extends SourceComponent implements AfterCon
   @Input()
   matrixSet: string;
   @Input()
-  dimensions?: any;
+  dimensions?: Record<string, unknown>;
   @Input()
   url?: string;
   @Input()
@@ -81,7 +82,7 @@ export class SourceTileWMTSComponent extends SourceComponent implements AfterCon
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
+    const properties: Record<string, unknown> = {};
     if (!this.instance) {
       return;
     }

@@ -18,13 +18,13 @@ export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestro
   @Input()
   latLabelPosition: number;
 
-  instance: any;
+  instance: Graticule;
   public componentType = 'graticule';
 
   constructor(private map: MapComponent) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: { [index: string]: any } = {};
+    const properties: Record<string, unknown> = {};
 
     if (!this.instance) {
       return;
