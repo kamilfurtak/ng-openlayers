@@ -42,7 +42,7 @@ jobs:
           cache: 'npm'
 
       - run: npm ci --legacy-peer-deps --include=optional
-      - uses: nrwl/nx-set-shas@v4
+      - uses: nrwl/nx-set-shas@v5
         with:
           # The "main" branch of your repository (the base branch which you target with PRs).
           # Common names for this branch include main and master.
@@ -60,7 +60,7 @@ jobs:
       - run: npm run build
       #      - run: npx nx affected --parallel 1 -t e2e-ci
       - name: Upload static files as artifact
-        uses: actions/upload-pages-artifact@v3      # Upload the build artifacts
+        uses: actions/upload-pages-artifact@v5      # Upload the build artifacts
         with:
           path: ./dist/apps/demo-ng-openlayers  # Adjust to your build output directory
   publish_to_npm:
@@ -120,4 +120,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
