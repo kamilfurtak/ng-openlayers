@@ -19,7 +19,7 @@ export enum DrawHoleInPolygonInteractionErrorType {
 
 export interface DrawHoleInPolygonInteractionError {
   type: DrawHoleInPolygonInteractionErrorType;
-  event: DrawEvent | MapBrowserEvent<MouseEvent>;
+  event: DrawEvent | MapBrowserEvent;
   message: string;
 }
 
@@ -102,7 +102,7 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
     this.drawEnd.emit(new Feature(this.foundFeatureToApplyEnclave.getGeometry()));
   };
 
-  onMapClick = (e: MapBrowserEvent<MouseEvent>) => {
+  onMapClick = (e: MapBrowserEvent) => {
     console.log('onMapClick', e);
 
     const coordinate = this.map.instance.getCoordinateFromPixel(e.pixel);
@@ -177,7 +177,7 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
     this.foundFeatureToApplyEnclave.setGeometry(newPolygon);
   }
 
-  checkAndRemoveHole(e: MapBrowserEvent<MouseEvent>, foundFeatureToApplyEnclave: Feature<Geometry>) {
+  checkAndRemoveHole(e: MapBrowserEvent, foundFeatureToApplyEnclave: Feature<Geometry>) {
     const polygon = foundFeatureToApplyEnclave.getGeometry() as Polygon;
     let coordinates = polygon.getCoordinates();
     const coordinateIndex = coordinates.slice(1).findIndex((coordinate) => {

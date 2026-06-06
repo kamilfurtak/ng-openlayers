@@ -1,6 +1,7 @@
 import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
 import { VectorTile } from 'ol/source';
-import Feature from 'ol/format/Feature';
+import { FeatureLike } from 'ol/Feature';
+import FeatureFormat from 'ol/format/Feature';
 import TileGrid from 'ol/tilegrid/TileGrid';
 import { LayerVectorTileComponent } from '../layers/layervectortile.component';
 import { FormatComponent } from '../formats/format.component';
@@ -38,8 +39,8 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
   @ContentChild(TileGridComponent, { static: false })
   tileGridComponent: TileGridComponent;
 
-  public instance: VectorTile;
-  format: Feature;
+  public instance: VectorTile<FeatureLike>;
+  format: FeatureFormat<FeatureLike>;
   tileGrid: TileGrid;
 
   constructor(@Host() layer: LayerVectorTileComponent) {
@@ -51,7 +52,7 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
     this.format = this.formatComponent.instance;
     this.tileGrid = this.tileGridComponent.instance;
     // console.log('creating ol.source.VectorTile instance with:', this);
-    this.instance = new VectorTile(this);
+    this.instance = new VectorTile<FeatureLike>(this);
     this.host.instance.setSource(this.instance);
   }
 }

@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { FormatComponent } from './format.component';
 import { MVT } from 'ol/format';
-import { FeatureClass } from 'ol/Feature';
+import { FeatureClass, FeatureLike } from 'ol/Feature';
 
 @Component({
     selector: 'aol-format-mvt',
@@ -19,10 +19,10 @@ export class FormatMVTComponent extends FormatComponent {
   @Input()
   layers: string[];
 
-  instance: MVT;
+  instance: MVT<FeatureLike>;
 
   constructor() {
     super();
-    this.instance = new MVT(this);
+    this.instance = new MVT<FeatureLike>(this);
   }
 }

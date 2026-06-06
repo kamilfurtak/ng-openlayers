@@ -4,8 +4,8 @@
   "peerDependencies": {
     "@angular/common": "19 - 21",
     "@angular/core": "19 - 21",
-    "ol": "^8.2.0",
-    "proj4": "^2.11.0"
+    "ol": "^10.9.0",
+    "proj4": "^2.20.8"
   },
   "description": "Declarative OpenLayers components for Angular",
   "author": "Kamil Furtak",

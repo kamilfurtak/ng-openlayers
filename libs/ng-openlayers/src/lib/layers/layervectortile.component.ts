@@ -1,11 +1,13 @@
 import { Component, OnInit, Input, Optional, SimpleChanges, OnChanges } from '@angular/core';
 import { VectorTile } from 'ol/layer';
-import { Feature } from 'ol';
 import { Style } from 'ol/style';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
 import { StyleFunction } from 'ol/style/Style';
+import { VectorTileRenderType } from 'ol/layer/VectorTile';
+import { OrderFunction } from 'ol/render';
+import { BackgroundColor } from 'ol/layer/Base';
 
 @Component({
     selector: 'aol-layer-vectortile',
@@ -16,10 +18,9 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
   @Input()
   renderBuffer: number;
   @Input()
-  renderMode: any | string;
-  /* not marked as optional in the typings */
+  renderMode: VectorTileRenderType;
   @Input()
-  renderOrder: (feature1: Feature, feature2: Feature) => number;
+  renderOrder: OrderFunction;
   @Input()
   style: Style | Style[] | StyleFunction;
   @Input()
@@ -28,6 +29,16 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
   updateWhileInteracting: boolean;
   @Input()
   visible: boolean;
+  @Input()
+  declutter: string | number | boolean;
+  @Input()
+  background: BackgroundColor;
+  @Input()
+  preload: number;
+  @Input()
+  useInterimTilesOnError: boolean;
+  @Input()
+  cacheSize: number;
 
   constructor(map: MapComponent, @Optional() group?: LayerGroupComponent) {
     super(group || map);
