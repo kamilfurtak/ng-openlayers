@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kamilfurtak.github.io/ng-openlayers/sitemap.xml
+Sitemap: https://ng-openlayers.furtak.dev/sitemap.xml

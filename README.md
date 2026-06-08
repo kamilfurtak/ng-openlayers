@@ -6,10 +6,10 @@ Declarative OpenLayers components for Angular.
 
 [![npm version](https://img.shields.io/npm/v/ng-openlayers.svg)](https://www.npmjs.com/package/ng-openlayers)
 [![npm downloads](https://img.shields.io/npm/dw/ng-openlayers.svg)](https://www.npmjs.com/package/ng-openlayers)
-[![GitHub Pages demo](https://img.shields.io/badge/demo-GitHub%20Pages-2ea44f)](https://kamilfurtak.github.io/ng-openlayers/)
+[![Demo](https://img.shields.io/badge/demo-ng--openlayers.furtak.dev-2ea44f)](https://ng-openlayers.furtak.dev/)
 [![License: MPL--2.0](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](LICENSE.md)
 
-[Demo](https://kamilfurtak.github.io/ng-openlayers/) · [Article](https://furtak.dev/articles/angular-openlayers/) · [Tutorial on Medium](https://medium.com/@kamilfurtak/create-interactive-maps-with-angular-17-and-latest-openlayers-7ae9b7fdb7ec) · [Author](https://furtak.dev/) · [OpenLayers API](https://openlayers.org/en/latest/apidoc/)
+[Demo](https://ng-openlayers.furtak.dev/) · [Project page](https://furtak.dev/projects/ng-openlayers/) · [Article](https://furtak.dev/articles/angular-openlayers/) · [Tutorial on Medium](https://medium.com/@kamilfurtak/create-interactive-maps-with-angular-17-and-latest-openlayers-7ae9b7fdb7ec) · [Author](https://furtak.dev/) · [OpenLayers API](https://openlayers.org/en/latest/apidoc/)
 
 `ng-openlayers` lets Angular applications describe OpenLayers maps with templates instead of imperative map setup code. Layers, sources, geometries, styles, controls, interactions, overlays, and coordinates become Angular components with typed inputs and outputs.
 
@@ -117,9 +117,11 @@ The demo includes examples for:
 - overlays, controls, cursor position, overview map, and graticule;
 - raster, WMS, ArcGIS image, static image, tile JSON, cluster, swipe, and side-by-side maps.
 
-Live demo: https://kamilfurtak.github.io/ng-openlayers/
+Live demo: https://ng-openlayers.furtak.dev/
 
 Own-domain article: https://furtak.dev/articles/angular-openlayers/
+
+Project page: https://furtak.dev/projects/ng-openlayers/
 
 ## Compatibility
 
