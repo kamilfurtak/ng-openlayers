@@ -38,6 +38,9 @@
         "tsConfig": "apps/demo-ng-openlayers/tsconfig.app.json",
         "assets": [
           "apps/demo-ng-openlayers/src/favicon.ico",
+          "apps/demo-ng-openlayers/src/robots.txt",
+          "apps/demo-ng-openlayers/src/sitemap.xml",
+          "apps/demo-ng-openlayers/src/.nojekyll",
           "apps/demo-ng-openlayers/src/assets"
         ],
         "styles": [
@@ -105,6 +108,9 @@
         "karmaConfig": "apps/demo-ng-openlayers/karma.conf.js",
         "assets": [
           "apps/demo-ng-openlayers/src/favicon.ico",
+          "apps/demo-ng-openlayers/src/robots.txt",
+          "apps/demo-ng-openlayers/src/sitemap.xml",
+          "apps/demo-ng-openlayers/src/.nojekyll",
           "apps/demo-ng-openlayers/src/assets"
         ],
         "styles": [

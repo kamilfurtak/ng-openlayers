@@ -3,7 +3,13 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'app-root',
     template: `
-    <header><h1 routerLink="/">ng-openlayers demo</h1></header>
+    <header>
+      <h1 routerLink="/">ng-openlayers demo</h1>
+      <nav aria-label="Project links">
+        <a href="https://www.npmjs.com/package/ng-openlayers" rel="noopener">npm</a>
+        <a href="https://github.com/kamilfurtak/ng-openlayers" rel="noopener">GitHub</a>
+      </nav>
+    </header>
     <div class="main-container"><router-outlet></router-outlet></div>
   `,
     styles: [
@@ -22,6 +28,7 @@ import { Component } from '@angular/core';
         color: #fff;
         font-family: Roboto, sans-serif;
         font-size: 16px;
+        align-items: center;
         opacity: 1;
         box-shadow:
           0 2px 4px -1px rgba(0, 0, 0, 0.2),
@@ -32,6 +39,23 @@ import { Component } from '@angular/core';
       header h1 {
         padding-left: 1rem;
         cursor: pointer;
+      }
+
+      nav {
+        display: flex;
+        gap: 1rem;
+        margin-left: auto;
+        padding-right: 1rem;
+      }
+
+      nav a {
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      nav a:hover {
+        text-decoration: underline;
       }
 
       .main-container {
