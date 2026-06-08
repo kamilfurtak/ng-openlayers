@@ -9,7 +9,7 @@ Declarative OpenLayers components for Angular.
 [![GitHub Pages demo](https://img.shields.io/badge/demo-GitHub%20Pages-2ea44f)](https://kamilfurtak.github.io/ng-openlayers/)
 [![License: MPL--2.0](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](LICENSE.md)
 
-[Demo](https://kamilfurtak.github.io/ng-openlayers/) · [Tutorial](https://medium.com/@kamilfurtak/create-interactive-maps-with-angular-17-and-latest-openlayers-7ae9b7fdb7ec) · [OpenLayers API](https://openlayers.org/en/latest/apidoc/)
+[Demo](https://kamilfurtak.github.io/ng-openlayers/) · [Article](https://furtak.dev/articles/angular-openlayers/) · [Tutorial on Medium](https://medium.com/@kamilfurtak/create-interactive-maps-with-angular-17-and-latest-openlayers-7ae9b7fdb7ec) · [Author](https://furtak.dev/) · [OpenLayers API](https://openlayers.org/en/latest/apidoc/)
 
 `ng-openlayers` lets Angular applications describe OpenLayers maps with templates instead of imperative map setup code. Layers, sources, geometries, styles, controls, interactions, overlays, and coordinates become Angular components with typed inputs and outputs.
 
@@ -118,6 +118,8 @@ The demo includes examples for:
 - raster, WMS, ArcGIS image, static image, tile JSON, cluster, swipe, and side-by-side maps.
 
 Live demo: https://kamilfurtak.github.io/ng-openlayers/
+
+Own-domain article: https://furtak.dev/articles/angular-openlayers/
 
 ## Compatibility
 
