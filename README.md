@@ -1,5 +1,7 @@
 # ng-openlayers
 
+![ng-openlayers social preview](docs/assets/ng-openlayers-social-preview.png)
+
 Declarative OpenLayers components for Angular.
 
 [![npm version](https://img.shields.io/npm/v/ng-openlayers.svg)](https://www.npmjs.com/package/ng-openlayers)
