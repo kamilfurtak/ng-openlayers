@@ -8,8 +8,9 @@ Declarative OpenLayers components for Angular.
 [![npm downloads](https://img.shields.io/npm/dw/ng-openlayers.svg)](https://www.npmjs.com/package/ng-openlayers)
 [![Demo](https://img.shields.io/badge/demo-ng--openlayers.furtak.dev-2ea44f)](https://ng-openlayers.furtak.dev/)
 [![License: MPL--2.0](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](LICENSE.md)
+[![Sponsor](https://img.shields.io/badge/sponsor-GitHub%20Sponsors-ea4aaa.svg)](https://github.com/sponsors/kamilfurtak)
 
-[Demo](https://ng-openlayers.furtak.dev/) · [Project page](https://furtak.dev/projects/ng-openlayers/) · [Article](https://furtak.dev/articles/angular-openlayers/) · [Tutorial on Medium](https://medium.com/@kamilfurtak/create-interactive-maps-with-angular-17-and-latest-openlayers-7ae9b7fdb7ec) · [Author](https://furtak.dev/) · [OpenLayers API](https://openlayers.org/en/latest/apidoc/)
+[Demo](https://ng-openlayers.furtak.dev/) · [Project page](https://furtak.dev/projects/ng-openlayers/) · [Article](https://furtak.dev/articles/angular-openlayers/) · [Tutorial on Medium](https://medium.com/@kamilfurtak/create-interactive-maps-with-angular-17-and-latest-openlayers-7ae9b7fdb7ec) · [Author](https://furtak.dev/) · [Sponsor](https://github.com/sponsors/kamilfurtak) · [OpenLayers API](https://openlayers.org/en/latest/apidoc/)
 
 `ng-openlayers` lets Angular applications describe OpenLayers maps with templates instead of imperative map setup code. Layers, sources, geometries, styles, controls, interactions, overlays, and coordinates become Angular components with typed inputs and outputs.
 
@@ -130,6 +131,12 @@ Project page: https://furtak.dev/projects/ng-openlayers/
 | Angular | 21 |
 | OpenLayers | `^10.9.0` |
 | Proj4 | `^2.20.8` |
+
+## Support
+
+`ng-openlayers` is maintained as an open-source Angular/OpenLayers library. If it helps your project or saves implementation time, consider [sponsoring its maintenance](https://github.com/sponsors/kamilfurtak).
+
+Sponsorship helps with Angular and OpenLayers compatibility updates, documentation, examples, issue triage, and long-term maintenance.
 
 ## Repository Map
 
