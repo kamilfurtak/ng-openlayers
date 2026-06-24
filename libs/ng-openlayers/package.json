@@ -17,6 +17,10 @@
     "url": "https://github.com/kamilfurtak/ng-openlayers/issues"
   },
   "homepage": "https://ng-openlayers.furtak.dev/",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/kamilfurtak"
+  },
   "keywords": [
     "angular",
     "angular-components",
