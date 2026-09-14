@@ -65,6 +65,7 @@ jobs:
         run: |
           npm pack ./dist/libs/ng-openlayers --pack-destination dist
           npm ci --prefix compatibility/angular22
+          (cd compatibility/angular22 && npm install ../../dist/ng-openlayers-21.2.0.tgz --no-save --package-lock=false)
           npm run build --prefix compatibility/angular22
           npm test --prefix compatibility/angular22
       #      - run: npx nx affected --parallel 1 -t e2e-ci

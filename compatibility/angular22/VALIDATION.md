@@ -2,7 +2,11 @@
 
 The fixture is excluded from the Angular 21 Nx graph: it has an independent,
 pinned Angular 22 installation. CI explicitly builds the root library, packs it,
-installs the fixture lockfile and runs its build and lifecycle test.
+installs the fixture lockfile and then installs the tarball built in that run.
+The tarball is intentionally not in the dependency lock: compiler outputs can
+vary across build environments. Registry dependencies retain locked integrity;
+only the current build-under-test is installed with `--no-save --package-lock=false`.
+CI then runs the production build and lifecycle test.
 
 The first packed-consumer run exposed extensionless OpenLayers imports rejected
 by native ESM. Library imports now resolve to existing OpenLayers `.js` files.

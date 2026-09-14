@@ -11,6 +11,7 @@ From the repository root:
 npm run build:lib
 npm pack ./dist/libs/ng-openlayers --pack-destination dist
 npm ci --prefix compatibility/angular22
+(cd compatibility/angular22 && npm install ../../dist/ng-openlayers-21.2.0.tgz --no-save --package-lock=false)
 npm run build --prefix compatibility/angular22
 npm test --prefix compatibility/angular22
 ```
