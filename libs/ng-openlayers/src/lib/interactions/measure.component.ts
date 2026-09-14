@@ -9,22 +9,22 @@ import {
   SimpleChanges,
   ViewEncapsulation,
 } from '@angular/core';
-import Feature from 'ol/Feature';
-import MapBrowserEvent from 'ol/MapBrowserEvent';
-import Overlay from 'ol/Overlay';
-import { unByKey } from 'ol/Observable';
-import { ObjectEvent } from 'ol/Object';
-import { EventsKey } from 'ol/events';
-import BaseEvent from 'ol/events/Event';
-import { Geometry, LineString, Polygon } from 'ol/geom';
-import { Type } from 'ol/geom/Geometry';
-import { Draw } from 'ol/interaction';
-import { DrawEvent } from 'ol/interaction/Draw';
-import VectorLayer from 'ol/layer/Vector';
-import VectorSource from 'ol/source/Vector';
-import { getArea, getLength } from 'ol/sphere';
-import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
-import { StyleFunction } from 'ol/style/Style';
+import Feature from 'ol/Feature.js';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import Overlay from 'ol/Overlay.js';
+import { unByKey } from 'ol/Observable.js';
+import { ObjectEvent } from 'ol/Object.js';
+import { EventsKey } from 'ol/events.js';
+import BaseEvent from 'ol/events/Event.js';
+import { Geometry, LineString, Polygon } from 'ol/geom.js';
+import { Type } from 'ol/geom/Geometry.js';
+import { Draw } from 'ol/interaction.js';
+import { DrawEvent } from 'ol/interaction/Draw.js';
+import VectorLayer from 'ol/layer/Vector.js';
+import VectorSource from 'ol/source/Vector.js';
+import { getArea, getLength } from 'ol/sphere.js';
+import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style.js';
+import { StyleFunction } from 'ol/style/Style.js';
 import { MapComponent } from '../map.component';
 
 export const MeasureType = {

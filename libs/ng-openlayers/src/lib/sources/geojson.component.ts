@@ -1,10 +1,10 @@
 import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
-import FeatureFormat from 'ol/format/Feature';
-import { Vector } from 'ol/source';
-import { GeoJSON } from 'ol/format';
-import { ProjectionLike } from 'ol/proj';
+import FeatureFormat from 'ol/format/Feature.js';
+import { Vector } from 'ol/source.js';
+import { GeoJSON } from 'ol/format.js';
+import { ProjectionLike } from 'ol/proj.js';
 
 @Component({
     selector: 'aol-source-geojson',

@@ -1,8 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { DragAndDrop } from 'ol/interaction';
-import FeatureFormat from 'ol/format/Feature';
+import { DragAndDrop } from 'ol/interaction.js';
+import FeatureFormat from 'ol/format/Feature.js';
 import { MapComponent } from '../map.component';
-import { ProjectionLike } from 'ol/proj';
+import { ProjectionLike } from 'ol/proj.js';
 
 @Component({
     selector: 'aol-interaction-draganddrop',

@@ -1,5 +1,5 @@
 import { AfterContentInit, Component, Host, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
-import { Circle, Fill, Stroke } from 'ol/style';
+import { Circle, Fill, Stroke } from 'ol/style.js';
 import { StyleComponent } from './style.component';
 
 @Component({

@@ -1,10 +1,10 @@
 import { Component, Input, OnChanges, OnInit, Optional, SimpleChanges } from '@angular/core';
-import { Image } from 'ol/layer';
-import ImageSource from 'ol/source/Image';
+import { Image } from 'ol/layer.js';
+import ImageSource from 'ol/source/Image.js';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
-import { Extent } from 'ol/extent';
+import { Extent } from 'ol/extent.js';
 
 @Component({
     selector: 'aol-layer-image',

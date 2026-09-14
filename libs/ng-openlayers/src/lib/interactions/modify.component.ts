@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MapComponent } from '../map.component';
-import { Modify } from 'ol/interaction';
+import { Modify } from 'ol/interaction.js';
 import { Collection, Feature } from 'ol';
-import { Style } from 'ol/style';
-import { Vector } from 'ol/source';
-import { ModifyEvent } from 'ol/interaction/Modify';
-import { StyleFunction } from 'ol/style/Style';
-import { Condition } from 'ol/events/condition';
-import { ObjectEvent } from 'ol/Object';
-import { DrawEvent } from 'ol/interaction/Draw';
-import BaseEvent from 'ol/events/Event';
-import { EventsKey } from 'ol/events';
-import { unByKey } from 'ol/Observable';
+import { Style } from 'ol/style.js';
+import { Vector } from 'ol/source.js';
+import { ModifyEvent } from 'ol/interaction/Modify.js';
+import { StyleFunction } from 'ol/style/Style.js';
+import { Condition } from 'ol/events/condition.js';
+import { ObjectEvent } from 'ol/Object.js';
+import { DrawEvent } from 'ol/interaction/Draw.js';
+import BaseEvent from 'ol/events/Event.js';
+import { EventsKey } from 'ol/events.js';
+import { unByKey } from 'ol/Observable.js';
 
 @Component({
   selector: 'aol-interaction-modify',

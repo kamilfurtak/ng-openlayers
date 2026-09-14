@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ScaleLine } from 'ol/control';
+import { ScaleLine } from 'ol/control.js';
 import { MapComponent } from '../map.component';
-import { Units } from 'ol/control/ScaleLine';
+import { Units } from 'ol/control/ScaleLine.js';
 
 @Component({
     selector: 'aol-control-scaleline',

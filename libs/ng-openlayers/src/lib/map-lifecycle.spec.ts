@@ -1,7 +1,7 @@
 import { Component, Input, SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import View from 'ol/View';
+import View from 'ol/View.js';
 import { MapComponent } from './map.component';
 import { ViewComponent } from './view.component';
 import { CoordinateComponent } from './coordinate.component';

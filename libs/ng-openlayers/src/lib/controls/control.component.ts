@@ -1,5 +1,5 @@
 import { Component, ContentChild, OnDestroy, OnInit } from '@angular/core';
-import { Control } from 'ol/control';
+import { Control } from 'ol/control.js';
 import { MapComponent } from '../map.component';
 import { ContentComponent } from '../content.component';
 

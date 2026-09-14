@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { defaults, Interaction } from 'ol/interaction';
+import { defaults, Interaction } from 'ol/interaction.js';
 import { Collection } from 'ol';
 import { MapComponent } from '../map.component';
 

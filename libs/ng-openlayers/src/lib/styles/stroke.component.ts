@@ -1,10 +1,10 @@
 import { Component, Input, OnChanges, OnInit, Optional, SimpleChanges } from '@angular/core';
-import { Stroke } from 'ol/style';
+import { Stroke } from 'ol/style.js';
 import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';
 import { StyleTextComponent } from './text.component';
-import { Color } from 'ol/color';
-import { ColorLike } from 'ol/colorlike';
+import { Color } from 'ol/color.js';
+import { ColorLike } from 'ol/colorlike.js';
 
 @Component({
   selector: 'aol-style-stroke',

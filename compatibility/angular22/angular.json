@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "projects": {
+    "consumer": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.json",
+            "outputPath": "dist",
+            "index": "src/index.html"
+          }
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "buildTarget": "consumer:build",
+            "tsConfig": "tsconfig.spec.json",
+            "setupFiles": [
+              "src/setup.ts"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { Component, ContentChild, Input, OnDestroy, OnInit } from '@angular/core';
 import { MapComponent } from './map.component';
-import Overlay, { PanOptions, Positioning } from 'ol/Overlay';
+import Overlay, { PanOptions, Positioning } from 'ol/Overlay.js';
 import { ContentComponent } from './content.component';
 
 @Component({

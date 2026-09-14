@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, Input, Optional, OnChanges, SimpleChanges } from '@angular/core';
-import { Tile } from 'ol/layer';
-import TileSource from 'ol/source/Tile';
+import { Tile } from 'ol/layer.js';
+import TileSource from 'ol/source/Tile.js';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';

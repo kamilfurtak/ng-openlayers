@@ -1,5 +1,5 @@
-import { FeatureLike } from 'ol/Feature';
-import FeatureFormat from 'ol/format/Feature';
+import { FeatureLike } from 'ol/Feature.js';
+import FeatureFormat from 'ol/format/Feature.js';
 
 export class FormatComponent {
   public instance: FeatureFormat<FeatureLike>;

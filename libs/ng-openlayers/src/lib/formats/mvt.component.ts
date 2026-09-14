@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { FormatComponent } from './format.component';
-import { MVT } from 'ol/format';
-import { FeatureClass, FeatureLike } from 'ol/Feature';
+import { MVT } from 'ol/format.js';
+import { FeatureClass, FeatureLike } from 'ol/Feature.js';
 
 @Component({
     selector: 'aol-format-mvt',

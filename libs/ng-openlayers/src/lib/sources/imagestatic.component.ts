@@ -9,15 +9,15 @@ import {
   SimpleChanges,
   OnInit,
 } from '@angular/core';
-import { ImageStatic } from 'ol/source';
+import { ImageStatic } from 'ol/source.js';
 import { SourceComponent } from './source.component';
 import { LayerImageComponent } from '../layers/layerimage.component';
-import { ProjectionLike } from 'ol/proj';
-import { Extent } from 'ol/extent';
-import { AttributionLike } from 'ol/source/Source';
-import { LoadFunction } from 'ol/Image';
-import { Size } from 'ol/size';
-import { ImageSourceEvent } from 'ol/source/Image';
+import { ProjectionLike } from 'ol/proj.js';
+import { Extent } from 'ol/extent.js';
+import { AttributionLike } from 'ol/source/Source.js';
+import { LoadFunction } from 'ol/Image.js';
+import { Size } from 'ol/size.js';
+import { ImageSourceEvent } from 'ol/source/Image.js';
 
 @Component({
     selector: 'aol-source-imagestatic',

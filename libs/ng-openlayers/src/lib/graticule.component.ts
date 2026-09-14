@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Graticule } from 'ol';
-import { Stroke } from 'ol/style';
+import { Stroke } from 'ol/style.js';
 import { MapComponent } from './map.component';
 
 @Component({

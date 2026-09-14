@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MapComponent } from '../map.component';
-import { Select } from 'ol/interaction';
-import { Layer } from 'ol/layer';
-import { Style } from 'ol/style';
+import { Select } from 'ol/interaction.js';
+import { Layer } from 'ol/layer.js';
+import { Style } from 'ol/style.js';
 import { Collection, Feature } from 'ol';
-import { SelectEvent, FilterFunction } from 'ol/interaction/Select';
-import { StyleFunction } from 'ol/style/Style';
-import { Condition } from 'ol/events/condition';
-import { ObjectEvent } from 'ol/Object';
-import BaseEvent from 'ol/events/Event';
+import { SelectEvent, FilterFunction } from 'ol/interaction/Select.js';
+import { StyleFunction } from 'ol/style/Style.js';
+import { Condition } from 'ol/events/condition.js';
+import { ObjectEvent } from 'ol/Object.js';
+import BaseEvent from 'ol/events/Event.js';
 
 @Component({
     selector: 'aol-interaction-select',
