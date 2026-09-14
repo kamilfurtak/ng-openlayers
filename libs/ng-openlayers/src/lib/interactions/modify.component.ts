@@ -10,11 +10,13 @@ import { Condition } from 'ol/events/condition';
 import { ObjectEvent } from 'ol/Object';
 import { DrawEvent } from 'ol/interaction/Draw';
 import BaseEvent from 'ol/events/Event';
+import { EventsKey } from 'ol/events';
+import { unByKey } from 'ol/Observable';
 
 @Component({
-    selector: 'aol-interaction-modify',
-    template: '',
-    standalone: true,
+  selector: 'aol-interaction-modify',
+  template: '',
+  standalone: true,
 })
 export class ModifyInteractionComponent implements OnInit, OnDestroy {
   @Input()
@@ -46,21 +48,26 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
   propertyChange = new EventEmitter<ObjectEvent>();
 
   instance: Modify;
+  private eventKeys: EventsKey[] = [];
 
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
     this.instance = new Modify(this);
-    this.instance.on('change', (event: DrawEvent) => this.olChange.emit(event));
-    this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
-    this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
-    this.instance.on('modifyend', (event: ModifyEvent) => this.olModifyEnd.emit(event));
-    this.instance.on('modifystart', (event: ModifyEvent) => this.olModifyStart.emit(event));
-    this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
+    this.eventKeys = [
+      this.instance.on('change', (event: DrawEvent) => this.olChange.emit(event)),
+      this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event)),
+      this.instance.on('error', (event: BaseEvent) => this.olError.emit(event)),
+      this.instance.on('modifyend', (event: ModifyEvent) => this.olModifyEnd.emit(event)),
+      this.instance.on('modifystart', (event: ModifyEvent) => this.olModifyStart.emit(event)),
+      this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event)),
+    ];
     this.map.instance.addInteraction(this.instance);
   }
 
   ngOnDestroy() {
+    unByKey(this.eventKeys);
+    this.eventKeys = [];
     this.map.instance.removeInteraction(this.instance);
   }
 }

@@ -6,6 +6,7 @@ import {
   Input,
   OnChanges,
   OnInit,
+  OnDestroy,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -21,6 +22,8 @@ import BaseEvent from 'ol/events/Event';
 import { ProjectionCode, ProjectionCodeDefinition } from './map.model';
 import { register } from 'ol/proj/proj4';
 import proj4 from 'proj4';
+import { EventsKey } from 'ol/events';
+import { unByKey } from 'ol/Observable';
 
 @Component({
   selector: 'aol-map',
@@ -30,7 +33,7 @@ import proj4 from 'proj4';
   `,
   standalone: true,
 })
-export class MapComponent implements OnInit, AfterViewInit, OnChanges {
+export class MapComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @Input()
   width = '100%';
   @Input()
@@ -93,6 +96,7 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
   public instance: Map;
   public componentType = 'map';
+  private eventKeys: EventsKey[] = [];
 
   // we pass empty arrays to not get default controls/interactions because we have our own directives
   controls: Control[] = [];
@@ -105,26 +109,28 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
     this.setProjectionDefinitions();
     this.instance = new Map(this);
     this.instance.setTarget(this.host.nativeElement.firstElementChild);
-    this.instance.on('change', (event: DrawEvent) => this.olChange.emit(event));
-    this.instance.on('change:layergroup', (event: ObjectEvent) => this.olChangeLayerGroup.emit(event));
-    this.instance.on('change:size', (event: ObjectEvent) => this.olChangeSize.emit(event));
-    this.instance.on('change:target', (event: ObjectEvent) => this.olChangeTarget.emit(event));
-    this.instance.on('change:view', (event: ObjectEvent) => this.olChangeView.emit(event));
-    this.instance.on('click', (event: MapBrowserEvent) => this.olClick.emit(event));
-    this.instance.on('dblclick', (event: MapBrowserEvent) => this.dblClick.emit(event));
-    this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
-    this.instance.on('loadend', (event: MapEvent) => this.loadEnd.emit(event));
-    this.instance.on('loadstart', (event: MapEvent) => this.loadStart.emit(event));
-    this.instance.on('moveend', (event: MapEvent) => this.moveEnd.emit(event));
-    this.instance.on('movestart', (event: MapEvent) => this.moveStart.emit(event));
-    this.instance.on('pointerdrag', (event: MapBrowserEvent) => this.pointerDrag.emit(event));
-    this.instance.on('pointermove', (event: MapBrowserEvent) => this.pointerMove.emit(event));
-    this.instance.on('postcompose', (event: RenderEvent) => this.olPostCompose.emit(event));
-    this.instance.on('postrender', (event: RenderEvent) => this.olPostRender.emit(event));
-    this.instance.on('postrender', (event: MapEvent) => this.postRender.emit(event));
-    this.instance.on('precompose', (event: RenderEvent) => this.olPreCompose.emit(event));
-    this.instance.on('propertychange', (event: ObjectEvent) => this.olPropertyChange.emit(event));
-    this.instance.on('singleclick', (event: MapBrowserEvent) => this.singleClick.emit(event));
+    this.eventKeys = [
+      this.instance.on('change', (event: DrawEvent) => this.olChange.emit(event)),
+      this.instance.on('change:layergroup', (event: ObjectEvent) => this.olChangeLayerGroup.emit(event)),
+      this.instance.on('change:size', (event: ObjectEvent) => this.olChangeSize.emit(event)),
+      this.instance.on('change:target', (event: ObjectEvent) => this.olChangeTarget.emit(event)),
+      this.instance.on('change:view', (event: ObjectEvent) => this.olChangeView.emit(event)),
+      this.instance.on('click', (event: MapBrowserEvent) => this.olClick.emit(event)),
+      this.instance.on('dblclick', (event: MapBrowserEvent) => this.dblClick.emit(event)),
+      this.instance.on('error', (event: BaseEvent) => this.olError.emit(event)),
+      this.instance.on('loadend', (event: MapEvent) => this.loadEnd.emit(event)),
+      this.instance.on('loadstart', (event: MapEvent) => this.loadStart.emit(event)),
+      this.instance.on('moveend', (event: MapEvent) => this.moveEnd.emit(event)),
+      this.instance.on('movestart', (event: MapEvent) => this.moveStart.emit(event)),
+      this.instance.on('pointerdrag', (event: MapBrowserEvent) => this.pointerDrag.emit(event)),
+      this.instance.on('pointermove', (event: MapBrowserEvent) => this.pointerMove.emit(event)),
+      this.instance.on('postcompose', (event: RenderEvent) => this.olPostCompose.emit(event)),
+      this.instance.on('postrender', (event: RenderEvent) => this.olPostRender.emit(event)),
+      this.instance.on('postrender', (event: MapEvent) => this.postRender.emit(event)),
+      this.instance.on('precompose', (event: RenderEvent) => this.olPreCompose.emit(event)),
+      this.instance.on('propertychange', (event: ObjectEvent) => this.olPropertyChange.emit(event)),
+      this.instance.on('singleclick', (event: MapBrowserEvent) => this.singleClick.emit(event)),
+    ];
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -143,6 +149,13 @@ export class MapComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
     this.instance.updateSize();
+  }
+
+  ngOnDestroy(): void {
+    unByKey(this.eventKeys);
+    this.eventKeys = [];
+    // OpenLayers owns its renderer, target observers and interaction handlers.
+    this.instance?.dispose();
   }
 
   private setProjectionDefinitions(): void {

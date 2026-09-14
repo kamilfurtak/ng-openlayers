@@ -12,7 +12,7 @@
     "test": "npm run build:lib && nx test ng-openlayers",
     "test-ci": " nx test ng-openlayers --code-coverage --browsers=ChromeHeadless --watch=false",
     "lint": "nx run-many -t lint",
-    "e2e": "npm run build:lib && nx e2e",
+    "e2e": "nx run demo-ng-openlayers-e2e:e2e",
     "format": "prettier --write \"**/@(src|e2e)/**/*.ts\"",
     "release": "npm --cwd libs/ng-openlayers release"
   },
@@ -50,6 +50,7 @@
     "@nx/eslint-plugin": "22.7.5",
     "@nx/js": "22.7.5",
     "@nx/workspace": "22.7.5",
+    "@playwright/test": "1.63.0",
     "@schematics/angular": "21.2.14",
     "@types/arcgis-rest-api": "^10.4.8",
     "@types/jasmine": "^6.0.0",

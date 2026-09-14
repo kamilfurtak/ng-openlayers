@@ -10,6 +10,8 @@ import { Condition } from 'ol/events/condition';
 import { Type } from 'ol/geom/Geometry';
 import { ObjectEvent } from 'ol/Object';
 import BaseEvent from 'ol/events/Event';
+import { EventsKey } from 'ol/events';
+import { unByKey } from 'ol/Observable';
 
 @Component({
   selector: 'aol-interaction-draw',
@@ -64,18 +66,21 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   propertyChange = new EventEmitter<ObjectEvent>();
 
   instance: Draw;
+  private eventKeys: EventsKey[] = [];
 
   constructor(private map: MapComponent) {}
 
   ngOnInit() {
     this.instance = new Draw(this);
-    this.instance.on('change', (event: DrawEvent) => this.olChange.emit(event));
-    this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
-    this.instance.on('drawabort', (event: DrawEvent) => this.olDrawAbort.emit(event));
-    this.instance.on('drawend', (event: DrawEvent) => this.drawEnd.emit(event));
-    this.instance.on('drawstart', (event: DrawEvent) => this.drawStart.emit(event));
-    this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
-    this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
+    this.eventKeys = [
+      this.instance.on('change', (event: DrawEvent) => this.olChange.emit(event)),
+      this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event)),
+      this.instance.on('drawabort', (event: DrawEvent) => this.olDrawAbort.emit(event)),
+      this.instance.on('drawend', (event: DrawEvent) => this.drawEnd.emit(event)),
+      this.instance.on('drawstart', (event: DrawEvent) => this.drawStart.emit(event)),
+      this.instance.on('error', (event: BaseEvent) => this.olError.emit(event)),
+      this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event)),
+    ];
     this.map.instance.addInteraction(this.instance);
   }
 
@@ -85,6 +90,8 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    unByKey(this.eventKeys);
+    this.eventKeys = [];
     this.map.instance.removeInteraction(this.instance);
   }
 }
