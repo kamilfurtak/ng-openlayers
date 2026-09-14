@@ -2,11 +2,9 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
+    "module": "esnext",
     "target": "es2018",
     "types": [
-      "jasmine",
-      "jasminewd2",
       "node"
     ]
   }

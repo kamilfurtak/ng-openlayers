@@ -1,3 +1,5 @@
+import BaseObject, { ObjectEvent } from 'ol/Object';
+import View from 'ol/View';
 import { TestBed } from '@angular/core/testing';
 import { CollectionCoordinatesComponent } from './collectioncoordinates.component';
 import {
@@ -167,7 +169,7 @@ describe('CollectionCoordinatesComponent', () => {
     });
 
     it('should register "change:view" event and call onMapViewChanged when the event is triggered', () => {
-      const mockEvent = { testEventProperty: 'testValue' };
+      const mockEvent = new ObjectEvent('change:view', 'view', null);
       spyOn(component as unknown as CollectionCoordinatesComponentInternals, 'onMapViewChanged');
 
       // Simulate ngOnInit to set up the event listener
@@ -199,16 +201,8 @@ describe('CollectionCoordinatesComponent', () => {
   describe('onMapViewChanged', () => {
     it('should update mapSrid and call transformCoordinates', () => {
       spyOn(component as unknown as CollectionCoordinatesComponentInternals, 'transformCoordinates');
-      const mockEvent = {
-        target: {
-          get: jasmine.createSpy().and.returnValue({
-            getProjection: jasmine.createSpy().and.returnValue({
-              getCode: jasmine.createSpy().and.returnValue('EPSG:4326'),
-            }),
-          }),
-        },
-        key: 'view',
-      };
+      const mockEvent = new ObjectEvent('change:view', 'view', null);
+      mockEvent.target = new BaseObject({ view: new View({ projection: 'EPSG:4326' }) });
 
       component['onMapViewChanged'](mockEvent);
       expect(component['mapSrid']).toBe('EPSG:4326');

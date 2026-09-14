@@ -1,5 +1,12 @@
 # ng-openlayers
 
+[![CI](https://github.com/kamilfurtak/ng-openlayers/actions/workflows/ci.yml/badge.svg)](https://github.com/kamilfurtak/ng-openlayers/actions/workflows/ci.yml)
+
+**Maintained Angular/OpenLayers library.** Start with the [live examples](https://ng-openlayers.furtak.dev/)
+or the [npm package](https://www.npmjs.com/package/ng-openlayers).
+See [validation and known boundaries](docs/validation.md) for test commands, coverage gates and browser-test scope.
+
+
 ![ng-openlayers social preview](docs/assets/ng-openlayers-social-preview.png)
 
 Declarative OpenLayers components for Angular.

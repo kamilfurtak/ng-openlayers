@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { StyleIconComponent } from 'ng-openlayers';
 import { StyleFillComponent } from 'ng-openlayers';
@@ -21,7 +21,7 @@ import { MapComponent } from 'ng-openlayers';
     template: `
     <aol-map [width]="'100%'" [height]="'100%'">
       <aol-interaction-default></aol-interaction-default>
-      <aol-view [zoom]="2" [projection]="viewProjection">
+      <aol-view [zoom]="zoom" [projection]="viewProjection" (changeResolution)="onResolutionChange()">
         <aol-coordinate [x]="0" [y]="0" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
       <aol-layer-tile> <aol-source-osm></aol-source-osm> </aol-layer-tile>
@@ -59,10 +59,12 @@ import { MapComponent } from 'ng-openlayers';
     </aol-map>
     <div class="controls">
       Current projection:
-      <select (change)="projectionChange($event)">
+      <select aria-label="Projection" (change)="projectionChange($event)">
         <option value="EPSG:3857">EPSG:3857</option>
         <option value="EPSG:4326">EPSG:4326</option>
       </select>
+      <button (click)="zoom = zoom + 1">Increase zoom</button>
+      <p>Resolution events: <output aria-label="Resolution events">{{ resolutionEvents() }}</output></p>
     </div>
   `,
     styles: [
@@ -103,9 +105,16 @@ import { MapComponent } from 'ng-openlayers';
 })
 export class ViewProjectionUpdateComponent {
   public viewProjection = 'EPSG:3857';
+  zoom = 2;
+  readonly resolutionEvents = signal(0);
 
-  projectionChange(evt) {
-    console.log(`Projection changed to ${evt.target.value}`);
-    this.viewProjection = evt.target.value;
+  onResolutionChange(): void {
+    this.resolutionEvents.update((count) => count + 1);
+  }
+
+  projectionChange(evt: Event) {
+    if (evt.target instanceof HTMLSelectElement) {
+      this.viewProjection = evt.target.value;
+    }
   }
 }

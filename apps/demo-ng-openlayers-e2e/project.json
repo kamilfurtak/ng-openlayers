@@ -5,10 +5,9 @@
   "projectType": "application",
   "targets": {
     "e2e": {
-      "executor": "@angular-devkit/build-angular:protractor",
+      "executor": "nx:run-commands",
       "options": {
-        "protractorConfig": "apps/demo-ng-openlayers-e2e/protractor.conf.js",
-        "devServerTarget": "demo-ng-openlayers:serve"
+        "command": "playwright test"
       }
     },
     "lint": {

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, Optional } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, OnDestroy, Optional } from '@angular/core';
 import { transform } from 'ol/proj';
 import { ObjectEvent } from 'ol/Object';
 import { MapComponent } from './map.component';
@@ -6,6 +6,8 @@ import { GeometryPointComponent } from './geom/geometrypoint.component';
 import { GeometryCircleComponent } from './geom/geometrycircle.component';
 import { ViewComponent } from './view.component';
 import { OverlayComponent } from './overlay.component';
+import { EventsKey } from 'ol/events';
+import { unByKey } from 'ol/Observable';
 
 type CoordinateHost = {
   componentType: string;
@@ -21,7 +23,7 @@ type CoordinateHost = {
   template: ` <div class="aol-coordinate"></div> `,
   standalone: true,
 })
-export class CoordinateComponent implements OnChanges, OnInit {
+export class CoordinateComponent implements OnChanges, OnInit, OnDestroy {
   @Input()
   x: number;
   @Input()
@@ -31,6 +33,7 @@ export class CoordinateComponent implements OnChanges, OnInit {
 
   private host: CoordinateHost;
   private mapSrid = 'EPSG:3857';
+  private viewChangeKey?: EventsKey;
 
   constructor(
     private map: MapComponent,
@@ -52,9 +55,16 @@ export class CoordinateComponent implements OnChanges, OnInit {
   }
 
   ngOnInit() {
-    this.map.instance.on('change:view', (e) => this.onMapViewChanged(e));
+    this.viewChangeKey = this.map.instance.on('change:view', (e) => this.onMapViewChanged(e));
     this.mapSrid = this.map.instance.getView().getProjection().getCode();
     this.transformCoordinates();
+  }
+
+  ngOnDestroy(): void {
+    if (this.viewChangeKey) {
+      unByKey(this.viewChangeKey);
+      this.viewChangeKey = undefined;
+    }
   }
 
   ngOnChanges() {

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
 import { Feature } from 'ol';
+import { Coordinate } from 'ol/coordinate';
 import { DrawEvent } from 'ol/interaction/Draw';
 import { Geometry, LinearRing, Polygon } from 'ol/geom';
 import { Fill, Style } from 'ol/style';
@@ -81,7 +82,7 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
   };
 
   onGeomChange = (e: DrawEvent) => {
-    const coordinates = e.target.getCoordinates()[0];
+    const coordinates: Coordinate[] = e.target.getCoordinates()[0];
 
     if (coordinates.every((coord) => this.foundPolygonToApplyEnclave.intersectsCoordinate(coord))) {
       const linear_ring = new LinearRing(coordinates);
@@ -138,7 +139,7 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
 
     const foundFeatureToRemoveEnclave = vectorLayer
       .getSource()
-      .getClosestFeatureToCoordinate(e.coordinate, (feature) => {
+      .getClosestFeatureToCoordinate(e.coordinate, (feature: Feature<Geometry>) => {
         console.log(feature.getGeometry().intersectsCoordinate(e.coordinate));
         return feature.getGeometry().getType() === 'Polygon';
       });

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, Optional } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, OnDestroy, Optional } from '@angular/core';
 import { MapComponent } from './map.component';
 import { GeometryLinestringComponent } from './geom/geometrylinestring.component';
 import { GeometryPolygonComponent } from './geom/geometrypolygon.component';
@@ -7,6 +7,9 @@ import { GeometryMultiLinestringComponent } from './geom/geometrymultilinestring
 import { GeometryMultiPolygonComponent } from './geom/geometrymultipolygon.component';
 import { Coordinate } from 'ol/coordinate';
 import { transform } from 'ol/proj';
+import { ObjectEvent } from 'ol/Object';
+import { EventsKey } from 'ol/events';
+import { unByKey } from 'ol/Observable';
 import { SimpleGeometryComponent } from './geom/simplegeometry.component';
 
 @Component({
@@ -14,7 +17,7 @@ import { SimpleGeometryComponent } from './geom/simplegeometry.component';
   template: ` <div class="aol-collection-coordinates"></div> `,
   standalone: true,
 })
-export class CollectionCoordinatesComponent implements OnChanges, OnInit {
+export class CollectionCoordinatesComponent implements OnChanges, OnInit, OnDestroy {
   @Input()
   coordinates: Coordinate[] | Coordinate[][] | Coordinate[][][];
   @Input()
@@ -22,6 +25,7 @@ export class CollectionCoordinatesComponent implements OnChanges, OnInit {
 
   private host: SimpleGeometryComponent;
   private mapSrid = 'EPSG:3857';
+  private viewChangeKey?: EventsKey;
 
   constructor(
     private map: MapComponent,
@@ -47,16 +51,23 @@ export class CollectionCoordinatesComponent implements OnChanges, OnInit {
   }
 
   ngOnInit() {
-    this.map.instance.on('change:view', (e) => this.onMapViewChanged(e));
+    this.viewChangeKey = this.map.instance.on('change:view', (e) => this.onMapViewChanged(e));
     this.mapSrid = this.map.instance.getView().getProjection().getCode();
     this.transformCoordinates();
+  }
+
+  ngOnDestroy(): void {
+    if (this.viewChangeKey) {
+      unByKey(this.viewChangeKey);
+      this.viewChangeKey = undefined;
+    }
   }
 
   ngOnChanges() {
     this.transformCoordinates();
   }
 
-  private onMapViewChanged(event) {
+  private onMapViewChanged(event: ObjectEvent) {
     this.mapSrid = event.target.get(event.key).getProjection().getCode();
     this.transformCoordinates();
   }

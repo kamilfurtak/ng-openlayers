@@ -24,7 +24,7 @@ import { MapComponent } from 'ng-openlayers';
         (changeZoom)="changeZoom($event)"
         (changeCenter)="changeCenter($event)"
       >
-        <aol-coordinate [x]="5" [y]="45" [srid]="'EPSG:4326'"></aol-coordinate>
+        <aol-coordinate [x]="lon" [y]="lat" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
       <aol-layer-tile [opacity]="opacity"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
       <aol-layer-vector [opacity]="opacity">
@@ -60,11 +60,15 @@ import { MapComponent } from 'ng-openlayers';
       </aol-layer-vector>
     </aol-map>
     <div class="controls">
-      <span>opacity:</span><button (click)="increaseOpacity()">+</button><button (click)="decreaseOpacity()">-</button
+      <p>Zoom: <output aria-label="Zoom">{{ zoom }}</output></p>
+      <p>Longitude: <output aria-label="Longitude">{{ lon }}</output></p>
+      <p>Latitude: <output aria-label="Latitude">{{ lat }}</output></p>
+      <p>Opacity: <output aria-label="Opacity">{{ opacity }}</output></p>
+      <span>opacity:</span><button aria-label="Increase opacity" (click)="increaseOpacity()">+</button><button aria-label="Decrease opacity" (click)="decreaseOpacity()">-</button
       ><br />
-      <span>zoom:</span><button (click)="increaseZoom()">+</button><button (click)="decreaseZoom()">-</button><br />
-      <span>latitude:</span><button (click)="increaseLat()">+</button><button (click)="decreaseLat()">-</button><br />
-      <span>longitude:</span><button (click)="increaseLon()">+</button><button (click)="decreaseLon()">-</button><br />
+      <span>zoom:</span><button aria-label="Increase zoom" (click)="increaseZoom()">+</button><button aria-label="Decrease zoom" (click)="decreaseZoom()">-</button><br />
+      <span>latitude:</span><button aria-label="Increase latitude" (click)="increaseLat()">+</button><button aria-label="Decrease latitude" (click)="decreaseLat()">-</button><br />
+      <span>longitude:</span><button aria-label="Increase longitude" (click)="increaseLon()">+</button><button aria-label="Decrease longitude" (click)="decreaseLon()">-</button><br />
     </div>
   `,
     styles: [
@@ -129,12 +133,12 @@ export class BasicComponent {
   }
 
   increaseLon() {
-    this.lon = Math.max(-180, Math.min(180, this.lat + 1));
+    this.lon = Math.max(-180, Math.min(180, this.lon + 1));
     console.log('lon: ', this.lon);
   }
 
   decreaseLon() {
-    this.lon = Math.max(-180, Math.min(180, this.lat - 1));
+    this.lon = Math.max(-180, Math.min(180, this.lon - 1));
     console.log('lon: ', this.lon);
   }
 

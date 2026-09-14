@@ -26,8 +26,13 @@
     }
   },
   "namedInputs": {
-    "sharedGlobals": [],
+    "sharedGlobals": [
+      "{workspaceRoot}/tsconfig.base.json",
+      "{workspaceRoot}/package.json",
+      "{workspaceRoot}/package-lock.json"
+    ],
     "default": [
+      "{projectRoot}/**/*",
       "sharedGlobals"
     ],
     "production": [
@@ -69,7 +74,8 @@
     "e2e": {
       "inputs": [
         "default",
-        "^production"
+        "^production",
+        "{workspaceRoot}/playwright.config.ts"
       ],
       "cache": true
     },
@@ -85,7 +91,7 @@
       ]
     }
   },
-  "defaultBase": "main",
+  "defaultBase": "master",
   "generators": {
     "@nx/angular:component": {
       "type": "component"
