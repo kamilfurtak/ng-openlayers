@@ -1,3 +1,9 @@
+# 21.2.0
+
+- Support Angular 21 and 22, with a packed-package Angular 22 consumer checked in CI.
+- Use explicit OpenLayers ESM module extensions so Node-based consumers can resolve the published bundle.
+- Keep the existing Angular 21 browser and unit regression suite.
+
 ## 21.1.1 (2026-06-08)
 
 This was a version bump only for ng-openlayers to align it with other projects, there were no code changes.
