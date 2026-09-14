@@ -11,19 +11,19 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Map } from 'ol';
-import MapBrowserEvent from 'ol/MapBrowserEvent';
-import MapEvent from 'ol/MapEvent';
-import { ObjectEvent } from 'ol/Object';
-import RenderEvent from 'ol/render/Event';
-import { Control } from 'ol/control';
-import { Interaction } from 'ol/interaction';
-import { DrawEvent } from 'ol/interaction/Draw';
-import BaseEvent from 'ol/events/Event';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import MapEvent from 'ol/MapEvent.js';
+import { ObjectEvent } from 'ol/Object.js';
+import RenderEvent from 'ol/render/Event.js';
+import { Control } from 'ol/control.js';
+import { Interaction } from 'ol/interaction.js';
+import { DrawEvent } from 'ol/interaction/Draw.js';
+import BaseEvent from 'ol/events/Event.js';
 import { ProjectionCode, ProjectionCodeDefinition } from './map.model';
-import { register } from 'ol/proj/proj4';
+import { register } from 'ol/proj/proj4.js';
 import proj4 from 'proj4';
-import { EventsKey } from 'ol/events';
-import { unByKey } from 'ol/Observable';
+import { EventsKey } from 'ol/events.js';
+import { unByKey } from 'ol/Observable.js';
 
 @Component({
   selector: 'aol-map',

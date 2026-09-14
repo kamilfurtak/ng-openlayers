@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ZoomToExtent } from 'ol/control';
+import { ZoomToExtent } from 'ol/control.js';
 import { MapComponent } from '../map.component';
-import { Extent } from 'ol/extent';
+import { Extent } from 'ol/extent.js';
 
 @Component({
     selector: 'aol-control-zoomtoextent',

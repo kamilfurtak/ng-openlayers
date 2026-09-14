@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
-import { Attribution } from 'ol/control';
+import { Attribution } from 'ol/control.js';
 import { MapComponent } from '../map.component';
 
 @Component({

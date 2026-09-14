@@ -5,11 +5,11 @@ import { GeometryPolygonComponent } from './geom/geometrypolygon.component';
 import { GeometryMultiPointComponent } from './geom/geometrymultipoint.component';
 import { GeometryMultiLinestringComponent } from './geom/geometrymultilinestring.component';
 import { GeometryMultiPolygonComponent } from './geom/geometrymultipolygon.component';
-import { Coordinate } from 'ol/coordinate';
-import { transform } from 'ol/proj';
-import { ObjectEvent } from 'ol/Object';
-import { EventsKey } from 'ol/events';
-import { unByKey } from 'ol/Observable';
+import { Coordinate } from 'ol/coordinate.js';
+import { transform } from 'ol/proj.js';
+import { ObjectEvent } from 'ol/Object.js';
+import { EventsKey } from 'ol/events.js';
+import { unByKey } from 'ol/Observable.js';
 import { SimpleGeometryComponent } from './geom/simplegeometry.component';
 
 @Component({

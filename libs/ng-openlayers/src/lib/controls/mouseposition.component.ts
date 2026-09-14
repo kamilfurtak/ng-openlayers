@@ -1,8 +1,8 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
-import MousePosition from 'ol/control/MousePosition';
+import MousePosition from 'ol/control/MousePosition.js';
 import { MapComponent } from '../map.component';
-import { CoordinateFormat } from 'ol/coordinate';
-import { ProjectionLike } from 'ol/proj';
+import { CoordinateFormat } from 'ol/coordinate.js';
+import { ProjectionLike } from 'ol/proj.js';
 
 @Component({
     selector: 'aol-control-mouseposition',

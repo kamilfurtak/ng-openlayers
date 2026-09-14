@@ -1,15 +1,15 @@
 import { Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
 import { Feature } from 'ol';
-import { Coordinate } from 'ol/coordinate';
-import { DrawEvent } from 'ol/interaction/Draw';
-import { Geometry, LinearRing, Polygon } from 'ol/geom';
-import { Fill, Style } from 'ol/style';
+import { Coordinate } from 'ol/coordinate.js';
+import { DrawEvent } from 'ol/interaction/Draw.js';
+import { Geometry, LinearRing, Polygon } from 'ol/geom.js';
+import { Fill, Style } from 'ol/style.js';
 import { DrawInteractionComponent } from './draw.component';
 import { MapComponent } from '../map.component';
-import MapBrowserEvent from 'ol/MapBrowserEvent';
-import { Condition, platformModifierKey } from 'ol/events/condition';
-import { containsCoordinate } from 'ol/extent';
-import VectorLayer from 'ol/layer/Vector';
+import MapBrowserEvent from 'ol/MapBrowserEvent.js';
+import { Condition, platformModifierKey } from 'ol/events/condition.js';
+import { containsCoordinate } from 'ol/extent.js';
+import VectorLayer from 'ol/layer/Vector.js';
 
 export enum DrawHoleInPolygonInteractionErrorType {
   MoPolygonFound = 'noPolygonFound',

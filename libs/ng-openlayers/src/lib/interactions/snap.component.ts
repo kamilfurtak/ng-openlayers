@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Collection, Feature } from 'ol';
-import BaseEvent from 'ol/events/Event';
-import { SnapEvent } from 'ol/events/SnapEvent';
-import { Snap } from 'ol/interaction';
-import { ObjectEvent } from 'ol/Object';
-import { Vector } from 'ol/source';
+import BaseEvent from 'ol/events/Event.js';
+import { SnapEvent } from 'ol/events/SnapEvent.js';
+import { Snap } from 'ol/interaction.js';
+import { ObjectEvent } from 'ol/Object.js';
+import { Vector } from 'ol/source.js';
 import { MapComponent } from '../map.component';
 
 @Component({

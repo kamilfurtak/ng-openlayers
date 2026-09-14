@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, Input, Optional, OnChanges, SimpleChanges } from '@angular/core';
 import { MapComponent } from '../map.component';
-import { Vector } from 'ol/layer';
-import VectorSource from 'ol/source/Vector';
-import { Style } from 'ol/style';
-import { StyleFunction } from 'ol/style/Style';
+import { Vector } from 'ol/layer.js';
+import VectorSource from 'ol/source/Vector.js';
+import { Style } from 'ol/style.js';
+import { StyleFunction } from 'ol/style/Style.js';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
 

@@ -8,8 +8,8 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Raster, Source } from 'ol/source';
-import { Operation, RasterSourceEvent } from 'ol/source/Raster';
+import { Raster, Source } from 'ol/source.js';
+import { Operation, RasterSourceEvent } from 'ol/source/Raster.js';
 
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { SourceComponent } from './source.component';

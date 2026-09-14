@@ -9,14 +9,14 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { ImageWMS } from 'ol/source';
+import { ImageWMS } from 'ol/source.js';
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { SourceComponent } from './source.component';
-import { ProjectionLike } from 'ol/proj';
-import { AttributionLike } from 'ol/source/Source';
-import { LoadFunction } from 'ol/Image';
-import { ImageSourceEvent } from 'ol/source/Image';
-import { ServerType } from 'ol/source/wms';
+import { ProjectionLike } from 'ol/proj.js';
+import { AttributionLike } from 'ol/source/Source.js';
+import { LoadFunction } from 'ol/Image.js';
+import { ImageSourceEvent } from 'ol/source/Image.js';
+import { ServerType } from 'ol/source/wms.js';
 
 @Component({
     selector: 'aol-source-imagewms',

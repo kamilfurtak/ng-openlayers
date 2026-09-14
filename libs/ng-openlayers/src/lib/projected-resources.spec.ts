@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Collection, Feature } from 'ol';
-import View from 'ol/View';
+import View from 'ol/View.js';
 import { MapComponent } from './map.component';
 import { ViewComponent } from './view.component';
 import { LayerVectorComponent } from './layers/layervector.component';

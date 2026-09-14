@@ -1,14 +1,14 @@
 import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
-import { VectorTile } from 'ol/source';
-import { FeatureLike } from 'ol/Feature';
-import FeatureFormat from 'ol/format/Feature';
-import TileGrid from 'ol/tilegrid/TileGrid';
+import { VectorTile } from 'ol/source.js';
+import { FeatureLike } from 'ol/Feature.js';
+import FeatureFormat from 'ol/format/Feature.js';
+import TileGrid from 'ol/tilegrid/TileGrid.js';
 import { LayerVectorTileComponent } from '../layers/layervectortile.component';
 import { FormatComponent } from '../formats/format.component';
 import { TileGridComponent } from '../tilegrid.component';
 import { SourceComponent } from './source.component';
-import { ProjectionLike } from 'ol/proj';
-import { UrlFunction } from 'ol/Tile';
+import { ProjectionLike } from 'ol/proj.js';
+import { UrlFunction } from 'ol/Tile.js';
 
 @Component({
     selector: 'aol-source-vectortile',

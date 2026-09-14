@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
-import { Circle } from 'ol/geom';
+import { Circle } from 'ol/geom.js';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
 

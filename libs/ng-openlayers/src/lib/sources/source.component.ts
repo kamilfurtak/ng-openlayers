@@ -1,6 +1,6 @@
 import { Input, OnDestroy, Directive } from '@angular/core';
-import Source from 'ol/source/Source';
-import { AttributionLike } from 'ol/source/Source';
+import Source from 'ol/source/Source.js';
+import { AttributionLike } from 'ol/source/Source.js';
 
 import { LayerComponent } from '../layers/layer.component';
 

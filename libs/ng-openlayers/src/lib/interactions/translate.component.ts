@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Translate } from 'ol/interaction';
+import { Translate } from 'ol/interaction.js';
 import { Collection, Feature } from 'ol';
-import { Layer } from 'ol/layer';
-import { TranslateEvent } from 'ol/interaction/Translate';
+import { Layer } from 'ol/layer.js';
+import { TranslateEvent } from 'ol/interaction/Translate.js';
 import { MapComponent } from '../map.component';
-import BaseEvent from 'ol/events/Event';
-import { ObjectEvent } from 'ol/Object';
+import BaseEvent from 'ol/events/Event.js';
+import { ObjectEvent } from 'ol/Object.js';
 
 @Component({
     selector: 'aol-interaction-translate',

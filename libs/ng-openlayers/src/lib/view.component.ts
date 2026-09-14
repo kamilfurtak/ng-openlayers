@@ -1,13 +1,13 @@
 import { Component, Input, OnInit, OnChanges, OnDestroy, SimpleChanges, EventEmitter, Output } from '@angular/core';
-import View from 'ol/View';
+import View from 'ol/View.js';
 import { MapComponent } from './map.component';
-import { ObjectEvent } from 'ol/Object';
-import { Extent } from 'ol/extent';
-import { Coordinate } from 'ol/coordinate';
-import { DrawEvent } from 'ol/interaction/Draw';
-import BaseEvent from 'ol/events/Event';
-import { EventsKey } from 'ol/events';
-import { unByKey } from 'ol/Observable';
+import { ObjectEvent } from 'ol/Object.js';
+import { Extent } from 'ol/extent.js';
+import { Coordinate } from 'ol/coordinate.js';
+import { DrawEvent } from 'ol/interaction/Draw.js';
+import BaseEvent from 'ol/events/Event.js';
+import { EventsKey } from 'ol/events.js';
+import { unByKey } from 'ol/Observable.js';
 
 @Component({
   selector: 'aol-view',

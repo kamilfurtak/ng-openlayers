@@ -1,9 +1,9 @@
 import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
-import { Vector } from 'ol/source';
-import Feature from 'ol/format/Feature';
+import { Vector } from 'ol/source.js';
+import Feature from 'ol/format/Feature.js';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
-import { LoadingStrategy } from 'ol/source/Vector';
+import { LoadingStrategy } from 'ol/source/Vector.js';
 
 @Component({
     selector: 'aol-source-vector',

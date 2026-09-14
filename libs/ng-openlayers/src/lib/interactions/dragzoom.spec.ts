@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { DragZoom } from 'ol/interaction';
+import { DragZoom } from 'ol/interaction.js';
 import { DragZoomInteractionComponent } from './dragzoom.component';
 import { MapComponent } from '../../public-api';
 

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { PinchZoom } from 'ol/interaction';
+import { PinchZoom } from 'ol/interaction.js';
 import { MapComponent } from '../map.component';
 
 @Component({

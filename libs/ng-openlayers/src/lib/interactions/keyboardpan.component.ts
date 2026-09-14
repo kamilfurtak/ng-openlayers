@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { KeyboardPan } from 'ol/interaction';
+import { KeyboardPan } from 'ol/interaction.js';
 import { MapComponent } from '../map.component';
 
 @Component({

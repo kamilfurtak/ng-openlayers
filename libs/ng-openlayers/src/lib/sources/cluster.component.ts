@@ -9,8 +9,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Feature } from 'ol';
-import { Point } from 'ol/geom';
-import { Cluster, Vector } from 'ol/source';
+import { Point } from 'ol/geom.js';
+import { Cluster, Vector } from 'ol/source.js';
 
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';

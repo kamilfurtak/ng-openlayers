@@ -1,14 +1,14 @@
 import { Component, OnInit, Input, Optional, SimpleChanges, OnChanges } from '@angular/core';
-import { VectorTile } from 'ol/layer';
-import VectorTileSource from 'ol/source/VectorTile';
-import { Style } from 'ol/style';
+import { VectorTile } from 'ol/layer.js';
+import VectorTileSource from 'ol/source/VectorTile.js';
+import { Style } from 'ol/style.js';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
-import { StyleFunction } from 'ol/style/Style';
-import { VectorTileRenderType } from 'ol/layer/VectorTile';
-import { OrderFunction } from 'ol/render';
-import { BackgroundColor } from 'ol/layer/Base';
+import { StyleFunction } from 'ol/style/Style.js';
+import { VectorTileRenderType } from 'ol/layer/VectorTile.js';
+import { OrderFunction } from 'ol/render.js';
+import { BackgroundColor } from 'ol/layer/Base.js';
 
 @Component({
     selector: 'aol-layer-vectortile',

@@ -1,8 +1,8 @@
 import { AfterContentInit, Component, EventEmitter, forwardRef, Host, Input, Optional, Output } from '@angular/core';
-import { OSM } from 'ol/source';
-import { AttributionLike } from 'ol/source/Source';
-import { TileSourceEvent } from 'ol/source/Tile';
-import { LoadFunction } from 'ol/Tile';
+import { OSM } from 'ol/source.js';
+import { AttributionLike } from 'ol/source/Source.js';
+import { TileSourceEvent } from 'ol/source/Tile.js';
+import { LoadFunction } from 'ol/Tile.js';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
 import { SourceXYZComponent } from './xyz.component';

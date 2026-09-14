@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, Optional } from '@angular/core';
-import { Fill, Image, Stroke, Style, Text } from 'ol/style';
-import { Geometry } from 'ol/geom';
+import { Fill, Image, Stroke, Style, Text } from 'ol/style.js';
+import { Geometry } from 'ol/geom.js';
 import { FeatureComponent } from '../feature.component';
 import { LayerVectorComponent } from '../layers/layervector.component';
-import { GeometryFunction } from 'ol/style/Style';
+import { GeometryFunction } from 'ol/style/Style.js';
 
 @Component({
   selector: 'aol-style',

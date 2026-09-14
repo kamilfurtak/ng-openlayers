@@ -1,9 +1,9 @@
 import { OnDestroy, OnInit, OnChanges, Input, SimpleChanges, Directive } from '@angular/core';
-import BaseLayer from 'ol/layer/Base';
-import Event from 'ol/events/Event';
+import BaseLayer from 'ol/layer/Base.js';
+import Event from 'ol/events/Event.js';
 import { MapComponent } from '../map.component';
 import { LayerGroupComponent } from './layergroup.component';
-import { Extent } from 'ol/extent';
+import { Extent } from 'ol/extent.js';
 
 type RenderableLayer = BaseLayer & {
   on(type: 'prerender' | 'postrender', listener: (evt: Event) => void): unknown;

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
-import { Point } from 'ol/geom';
+import { Point } from 'ol/geom.js';
 
 @Component({
     selector: 'aol-geometry-point',

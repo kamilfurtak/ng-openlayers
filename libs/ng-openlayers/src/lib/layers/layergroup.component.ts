@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, SkipSelf, Optional } from '@angular/core';
-import { Group } from 'ol/layer';
+import { Group } from 'ol/layer.js';
 import { LayerComponent } from './layer.component';
 import { MapComponent } from '../map.component';
 

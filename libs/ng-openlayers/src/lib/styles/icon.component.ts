@@ -1,11 +1,11 @@
 import { Component, Input, Host, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Icon } from 'ol/style';
+import { Icon } from 'ol/style.js';
 
 // TODO https://github.com/openlayers/openlayers/issues/12694
 // import IconAnchorUnits from 'ol/style/IconAnchorUnits';
 // import IconOrigin from 'ol/style/IconOrigin';
 import { StyleComponent } from './style.component';
-import { IconAnchorUnits, IconOrigin } from 'ol/style/Icon';
+import { IconAnchorUnits, IconOrigin } from 'ol/style/Icon.js';
 
 @Component({
     selector: 'aol-style-icon',

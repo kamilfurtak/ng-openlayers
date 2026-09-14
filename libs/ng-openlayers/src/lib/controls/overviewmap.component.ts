@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Layer } from 'ol/layer';
+import { Layer } from 'ol/layer.js';
 import { View } from 'ol';
-import { OverviewMap } from 'ol/control';
+import { OverviewMap } from 'ol/control.js';
 import { MapComponent } from '../map.component';
 
 @Component({

@@ -9,13 +9,13 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import ImageArcGISRest from 'ol/source/ImageArcGISRest';
+import ImageArcGISRest from 'ol/source/ImageArcGISRest.js';
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { SourceComponent } from './source.component';
-import { ProjectionLike } from 'ol/proj';
-import { AttributionLike } from 'ol/source/Source';
-import { LoadFunction } from 'ol/Image';
-import { ImageSourceEvent } from 'ol/source/Image';
+import { ProjectionLike } from 'ol/proj.js';
+import { AttributionLike } from 'ol/source/Source.js';
+import { LoadFunction } from 'ol/Image.js';
+import { ImageSourceEvent } from 'ol/source/Image.js';
 
 @Component({
     selector: 'aol-source-imagearcgisrest',

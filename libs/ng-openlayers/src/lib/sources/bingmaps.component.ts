@@ -1,8 +1,8 @@
 import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
-import { BingMaps } from 'ol/source';
+import { BingMaps } from 'ol/source.js';
 import { SourceComponent } from './source.component';
 import { LayerTileComponent } from '../layers/layertile.component';
-import { LoadFunction } from 'ol/Tile';
+import { LoadFunction } from 'ol/Tile.js';
 
 @Component({
     selector: 'aol-source-bingmaps',

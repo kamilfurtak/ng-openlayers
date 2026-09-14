@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { Control, defaults } from 'ol/control';
+import { Control, defaults } from 'ol/control.js';
 import { Collection } from 'ol';
-import { Options as AttributionOptions } from 'ol/control/Attribution';
-import { Options as RotateOptions } from 'ol/control/Rotate';
-import { Options as ZoomOptions } from 'ol/control/Zoom';
+import { Options as AttributionOptions } from 'ol/control/Attribution.js';
+import { Options as RotateOptions } from 'ol/control/Rotate.js';
+import { Options as ZoomOptions } from 'ol/control/Zoom.js';
 
 import { MapComponent } from '../map.component';
 

@@ -1,13 +1,13 @@
 import { Component, Input, OnChanges, OnInit, OnDestroy, Optional } from '@angular/core';
-import { transform } from 'ol/proj';
-import { ObjectEvent } from 'ol/Object';
+import { transform } from 'ol/proj.js';
+import { ObjectEvent } from 'ol/Object.js';
 import { MapComponent } from './map.component';
 import { GeometryPointComponent } from './geom/geometrypoint.component';
 import { GeometryCircleComponent } from './geom/geometrycircle.component';
 import { ViewComponent } from './view.component';
 import { OverlayComponent } from './overlay.component';
-import { EventsKey } from 'ol/events';
-import { unByKey } from 'ol/Observable';
+import { EventsKey } from 'ol/events.js';
+import { unByKey } from 'ol/Observable.js';
 
 type CoordinateHost = {
   componentType: string;

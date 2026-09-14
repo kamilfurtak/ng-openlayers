@@ -1,5 +1,5 @@
-import BaseObject, { ObjectEvent } from 'ol/Object';
-import View from 'ol/View';
+import BaseObject, { ObjectEvent } from 'ol/Object.js';
+import View from 'ol/View.js';
 import { TestBed } from '@angular/core/testing';
 import { CollectionCoordinatesComponent } from './collectioncoordinates.component';
 import {

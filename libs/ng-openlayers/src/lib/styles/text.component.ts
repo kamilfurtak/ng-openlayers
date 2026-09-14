@@ -1,5 +1,5 @@
 import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Text } from 'ol/style';
+import { Text } from 'ol/style.js';
 import { StyleComponent } from './style.component';
 
 @Component({

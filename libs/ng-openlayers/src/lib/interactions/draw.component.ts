@@ -1,17 +1,17 @@
 import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MapComponent } from '../map.component';
-import { Draw } from 'ol/interaction';
+import { Draw } from 'ol/interaction.js';
 import { Collection, Feature } from 'ol';
-import { Vector } from 'ol/source';
-import { Style } from 'ol/style';
-import { DrawEvent, GeometryFunction } from 'ol/interaction/Draw';
-import { StyleFunction } from 'ol/style/Style';
-import { Condition } from 'ol/events/condition';
-import { Type } from 'ol/geom/Geometry';
-import { ObjectEvent } from 'ol/Object';
-import BaseEvent from 'ol/events/Event';
-import { EventsKey } from 'ol/events';
-import { unByKey } from 'ol/Observable';
+import { Vector } from 'ol/source.js';
+import { Style } from 'ol/style.js';
+import { DrawEvent, GeometryFunction } from 'ol/interaction/Draw.js';
+import { StyleFunction } from 'ol/style/Style.js';
+import { Condition } from 'ol/events/condition.js';
+import { Type } from 'ol/geom/Geometry.js';
+import { ObjectEvent } from 'ol/Object.js';
+import BaseEvent from 'ol/events/Event.js';
+import { EventsKey } from 'ol/events.js';
+import { unByKey } from 'ol/Observable.js';
 
 @Component({
   selector: 'aol-interaction-draw',
