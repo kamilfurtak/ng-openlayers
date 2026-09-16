@@ -7,6 +7,7 @@ import workspace from '../../../../package.json';
 
 export const project = {
   version: library.version,
+  description: library.description,
   angular: VERSION.major,
   openlayers: workspace.dependencies.ol,
   repository: 'https://github.com/kamilfurtak/ng-openlayers',

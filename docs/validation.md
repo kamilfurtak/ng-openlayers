@@ -50,3 +50,9 @@ The production home page's initial JavaScript and CSS total approximately 331 kB
 Nx cache inputs include sources and shared package/TypeScript configuration. E2E also includes the Playwright configuration. Static content, canonical metadata, sitemap entries and JSON-LD are validated in the build/browser checks. Search-engine indexing is not asserted by these checks.
 
 The CI workflow runs validation before GitHub Pages deployment. Npm publication remains a separate release action.
+
+## Package presentation
+
+`README.md` is canonical for GitHub and npm. `copy:lib:docs` checks package metadata freshness and README links, then includes that exact file with LICENSE and CHANGELOG in the built package. The site reads its description from the library manifest.
+
+`npm run build:branding` regenerates the README SVG banner from the site's logo and map illustration. The matching 1200 × 630 PNG in `docs/assets/` is the social preview; render it again when changing the banner. The site copies that canonical PNG during its build, with the shared artwork included in the Nx cache inputs.

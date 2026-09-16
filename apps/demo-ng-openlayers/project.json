@@ -45,7 +45,12 @@
           "apps/demo-ng-openlayers/src/CNAME",
           "apps/demo-ng-openlayers/src/robots.txt",
           "apps/demo-ng-openlayers/src/.nojekyll",
-          "apps/demo-ng-openlayers/src/assets"
+          "apps/demo-ng-openlayers/src/assets",
+          {
+            "glob": "ng-openlayers-social-preview.png",
+            "input": "docs/assets",
+            "output": "assets"
+          }
         ],
         "styles": ["apps/demo-ng-openlayers/src/styles.css", "node_modules/ol/ol.css"],
         "scripts": [],
@@ -80,7 +85,8 @@
           "sourceMap": false,
           "extractLicenses": true
         }
-      }
+      },
+      "inputs": ["production", "^production", "{workspaceRoot}/docs/assets/**/*"]
     },
     "serve": {
       "executor": "@angular/build:dev-server",
