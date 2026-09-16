@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { SourceImageArcGISRestComponent } from 'ng-openlayers';
 import { LayerImageComponent } from 'ng-openlayers';
 import { SourceOsmComponent } from 'ng-openlayers';
@@ -11,8 +11,8 @@ import { DefaultInteractionComponent } from 'ng-openlayers';
 import { MapComponent } from 'ng-openlayers';
 
 @Component({
-    selector: 'app-root',
-    template: `
+  selector: 'app-root',
+  template: `
     <aol-map>
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -31,8 +31,8 @@ import { MapComponent } from 'ng-openlayers';
       </aol-layer-image>
     </aol-map>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -43,19 +43,20 @@ import { MapComponent } from 'ng-openlayers';
         height: 100%;
       }
     `,
-    ],
-    imports: [
-        MapComponent,
-        DefaultInteractionComponent,
-        DefaultControlComponent,
-        ControlFullScreenComponent,
-        ViewComponent,
-        CoordinateComponent,
-        LayerTileComponent,
-        SourceOsmComponent,
-        LayerImageComponent,
-        SourceImageArcGISRestComponent,
-    ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    ControlFullScreenComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    LayerImageComponent,
+    SourceImageArcGISRestComponent,
+  ],
 })
 export class ArcgisImageComponent {
   public zoom = 4;

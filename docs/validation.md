@@ -1,46 +1,52 @@
 # Validation and maintenance
 
-Use Node.js 24 and the committed lockfile:
+Use Node.js 24.15+ (or 22.22.3+) and the committed lockfiles:
 
 ```sh
-npm ci --legacy-peer-deps --include=optional
+npm ci
 npm run lint
 npm run test-ci
 npm run build
 npx playwright install chromium
 npm run e2e
+npm run test:consumer
+npm audit
 ```
 
-`test-ci` uses Jasmine/Karma with real OpenLayers objects and ChromeHeadless.
-Set `CHROME_BIN` to your Chromium executable if it is not found automatically.
-The library compiler additionally enforces `noImplicitAny`; this is an incremental
-improvement, not a claim that the whole legacy workspace uses full strict mode.
+`test-ci` uses Jasmine/Karma and real OpenLayers objects in ChromeHeadless. Set `CHROME_BIN` if Chrome is not detected. `e2e` builds and serves the production static site. `test:consumer` installs the actual library tarball into an independent Angular 22 application and verifies compilation and lifecycle behavior without source aliases.
 
-## What the regression suite protects
+## Verified on 2026-09-16
 
-- Angular map destruction disposes the owned OpenLayers map and event bridges.
-- Replacing a view rebinds all outputs once and unsubscribes the previous view.
-- Projected coordinates follow projection changes and unsubscribe on removal.
-- Layers and overlays attach/detach; layer opacity updates in place.
-- Draw and modify interactions detach and no longer forward events after removal.
-- Browser tests exercise demo navigation, controls, repeated projection changes,
-  polygon drawing and disabling the drawing interaction.
+- Clean install without legacy peer resolution; no npm audit vulnerabilities in the root or consumer installation.
+- Lint for all three Nx projects.
+- 55 library tests, 7 browser tests and 1 packaged-consumer lifecycle test.
+- Production library build and 28 prerendered content pages, plus the example-index redirect and a standalone 404 page.
+- Camofox visual inspection at desktop and mobile widths, DOM checks, live OSM map rendering and a map-control state change.
 
-The browser suite uses an explicitly mocked OSM tile response to remain deterministic;
-it does not validate third-party tile availability. Unit tests do not measure heap
-retention or prove the absence of every possible memory leak.
+The dependency review leaves TypeScript at 6.0.3 and consumer Vitest at 4.1.11 to match Angular's supported peer ranges. Node type definitions follow the CI runtime's major. The demo uses Angular's default Baseline browser targets.
 
-## Coverage boundary
+## Regression coverage
 
-The September 2026 maintenance run executed 45 unit tests and 3 browser tests.
-Line coverage was 31.47%, up from the previously recorded 16.34%; many specialized
-sources, styles and controls still need behavioral tests. CI prevents regression
-below 30% statements/lines and 20% branches/functions. These are a starting floor,
-not a target or evidence of comprehensive coverage. Improve it alongside actual
-bug fixes rather than adding assertion-free tests.
+- Map disposal and event bridge cleanup; view replacement, projected coordinates and event rebinding.
+- Layers and overlays attaching/detaching, layer property updates and render callback replacement/removal.
+- Sources composed through custom Angular components and isolation between sibling maps.
+- OSM/XYZ URL updates preserving source identity and subscriptions; replacement-source ownership.
+- Dynamic style composition, flat vector styles and cluster spacing/cleanup.
+- Draw abortion and interaction event cleanup, including snap/select/translate.
+- Zone-based map setup outside Angular and re-entry only for subscribed map outputs.
+- Browser navigation, map controls, projection changes, drawing, mobile search/filtering and keyboard-controlled swipe.
+- All sitemap routes opening with distinct metadata and an initialized map; home and example content usable with JavaScript disabled.
 
-Nx cache inputs include project sources and shared TypeScript/package configuration;
-E2E also includes the Playwright config. Source edits must invalidate previous results.
+Browser regression tiles are explicitly mocked to avoid depending on external providers. The all-route smoke test substitutes external responses and checks initialization/errors; it does not validate every provider's data or every example's complete interaction flow. Camofox's live tile check is separate from these deterministic tests.
 
-The CI workflow runs lint, tests, production library/demo builds and browser tests
-before deploying the demo. Npm publishing remains a separate explicit release path.
+## Measured boundaries
+
+Library coverage: 40.26% statements, 29.26% branches, 31.44% functions and 41.03% lines. CI retains the existing floor of 30% statements/lines and 20% branches/functions. Many specialized sources and controls still need behavioral tests; these results do not prove absence of all memory leaks.
+
+The library enforces `noImplicitAny` and the workspace uses strict Angular templates. Full TypeScript strict mode has not been enabled across the legacy API.
+
+The production home page's initial JavaScript and CSS total approximately 331 kB before compression (about 91 kB estimated transfer). OpenLayers is loaded with the example routes. A 400 kB warning / 500 kB error budget protects initial assets. These are build sizes, not field performance or Core Web Vitals measurements.
+
+Nx cache inputs include sources and shared package/TypeScript configuration. E2E also includes the Playwright configuration. Static content, canonical metadata, sitemap entries and JSON-LD are validated in the build/browser checks. Search-engine indexing is not asserted by these checks.
+
+The CI workflow runs validation before GitHub Pages deployment. Npm publication remains a separate release action.

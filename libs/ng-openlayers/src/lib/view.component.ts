@@ -1,9 +1,20 @@
-import { Component, Input, OnInit, OnChanges, OnDestroy, SimpleChanges, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+  EventEmitter,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import View from 'ol/View.js';
 import { MapComponent } from './map.component';
 import { ObjectEvent } from 'ol/Object.js';
 import { Extent } from 'ol/extent.js';
 import { Coordinate } from 'ol/coordinate.js';
+import { ProjectionLike } from 'ol/proj.js';
 import { DrawEvent } from 'ol/interaction/Draw.js';
 import BaseEvent from 'ol/events/Event.js';
 import { EventsKey } from 'ol/events.js';
@@ -12,6 +23,7 @@ import { unByKey } from 'ol/Observable.js';
 @Component({
   selector: 'aol-view',
   template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class ViewComponent implements OnInit, OnChanges, OnDestroy {
@@ -42,7 +54,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   center: Coordinate;
   @Input()
-  projection: string;
+  projection: ProjectionLike;
   @Input()
   constrainOnlyCenter: boolean;
   @Input()

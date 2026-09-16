@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CollectionCoordinatesComponent } from 'ng-openlayers';
 import { GeometryPolygonComponent } from 'ng-openlayers';
@@ -21,19 +21,19 @@ import { DefaultInteractionComponent } from 'ng-openlayers';
 import { MapComponent } from 'ng-openlayers';
 
 @Component({
-    selector: 'app-cluster',
-    template: `
+  selector: 'app-cluster',
+  template: `
     <aol-map [width]="'100%'" [height]="'100%'">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
       <aol-control-fullscreen></aol-control-fullscreen>
-    
+
       <aol-view [zoom]="14">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
-    
+
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
-    
+
       <aol-layer-vector>
         <aol-source-cluster [distance]="distance">
           <aol-source-vector>
@@ -45,7 +45,7 @@ import { MapComponent } from 'ng-openlayers';
               </aol-feature>
             }
           </aol-source-vector>
-    
+
           <aol-style>
             <aol-style-circle [radius]="10">
               <aol-style-stroke [color]="'#fff'"></aol-style-stroke>
@@ -54,7 +54,7 @@ import { MapComponent } from 'ng-openlayers';
           </aol-style>
         </aol-source-cluster>
       </aol-layer-vector>
-    
+
       <aol-layer-vector>
         <aol-source-vector>
           <aol-feature>
@@ -65,11 +65,11 @@ import { MapComponent } from 'ng-openlayers';
                     [1.47, 43.545],
                     [1.51, 43.545],
                     [1.51, 43.565],
-                    [1.47, 43.565]
-                  ]
+                    [1.47, 43.565],
+                  ],
                 ]"
                 [srid]="'EPSG:4326'"
-                >
+              >
               </aol-collection-coordinates>
             </aol-geometry-polygon>
             <aol-style>
@@ -80,15 +80,15 @@ import { MapComponent } from 'ng-openlayers';
         </aol-source-vector>
       </aol-layer-vector>
     </aol-map>
-    
+
     <div class="control">
       <span>Distance : </span>
       <input type="range" min="0" max="255" [(ngModel)]="distance" />
       <span> ({{ distance }})</span>
     </div>
-    `,
-    styles: [
-        `
+  `,
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -107,29 +107,30 @@ import { MapComponent } from 'ng-openlayers';
         margin: 20px;
       }
     `,
-    ],
-    imports: [
-        MapComponent,
-        DefaultInteractionComponent,
-        DefaultControlComponent,
-        ControlFullScreenComponent,
-        ViewComponent,
-        CoordinateComponent,
-        LayerTileComponent,
-        SourceOsmComponent,
-        LayerVectorComponent,
-        SourceClusterComponent,
-        SourceVectorComponent,
-        FeatureComponent,
-        GeometryPointComponent,
-        StyleComponent,
-        StyleCircleComponent,
-        StyleStrokeComponent,
-        StyleFillComponent,
-        GeometryPolygonComponent,
-        CollectionCoordinatesComponent,
-        FormsModule,
-    ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    ControlFullScreenComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    LayerVectorComponent,
+    SourceClusterComponent,
+    SourceVectorComponent,
+    FeatureComponent,
+    GeometryPointComponent,
+    StyleComponent,
+    StyleCircleComponent,
+    StyleStrokeComponent,
+    StyleFillComponent,
+    GeometryPolygonComponent,
+    CollectionCoordinatesComponent,
+    FormsModule,
+  ],
 })
 export class ClusterComponent implements OnInit {
   distance = 60;

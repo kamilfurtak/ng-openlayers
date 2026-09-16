@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Stroke } from 'ol/style';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import Stroke from 'ol/style/Stroke.js';
 import { FormsModule } from '@angular/forms';
 import {
   ControlFullScreenComponent,
@@ -14,8 +14,8 @@ import {
 } from 'ng-openlayers';
 
 @Component({
-    selector: 'app-root',
-    template: `
+  selector: 'app-root',
+  template: `
     <aol-map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -36,8 +36,8 @@ import {
       <label for="graticule">Toggle graticule</label>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -52,19 +52,20 @@ import {
         padding: 1rem;
       }
     `,
-    ],
-    imports: [
-        MapComponent,
-        DefaultInteractionComponent,
-        DefaultControlComponent,
-        ControlFullScreenComponent,
-        ViewComponent,
-        CoordinateComponent,
-        LayerTileComponent,
-        SourceOsmComponent,
-        FormsModule,
-        GraticuleComponent,
-    ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    ControlFullScreenComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    FormsModule,
+    GraticuleComponent,
+  ],
 })
 export class GraticuleDemoComponent {
   public zoom = 4;

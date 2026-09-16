@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, ContentChildren, Host, QueryList } from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, QueryList, ChangeDetectionStrategy } from '@angular/core';
 import { SourceComponent } from './sources/source.component';
 import { AttributionComponent } from './attribution.component';
 
 @Component({
   selector: 'aol-attributions',
   template: '<ng-content></ng-content>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class AttributionsComponent implements AfterViewInit {
@@ -13,7 +14,7 @@ export class AttributionsComponent implements AfterViewInit {
 
   instance: Array<string>;
 
-  constructor(@Host() private source: SourceComponent) {}
+  constructor(private source: SourceComponent) {}
 
   /* we can do this at the very end */
   ngAfterViewInit() {

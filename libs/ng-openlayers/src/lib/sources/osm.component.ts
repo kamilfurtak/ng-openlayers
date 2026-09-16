@@ -1,5 +1,14 @@
-import { AfterContentInit, Component, EventEmitter, forwardRef, Host, Input, Optional, Output } from '@angular/core';
-import { OSM } from 'ol/source.js';
+import {
+  AfterContentInit,
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Optional,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import OSM from 'ol/source/OSM.js';
 import { AttributionLike } from 'ol/source/Source.js';
 import { TileSourceEvent } from 'ol/source/Tile.js';
 import { LoadFunction } from 'ol/Tile.js';
@@ -8,10 +17,11 @@ import { SourceComponent } from './source.component';
 import { SourceXYZComponent } from './xyz.component';
 
 @Component({
-    selector: 'aol-source-osm',
-    template: ` <div class="aol-source-osm"></div> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceOsmComponent) }],
-    standalone: true,
+  selector: 'aol-source-osm',
+  template: ` <div class="aol-source-osm"></div> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceOsmComponent) }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SourceOsmComponent extends SourceXYZComponent implements AfterContentInit {
   @Input()
@@ -44,7 +54,6 @@ export class SourceOsmComponent extends SourceXYZComponent implements AfterConte
 
   constructor(
     @Optional()
-    @Host()
     protected layer?: LayerTileComponent
   ) {
     super(layer);

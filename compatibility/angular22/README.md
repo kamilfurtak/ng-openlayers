@@ -1,20 +1,13 @@
 # Angular 22 packaged consumer
 
-This fixture consumes the actual Angular 21 partial-compiled npm tarball, not
-TypeScript source aliases or an npm-linked development checkout. Its pinned
-Angular 22 app runs zoneless. Unit tests verify projection changes and disposal;
-DOM canvas rendering remains covered by the main repository's Playwright suite.
+This fixture consumes the actual partial-compiled npm tarball built from the current library sources. It does not use TypeScript source aliases or npm linking. The standalone Angular 22 app runs zoneless.
 
 From the repository root:
 
 ```sh
-npm run build:lib
-npm pack ./dist/libs/ng-openlayers --pack-destination dist
-npm ci --prefix compatibility/angular22
-(cd compatibility/angular22 && npm install ../../dist/ng-openlayers-21.2.0.tgz --no-save --package-lock=false)
-npm run build --prefix compatibility/angular22
-npm test --prefix compatibility/angular22
+npm run test:consumer
 ```
 
-Keep Angular 21 build, Karma and browser gates passing too. Widening a peer range
-alone is not a compatibility proof. No npm publication is performed by this test.
+The script builds and packs the library, installs the consumer lockfile, installs the current tarball with `--no-save`, then runs the production build and lifecycle test. It discovers the tarball filename rather than hardcoding a version. No npm publication is performed.
+
+The fixture has its own dependency lockfile and is excluded from the Nx project graph. Registry dependencies remain locked; the build-under-test is intentionally not recorded as a file dependency in that lockfile.

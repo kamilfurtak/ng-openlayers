@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
   CollectionCoordinatesComponent,
   CoordinateComponent,
@@ -76,6 +76,7 @@ import { SnapEvent } from 'ol/events/SnapEvent';
       }
     `,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MapComponent,
     DefaultInteractionComponent,

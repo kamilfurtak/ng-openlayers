@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Geometry } from 'geojson';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { GeometryMultiPolygonComponent } from 'ng-openlayers';
 import { GeometryMultiLinestringComponent } from 'ng-openlayers';
 import { GeometryMultiPointComponent } from 'ng-openlayers';
@@ -24,16 +25,16 @@ import { DefaultInteractionComponent } from 'ng-openlayers';
 import { MapComponent } from 'ng-openlayers';
 
 @Component({
-    selector: 'app-display-geometry',
-    template: `
+  selector: 'app-display-geometry',
+  template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
-    
+
       <aol-view [zoom]="6"> <aol-coordinate [x]="1" [y]="46.292896" [srid]="'EPSG:4326'"></aol-coordinate> </aol-view>
-    
+
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
-    
+
       <aol-layer-group>
         @for (feature of features; track feature) {
           <aol-layer-vector>
@@ -41,7 +42,7 @@ import { MapComponent } from 'ng-openlayers';
               @case ('Polygon') {
                 <aol-source-vector>
                   <aol-style>
-                    <aol-style-stroke [color]="'rgba(90, 17, 26)'" width="3"></aol-style-stroke>
+                    <aol-style-stroke [color]="'rgba(90, 17, 26)'" [width]="3"></aol-style-stroke>
                     <aol-style-fill [color]="'rgba(90, 17, 26, 0.5)'"></aol-style-fill>
                   </aol-style>
                   <aol-feature>
@@ -60,7 +61,7 @@ import { MapComponent } from 'ng-openlayers';
                         [x]="feature.geometry.coordinates[0]"
                         [y]="feature.geometry.coordinates[1]"
                         [srid]="'EPSG:4326'"
-                        >
+                      >
                       </aol-coordinate>
                       <aol-style>
                         <aol-style-circle [radius]="10">
@@ -90,10 +91,10 @@ import { MapComponent } from 'ng-openlayers';
                         [x]="feature.geometry.coordinates[0]"
                         [y]="feature.geometry.coordinates[1]"
                         srid="EPSG:4326"
-                        >
+                      >
                       </aol-coordinate>
                       <aol-style>
-                        <aol-style-stroke color="blue" width="2"></aol-style-stroke>
+                        <aol-style-stroke color="blue" [width]="2"></aol-style-stroke>
                         <aol-style-fill color="rgba(255, 255, 0, 0.5)"></aol-style-fill>
                       </aol-style>
                     </aol-geometry-circle>
@@ -129,7 +130,7 @@ import { MapComponent } from 'ng-openlayers';
               @case ('MultiPolygon') {
                 <aol-source-vector>
                   <aol-style>
-                    <aol-style-stroke [color]="'rgba(81, 15.3, 23.4)'" width="2"></aol-style-stroke>
+                    <aol-style-stroke [color]="'rgba(81, 15.3, 23.4)'" [width]="2"></aol-style-stroke>
                     <aol-style-fill [color]="'rgba(81, 15.3, 23.4, 0.4)'"></aol-style-fill>
                   </aol-style>
                   <aol-feature>
@@ -145,37 +146,43 @@ import { MapComponent } from 'ng-openlayers';
         }
       </aol-layer-group>
     </aol-map>
-    `,
-    imports: [
-        MapComponent,
-        DefaultInteractionComponent,
-        DefaultControlComponent,
-        ViewComponent,
-        CoordinateComponent,
-        LayerTileComponent,
-        SourceOsmComponent,
-        LayerGroupComponent,
-        LayerVectorComponent,
-        SourceVectorComponent,
-        StyleComponent,
-        StyleStrokeComponent,
-        StyleFillComponent,
-        FeatureComponent,
-        GeometryPolygonComponent,
-        CollectionCoordinatesComponent,
-        GeometryPointComponent,
-        StyleCircleComponent,
-        GeometryLinestringComponent,
-        GeometryCircleComponent,
-        GeometryMultiPointComponent,
-        GeometryMultiLinestringComponent,
-        GeometryMultiPolygonComponent,
-    ]
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    LayerGroupComponent,
+    LayerVectorComponent,
+    SourceVectorComponent,
+    StyleComponent,
+    StyleStrokeComponent,
+    StyleFillComponent,
+    FeatureComponent,
+    GeometryPolygonComponent,
+    CollectionCoordinatesComponent,
+    GeometryPointComponent,
+    StyleCircleComponent,
+    GeometryLinestringComponent,
+    GeometryCircleComponent,
+    GeometryMultiPointComponent,
+    GeometryMultiLinestringComponent,
+    GeometryMultiPolygonComponent,
+  ],
 })
 export class DisplayGeometryComponent implements OnInit {
   constructor() {}
 
-  features = [
+  features: Array<{
+    type: 'Feature';
+    properties: Record<string, unknown>;
+    geometry:
+      Exclude<Geometry, { type: 'GeometryCollection' }> | { type: 'Circle'; coordinates: number[]; radius: number };
+  }> = [
     {
       type: 'Feature',
       properties: {},

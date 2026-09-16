@@ -1,11 +1,11 @@
 {
   "name": "ng-openlayers",
-  "version": "21.2.0",
+  "version": "22.0.0",
   "peerDependencies": {
-    "@angular/common": "^21.0.0 || ^22.0.0",
-    "@angular/core": "^21.0.0 || ^22.0.0",
-    "ol": "^10.9.0",
-    "proj4": "^2.20.8"
+    "@angular/common": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "ol": "^10.10.0",
+    "proj4": "^2.22.0"
   },
   "description": "Declarative OpenLayers components for Angular applications",
   "author": "Kamil Furtak",
@@ -37,8 +37,5 @@
     "webgis"
   ],
   "license": "MPL-2.0",
-  "private": false,
-  "scripts": {
-    "prepublishOnly": "cp ../../README.md ../../dist/libs/ng-openlayers/README.md && cp CHANGELOG.md ../../dist/libs/ng-openlayers/CHANGELOG.md"
-  }
+  "private": false
 }

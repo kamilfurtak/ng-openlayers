@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { transform } from 'ol/proj';
 import { SourceOsmComponent } from 'ng-openlayers';
 import { LayerTileComponent } from 'ng-openlayers';
@@ -9,8 +9,8 @@ import { DefaultInteractionComponent } from 'ng-openlayers';
 import { MapComponent } from 'ng-openlayers';
 
 @Component({
-    selector: 'app-cursor-position',
-    template: `
+  selector: 'app-cursor-position',
+  template: `
     <aol-map #map width="100%" height="100%" (pointerMove)="dispatchCursor($event)">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -29,8 +29,8 @@ import { MapComponent } from 'ng-openlayers';
       </div>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -50,16 +50,17 @@ import { MapComponent } from 'ng-openlayers';
         flex-direction: column;
       }
     `,
-    ],
-    imports: [
-        MapComponent,
-        DefaultInteractionComponent,
-        DefaultControlComponent,
-        ViewComponent,
-        CoordinateComponent,
-        LayerTileComponent,
-        SourceOsmComponent,
-    ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+  ],
 })
 export class CursorPositionComponent implements OnInit {
   constructor() {}

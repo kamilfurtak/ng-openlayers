@@ -1,16 +1,17 @@
-import { Component, Host, Input, OnChanges, OnInit, forwardRef, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, forwardRef, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
-import { TileWMS } from 'ol/source.js';
+import TileWMS from 'ol/source/TileWMS.js';
 import TileGrid from 'ol/tilegrid/TileGrid.js';
 import { LoadFunction } from 'ol/Tile.js';
 import { ServerType } from 'ol/source/wms.js';
 
 @Component({
-    selector: 'aol-source-tilewms',
-    template: ` <ng-content></ng-content> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileWMSComponent) }],
-    standalone: true,
+  selector: 'aol-source-tilewms',
+  template: ` <ng-content></ng-content> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileWMSComponent) }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SourceTileWMSComponent extends SourceComponent implements OnChanges, OnInit {
   @Input()
@@ -42,7 +43,7 @@ export class SourceTileWMSComponent extends SourceComponent implements OnChanges
 
   instance: TileWMS;
 
-  constructor(@Host() layer: LayerTileComponent) {
+  constructor(layer: LayerTileComponent) {
     super(layer);
   }
 

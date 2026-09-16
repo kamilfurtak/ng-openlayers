@@ -1,3 +1,18 @@
+# 22.0.0
+
+- **Breaking:** require Angular 22, OpenLayers 10.10+ and Proj4 2.22+.
+- Update Angular, Nx, build, lint and test tooling; use direct OpenLayers module imports.
+- Use OnPush components and run unobserved map pointer/render work outside Angular's zone.
+- Add map `renderComplete`, `maxTilesLoading` and `moveTolerance`; fix `propertyChange` forwarding and map event types.
+- Support reusable source/style/attribution wrapper components through ancestor injection.
+- Preserve source instances when changing XYZ/OSM URLs; detach and dispose owned sources, layers and interactions.
+- Add layer zoom limits, replaceable render callbacks, flat vector styles and cluster `minDistance`.
+- Add drawing trace options and the backward-compatible `drawAbort` alias.
+- Synchronize composed styles when child components change.
+- Redesign the example site with search, categories, lazy maps and 28 prerendered content pages with metadata and a sitemap.
+- Replace retired demo endpoints and Hammer.js/toast dependencies with local fixtures and native controls.
+- Expand regression tests and verify the actual npm tarball in an independent Angular 22 app.
+
 # 21.2.0
 
 - Support Angular 21 and 22, with a packed-package Angular 22 consumer checked in CI.

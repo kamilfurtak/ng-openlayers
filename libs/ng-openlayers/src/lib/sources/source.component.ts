@@ -6,12 +6,12 @@ import { LayerComponent } from '../layers/layer.component';
 
 type SourceLayerHost = LayerComponent & {
   instance: {
+    getSource(): Source | null;
     setSource(source: Source | null): void;
   };
 };
 
 @Directive()
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class SourceComponent implements OnDestroy {
   @Input()
   attributions: AttributionLike;
@@ -22,9 +22,10 @@ export abstract class SourceComponent implements OnDestroy {
   protected constructor(protected host: SourceLayerHost) {}
 
   ngOnDestroy() {
-    if (this.host && this.host.instance) {
+    if (this.host?.instance?.getSource() === this.instance) {
       this.host.instance.setSource(null);
     }
+    this.instance?.dispose();
   }
 
   protected register(s: Source) {

@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { Layer as OlLayer } from 'ol/layer';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import OlLayer from 'ol/layer/Layer.js';
 import { SelectEvent } from 'ol/interaction/Select';
 import {
   CoordinateComponent,
@@ -45,6 +45,7 @@ import {
       </aol-layer-vector>
     </aol-map>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MapComponent,
     DefaultInteractionComponent,

@@ -1,12 +1,13 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ScaleLine } from 'ol/control.js';
+import { Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import ScaleLine from 'ol/control/ScaleLine.js';
 import { MapComponent } from '../map.component';
 import { Units } from 'ol/control/ScaleLine.js';
 
 @Component({
-    selector: 'aol-control-scaleline',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-control-scaleline',
+  template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class ControlScaleLineComponent implements OnInit, OnDestroy {
   @Input()

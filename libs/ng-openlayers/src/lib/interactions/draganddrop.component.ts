@@ -1,13 +1,14 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { DragAndDrop } from 'ol/interaction.js';
+import { Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import DragAndDrop from 'ol/interaction/DragAndDrop.js';
 import FeatureFormat from 'ol/format/Feature.js';
 import { MapComponent } from '../map.component';
 import { ProjectionLike } from 'ol/proj.js';
 
 @Component({
-    selector: 'aol-interaction-draganddrop',
-    template: '',
-    standalone: true,
+  selector: 'aol-interaction-draganddrop',
+  template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class DragAndDropInteractionComponent implements OnInit, OnDestroy {
   @Input()

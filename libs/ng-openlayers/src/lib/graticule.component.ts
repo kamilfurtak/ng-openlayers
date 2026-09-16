@@ -1,11 +1,20 @@
-import { AfterContentInit, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Graticule } from 'ol';
-import { Stroke } from 'ol/style.js';
+import Stroke from 'ol/style/Stroke.js';
 import { MapComponent } from './map.component';
 
 @Component({
   selector: 'aol-graticule',
   template: '<ng-content></ng-content>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestroy {
@@ -35,7 +44,7 @@ export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestro
         properties[key] = changes[key].currentValue;
       }
     }
- 
+
     if (properties) {
       this.instance = new Graticule(properties);
     }

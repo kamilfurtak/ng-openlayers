@@ -1,15 +1,16 @@
-import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
-import { Vector } from 'ol/source.js';
+import { Component, Input, OnInit, forwardRef, ChangeDetectionStrategy } from '@angular/core';
+import Vector from 'ol/source/Vector.js';
 import Feature from 'ol/format/Feature.js';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
 import { LoadingStrategy } from 'ol/source/Vector.js';
 
 @Component({
-    selector: 'aol-source-vector',
-    template: ` <ng-content></ng-content> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceVectorComponent) }],
-    standalone: true,
+  selector: 'aol-source-vector',
+  template: ` <ng-content></ng-content> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceVectorComponent) }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SourceVectorComponent extends SourceComponent implements OnInit {
   @Input()
@@ -27,7 +28,7 @@ export class SourceVectorComponent extends SourceComponent implements OnInit {
 
   instance: Vector;
 
-  constructor(@Host() layer: LayerVectorComponent) {
+  constructor(layer: LayerVectorComponent) {
     super(layer);
   }
 

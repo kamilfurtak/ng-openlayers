@@ -1,16 +1,7 @@
 # Compatibility boundary
 
-The fixture is excluded from the Angular 21 Nx graph: it has an independent,
-pinned Angular 22 installation. CI explicitly builds the root library, packs it,
-installs the fixture lockfile and then installs the tarball built in that run.
-The tarball is intentionally not in the dependency lock: compiler outputs can
-vary across build environments. Registry dependencies retain locked integrity;
-only the current build-under-test is installed with `--no-save --package-lock=false`.
-CI then runs the production build and lifecycle test.
+The packed-consumer test verifies Angular 22 compilation and linking, zoneless projection changes, coordinate rebinding, event uniqueness and disposal against the installed `ng-openlayers` package. OpenLayers imports resolve to existing ESM `.js` files.
 
-The first packed-consumer run exposed extensionless OpenLayers imports rejected
-by native ESM. Library imports now resolve to existing OpenLayers `.js` files.
-The consumer uses signals to notify zoneless change detection. Tests cover
-projection replacement, coordinate rebinding, event uniqueness and disposal.
+This fixture uses JSDOM, so it does not validate canvas rendering. Real-browser map and interaction checks live in the main Playwright suite. Neither the fixture nor the demo's prerendering claims SSR support for OpenLayers itself or compatibility with future Angular majors.
 
-This does not claim SSR support or compatibility with future Angular majors.
+TypeScript 6.0.x and Vitest 4.x follow the Angular 22 build tool's peer constraints. The lockfile was regenerated with npm 11; normal `npm ci` and the packed installation also pass with npm 10.9.8.

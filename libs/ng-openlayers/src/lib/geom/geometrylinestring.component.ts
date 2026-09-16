@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
 import { LineString } from 'ol/geom.js';
 
 @Component({
-    selector: 'aol-geometry-linestring',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-geometry-linestring',
+  template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class GeometryLinestringComponent extends SimpleGeometryComponent implements OnInit {
   public componentType = 'geometry-linestring';

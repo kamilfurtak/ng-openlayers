@@ -1,0 +1,8 @@
+{
+  "tilejson": "2.2.0",
+  "name": "Local UTFGrid demonstration",
+  "grids": ["/assets/utfgrid/grid.json"],
+  "tiles": [],
+  "minzoom": 0,
+  "maxzoom": 19
+}

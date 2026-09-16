@@ -1,13 +1,14 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { DragBox } from 'ol/interaction.js';
+import { Component, OnDestroy, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import DragBox from 'ol/interaction/DragBox.js';
 import { MapComponent } from '../map.component';
 import { Condition } from 'ol/events/condition.js';
 import { EndCondition } from 'ol/interaction/DragBox.js';
 
 @Component({
-    selector: 'aol-interaction-dragbox',
-    template: '',
-    standalone: true,
+  selector: 'aol-interaction-dragbox',
+  template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class DragBoxInteractionComponent implements OnInit, OnDestroy {
   @Input()

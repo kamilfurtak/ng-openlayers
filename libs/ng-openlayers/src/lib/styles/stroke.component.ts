@@ -1,5 +1,5 @@
-import { Component, Input, OnChanges, OnInit, Optional, SimpleChanges } from '@angular/core';
-import { Stroke } from 'ol/style.js';
+import { Component, Input, OnChanges, OnInit, Optional, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import Stroke from 'ol/style/Stroke.js';
 import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';
 import { StyleTextComponent } from './text.component';
@@ -9,6 +9,7 @@ import { ColorLike } from 'ol/colorlike.js';
 @Component({
   selector: 'aol-style-stroke',
   template: ` <div class="aol-style-stroke"></div> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class StyleStrokeComponent implements OnInit, OnChanges {

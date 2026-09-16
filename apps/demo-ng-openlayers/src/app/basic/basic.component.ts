@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { StyleIconComponent } from 'ng-openlayers';
 import { StyleFillComponent } from 'ng-openlayers';
 import { StyleStrokeComponent } from 'ng-openlayers';
@@ -15,8 +15,8 @@ import { ViewComponent } from 'ng-openlayers';
 import { MapComponent } from 'ng-openlayers';
 
 @Component({
-    selector: 'app-root',
-    template: `
+  selector: 'app-root',
+  template: `
     <aol-map [width]="'100%'" [height]="'100%'">
       <aol-view
         [zoom]="zoom"
@@ -60,19 +60,30 @@ import { MapComponent } from 'ng-openlayers';
       </aol-layer-vector>
     </aol-map>
     <div class="controls">
-      <p>Zoom: <output aria-label="Zoom">{{ zoom }}</output></p>
-      <p>Longitude: <output aria-label="Longitude">{{ lon }}</output></p>
-      <p>Latitude: <output aria-label="Latitude">{{ lat }}</output></p>
-      <p>Opacity: <output aria-label="Opacity">{{ opacity }}</output></p>
-      <span>opacity:</span><button aria-label="Increase opacity" (click)="increaseOpacity()">+</button><button aria-label="Decrease opacity" (click)="decreaseOpacity()">-</button
-      ><br />
-      <span>zoom:</span><button aria-label="Increase zoom" (click)="increaseZoom()">+</button><button aria-label="Decrease zoom" (click)="decreaseZoom()">-</button><br />
-      <span>latitude:</span><button aria-label="Increase latitude" (click)="increaseLat()">+</button><button aria-label="Decrease latitude" (click)="decreaseLat()">-</button><br />
-      <span>longitude:</span><button aria-label="Increase longitude" (click)="increaseLon()">+</button><button aria-label="Decrease longitude" (click)="decreaseLon()">-</button><br />
+      <p>
+        Zoom: <output aria-label="Zoom">{{ zoom }}</output>
+      </p>
+      <p>
+        Longitude: <output aria-label="Longitude">{{ lon }}</output>
+      </p>
+      <p>
+        Latitude: <output aria-label="Latitude">{{ lat }}</output>
+      </p>
+      <p>
+        Opacity: <output aria-label="Opacity">{{ opacity }}</output>
+      </p>
+      <span>opacity:</span><button aria-label="Increase opacity" (click)="increaseOpacity()">+</button
+      ><button aria-label="Decrease opacity" (click)="decreaseOpacity()">-</button><br />
+      <span>zoom:</span><button aria-label="Increase zoom" (click)="increaseZoom()">+</button
+      ><button aria-label="Decrease zoom" (click)="decreaseZoom()">-</button><br />
+      <span>latitude:</span><button aria-label="Increase latitude" (click)="increaseLat()">+</button
+      ><button aria-label="Decrease latitude" (click)="decreaseLat()">-</button><br />
+      <span>longitude:</span><button aria-label="Increase longitude" (click)="increaseLon()">+</button
+      ><button aria-label="Decrease longitude" (click)="decreaseLon()">-</button><br />
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -87,23 +98,24 @@ import { MapComponent } from 'ng-openlayers';
         padding: 1rem;
       }
     `,
-    ],
-    imports: [
-        MapComponent,
-        ViewComponent,
-        CoordinateComponent,
-        LayerTileComponent,
-        SourceOsmComponent,
-        LayerVectorComponent,
-        SourceVectorComponent,
-        FeatureComponent,
-        GeometryPointComponent,
-        StyleComponent,
-        StyleCircleComponent,
-        StyleStrokeComponent,
-        StyleFillComponent,
-        StyleIconComponent,
-    ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MapComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    LayerVectorComponent,
+    SourceVectorComponent,
+    FeatureComponent,
+    GeometryPointComponent,
+    StyleComponent,
+    StyleCircleComponent,
+    StyleStrokeComponent,
+    StyleFillComponent,
+    StyleIconComponent,
+  ],
 })
 export class BasicComponent {
   public zoom = 15;

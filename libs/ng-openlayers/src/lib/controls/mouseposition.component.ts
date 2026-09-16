@@ -1,13 +1,14 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import MousePosition from 'ol/control/MousePosition.js';
 import { MapComponent } from '../map.component';
 import { CoordinateFormat } from 'ol/coordinate.js';
 import { ProjectionLike } from 'ol/proj.js';
 
 @Component({
-    selector: 'aol-control-mouseposition',
-    template: ``,
-    standalone: true,
+  selector: 'aol-control-mouseposition',
+  template: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class ControlMousePositionComponent implements OnInit, OnDestroy {
   @Input()

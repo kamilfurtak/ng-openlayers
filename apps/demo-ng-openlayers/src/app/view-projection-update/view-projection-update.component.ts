@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { StyleIconComponent } from 'ng-openlayers';
 import { StyleFillComponent } from 'ng-openlayers';
@@ -17,8 +17,8 @@ import { DefaultInteractionComponent } from 'ng-openlayers';
 import { MapComponent } from 'ng-openlayers';
 
 @Component({
-    selector: 'app-root',
-    template: `
+  selector: 'app-root',
+  template: `
     <aol-map [width]="'100%'" [height]="'100%'">
       <aol-interaction-default></aol-interaction-default>
       <aol-view [zoom]="zoom" [projection]="viewProjection" (changeResolution)="onResolutionChange()">
@@ -64,11 +64,13 @@ import { MapComponent } from 'ng-openlayers';
         <option value="EPSG:4326">EPSG:4326</option>
       </select>
       <button (click)="zoom = zoom + 1">Increase zoom</button>
-      <p>Resolution events: <output aria-label="Resolution events">{{ resolutionEvents() }}</output></p>
+      <p>
+        Resolution events: <output aria-label="Resolution events">{{ resolutionEvents() }}</output>
+      </p>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -83,25 +85,26 @@ import { MapComponent } from 'ng-openlayers';
         padding: 1rem;
       }
     `,
-    ],
-    imports: [
-        MapComponent,
-        DefaultInteractionComponent,
-        ViewComponent,
-        CoordinateComponent,
-        LayerTileComponent,
-        SourceOsmComponent,
-        LayerVectorComponent,
-        SourceVectorComponent,
-        FeatureComponent,
-        GeometryPointComponent,
-        StyleComponent,
-        StyleCircleComponent,
-        StyleStrokeComponent,
-        StyleFillComponent,
-        StyleIconComponent,
-        FormsModule,
-    ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    LayerVectorComponent,
+    SourceVectorComponent,
+    FeatureComponent,
+    GeometryPointComponent,
+    StyleComponent,
+    StyleCircleComponent,
+    StyleStrokeComponent,
+    StyleFillComponent,
+    StyleIconComponent,
+    FormsModule,
+  ],
 })
 export class ViewProjectionUpdateComponent {
   public viewProjection = 'EPSG:3857';

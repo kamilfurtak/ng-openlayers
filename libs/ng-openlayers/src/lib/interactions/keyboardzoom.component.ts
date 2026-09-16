@@ -1,10 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { KeyboardZoom } from 'ol/interaction.js';
+import { Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import KeyboardZoom from 'ol/interaction/KeyboardZoom.js';
 import { MapComponent } from '../map.component';
 
 @Component({
   selector: 'aol-interaction-keyboardpan',
   template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
 export class KeyboardZoomInteractionComponent implements OnInit, OnDestroy {

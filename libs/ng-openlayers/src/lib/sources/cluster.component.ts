@@ -3,14 +3,15 @@ import {
   Component,
   ContentChild,
   forwardRef,
-  Host,
   Input,
   OnChanges,
   SimpleChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Feature } from 'ol';
 import { Point } from 'ol/geom.js';
-import { Cluster, Vector } from 'ol/source.js';
+import Cluster from 'ol/source/Cluster.js';
+import Vector from 'ol/source/Vector.js';
 
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
@@ -20,11 +21,14 @@ import { SourceVectorComponent } from './vector.component';
   selector: 'aol-source-cluster',
   template: ` <ng-content></ng-content> `,
   providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceClusterComponent) }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class SourceClusterComponent extends SourceComponent implements AfterContentInit, OnChanges {
   @Input()
   distance: number;
+  @Input()
+  minDistance: number;
   @Input()
   geometryFunction?: (feature: Feature) => Point;
   @Input()
@@ -36,7 +40,7 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   instance: Cluster;
   source: Vector;
 
-  constructor(@Host() layer: LayerVectorComponent) {
+  constructor(layer: LayerVectorComponent) {
     super(layer);
   }
 
@@ -51,5 +55,14 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
     if (this.instance && changes.hasOwnProperty('distance')) {
       this.instance.setDistance(this.distance);
     }
+    if (this.instance && changes['minDistance']) {
+      this.instance.setMinDistance(this.minDistance);
+    }
+  }
+
+  override ngOnDestroy() {
+    // Cluster subscribes to its wrapped source independently of the layer.
+    this.instance?.setSource(null);
+    super.ngOnDestroy();
   }
 }

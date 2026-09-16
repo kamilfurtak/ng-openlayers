@@ -1,74 +1,51 @@
 # ng-openlayers
 
+Declarative OpenLayers components for Angular. Build maps with templates, compose layers and interactions, and keep direct access to the underlying OpenLayers instances.
+
 [![CI](https://github.com/kamilfurtak/ng-openlayers/actions/workflows/ci.yml/badge.svg)](https://github.com/kamilfurtak/ng-openlayers/actions/workflows/ci.yml)
-
-**Maintained Angular/OpenLayers library.** Start with the [live examples](https://ng-openlayers.furtak.dev/)
-or the [npm package](https://www.npmjs.com/package/ng-openlayers).
-See [validation and known boundaries](docs/validation.md) for test commands, coverage gates and browser-test scope.
-
-
-![ng-openlayers social preview](docs/assets/ng-openlayers-social-preview.png)
-
-Declarative OpenLayers components for Angular.
-
 [![npm version](https://img.shields.io/npm/v/ng-openlayers.svg)](https://www.npmjs.com/package/ng-openlayers)
-[![npm downloads](https://img.shields.io/npm/dw/ng-openlayers.svg)](https://www.npmjs.com/package/ng-openlayers)
-[![Demo](https://img.shields.io/badge/demo-ng--openlayers.furtak.dev-2ea44f)](https://ng-openlayers.furtak.dev/)
 [![License: MPL--2.0](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](LICENSE.md)
-[![Sponsor](https://img.shields.io/badge/sponsor-GitHub%20Sponsors-ea4aaa.svg)](https://github.com/sponsors/kamilfurtak)
 
-[Demo](https://ng-openlayers.furtak.dev/) · [Project page](https://furtak.dev/projects/ng-openlayers/) · [Article](https://furtak.dev/articles/angular-openlayers/) · [Tutorial on Medium](https://medium.com/@kamilfurtak/create-interactive-maps-with-angular-17-and-latest-openlayers-7ae9b7fdb7ec) · [Author](https://furtak.dev/) · [Sponsor](https://github.com/sponsors/kamilfurtak) · [OpenLayers API](https://openlayers.org/en/latest/apidoc/)
+[Explore the examples](https://ng-openlayers.furtak.dev/) · [npm package](https://www.npmjs.com/package/ng-openlayers) · [Changelog](https://github.com/kamilfurtak/ng-openlayers/blob/master/libs/ng-openlayers/CHANGELOG.md) · [Sponsor](https://github.com/sponsors/kamilfurtak)
 
-`ng-openlayers` lets Angular applications describe OpenLayers maps with templates instead of imperative map setup code. Layers, sources, geometries, styles, controls, interactions, overlays, and coordinates become Angular components with typed inputs and outputs.
+![ng-openlayers social preview](https://raw.githubusercontent.com/kamilfurtak/ng-openlayers/master/docs/assets/ng-openlayers-social-preview.png)
 
-## Case Study: Declarative Maps In Angular
+## What you can build
 
-Interactive maps often enter Angular apps as a separate imperative island: create a map instance, keep references to sources/layers/features, wire events manually, and synchronize that state with Angular components later.
+- Tile, image and vector maps with OSM, XYZ, WMS, WMTS, ArcGIS, TileJSON and GeoJSON sources.
+- Features, geometries, markers, overlays and composed styles.
+- Drawing, editing, selection, snapping, measurement and custom controls.
+- Maps with dynamic view projections and declarative coordinate transformation.
 
-This library explores a different boundary:
+Use standalone components or `AngularOpenlayersModule`. Each component owns its OpenLayers lifecycle and exposes its public `instance` for advanced integration. The [27 interactive examples](https://ng-openlayers.furtak.dev/#examples) include links to their TypeScript source.
 
-- Angular templates describe the map structure.
-- Components own OpenLayers instance creation and lifecycle.
-- Inputs map to OpenLayers configuration.
-- Outputs expose map, view, interaction, and feature events back to Angular.
-- The application remains free to compose maps with ordinary Angular state, bindings, and reusable components.
+## Compatibility
 
-```mermaid
-flowchart LR
-  Template["Angular template"] --> Components["ng-openlayers components"]
-  Components --> Instances["OpenLayers instances"]
-  Instances --> Map["Interactive map"]
-  Instances --> Events["Angular outputs"]
-  Events --> AppState["Application state"]
-```
+The source on this branch targets **ng-openlayers 22.0.0**. The npm badge above reports the separately published version.
 
-The goal is not to hide OpenLayers. The goal is to make OpenLayers fit naturally into Angular architecture while keeping the underlying instances accessible when advanced use cases need them.
+| Package    | Supported range | Development version |
+| ---------- | --------------- | ------------------- |
+| Angular    | `^22.0.0`       | `22.1.6`            |
+| OpenLayers | `^10.10.0`      | `10.10.0`           |
+| Proj4      | `^2.22.0`       | `2.22.0`            |
 
-## Why It Helps
+Angular 21 applications should stay on ng-openlayers 21.2.x until they upgrade. For development, use Node.js 24.15+ or 22.22.3+ and TypeScript 6.0.x. Angular 22 does not yet support TypeScript 7. See the [migration guide](https://github.com/kamilfurtak/ng-openlayers/blob/master/docs/angular-22-migration.md).
 
-- Build maps declaratively with Angular component composition.
-- Keep map layers, sources, styles, features, controls, and interactions visible in the template.
-- Use standalone imports for modern Angular apps or `AngularOpenlayersModule` for module-based apps.
-- Keep access to the underlying OpenLayers instance through each component's public `instance` property.
-- Use one mental model across simple OSM maps, vector features, GeoJSON, draw/modify interactions, overlays, WMS/ArcGIS/image sources, and projection-oriented workflows.
+## Quick start
 
-## Quick Start
+Install the library and its peers in an Angular 22 application:
 
-Install the package, OpenLayers, and Proj4:
-
-```bash
+```sh
 npm install ng-openlayers ol proj4
 ```
 
-Add the OpenLayers stylesheet to your application styles:
+Add the OpenLayers stylesheet to your global styles:
 
-```json
-{
-  "styles": ["src/styles.css", "node_modules/ol/ol.css"]
-}
+```css
+@import 'ol/ol.css';
 ```
 
-## Minimal Standalone Example
+## Minimal standalone example
 
 ```ts
 import { Component } from '@angular/core';
@@ -84,7 +61,6 @@ import {
 
 @Component({
   selector: 'app-map-example',
-  standalone: true,
   imports: [
     MapComponent,
     ViewComponent,
@@ -95,553 +71,92 @@ import {
     DefaultControlComponent,
   ],
   template: `
-    <aol-map [width]="'100%'" [height]="'500px'">
+    <aol-map width="100%" height="420px">
       <aol-view [zoom]="12">
-        <aol-coordinate [x]="19.94498" [y]="50.06465" [srid]="'EPSG:4326'"></aol-coordinate>
+        <aol-coordinate [x]="19.94498" [y]="50.06465" srid="EPSG:4326" />
       </aol-view>
-
-      <aol-layer-tile>
-        <aol-source-osm></aol-source-osm>
-      </aol-layer-tile>
-
-      <aol-interaction-default></aol-interaction-default>
-      <aol-control-defaults></aol-control-defaults>
+      <aol-layer-tile><aol-source-osm /></aol-layer-tile>
+      <aol-interaction-default />
+      <aol-control-defaults />
     </aol-map>
   `,
 })
 export class MapExampleComponent {}
 ```
 
-Module-based applications can import `AngularOpenlayersModule` from `ng-openlayers`.
+Give the map a nonzero height and include a view. Default controls and interactions are explicit components, so a map only includes the behavior requested by its template.
 
-## Demo Examples
+Module-based applications can import `AngularOpenlayersModule` instead of individual components.
 
-The demo includes examples for:
+## Angular state and lifecycle
 
-- basic OSM maps and view updates;
-- markers, vector features, geometry display, and GeoJSON;
-- draw, modify, select, hover, snap, and polygon-hole interactions;
-- single and composed vector styles;
-- overlays, controls, cursor position, overview map, and graticule;
-- raster, WMS, ArcGIS image, static image, tile JSON, cluster, swipe, and side-by-side maps.
+The demo runs with zoneless change detection. Library components use `OnPush`; use template input bindings, signals or `ComponentRef.setInput()` to notify Angular about changes. Setting a field on a component obtained through `ViewChild` does not invoke `ngOnChanges`.
 
-Live demo: https://ng-openlayers.furtak.dev/
+Map creation, pointer handling and rendering run outside Angular's zone. Observed map outputs re-enter the zone for applications that still use Zone.js. Template event bindings also notify zoneless change detection.
 
-Own-domain article: https://furtak.dev/articles/angular-openlayers/
+The library disposes resources it creates. Consumer-supplied OpenLayers objects remain the application's responsibility. Use `.instance` after the component has initialized and do not retain it after component destruction. See [validation and boundaries](https://github.com/kamilfurtak/ng-openlayers/blob/master/docs/validation.md) for tested behavior.
 
-Project page: https://furtak.dev/projects/ng-openlayers/
+### Server rendering
 
-## Compatibility
-
-| Package | Supported range |
-|---|---|
-| Angular | 21 |
-| OpenLayers | `^10.9.0` |
-| Proj4 | `^2.20.8` |
-
-## Support
-
-`ng-openlayers` is maintained as an open-source Angular/OpenLayers library. If it helps your project or saves implementation time, consider [sponsoring its maintenance](https://github.com/sponsors/kamilfurtak).
-
-Sponsorship helps with Angular and OpenLayers compatibility updates, documentation, examples, issue triage, and long-term maintenance.
-
-## Repository Map
-
-- `libs/ng-openlayers` - publishable Angular library.
-- `apps/demo-ng-openlayers` - GitHub Pages demo application.
-- `apps/demo-ng-openlayers-e2e` - legacy e2e project.
-
-## Reference Documentation
-
-Most of the following documentation is an adaptation of OpenLayers' own documentation: https://openlayers.org/en/latest/apidoc/.
-While trying to cover most important aspects in here, this documentation is by no means exhaustive,
-please refer to https://openlayers.org/en/latest/apidoc/ if in doubt. Contributions welcome!
-
-## Basic structure
-
-For each supported OpenLayers class, there is a corresponding Angular component. The components instantiate their underlying
-OpenLayers counterpart as part of their initialization and carry the reference in their `instance` property which is public.
-Each property of the underlying OpenLayers object is also an `@Input()` property of the Angular component.
-Each component has a directive selector of the form `aol-` and a structure of components that corresponds to the hierarchy of
-OpenLayers objects is built in a declarative Angular fashion.
-
-## Map component
-
-The `MapComponent` (`aol-map`) is the root component of ng-openlayers maps.
-
-Available parameters are:
-
-- `width` (`string|undefined`): width of the enclosing `<div>`. Defaults to `100%`.
-- `height` (`string|undefined`): height of the enclosing `<div>`. Defaults to `100%`.
-- `pixelRatio` (`number|undefined`): physical pixels to device-independent pixels (dips) ratio. Defaults to `window.devicePixelRatio`.
-- `keyboardEventTarget` (`Element|string|undefined`): element to listen to keyboard events on. Defaults to enclosing `<div>`.
-- `loadTilesWhileAnimating` (`boolean|undefined`): tiles loading policy while animating. Defaults to `false`.
-- `loadTilesWhileInteracting` (`boolean|undefined`): tiles loading policy while interacting. Defaults to `false`.
-- `logo` (`string|boolean|undefined`): map logo. Provide `true` to display the Openlayers logo or a string URL. Defaults to `undefined`.
-- `renderer` (`'canvas'|'webgl'|undefined`): map renderer. Defaults to canvas.
-
-Exposed events are:
-
-- `olClick` (`ol.MapBrowserEvent`) - A click with no dragging. A double click will fire two of this.
-- `dblClick` (`ol.MapBrowserEvent`) - A true double click, with no dragging.
-- `moveStart` (`ol.MapEvent`) - Triggered when the map start been moved.
-- `moveEnd` (`ol.MapEvent`) - Triggered after the map is moved.
-- `pointerdrag` (`ol.MapBrowserEvent`) experimental - Triggered when a pointer is dragged.
-- `pointermove` (`ol.MapBrowserEvent`) - Triggered when a pointer is moved. Note that on touch devices this is triggered when the map is panned, so is not the same as mousemove.
-- `postcompose` (`ol.render.Event`) experimental
-- `postrender` (`ol.MapEvent`) experimental - Triggered after a map frame is rendered.
-- `precompose` (`ol.render.Event`) experimental
-- `propertychange` (`ol.Object.Event`) - Triggered when a property is changed.
-- `singleclick` (`ol.MapBrowserEvent`) - A true single click with no dragging and no double click. Note that this event is delayed by 250 ms to ensure that it is not a double click.
-
-### Important note
-
-A map component without a view won't fetch tiles, _i.e._ it stays **blank**, provide an `<aol-view>` component to display
-the map.
-
-### Map component example
-
-Here is a simple example, based on OpenStreetMap tiles source:
- ```html
-<aol-map [width]="'500px'" [height]="'300px'">
-    <aol-view [zoom]="2">
-        <aol-coordinate [x]="5.795122" [y]="45.210225" [srid]="'EPSG:4326'"></aol-coordinate>
-    </aol-view>
-    <aol-layer-tile>
-        <aol-source-osm></aol-source-osm>
-    </aol-layer-tile>
-</aol-map>
- ```
-
-## View component
-
-The `ViewComponent` (`<aol-view>`) describes which content to display. In most cases, the view specifies the center of the map,
-_i.e._ coordinates on which the map is centered, and a zoom level or extent.
-
-Available parameters are:
-
-- `constrainRotation` (`boolean|number|undefined`) Rotation constraint. false means no constraint. true means no constraint, but snap to zero near zero. A number constrains the rotation to that number of values. For example, 4 will constrain the rotation to 0, 90, 180, and 270 degrees. Defaults to `true`.
-- `enableRotation` (`boolean|undefined`) Enable rotation. If false a rotation constraint that always sets the rotation to zero is used. The constrainRotation option has no effect if enableRotation is false. Defaults to `true`.
-- `extent` (`ol.Extent|undefined`) extent that constrains the center, in other words, center cannot be set outside this extent. Defaults to `undefined`.
-- `maxResolution` (`number|undefined`) The maximum resolution used to determine the resolution constraint. It is used together with `minResolution` (or `maxZoom`) and `zoomFactor`. If unspecified it is calculated in such a way that the projection's validity extent fits in a 256x256 px tile. If the projection is Spherical Mercator (the default) then `maxResolution` defaults to `40075016.68557849 / 256 = 156543.03392804097`.
-- `minResolution` (`number|undefined`) The minimum resolution used to determine the resolution constraint. It is used together with `maxResolution` (or `minZoom`) and `zoomFactor`. If unspecified it is calculated assuming 29 zoom levels (with a factor of 2). If the projection is Spherical Mercator (the default) then `minResolution` defaults to `40075016.68557849 / 256 / Math.pow(2, 28) = 0.0005831682455839253`.
-- `maxZoom` (`number|undefined`) The maximum zoom level used to determine the resolution constraint. It is used together with `minZoom` (or `maxResolution`) and `zoomFactor`. Default is 28. Note that if `minResolution` is also provided, it is given precedence over `maxZoom`.
-- `minZoom` (`number|undefined`) The minimum zoom level used to determine the resolution constraint. It is used together with `maxZoom` (or `minResolution`) and `zoomFactor`. Default is 0. Note that if `maxResolution` is also provided, it is given precedence over `minZoom`.
-- `resolution` (`number|undefined`) The initial resolution for the view. The units are projection units per pixel (e.g. meters per pixel). An alternative to setting this is to set `zoom`. Default is `undefined`, and layer sources will not be fetched if neither this nor `zoom` are defined.
-- `resolutions` (`number[]|undefined`) Resolutions to determine the resolution constraint. If set the `maxResolution`, `minResolution`, `minZoom`, `maxZoom`, and `zoomFactor` options are ignored.
-- `rotation` (`number|undefined`) The initial rotation for the view in radians (positive rotation clockwise). Defaults to 0.
-- `zoom` (`number|undefined`) Only used if resolution is not defined. Zoom level used to calculate the initial resolution for the view. The initial resolution is determined using the `ol.View#constrainResolution` method.
-- `zoomFactor` (`number|undefined`) The zoom factor used to determine the resolution constraint. Defaults to 2.
-
-### View component example
+OpenLayers needs browser DOM and canvas APIs. Render map components on the client. For example, place the map in a separate component and defer it while prerendering the surrounding description and navigation:
 
 ```html
-<aol-view [zoom]="15">
-    <aol-coordinate [x]="5" [y]="45" [srid]="'EPSG:4326'"></aol-coordinate>
-</aol-view>
+@defer (on immediate) {
+<app-map-example />
+} @placeholder {
+<p>The interactive map loads in your browser.</p>
+}
 ```
 
-## Layer components
+The demo prerenders the home page and all example descriptions, then creates maps in the browser. This does not make OpenLayers itself server-renderable. The demo explicitly disables incremental hydration for its deferred map outlet.
 
-`LayerComponents` (`<aol-layer-*>`) provide ways to displaying contents on the map.
+## APIs added or improved in version 22
 
-Available parameters are:
+| Component                           | Capability                                                                                                    |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `aol-map`                           | `maxTilesLoading`, `moveTolerance`, `(renderComplete)`; both `(propertyChange)` and `(olPropertyChange)` work |
+| `aol-layer-*`                       | `minZoom` / `maxZoom`; render callbacks can be replaced and removed                                           |
+| `aol-layer-vector`                  | OpenLayers flat style objects through `[style]`; updates apply in place                                       |
+| `aol-source-xyz` / `aol-source-osm` | URL changes retain the source instance and its listeners                                                      |
+| `aol-source-cluster`                | `[minDistance]` and proper detachment on destruction                                                          |
+| `aol-interaction-draw`              | `[trace]`, `[traceSource]`, `(drawAbort)` alongside `(olDrawAbort)`                                           |
+| `aol-styles`                        | Style composition follows children added or removed with `@if` / `@for`                                       |
 
-- `opacity` (`number|undefined`): layer's opacity, defaults to `1` (opaque).
-- `visible` (`boolean|undefined`): layers visibility, defaults to `true`.
-- `extent`  (`ol.Extent|undefined`): bounding extent for layer rendering. The layer will not be rendered outside of this extent.
-- `zIndex`  (`number|undefined`) experimental: layers are ordered, first by Z-index and then by position. The default Z-index is 0.
-- `minResolution` (`number|undefined`: minimum resolution (inclusive) at which the layer is visible.
-- `maxResolution` (`number|undefined`: maximum resolution (exclusive) at which the layer is visible.
+Inputs that OpenLayers only accepts in a constructor still require recreating the component; not every OpenLayers option is dynamically mutable. The map's legacy `logo`, `renderer` and `loadTilesWhile*` inputs and style `snapToPixel` inputs are retained for source compatibility but are not supported options in current OpenLayers.
 
-## Source components
+Reusable wrapper components can provide sources, styles and attribution through ancestor injection. The [upstream comparison](https://github.com/kamilfurtak/ng-openlayers/blob/master/docs/upstream-review.md) explains the changes adopted from Quentin Lampin's `ngx-openlayers`.
 
-The `SourceComponent`s (`aol-source-*`) represent a map source and belong to a layer.
+## API reference and examples
 
-Source attributions can either be passed via the `attributions` input property or defined in a declarative way. If multiple sources share the
-same attribution, the attribution should be defined in the code portion as an `ol.AttributionLike` and passed via the `attributions` input
-property of the source as they would otherwise appear multiple times.
+The [public API](https://github.com/kamilfurtak/ng-openlayers/blob/master/libs/ng-openlayers/src/public-api.ts) lists exported components. Their TypeScript inputs and outputs are the reference for the wrapper; consult the [OpenLayers API](https://openlayers.org/en/latest/apidoc/) for underlying classes and options.
 
-```html
-<aol-layer-vectortile
-    [renderMode]="'vector'"
-    [maxResolution]="312"
-    [style]="myStyle"
-    [zIndex]="20"
->
-    <aol-source-vectortile
-        [tilePixelRatio]="16"
-        [tileUrlFunction]="tileUrlFn"
-    >
-        <aol-attributions>
-          <aol-attribution>&copy; by me</aol-attribution>
-        </aol-attributions>
-        <aol-format-mvt></aol-format-mvt>
-        <aol-tilegrid
-            [minZoom]="5"
-            [extent]="tileGridExtent"
-        >
-        </aol-tilegrid>
-    </aol-source-vectortile>
-</aol-layer-vectortile>
-```
-
-## Feature component
-
-The `FeatureComponent` (`aol-feature`) is a  vector object with a geometry and other attribute properties, similar to the features in
-vector file formats like GeoJSON. Used in conjunction with a geometry (`<aol-geometry-*>`) and a style (`<aol-style>`),
-it allows displaying vector shapes on the map.
-
-### Feature component example
-
-```html
-<aol-feature>
-    <aol-geometry-point>
-        <aol-coordinate [x]="5" [y]="45" [srid]="'EPSG:4326'"></aol-coordinate>
-    </aol-geometry-point>
-    <aol-style>
-        <aol-style-circle [radius]="10">
-            <aol-style-stroke [color]="'black'" [width]="2"></aol-style-stroke>
-            <aol-style-fill [color]="'green'"></aol-style-fill>
-        </aol-style-circle>
-    </aol-style>
-</aol-feature>
-```
-
-## Geometry components
-
-The `GeometryComponents` (`aol-geometry-*`) allow defining geometrical shapes that, used in conjunction with a geometry
-(`<aol-geometry-*>`) and a style (`<aol-style>`), display said geometrical shape to the map.
-
-### Linestring component
-
-The `GeometryLinestringComponent` (`aol-geometry-linestring`) defines a collection of connected segments.
-
-#### Linestring component example
-
-```html
-<aol-feature>
-    <aol-geometry-linestring>
-        <aol-collection-coordinates
-            [coordinates]="[[5.0, 45.01],[5.01, 45.03]]"
-            [srid]="'EPSG:4326'">
-        </aol-collection-coordinates>
-    </aol-geometry-linestring>
-    <aol-style>
-        <aol-style-stroke [color]="'red'"></aol-style-stroke>
-    </aol-style>
-</aol-feature>
-```
-
-### Point component
-
-The `GeometryPointComponent` (`aol-geometry-point`) defines a single point.
-
-#### Point component example
-
-```html
-<aol-feature>
-    <aol-geometry-point>
-        <aol-coordinate [x]="5" [y]="45" [srid]="'EPSG:4326'"></aol-coordinate>
-    </aol-geometry-point>
-    <aol-style>
-        <aol-style-circle [radius]="10">
-            <aol-style-stroke [color]="'black'" [width]="width"></aol-style-stroke>
-            <aol-style-fill [color]="'green'"></aol-style-fill>
-        </aol-style-circle>
-    </aol-style>
-</aol-feature>
-```
-
-### Polygon component
-
-The `GeometryPolygonComponent` (`aol-geometry-polygon`) defines a polygon.
-
-#### Polygon component example
-
-```html
-<aol-feature>
-    <aol-geometry-polygon>
-        <aol-collection-coordinates
-            [coordinates]="[[[5, 45],[5.05, 45.05],[5.05, 44.95],[4.95, 44.95]]]"
-            [srid]="'EPSG:4326'"
-        >
-        </aol-collection-coordinates>
-    </aol-geometry-polygon>
-    <aol-style>
-        <aol-style-stroke [color]="'red'"></aol-style-stroke>
-        <aol-style-fill [color]="[255,0,0,0.5]"></aol-style-fill>
-    </aol-style>
-</aol-feature>
-```
-
-### MultiPoint component
-
-The `GeometryMultiPointComponent` (`aol-geometry-multipoint`) defines a collection of points.
-
-#### MultiPoint component example
-
-```html
-<aol-feature>
-    <aol-geometry-multipoint>
-        <aol-collection-coordinates
-            [coordinates]="[[5, 45],[5.05, 45.05],[5.05, 44.95],[4.95, 44.95]]"
-            [srid]="'EPSG:4326'"
-        >
-        </aol-collection-coordinates>
-    </aol-geometry-multipoint>
-    <aol-style>
-            <aol-style-circle [radius]="10">
-                <aol-style-stroke [color]="'black'" [width]="width"></aol-style-stroke>
-                <aol-style-fill [color]="'green'"></aol-style-fill>
-            </aol-style-circle>
-        </aol-style>
-</aol-feature>
-```
-
-### MultiLinestring component
-
-The `GeometryMultiLinestringComponent` (`aol-geometry-multilinestring`) defines a collection of multilines.
-
-#### MultiLinestring component example
-
-```html
-<aol-feature>
-    <aol-geometry-multilinestring>
-        <aol-collection-coordinates
-            [coordinates]="[[[5.0, 45.01],[5.01, 45.03]],[[6.0, 45.01],[6.01, 45.03]]]"
-            [srid]="'EPSG:4326'">
-        </aol-collection-coordinates>
-    </aol-geometry-multilinestring>
-    <aol-style>
-        <aol-style-stroke [color]="'red'"></aol-style-stroke>
-    </aol-style>
-</aol-feature>
-```
-
-### MultiPolygon component
-
-The `GeometryMultiPolygonComponent` (`aol-geometry-multipolygon`) defines a collection polygons.
-
-#### MultiPolygon component example
-
-```html
-<aol-feature>
-    <aol-geometry-multipolygon>
-        <aol-collection-coordinates
-            [coordinates]="[[[5, 45],[5.05, 45.05],[5.05, 44.95],[4.95, 44.95]],[[6, 45],[6.05, 45.05],[6.05, 44.95],[5.95, 44.95]]]"
-            [srid]="'EPSG:4326'"
-        >
-        </aol-collection-coordinates>
-    </aol-geometry-multipolygon>
-    <aol-style>
-        <aol-style-stroke [color]="'red'"></aol-style-stroke>
-        <aol-style-fill [color]="[255,0,0,0.5]"></aol-style-fill>
-    </aol-style>
-</aol-feature>
-```
-
-## Style components
-
-`StyleComponents` (`<aol-style-*>`) provide ways to altering the look of vector features.
-
-**WARNING** : as of now, changes on style directives are not displayed. This issue lies in OpenLayers:
-https://github.com/openlayers/ol3/issues/5775 (related).
-
-`<aol-style-*>` must be encapsulated in a `<aol-style>` component. As of now, only `StyleCircleComponent` (`<aol-style-circle>`), `StyleFillComponent` (`<aol-style-fill>`),
-`StyleIconComponent` (`<aol-style-icon`) and `StyleFillComponent` (`<aol-style-stroke>`) are implemented.
-
-### Circle style component
-
-`StyleCircleComponent` (`<aol-style-circle>`) displays a circle.
-Note that it can be further style using `<aol-style-fill>` and `<aol-style-stroke>`.
-Available parameters are:
-
-- `radius` (`number|undefined`): circle's radius, defaults to `10px`.
-- `snapToPixel` (`boolean|undefined`): whether or not use sub-pixels, defaults to `true`.
-
-### Fill style component
-
-`StyleFillComponent` (`<aol-style-fill>`) fills the host with a color, or gradient of colors.
-
-Available parameters are:
-
-- `color` (`Color|ColorLike|undefined`): color, gradient or pattern. See `ol.color` and `ol.colorlike` for possible formats. Defaults to black.
-
-### Icon style component
-
-The `StyleIconComponent` (`<aol-style-icon`) displays an icon.
-
-Available parameters are:
-
-- `anchor` (`[number, number]`): image anchor. Defaults to `[0.5, 0.5]`: icon center.
-- `anchorXUnits` (`style.IconAnchorUnits`): X anchor unit: 'fraction' indicates a fraction of the icon, 'pixels' indicates a value in pixels. Defaults to 'fraction'.
-- `anchorYUnits` (`style.IconAnchorUnits`): Y anchor unit: 'fraction' indicates a fraction of the icon, 'pixels' indicates a value in pixels. Defaults to 'fraction'.
-- `anchorOrigin` (`style.IconOrigin`): origin of the anchor: `bottom-left`, `bottom-right`, `top-left` or `top-right`. Defaults to `top-left`.
-- `color` (`[number, number, number, number]`): tint of the icon. If not specified, the icon will be left as is.
-- `crossOrigin` (`style.IconOrigin`): `crossOrigin` attribute for loaded images.
-- `img` (`string`): image object for the icon.
-- `offset` (`[number, number]`): offset, which, together with the size and the offset origin, define the sub-rectangle to use from the original icon image. Defaults to `[0, 0]`.
-- `offsetOrigin` (`style.IconOrigin`): origin of the offset: `bottom-left`, `bottom-right`, `top-left` or `top-right`. Defaults to `top-left`.
-- `opacity` (`number`): opacity of the icon. Default is 1.
-- `scale` (`number`): scale
-- `snapToPixel` (`boolean`): whether or not use sub-pixels, defaults to `true`.
-- `rotateWithView` (`boolean`): whether to rotate the icon with the view. Defaults to `false`.
-- `rotation` (`number`): rotation in radians (positive rotation clockwise). Defaults to 0.
-- `size` (`[number, number]`): icon size in pixel. Can be used together with offset to define the sub-rectangle to use from the origin (sprite) icon image.
-- `imgSize` (`[number, number]`): image size in pixels. Only required if img is set and src is not, and for SVG images in Internet Explorer 11. The provided `imgSize` needs to match the actual size of the image.
-- `src` (`string`): image source URI. Required.
-
-
-### Stroke style component
-
-`StyleStrokeComponent` (`<aol-style-stroke>`) adds a stroke around the host.
-
-Available parameters are:
-
-- `color`: (`Color|ColorLike|undefined`): color, gradient or pattern. See `ol.color` and `ol.colorlike` for possible formats. Defaults to black.
-- `lineCap`: (`string|undefined`): line cap style: `butt`, `round`, or `square`. Default to `round`.
-- `lineDash`: (`number[]|undefined`): line dash pattern. Defaults to `undefined` (no dash). No support in Internet Explorer 10 and lower.
-- `lineJoin`: (`string|undefined`): line join style: `bevel`, `round`, or `miter`. Defaults to `round`.
-- `miterLimit`: (`number|undefined`): miter limit. Defaults to 10.
-- `width`: (`number|undefined`): line width.
-
-### Text style component
-
-`StyleTextComponent` (`<aol-style-text>`) adds a text ons the host.
-
-Available parameters are:
-
-- `font`: (`string|undefined`): Font style as CSS 'font' value. Default is '10px sans-serif'
-- `offsetX`: (`number|undefined`): Horizontal text offset in pixels. A positive will shift the text right. Default is 0.
-- `offsetY`: (`number|undefined`): Vertical text offset in pixels. A positive will shift the text down. Default is 0.
-- `scale`: (`number|undefined`): Scale.
-- `rotateWithView`: (`boolean|undefined`): Whether to rotate the text with the view. Default is false.
-- `rotation`: (`number|undefined`): Rotation in radians (positive rotation clockwise). Default is 0.
-- `text`: (`string|undefined`): Text content.
-- `textAlign`: (`string|undefined`): Text alignment. Possible values: 'left', 'right', 'center', 'end' or 'start'. Default is 'start'.
-- `textBaseLine`: (`string|undefined`): Text base line. Possible values: 'bottom', 'top', 'middle', 'alphabetic', 'hanging', 'ideographic'. Default is 'alphabetic'.
-
-## Controls components
-
-For each `ol.control` class, there is a corresponding component. Apart from the specialized pre-defined controls, you can define your own
-custom controls using a simple declarative syntax. Use the map component's CSS to style and position the control on the map view.
-
-```html
-<aol-control>
-    <aol-content>
-        <div id="controlnameforcssstyling" class="ol-unselectable ol-control">
-            <span (click)="doSomething()">{{ someContent() }}</span>
-        </div>
-    </aol-content>
-</aol-control>
-```
-
-## Overlay component
-
-Similar to controls, custom overlays can be defined using HTML markup. Overlays have a position on the map as opposed to controls which are
-positioned on the map view. You can style overlay components like a regular component element.
-
-```html
-<aol-overlay>
-    <aol-coordinate
-        [x]="longitude"
-        [y]="latitude"
-        [srid]="'EPSG:4326'"
-    >
-    </aol-coordinate>
-    <aol-content>
-        <div class="my-overlay-class">
-            <h1>This is an overlay</h1>
-        </div>
-    </aol-content>
-</aol-overlay>
-```
-
-## Interaction component
-
-### Default interactions
-
-You could add default interactions to the map (drag, zoom, etc) just adding the `aol-interaction-default` component.
-
-```html
-<aol-map>
-    <aol-interaction-default></aol-interaction-default>
-</aol-map>
-```
-
-### Drawing interaction
-
-Interaction for drawing feature geometries. See https://openlayers.org/en/master/apidoc/ol.interaction.Draw.html
-
-Draw point
-```html
-<aol-map>
-    <df-interaction-draw type="Point"></df-interaction-draw>
-</aol-map>
-```
-
-
-Available parameters
-
-- `clickTolerance` (`number` | `undefined`) The maximum distance in pixels between "down" and "up" for a "up" event to be considered a "click" event and actually add a point/vertex to the geometry being drawn. Default is 6 pixels. That value was chosen for the draw interaction to behave correctly on mouse as well as on touch devices.
-- `features` (`ol.Collection.<ol.Feature>` | `undefined`) Destination collection for the drawn features.
-- `source` (`ol.source.Vector` | `undefined`) Destination source for the drawn features.
-- `snapTolerance` (`number` | `undefined`) Pixel distance for snapping to the drawing finish. Default is 12.
-- `type` (`ol.geom.GeometryType`) Drawing type ('Point', 'LineString', 'Polygon', 'MultiPoint', 'MultiLineString', 'MultiPolygon' or 'Circle'). Required.
-- `maxPoints` (`number` | `undefined`) The number of points that can be drawn before a polygon ring or line string is finished. The default is no restriction.
-- `minPoints` (`number` | `undefined`) The number of points that must be drawn before a polygon ring or line string can be finished. Default is 3 for polygon rings and 2 for line strings.
-- `finishCondition` (`ol.EventsConditionType` | `undefined`) A function that takes an `ol.MapBrowserEvent` and returns a boolean to indicate whether the drawing can be finished.
-- `style` (`ol.style.Style` | `Array.<ol.style.Style>` | `ol.StyleFunction` | `undefined`) Style for sketch features.
-- `geometryFunction` (`ol.DrawGeometryFunctionType` | `undefined`) Function that is called when a geometry's coordinates are updated.
-- `geometryName` (`string` | `undefined`) Geometry name to use for features created by the draw interaction.
-- `condition` (`ol.EventsConditionType` | `undefined`) A function that takes an `ol.MapBrowserEvent` and returns a boolean to indicate whether that event should be handled. By default `ol.events.condition.noModifierKeys`, i.e. a click, adds a vertex or deactivates freehand drawing.
-- `freehand` (`boolean` | `undefined`) Operate in freehand mode for lines, polygons, and circles. This makes the interaction always operate in freehand mode and takes precedence over any freehandCondition option.
-- `freehandCondition` (`ol.EventsConditionType` | `undefined`) Condition that activates freehand drawing for lines and polygons. This function takes an `ol.MapBrowserEvent` and returns a boolean to indicate whether that event should be handled. The default is `ol.events.condition.shiftKeyOnly`, meaning that the `Shift` key activates freehand drawing.
-- `wrapX` (`boolean` | `undefined`) Wrap the world horizontally on the sketch overlay. Default is false.
-
-Exposed events are:
-
-- `onChange` (`ol.events.Event`) - Generic change event. Triggered when the revision counter is increased.
-- `onChangeActive` (`ol.Object.Event`)
-- `onDrawEnd` (`ol.interaction.Draw.Event`) - Triggered upon feature draw end
-- `onDrawStart` (`ol.interaction.Draw.Event`) - Triggered upon feature draw start
-- `onPropertyChange` (`ol.Object.Event`) - Triggered when a property is changed.
+Start with [a basic map](https://ng-openlayers.furtak.dev/examples/basic/), [drawing](https://ng-openlayers.furtak.dev/examples/draw-polygon/), [GeoJSON](https://ng-openlayers.furtak.dev/examples/display-geojson-source/), [measurement](https://ng-openlayers.furtak.dev/examples/measure/) or [composed styles](https://ng-openlayers.furtak.dev/examples/styles-composition/).
 
 ## Development
 
-Install dependencies:
-
-```bash
-npm ci --legacy-peer-deps --include=optional
+```sh
+npm ci
+npm start                 # Local demo at http://localhost:4200
+npm run lint
+npm run test-ci            # Library regressions in ChromeHeadless
+npm run build             # npm package + prerendered production site
+npx playwright install chromium
+npm run e2e               # Production-site browser regressions
+npm run test:consumer     # Install and test the actual npm tarball on Angular 22
 ```
 
-Build the library:
+`test:consumer` does not publish a package. The CI workflow runs these checks before deploying the site; npm publishing uses the separate release job.
 
-```bash
-npm run build:lib
-```
+| Directory                     | Purpose                                                   |
+| ----------------------------- | --------------------------------------------------------- |
+| `libs/ng-openlayers`          | Publishable library                                       |
+| `apps/demo-ng-openlayers`     | Standalone, zoneless example site                         |
+| `apps/demo-ng-openlayers-e2e` | Playwright browser and prerendering regressions           |
+| `compatibility/angular22`     | Independent consumer of the built npm package             |
+| `tools`                       | Static-site validation and packaged-consumer verification |
 
-Build the demo:
+## Maintenance and license
 
-```bash
-npm run build:demo
-```
+Maintained by [Kamil Furtak](https://furtak.dev/). Report reproducible problems through [GitHub issues](https://github.com/kamilfurtak/ng-openlayers/issues), or [sponsor ongoing maintenance](https://github.com/sponsors/kamilfurtak).
 
-Run library tests in CI mode:
-
-```bash
-npm run test-ci
-```
-
-Run the local demo:
-
-```bash
-npm start
-```
-
-The local demo is served from `http://localhost:4200/`.
-
-## License
-
-MPL-2.0. See [LICENSE.md](LICENSE.md).
+MPL-2.0. See [LICENSE.md](LICENSE.md). The project builds on the Angular/OpenLayers wrapper work in [quentinlampin/ngx-openlayers](https://github.com/quentinlampin/ngx-openlayers).

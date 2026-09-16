@@ -1,5 +1,5 @@
-import { Component, Input, OnChanges, OnInit, Optional, SimpleChanges } from '@angular/core';
-import { Image } from 'ol/layer.js';
+import { Component, Input, OnChanges, OnInit, Optional, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import Image from 'ol/layer/Image.js';
 import ImageSource from 'ol/source/Image.js';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
@@ -7,9 +7,10 @@ import { LayerGroupComponent } from './layergroup.component';
 import { Extent } from 'ol/extent.js';
 
 @Component({
-    selector: 'aol-layer-image',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-layer-image',
+  template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class LayerImageComponent extends LayerComponent implements OnInit, OnChanges {
   public override instance: Image<ImageSource>;

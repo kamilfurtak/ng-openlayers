@@ -4,26 +4,28 @@ import {
   ContentChild,
   EventEmitter,
   forwardRef,
-  Host,
   Input,
   Output,
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import { Raster, Source } from 'ol/source.js';
+import Raster from 'ol/source/Raster.js';
+import Source from 'ol/source/Source.js';
 import { Operation, RasterSourceEvent } from 'ol/source/Raster.js';
 
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { SourceComponent } from './source.component';
 
 @Component({
-    selector: 'aol-source-raster',
-    template: ` <ng-content></ng-content> `,
-    providers: [
-        {
-            provide: SourceComponent,
-            useExisting: forwardRef(() => SourceRasterComponent),
-        },
-    ],
-    standalone: true,
+  selector: 'aol-source-raster',
+  template: ` <ng-content></ng-content> `,
+  providers: [
+    {
+      provide: SourceComponent,
+      useExisting: forwardRef(() => SourceRasterComponent),
+    },
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SourceRasterComponent extends SourceComponent implements AfterContentInit {
   @Input()
@@ -52,7 +54,7 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
     }
   }
 
-  constructor(@Host() layer: LayerImageComponent) {
+  constructor(layer: LayerImageComponent) {
     super(layer);
   }
 

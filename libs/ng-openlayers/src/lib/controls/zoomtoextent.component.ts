@@ -1,12 +1,13 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ZoomToExtent } from 'ol/control.js';
+import { Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import ZoomToExtent from 'ol/control/ZoomToExtent.js';
 import { MapComponent } from '../map.component';
 import { Extent } from 'ol/extent.js';
 
 @Component({
-    selector: 'aol-control-zoomtoextent',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-control-zoomtoextent',
+  template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class ControlZoomToExtentComponent implements OnInit, OnDestroy {
   @Input()

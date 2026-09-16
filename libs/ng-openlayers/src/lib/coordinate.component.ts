@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, OnDestroy, Optional } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, OnDestroy, Optional, ChangeDetectionStrategy } from '@angular/core';
 import { transform } from 'ol/proj.js';
 import { ObjectEvent } from 'ol/Object.js';
 import { MapComponent } from './map.component';
@@ -21,6 +21,7 @@ type CoordinateHost = {
 @Component({
   selector: 'aol-coordinate',
   template: ` <div class="aol-coordinate"></div> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class CoordinateComponent implements OnChanges, OnInit, OnDestroy {

@@ -1,11 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Rotate } from 'ol/control.js';
+import { Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import Rotate from 'ol/control/Rotate.js';
 import { MapComponent } from '../map.component';
 
 @Component({
-    selector: 'aol-control-rotate',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-control-rotate',
+  template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class ControlRotateComponent implements OnInit, OnDestroy {
   @Input()

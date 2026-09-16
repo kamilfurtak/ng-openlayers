@@ -2,36 +2,26 @@
   "compileOnSave": false,
   "compilerOptions": {
     "skipLibCheck": true,
-    "baseUrl": ".",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "module": "es2020",
-    "moduleResolution": "node",
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
     "strict": false,
     "strictPropertyInitialization": false,
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2022", "dom"],
     "useDefineForClassFields": false,
     "rootDir": ".",
     "allowSyntheticDefaultImports": true
   },
   "angularCompilerOptions": {
     "skipLibs": true,
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    "strictTemplates": true
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }

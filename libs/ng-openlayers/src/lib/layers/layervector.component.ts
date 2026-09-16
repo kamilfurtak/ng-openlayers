@@ -1,16 +1,26 @@
-import { Component, OnDestroy, OnInit, Input, Optional, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  Input,
+  Optional,
+  OnChanges,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MapComponent } from '../map.component';
-import { Vector } from 'ol/layer.js';
+import Vector from 'ol/layer/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
-import { Style } from 'ol/style.js';
-import { StyleFunction } from 'ol/style/Style.js';
+import { StyleLike } from 'ol/style/Style.js';
+import { FlatStyleLike } from 'ol/style/flat.js';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
 
 @Component({
-    selector: 'aol-layer-vector',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-layer-vector',
+  template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class LayerVectorComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
   public override instance: Vector<VectorSource>;
@@ -19,7 +29,7 @@ export class LayerVectorComponent extends LayerComponent implements OnInit, OnDe
   renderBuffer: number;
 
   @Input()
-  style: Style | Style[] | StyleFunction;
+  style: StyleLike | FlatStyleLike;
 
   @Input()
   updateWhileAnimating: boolean;
@@ -39,5 +49,6 @@ export class LayerVectorComponent extends LayerComponent implements OnInit, OnDe
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
+    if (this.instance && changes['style']) this.instance.setStyle(this.style);
   }
 }

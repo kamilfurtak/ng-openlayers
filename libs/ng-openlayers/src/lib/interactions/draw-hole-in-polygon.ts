@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Feature } from 'ol';
 import { Coordinate } from 'ol/coordinate.js';
 import { DrawEvent } from 'ol/interaction/Draw.js';
 import { Geometry, LinearRing, Polygon } from 'ol/geom.js';
-import { Fill, Style } from 'ol/style.js';
+import Fill from 'ol/style/Fill.js';
+import Style from 'ol/style/Style.js';
 import { DrawInteractionComponent } from './draw.component';
 import { MapComponent } from '../map.component';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
@@ -25,8 +26,8 @@ export interface DrawHoleInPolygonInteractionError {
 }
 
 @Component({
-    selector: 'aol-interaction-draw-hole-in-polygon',
-    template: `
+  selector: 'aol-interaction-draw-hole-in-polygon',
+  template: `
     <aol-interaction-draw
       #drawInstance
       type="Polygon"
@@ -38,7 +39,8 @@ export interface DrawHoleInPolygonInteractionError {
     >
     </aol-interaction-draw>
   `,
-    imports: [DrawInteractionComponent]
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [DrawInteractionComponent],
 })
 export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
   @ViewChild('drawInstance') drawInteractionComponent: DrawInteractionComponent;

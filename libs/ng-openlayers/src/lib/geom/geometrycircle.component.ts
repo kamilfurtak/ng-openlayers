@@ -1,13 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FeatureComponent } from '../feature.component';
 import { Circle } from 'ol/geom.js';
 import { SimpleGeometryComponent } from './simplegeometry.component';
 import { MapComponent } from '../map.component';
 
 @Component({
-    selector: 'aol-geometry-circle',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-geometry-circle',
+  template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class GeometryCircleComponent extends SimpleGeometryComponent implements OnInit {
   @Input()

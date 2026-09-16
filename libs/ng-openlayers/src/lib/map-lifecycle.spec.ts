@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChange } from '@angular/core';
+import { Component, Input, SimpleChange, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import View from 'ol/View.js';
@@ -10,6 +10,7 @@ import { CoordinateComponent } from './coordinate.component';
   selector: 'aol-test-host',
   standalone: true,
   imports: [MapComponent, ViewComponent, CoordinateComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <aol-map width="300px" height="200px">
       <aol-view [zoom]="5" [projection]="projection">

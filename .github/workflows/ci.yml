@@ -6,7 +6,7 @@ on:
       - master
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
-    branches: [ "master" ]
+    branches: ['master']
   workflow_dispatch:
   workflow_call:
 
@@ -30,49 +30,23 @@ jobs:
         with:
           fetch-depth: 0
 
-      # This enables task distribution via Nx Cloud
-      # Run this command as early as possible, before dependencies are installed
-      # Learn more at https://nx.dev/ci/reference/nx-cloud-cli#npx-nxcloud-startcirun
-      #      - run: npx nx-cloud start-ci-run --distribute-on="3 linux-medium-js" --stop-agents-after="e2e-ci"
-
-      # Cache node_modules
       - uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: 'npm'
 
-      - run: npm ci --legacy-peer-deps --include=optional
-      - uses: nrwl/nx-set-shas@v5
-        with:
-          # The "main" branch of your repository (the base branch which you target with PRs).
-          # Common names for this branch include main and master.
-          #
-          # Default: main
-          main-branch-name: 'master'
-
-      # Prepend any command with "nx-cloud record --" to record its logs to Nx Cloud
-      # - run: npx nx-cloud record -- echo Hello World
-      # Nx Affected runs only tasks affected by the changes in this PR/commit. Learn more: https://nx.dev/ci/features/affected
-      #      - run: npx nx affected -t lint test build
-      #      - run: npx nx affected -t build
+      - run: npm ci
       - run: npm run lint
       - run: npm run test-ci
       - run: npx playwright install --with-deps chromium
       - run: npm run e2e
 
-      - run: npm run build
       - name: Verify packed library on Angular 22
-        run: |
-          npm pack ./dist/libs/ng-openlayers --pack-destination dist
-          npm ci --prefix compatibility/angular22
-          (cd compatibility/angular22 && npm install ../../dist/ng-openlayers-21.2.0.tgz --no-save --package-lock=false)
-          npm run build --prefix compatibility/angular22
-          npm test --prefix compatibility/angular22
-      #      - run: npx nx affected --parallel 1 -t e2e-ci
+        run: npm run test:consumer
       - name: Upload static files as artifact
-        uses: actions/upload-pages-artifact@v5      # Upload the build artifacts
+        uses: actions/upload-pages-artifact@v5
         with:
-          path: ./dist/apps/demo-ng-openlayers  # Adjust to your build output directory
+          path: ./dist/apps/demo-ng-openlayers
   publish_to_npm:
     name: Publish to NPM
     runs-on: ubuntu-latest
@@ -97,7 +71,7 @@ jobs:
           package-manager-cache: false
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps --include=optional
+        run: npm ci
         shell: bash
 
       - run: npm run build:lib
@@ -113,13 +87,11 @@ jobs:
           npm run copy:lib:docs
           npx nx release publish
         shell: bash
-  # Deployment job
   deploy-github-pages:
     name: Deploy to GitHub Pages
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
+      pages: write # to deploy to Pages
+      id-token: write # to verify the deployment originates from an appropriate source
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

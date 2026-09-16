@@ -1,13 +1,14 @@
-import { Component, Input, OnDestroy, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Layer } from 'ol/layer.js';
+import { Component, Input, OnDestroy, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import Layer from 'ol/layer/Layer.js';
 import { View } from 'ol';
-import { OverviewMap } from 'ol/control.js';
+import OverviewMap from 'ol/control/OverviewMap.js';
 import { MapComponent } from '../map.component';
 
 @Component({
-    selector: 'aol-control-overviewmap',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-control-overviewmap',
+  template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
