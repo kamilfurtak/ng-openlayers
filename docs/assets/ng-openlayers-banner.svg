@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">ng-openlayers — Build maps. The Angular way.</title>
+  <desc id="description">Declarative OpenLayers components for Angular, with standalone components, typed APIs and an illustrated vector map.</desc>
+  <rect width="1200" height="630" rx="20" fill="#f8faf6"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#17352c">
+    <g transform="translate(64 62) scale(1.6)">
+  <rect width="32" height="32" rx="9" fill="#0c6555" />
+  <g fill="none" stroke="#baf7c7" stroke-width="1.6" stroke-linejoin="round">
+    <path d="m6 13 10-6 10 6-10 6Z" />
+    <path d="m6 18 10 6 10-6M6 22l10 6 10-6" />
+  </g>
+</g>
+    <text x="134" y="100" font-size="38" font-weight="700">ng-openlayers</text>
+    <text x="64" y="246" font-size="62" font-weight="700" letter-spacing="-2">Build maps.</text>
+    <text x="64" y="316" font-size="62" font-weight="700" letter-spacing="-2" fill="#0c6555">The Angular way.</text>
+    <text x="64" y="380" font-size="22" fill="#536d62">Declarative OpenLayers components</text>
+    <text x="64" y="414" font-size="22" fill="#536d62">for modern Angular applications.</text>
+    <g fill="#e8efe6" stroke="#dbe5dc"><rect x="64" y="462" width="134" height="38" rx="8"/><rect x="210" y="462" width="110" height="38" rx="8"/><rect x="332" y="462" width="130" height="38" rx="8"/></g>
+    <g font-size="16" fill="#0c6555"><text x="84" y="487">Standalone</text><text x="230" y="487">Zoneless</text><text x="352" y="487">TypeScript</text></g>
+    <rect x="672" y="157" width="464" height="396" rx="12" fill="#fff" stroke="#dbe5dc"/>
+    <circle cx="695" cy="182" r="4" fill="#0c6555"/>
+    <text x="710" y="187" font-size="15" fill="#536d62">A map, composed in Angular</text>
+    <svg x="673" y="205" width="462" height="308" viewBox="0 0 540 360">
+  <defs>
+    <pattern id="grid" width="58" height="52" patternUnits="userSpaceOnUse" patternTransform="rotate(-22)">
+      <rect width="58" height="52" fill="#f0f3eb" />
+      <rect x="5" y="5" width="44" height="38" rx="4" fill="#e2e8dc" />
+      <path d="M0 0h58v52" fill="none" stroke="#fff" stroke-width="7" />
+    </pattern>
+    <filter id="shadow"><feDropShadow dx="0" dy="5" stdDeviation="6" flood-opacity=".13" /></filter>
+  </defs>
+  <rect width="540" height="360" fill="url(#grid)" />
+  <path d="M-25 30c145 70 105 161 251 163s109-1 197 112 125 50 159 82" stroke="#bddee1" stroke-width="43" fill="none" />
+  <path d="M-25 30c145 70 105 161 251 163s109-1 197 112 125 50 159 82" stroke="#d5edf0" stroke-width="30" fill="none" />
+  <path d="m57 279 49-94 86 8 26 64-69 66Z" fill="#c6dec0" stroke="#b2cfab" stroke-width="2" />
+  <path d="m306 34 53 8 28 64-58 33-57-48Z" fill="#c6dec0" stroke="#b2cfab" stroke-width="2" />
+  <g fill="none" stroke="#fff" stroke-width="12"><path d="M31 360 365-13M-2 122l557 44M192 360 119-13" /></g>
+  <g fill="none" stroke="#d8d5c8" stroke-width="2"><path d="M31 360 365-13M-2 122l557 44M192 360 119-13" /></g>
+  <path
+    d="m275 200 84-40 86 42-17 94-102 10-61-58Z"
+    fill="#45a482"
+    fill-opacity=".23"
+    stroke="#127d61"
+    stroke-width="2.5"
+  />
+  <g fill="#fff" stroke="#127d61" stroke-width="2">
+    <circle cx="275" cy="200" r="4" />
+    <circle cx="359" cy="160" r="4" />
+    <circle cx="445" cy="202" r="4" />
+    <circle cx="428" cy="296" r="4" />
+    <circle cx="326" cy="306" r="4" />
+    <circle cx="265" cy="248" r="4" />
+  </g>
+  <path
+    d="m69 105 94 7 51-51 105 21 72 88"
+    fill="none"
+    stroke="#ce7458"
+    stroke-width="4"
+    stroke-dasharray="7 5"
+    stroke-linecap="round"
+  />
+  <g font-family="Arial,sans-serif" font-size="9" fill="#73847b" letter-spacing="1.5">
+    <text x="29" y="249" transform="rotate(-24 29 249)">RIVERSIDE PARK</text>
+    <text x="337" y="105">NORTH QUARTER</text>
+    <text x="369" y="331">50.065° N</text>
+  </g>
+  <g transform="translate(212 72)" filter="url(#shadow)">
+    <path d="M0-24a19 19 0 0 1 19 19C19 9 0 27 0 27S-19 9-19-5A19 19 0 0 1 0-24Z" fill="#0c6555" />
+    <circle cy="-5" r="6" fill="#d9ffc7" />
+  </g>
+  <g transform="translate(365 221)" filter="url(#shadow)">
+    <rect x="-47" y="-13" width="105" height="30" rx="6" fill="#fff" />
+    <circle cx="-32" cy="2" r="4" fill="#0c6555" />
+    <text x="-20" y="6" font-family="Arial,sans-serif" font-size="11" fill="#24463b">Vector layer</text>
+  </g>
+  <g transform="translate(493 26)" fill="#fff" filter="url(#shadow)">
+    <rect width="28" height="56" rx="7" />
+    <path d="M9 14h10m-5-5v10M9 42h10" stroke="#254b3f" stroke-width="1.5" />
+    <path d="M0 28h28" stroke="#e7ece6" />
+  </g>
+</svg>
+    <text x="692" y="539" font-size="15">Layers. Sources. Styles. Interactions.</text>
+    <text x="64" y="563" font-size="18" fill="#0c6555">ng-openlayers.furtak.dev</text>
+    <text x="64" y="591" font-size="15" fill="#536d62">Open source · MPL-2.0 · Maintained by Kamil Furtak</text>
+  </g>
+</svg>

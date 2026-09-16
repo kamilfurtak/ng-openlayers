@@ -31,7 +31,7 @@ export class SeoService {
       : 'ng-openlayers · OpenLayers maps for Angular';
     const description = example
       ? `${example.description} Explore the interactive Angular example and its TypeScript source with ng-openlayers.`
-      : 'Build OpenLayers maps with Angular components. Explore interactive examples, standalone components, drawing, GeoJSON, styles and projections. Open source by Kamil Furtak.';
+      : project.description;
     const url = project.site + (example ? path + '/' : '/');
     this.title.setTitle(title);
     this.meta.updateTag({ name: 'description', content: description });
@@ -65,7 +65,7 @@ export class SeoService {
           '@type': 'SoftwareSourceCode',
           '@id': project.site + '/#library',
           name: 'ng-openlayers',
-          description: 'Declarative OpenLayers components for Angular.',
+          description: project.description,
           url: project.site,
           codeRepository: project.repository,
           programmingLanguage: 'TypeScript',

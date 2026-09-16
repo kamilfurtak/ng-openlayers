@@ -1,14 +1,16 @@
 # ng-openlayers
 
-Declarative OpenLayers components for Angular. Build maps with templates, compose layers and interactions, and keep direct access to the underlying OpenLayers instances.
+**Build maps. The Angular way.**
+
+Declarative OpenLayers components for Angular. Compose maps, layers, sources, styles and interactions in your templates.
 
 [![CI](https://github.com/kamilfurtak/ng-openlayers/actions/workflows/ci.yml/badge.svg)](https://github.com/kamilfurtak/ng-openlayers/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/ng-openlayers.svg)](https://www.npmjs.com/package/ng-openlayers)
-[![License: MPL--2.0](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](LICENSE.md)
+[![License: MPL--2.0](https://img.shields.io/badge/license-MPL--2.0-blue.svg)](https://github.com/kamilfurtak/ng-openlayers/blob/master/LICENSE.md)
 
 [Explore the examples](https://ng-openlayers.furtak.dev/) · [npm package](https://www.npmjs.com/package/ng-openlayers) · [Changelog](https://github.com/kamilfurtak/ng-openlayers/blob/master/libs/ng-openlayers/CHANGELOG.md) · [Sponsor](https://github.com/sponsors/kamilfurtak)
 
-![ng-openlayers social preview](https://raw.githubusercontent.com/kamilfurtak/ng-openlayers/master/docs/assets/ng-openlayers-social-preview.png)
+[![ng-openlayers — Build maps. The Angular way.](https://raw.githubusercontent.com/kamilfurtak/ng-openlayers/master/docs/assets/ng-openlayers-banner.svg)](https://ng-openlayers.furtak.dev/)
 
 ## What you can build
 
@@ -21,7 +23,7 @@ Use standalone components or `AngularOpenlayersModule`. Each component owns its 
 
 ## Compatibility
 
-The source on this branch targets **ng-openlayers 22.0.0**. The npm badge above reports the separately published version.
+**ng-openlayers 22** requires **Angular 22**. The npm badge above shows the latest published release.
 
 | Package    | Supported range | Development version |
 | ---------- | --------------- | ------------------- |
@@ -159,4 +161,4 @@ npm run test:consumer     # Install and test the actual npm tarball on Angular 2
 
 Maintained by [Kamil Furtak](https://furtak.dev/). Report reproducible problems through [GitHub issues](https://github.com/kamilfurtak/ng-openlayers/issues), or [sponsor ongoing maintenance](https://github.com/sponsors/kamilfurtak).
 
-MPL-2.0. See [LICENSE.md](LICENSE.md). The project builds on the Angular/OpenLayers wrapper work in [quentinlampin/ngx-openlayers](https://github.com/quentinlampin/ngx-openlayers).
+MPL-2.0. See [LICENSE.md](https://github.com/kamilfurtak/ng-openlayers/blob/master/LICENSE.md). The project builds on the Angular/OpenLayers wrapper work in [quentinlampin/ngx-openlayers](https://github.com/quentinlampin/ngx-openlayers).

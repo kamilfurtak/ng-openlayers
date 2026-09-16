@@ -7,8 +7,11 @@
     "ol": "^10.10.0",
     "proj4": "^2.22.0"
   },
-  "description": "Declarative OpenLayers components for Angular applications",
-  "author": "Kamil Furtak",
+  "description": "Declarative OpenLayers components for Angular. Compose maps, layers, sources, styles and interactions in your templates.",
+  "author": {
+    "name": "Kamil Furtak",
+    "url": "https://furtak.dev/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kamilfurtak/ng-openlayers.git"
@@ -29,12 +32,13 @@
     "gis",
     "maps",
     "ng-openlayers",
-    "ngx-openlayers",
     "ol",
     "openlayers",
     "typescript",
     "web-mapping",
-    "webgis"
+    "webgis",
+    "standalone-components",
+    "zoneless"
   ],
   "license": "MPL-2.0",
   "private": false

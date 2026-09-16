@@ -1,4 +1,4 @@
-# 22.0.0
+# 22.0.0 (2026-09-16)
 
 - **Breaking:** require Angular 22, OpenLayers 10.10+ and Proj4 2.22+.
 - Update Angular, Nx, build, lint and test tooling; use direct OpenLayers module imports.
@@ -9,6 +9,7 @@
 - Add layer zoom limits, replaceable render callbacks, flat vector styles and cluster `minDistance`.
 - Add drawing trace options and the backward-compatible `drawAbort` alias.
 - Synchronize composed styles when child components change.
+- Unify the npm and GitHub README, package metadata and site artwork; validate the packaged documentation before release.
 - Redesign the example site with search, categories, lazy maps and 28 prerendered content pages with metadata and a sitemap.
 - Replace retired demo endpoints and Hammer.js/toast dependencies with local fixtures and native controls.
 - Expand regression tests and verify the actual npm tarball in an independent Angular 22 app.
