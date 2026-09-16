@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {
   CoordinateComponent,
   DefaultControlComponent,
@@ -13,8 +13,8 @@ import { transform } from 'ol/proj';
 import Projection from 'ol/proj/Projection';
 
 @Component({
-    selector: 'app-map-position',
-    template: `
+  selector: 'app-map-position',
+  template: `
     <aol-map #map width="100%" height="100%" (moveStart)="startMoving()" (moveEnd)="displayCoordinates()">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -36,15 +36,21 @@ import Projection from 'ol/proj/Projection';
       <div class="update-coordinates">
         <h3>Update coordinates</h3>
         <form [formGroup]="form">
-          <div class="row"><label>Longitude:</label><input min="0" type="number" formControlName="x" /></div>
-          <div class="row"><label>Latitude:</label><input min="0" type="number" formControlName="y" /></div>
-          <div class="row"><label>Zoom:</label><input min="0" type="number" formControlName="zoom" /></div>
+          <div class="row">
+            <label for="map-x">Longitude:</label><input id="map-x" min="0" type="number" formControlName="x" />
+          </div>
+          <div class="row">
+            <label for="map-y">Latitude:</label><input id="map-y" min="0" type="number" formControlName="y" />
+          </div>
+          <div class="row">
+            <label for="map-zoom">Zoom:</label><input id="map-zoom" min="0" type="number" formControlName="zoom" />
+          </div>
         </form>
       </div>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -85,18 +91,19 @@ import Projection from 'ol/proj/Projection';
         float: left;
       }
     `,
-    ],
-    imports: [
-        MapComponent,
-        DefaultInteractionComponent,
-        DefaultControlComponent,
-        ViewComponent,
-        CoordinateComponent,
-        LayerTileComponent,
-        SourceOsmComponent,
-        FormsModule,
-        ReactiveFormsModule,
-    ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
 export class MapPositionComponent implements OnInit {
   constructor(private fb: UntypedFormBuilder) {}

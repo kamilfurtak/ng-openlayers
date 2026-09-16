@@ -22,7 +22,7 @@ test('map controls change state and routes can be revisited', async ({ page }) =
   await page.getByRole('button', { name: 'Increase zoom', exact: true }).click();
   await expect(page.getByLabel('Zoom', { exact: true })).toHaveText('16');
   // Client-side route teardown, not a full-page reload.
-  await page.locator('header h1').click();
+  await page.getByRole('link', { name: 'ng-openlayers home' }).click();
   await expect(page.locator('.ol-viewport')).toHaveCount(0);
   await page.getByText('Basic', { exact: true }).click();
   await expect(page.locator('.ol-viewport')).toHaveCount(1);

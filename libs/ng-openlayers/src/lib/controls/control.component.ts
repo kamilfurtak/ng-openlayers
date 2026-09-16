@@ -1,12 +1,13 @@
-import { Component, ContentChild, OnDestroy, OnInit } from '@angular/core';
-import { Control } from 'ol/control.js';
+import { Component, ContentChild, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import Control from 'ol/control/Control.js';
 import { MapComponent } from '../map.component';
 import { ContentComponent } from '../content.component';
 
 @Component({
-    selector: 'aol-control',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-control',
+  template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class ControlComponent implements OnInit, OnDestroy {
   @ContentChild(ContentComponent, { static: true })

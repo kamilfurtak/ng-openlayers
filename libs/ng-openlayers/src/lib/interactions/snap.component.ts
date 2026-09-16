@@ -1,15 +1,16 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { Collection, Feature } from 'ol';
 import BaseEvent from 'ol/events/Event.js';
 import { SnapEvent } from 'ol/events/SnapEvent.js';
-import { Snap } from 'ol/interaction.js';
+import Snap from 'ol/interaction/Snap.js';
 import { ObjectEvent } from 'ol/Object.js';
-import { Vector } from 'ol/source.js';
+import Vector from 'ol/source/Vector.js';
 import { MapComponent } from '../map.component';
 
 @Component({
   selector: 'aol-interaction-snap',
   template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class SnapInteractionComponent implements OnInit, OnDestroy {
@@ -47,5 +48,6 @@ export class SnapInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+    this.instance?.dispose();
   }
 }

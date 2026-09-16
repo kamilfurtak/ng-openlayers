@@ -1,70 +1,82 @@
-import { Component, OnInit } from '@angular/core';
-import { examplesList } from '../example-list';
-import { Router, RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { Router, RouterLink, RouterOutlet, NavigationEnd } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { filter, map } from 'rxjs';
+import { categoryFor, examplesList, sourcePathFor } from '../example-list';
+import { project } from '../project-info';
 
 @Component({
-    selector: 'app-examples-item',
-    template: `
-    @if (exampleInfo) {
-      <div class="example-info">
-        <span class="title">{{ exampleInfo.title }}</span> <span class="description">{{ exampleInfo.description }}</span>
-        @if (exampleInfo.openLayersLink) {
-          <div class="open-layers-link">
-            <a [href]="exampleInfo.openLayersLink" target="_blank"> {{ exampleInfo.openLayersLink }} </a>
+  selector: 'app-examples-item',
+  imports: [RouterLink, RouterOutlet],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    @if (exampleInfo(); as example) {
+      <div class="example-page container">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a routerLink="/" fragment="examples">Examples</a><span aria-hidden="true">/</span
+          ><span>{{ example.title }}</span>
+        </nav>
+        <div class="example-heading">
+          <div>
+            <p class="eyebrow">{{ categoryFor(example.routerLink) }} · ANGULAR EXAMPLE</p>
+            <h1>{{ example.title }}</h1>
+            <p>{{ example.description }}</p>
           </div>
-        }
+          <a class="button secondary" [href]="sourcePathFor(example.routerLink)">View source ↗</a>
+        </div>
+        <div class="demo-stage">
+          @defer (on immediate) {
+            <router-outlet />
+          } @placeholder {
+            <div class="map-placeholder">
+              <span class="map-loading-icon" aria-hidden="true">⌖</span>
+              <p>The interactive map loads in your browser.</p>
+            </div>
+          }
+        </div>
+        <div class="demo-footnote">
+          <span>Built with Angular {{ project.angular }} + OpenLayers {{ project.openlayers }}</span>
+          @if (example.openLayersLink) {
+            <a [href]="example.openLayersLink" target="_blank" rel="noopener noreferrer">OpenLayers reference ↗</a>
+          }
+        </div>
+        <section class="related-examples" aria-labelledby="related-title">
+          <h2 id="related-title">Keep exploring</h2>
+          <div class="related-grid">
+            @for (item of related(); track item.routerLink) {
+              <a [routerLink]="'/examples/' + item.routerLink"
+                ><span>{{ item.title }}</span
+                ><span aria-hidden="true">→</span></a
+              >
+            }
+          </div>
+        </section>
       </div>
     }
-    <div class="example">
-      <router-outlet></router-outlet>
-    </div>
-    `,
-    styles: [
-        `
-      :host {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .example-info {
-        flex: 0 1 auto;
-        padding: 2rem 1rem;
-        display: flex;
-        flex-direction: column;
-        font-family: Roboto, Arial, sans-serif;
-      }
-
-      .example-info .title {
-        font-family: Roboto, sans-serif;
-        margin-top: 0px;
-        color: rgba(0, 0, 0, 0.87);
-        font-size: 25px;
-        font-weight: 700;
-        padding-bottom: 0.5rem;
-      }
-      .example-info .description {
-        color: rgba(0, 0, 0, 0.6);
-        line-height: 24px;
-        padding-bottom: 0.5rem;
-      }
-      .example-info .open-layers-link a {
-        margin-bottom: 0px;
-        color: rgba(0, 0, 0, 0.6);
-        font-size: 12px;
-      }
-
-      .example {
-        flex: 1 1 auto;
-      }
-    `,
-    ],
-    imports: [RouterOutlet]
+  `,
 })
-export class ExamplesItemComponent implements OnInit {
-  constructor(private router: Router) {}
-  exampleInfo;
-  ngOnInit() {
-    this.exampleInfo = examplesList.find((item) => this.router.url.includes(item.routerLink));
-  }
+export class ExamplesItemComponent {
+  private readonly router = inject(Router);
+  private readonly url = toSignal(
+    this.router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      map(() => this.router.url)
+    ),
+    { initialValue: this.router.url }
+  );
+  readonly project = project;
+  readonly categoryFor = categoryFor;
+  readonly sourcePathFor = sourcePathFor;
+  readonly exampleInfo = computed(() =>
+    examplesList.find((item) => this.url().split(/[?#]/)[0].replace(/\/$/, '') === '/examples/' + item.routerLink)
+  );
+  readonly related = computed(() =>
+    examplesList
+      .filter(
+        (item) =>
+          item !== this.exampleInfo() &&
+          categoryFor(item.routerLink) === categoryFor(this.exampleInfo()?.routerLink ?? '')
+      )
+      .slice(0, 3)
+  );
 }

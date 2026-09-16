@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { createBox } from 'ol/interaction/Draw';
 import { Feature } from 'ol';
 import Projection from 'ol/proj/Projection';
@@ -20,8 +20,8 @@ import {
 } from 'ng-openlayers';
 
 @Component({
-    selector: 'app-draw-polygon',
-    template: `
+  selector: 'app-draw-polygon',
+  template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       @if (isDrawing) {
@@ -63,8 +63,8 @@ import {
       </div>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -79,22 +79,23 @@ import {
         padding: 1rem;
       }
     `,
-    ],
-    imports: [
-        MapComponent,
-        DefaultInteractionComponent,
-        DrawInteractionComponent,
-        ViewComponent,
-        CoordinateComponent,
-        LayerTileComponent,
-        SourceOsmComponent,
-        LayerVectorComponent,
-        SourceVectorComponent,
-        FeatureComponent,
-        GeometryPolygonComponent,
-        CollectionCoordinatesComponent,
-        JsonPipe,
-    ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DrawInteractionComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    LayerVectorComponent,
+    SourceVectorComponent,
+    FeatureComponent,
+    GeometryPolygonComponent,
+    CollectionCoordinatesComponent,
+    JsonPipe,
+  ],
 })
 export class DrawPolygonComponent {
   isDrawing = false;

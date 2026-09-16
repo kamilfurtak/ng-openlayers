@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { MapComponent } from '../map.component';
-import { Modify } from 'ol/interaction.js';
+import Modify from 'ol/interaction/Modify.js';
 import { Collection, Feature } from 'ol';
-import { Style } from 'ol/style.js';
-import { Vector } from 'ol/source.js';
+import Style from 'ol/style/Style.js';
+import Vector from 'ol/source/Vector.js';
 import { ModifyEvent } from 'ol/interaction/Modify.js';
 import { StyleFunction } from 'ol/style/Style.js';
 import { Condition } from 'ol/events/condition.js';
@@ -16,6 +16,7 @@ import { unByKey } from 'ol/Observable.js';
 @Component({
   selector: 'aol-interaction-modify',
   template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class ModifyInteractionComponent implements OnInit, OnDestroy {
@@ -69,5 +70,6 @@ export class ModifyInteractionComponent implements OnInit, OnDestroy {
     unByKey(this.eventKeys);
     this.eventKeys = [];
     this.map.instance.removeInteraction(this.instance);
+    this.instance?.dispose();
   }
 }

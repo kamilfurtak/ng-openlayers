@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Optional, SimpleChanges, OnChanges } from '@angular/core';
-import { VectorTile } from 'ol/layer.js';
+import { Component, OnInit, Input, Optional, SimpleChanges, OnChanges, ChangeDetectionStrategy } from '@angular/core';
+import VectorTile from 'ol/layer/VectorTile.js';
 import VectorTileSource from 'ol/source/VectorTile.js';
-import { Style } from 'ol/style.js';
+import Style from 'ol/style/Style.js';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
@@ -11,9 +11,10 @@ import { OrderFunction } from 'ol/render.js';
 import { BackgroundColor } from 'ol/layer/Base.js';
 
 @Component({
-    selector: 'aol-layer-vectortile',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-layer-vectortile',
+  template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class LayerVectorTileComponent extends LayerComponent implements OnInit, OnChanges {
   public override instance: VectorTile<VectorTileSource>;

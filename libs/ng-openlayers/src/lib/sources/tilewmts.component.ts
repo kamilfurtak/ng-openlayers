@@ -1,6 +1,5 @@
 import {
   Component,
-  Host,
   Input,
   forwardRef,
   AfterContentInit,
@@ -9,11 +8,12 @@ import {
   OnChanges,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
 import { TileGridWMTSComponent } from '../tilegridwmts.component';
-import { WMTS as SourceWMTS } from 'ol/source.js';
+import SourceWMTS from 'ol/source/WMTS.js';
 import WMTS from 'ol/tilegrid/WMTS.js';
 import { ProjectionLike } from 'ol/proj.js';
 import { LoadFunction } from 'ol/Tile.js';
@@ -22,10 +22,11 @@ import { RequestEncoding } from 'ol/source/WMTS.js';
 import ImageTile from 'ol/ImageTile.js';
 
 @Component({
-    selector: 'aol-source-tilewmts',
-    template: ` <ng-content></ng-content> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileWMTSComponent) }],
-    standalone: true,
+  selector: 'aol-source-tilewmts',
+  template: ` <ng-content></ng-content> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileWMTSComponent) }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SourceTileWMTSComponent extends SourceComponent implements AfterContentInit, OnChanges {
   @Input()
@@ -77,7 +78,7 @@ export class SourceTileWMTSComponent extends SourceComponent implements AfterCon
 
   instance: SourceWMTS;
 
-  constructor(@Host() layer: LayerTileComponent) {
+  constructor(layer: LayerTileComponent) {
     super(layer);
   }
 

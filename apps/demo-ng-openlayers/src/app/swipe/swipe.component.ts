@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import {
   CoordinateComponent,
   DefaultInteractionComponent,
@@ -10,164 +10,86 @@ import {
 } from 'ng-openlayers';
 import RenderEvent from 'ol/render/Event';
 
-type SwipePanEvent = {
-  preventDefault: () => void;
-  deltaX: number;
-  srcEvent: {
-    view: Window | null;
-  };
-};
-
 @Component({
-    selector: 'app-swipe',
-    template: `
+  selector: 'app-swipe',
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    SourceXYZComponent,
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <aol-map #map width="100%" height="100%">
-      <aol-interaction-default></aol-interaction-default>
-
-      <aol-view #view [zoom]="5">
-        <aol-coordinate [x]="2.181539" [y]="47.125488" [srid]="'EPSG:4326'"></aol-coordinate>
-      </aol-view>
-
-      <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
-
+      <aol-interaction-default />
+      <aol-view [zoom]="5"><aol-coordinate [x]="2.181539" [y]="47.125488" srid="EPSG:4326" /></aol-view>
+      <aol-layer-tile><aol-source-osm /></aol-layer-tile>
       <aol-layer-tile [prerender]="prerenderFunction" [postrender]="postrenderFunction">
         <aol-source-xyz
           url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-        >
-        </aol-source-xyz>
+        />
       </aol-layer-tile>
     </aol-map>
-    <button
-      class="swipe-button"
-      [style.marginLeft.px]="swipeOffsetToCenter"
-      (panstart)="onPanStart()"
-      (panmove)="onPan($event)"
-    >
-      <>
-    </button>
+    <label class="swipe-control"
+      >Layer comparison
+      <input
+        #slider
+        type="range"
+        min="2"
+        max="98"
+        [value]="swipeValue"
+        (input)="setSwipe(slider.valueAsNumber)"
+        aria-label="Layer comparison"
+    /></label>
   `,
-    styles: [
-        `
-      .swipe-button {
-        box-shadow:
-          0 3px 5px -1px rgba(0, 0, 0, 0.2),
-          0 6px 10px 0 rgba(0, 0, 0, 0.14),
-          0 1px 18px 0 rgba(0, 0, 0, 0.12);
-        background-color: #0a2340;
-        color: white;
-        cursor: pointer;
-        left: calc(50% - 27px);
+  styles: [
+    `
+      :host {
+        display: block;
+        height: 100%;
+        position: relative;
+      }
+      .swipe-control {
         position: absolute;
-        top: 60%;
-        box-sizing: border-box;
-        border: none;
-        display: inline-block;
-        white-space: nowrap;
-        text-decoration: none;
-        vertical-align: baseline;
-        text-align: center;
-        margin: 0;
-        line-height: 36px;
-        border-radius: 2px;
-        min-width: 0;
-        width: 40px;
-        height: 40px;
+        z-index: 2;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: white;
+        border: 1px solid #cad6cc;
+        border-radius: 8px;
+        padding: 10px 16px;
+        font-size: 12px;
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        max-width: 90%;
+      }
+      input {
+        min-width: 100px;
+        accent-color: #0c6555;
       }
     `,
-    ],
-    imports: [
-        MapComponent,
-        DefaultInteractionComponent,
-        ViewComponent,
-        CoordinateComponent,
-        LayerTileComponent,
-        SourceOsmComponent,
-        SourceXYZComponent,
-    ]
+  ],
 })
-export class SwipeComponent implements OnInit {
-  constructor() {}
-
-  @ViewChild('map', { static: true })
-  map: MapComponent;
-
-  public prerenderFunction: (event: RenderEvent) => void;
-  public postrenderFunction: (event: RenderEvent) => void;
-
+export class SwipeComponent {
+  @ViewChild('map', { static: true }) map: MapComponent;
   swipeValue = 50;
-  swipeOffsetToCenter = 0;
-  positionPx = 0;
-  startX = 0;
-
-  paddingSize = 16;
-
-  ngOnInit() {
-    this.prerenderFunction = this.prerender();
-    this.postrenderFunction = this.postrender();
-  }
-
-  @HostListener('window:resize')
-  onWindowResize() {
-    this.resetSwipeValues();
-  }
-
-  prerender() {
-    return (event: RenderEvent) => {
-      const ctx = event.context as CanvasRenderingContext2D | undefined;
-      if (!ctx) {
-        return;
-      }
-      const width = ctx.canvas.width * (this.swipeValue / 100);
-
-      ctx.save();
-      ctx.beginPath();
-      ctx.rect(width, 0, ctx.canvas.width - width, ctx.canvas.height);
-      ctx.clip();
-    };
-  }
-
-  postrender() {
-    return (event: RenderEvent) => {
-      const ctx = event.context as CanvasRenderingContext2D | undefined;
-      if (!ctx) {
-        return;
-      }
-      ctx.restore();
-    };
-  }
-
-  resetSwipeValues() {
-    this.startX = 0;
-    this.swipeOffsetToCenter = 0;
-    this.swipeValue = 50;
-    this.positionPx = 0;
-  }
-
-  onPanStart(): void {
-    this.startX = this.swipeOffsetToCenter;
-  }
-
-  onPan(event: SwipePanEvent): void {
-    event.preventDefault();
-    const swipePercentageMax = 98;
-    const swipePercentageMin = 2;
-    const maxPercentage = 0.48;
-
-    this.swipeOffsetToCenter = this.startX + event.deltaX;
-    const screenSizePx = (event.srcEvent.view?.innerWidth ?? window.innerWidth) - this.paddingSize;
-    this.positionPx = screenSizePx / 2 + this.swipeOffsetToCenter;
-    this.swipeValue = (this.positionPx / screenSizePx) * 100;
-
-    const isDraggingButtonOutsideOnRight = this.swipeOffsetToCenter > maxPercentage * screenSizePx;
-    const isDraggingButtonOutsideOnLeft = this.swipeOffsetToCenter < -maxPercentage * screenSizePx;
-    if (isDraggingButtonOutsideOnRight) {
-      this.swipeOffsetToCenter = maxPercentage * screenSizePx;
-      this.swipeValue = swipePercentageMax;
-    }
-    if (isDraggingButtonOutsideOnLeft) {
-      this.swipeOffsetToCenter = -maxPercentage * screenSizePx;
-      this.swipeValue = swipePercentageMin;
-    }
+  readonly prerenderFunction = (event: RenderEvent): void => {
+    const context = event.context as CanvasRenderingContext2D;
+    if (!context) return;
+    const width = (context.canvas.width * this.swipeValue) / 100;
+    context.save();
+    context.beginPath();
+    context.rect(width, 0, context.canvas.width - width, context.canvas.height);
+    context.clip();
+  };
+  readonly postrenderFunction = (event: RenderEvent): void => (event.context as CanvasRenderingContext2D)?.restore();
+  setSwipe(value: number): void {
+    this.swipeValue = value;
     this.map.instance.render();
   }
 }

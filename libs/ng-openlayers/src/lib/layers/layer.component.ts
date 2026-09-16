@@ -4,14 +4,15 @@ import Event from 'ol/events/Event.js';
 import { MapComponent } from '../map.component';
 import { LayerGroupComponent } from './layergroup.component';
 import { Extent } from 'ol/extent.js';
+import { EventsKey } from 'ol/events.js';
+import { unByKey } from 'ol/Observable.js';
 
 type RenderableLayer = BaseLayer & {
-  on(type: 'prerender' | 'postrender', listener: (evt: Event) => void): unknown;
+  on(type: 'prerender' | 'postrender', listener: (evt: Event) => void): EventsKey;
   un(type: 'prerender' | 'postrender', listener: (evt: Event) => void): void;
 };
 
 @Directive()
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   opacity: number;
@@ -25,6 +26,10 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
   minResolution: number;
   @Input()
   maxResolution: number;
+  @Input()
+  minZoom: number;
+  @Input()
+  maxZoom: number;
 
   @Input()
   prerender: (evt: Event) => void;
@@ -33,21 +38,27 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
 
   public instance: BaseLayer;
   public componentType = 'layer';
+  private renderKeys: Partial<Record<'prerender' | 'postrender', EventsKey>> = {};
 
   protected constructor(protected host: MapComponent | LayerGroupComponent) {}
 
   ngOnInit() {
-    if (this.prerender !== null && this.prerender !== undefined) {
-      (this.instance as RenderableLayer).on('prerender', this.prerender);
-    }
-    if (this.postrender !== null && this.postrender !== undefined) {
-      (this.instance as RenderableLayer).on('postrender', this.postrender);
-    }
+    this.bindRenderEvent('prerender', this.prerender);
+    this.bindRenderEvent('postrender', this.postrender);
     this.host.instance.getLayers().push(this.instance);
   }
 
   ngOnDestroy() {
+    unByKey(Object.values(this.renderKeys));
+    this.renderKeys = {};
     this.host.instance.getLayers().remove(this.instance);
+    this.instance?.dispose();
+  }
+
+  private bindRenderEvent(type: 'prerender' | 'postrender', listener: (evt: Event) => void) {
+    if (this.renderKeys[type]) unByKey(this.renderKeys[type]);
+    delete this.renderKeys[type];
+    if (listener) this.renderKeys[type] = (this.instance as RenderableLayer).on(type, listener);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -57,14 +68,10 @@ export abstract class LayerComponent implements OnInit, OnChanges, OnDestroy {
     }
     for (const key in changes) {
       if (changes.hasOwnProperty(key)) {
-        properties[key] = changes[key].currentValue;
-        if (key === 'prerender') {
-          (this.instance as RenderableLayer).un('prerender', changes[key].previousValue);
-          (this.instance as RenderableLayer).on('prerender', changes[key].currentValue);
-        }
-        if (key === 'postrender') {
-          (this.instance as RenderableLayer).un('postrender', changes[key].previousValue);
-          (this.instance as RenderableLayer).on('postrender', changes[key].currentValue);
+        if (key === 'prerender' || key === 'postrender') {
+          this.bindRenderEvent(key, changes[key].currentValue);
+        } else {
+          properties[key] = changes[key].currentValue;
         }
       }
     }

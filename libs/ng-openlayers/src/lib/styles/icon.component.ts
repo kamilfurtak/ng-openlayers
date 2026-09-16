@@ -1,5 +1,5 @@
-import { Component, Input, Host, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Icon } from 'ol/style.js';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import Icon from 'ol/style/Icon.js';
 
 // TODO https://github.com/openlayers/openlayers/issues/12694
 // import IconAnchorUnits from 'ol/style/IconAnchorUnits';
@@ -8,9 +8,10 @@ import { StyleComponent } from './style.component';
 import { IconAnchorUnits, IconOrigin } from 'ol/style/Icon.js';
 
 @Component({
-    selector: 'aol-style-icon',
-    template: ` <div class="aol-style-icon"></div> `,
-    standalone: true,
+  selector: 'aol-style-icon',
+  template: ` <div class="aol-style-icon"></div> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class StyleIconComponent implements OnInit, OnChanges {
   @Input()
@@ -50,7 +51,7 @@ export class StyleIconComponent implements OnInit, OnChanges {
 
   public instance: Icon;
 
-  constructor(@Host() private host: StyleComponent) {}
+  constructor(private host: StyleComponent) {}
 
   ngOnInit() {
     // console.log('creating ol.style.Icon instance with: ', this);

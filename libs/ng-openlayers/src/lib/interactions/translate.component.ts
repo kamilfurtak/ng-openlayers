@@ -1,16 +1,17 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Translate } from 'ol/interaction.js';
+import { Component, OnDestroy, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import Translate from 'ol/interaction/Translate.js';
 import { Collection, Feature } from 'ol';
-import { Layer } from 'ol/layer.js';
+import Layer from 'ol/layer/Layer.js';
 import { TranslateEvent } from 'ol/interaction/Translate.js';
 import { MapComponent } from '../map.component';
 import BaseEvent from 'ol/events/Event.js';
 import { ObjectEvent } from 'ol/Object.js';
 
 @Component({
-    selector: 'aol-interaction-translate',
-    template: '',
-    standalone: true,
+  selector: 'aol-interaction-translate',
+  template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class TranslateInteractionComponent implements OnInit, OnDestroy {
   @Input()
@@ -55,5 +56,6 @@ export class TranslateInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+    this.instance?.dispose();
   }
 }

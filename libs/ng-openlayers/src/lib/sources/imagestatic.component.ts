@@ -1,6 +1,5 @@
 import {
   Component,
-  Host,
   Input,
   forwardRef,
   Output,
@@ -8,8 +7,9 @@ import {
   OnChanges,
   SimpleChanges,
   OnInit,
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import { ImageStatic } from 'ol/source.js';
+import ImageStatic from 'ol/source/ImageStatic.js';
 import { SourceComponent } from './source.component';
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { ProjectionLike } from 'ol/proj.js';
@@ -20,10 +20,11 @@ import { Size } from 'ol/size.js';
 import { ImageSourceEvent } from 'ol/source/Image.js';
 
 @Component({
-    selector: 'aol-source-imagestatic',
-    template: ` <ng-content></ng-content> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageStaticComponent) }],
-    standalone: true,
+  selector: 'aol-source-imagestatic',
+  template: ` <ng-content></ng-content> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageStaticComponent) }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SourceImageStaticComponent extends SourceComponent implements OnInit, OnChanges {
   @Input()
@@ -50,7 +51,7 @@ export class SourceImageStaticComponent extends SourceComponent implements OnIni
 
   instance: ImageStatic;
 
-  constructor(@Host() layer: LayerImageComponent) {
+  constructor(layer: LayerImageComponent) {
     super(layer);
   }
 

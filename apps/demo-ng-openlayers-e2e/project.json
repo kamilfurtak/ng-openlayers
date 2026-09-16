@@ -3,19 +3,14 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/demo-ng-openlayers-e2e/src",
   "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["demo-ng-openlayers"],
   "targets": {
     "e2e": {
       "executor": "nx:run-commands",
       "options": {
         "command": "playwright test"
       }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint"
     }
-  },
-  "implicitDependencies": [
-    "demo-ng-openlayers"
-  ],
-  "tags": []
+  }
 }

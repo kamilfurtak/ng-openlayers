@@ -1,6 +1,5 @@
 import {
   Component,
-  Host,
   Input,
   OnChanges,
   OnInit,
@@ -8,8 +7,9 @@ import {
   SimpleChanges,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy,
 } from '@angular/core';
-import { ImageWMS } from 'ol/source.js';
+import ImageWMS from 'ol/source/ImageWMS.js';
 import { LayerImageComponent } from '../layers/layerimage.component';
 import { SourceComponent } from './source.component';
 import { ProjectionLike } from 'ol/proj.js';
@@ -19,10 +19,11 @@ import { ImageSourceEvent } from 'ol/source/Image.js';
 import { ServerType } from 'ol/source/wms.js';
 
 @Component({
-    selector: 'aol-source-imagewms',
-    template: ` <ng-content></ng-content> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageWMSComponent) }],
-    standalone: true,
+  selector: 'aol-source-imagewms',
+  template: ` <ng-content></ng-content> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageWMSComponent) }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SourceImageWMSComponent extends SourceComponent implements OnChanges, OnInit {
   @Input()
@@ -55,7 +56,7 @@ export class SourceImageWMSComponent extends SourceComponent implements OnChange
 
   instance: ImageWMS;
 
-  constructor(@Host() layer: LayerImageComponent) {
+  constructor(layer: LayerImageComponent) {
     super(layer);
   }
 

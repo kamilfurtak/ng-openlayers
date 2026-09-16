@@ -23,20 +23,12 @@
       }
     },
     "test": {
-      "executor": "@angular-devkit/build-angular:karma",
+      "executor": "@angular/build:karma",
       "options": {
         "main": "libs/ng-openlayers/src/test.ts",
         "tsConfig": "libs/ng-openlayers/tsconfig.spec.json",
-        "karmaConfig": "libs/ng-openlayers/karma.conf.js"
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "options": {
-        "lintFilePatterns": [
-          "libs/ng-openlayers/**/*.ts",
-          "libs/ng-openlayers/**/*.html"
-        ]
+        "karmaConfig": "libs/ng-openlayers/karma.conf.js",
+        "polyfills": ["zone.js"]
       }
     }
   }

@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, OnDestroy, Optional } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, OnDestroy, Optional, ChangeDetectionStrategy } from '@angular/core';
 import { MapComponent } from './map.component';
 import { GeometryLinestringComponent } from './geom/geometrylinestring.component';
 import { GeometryPolygonComponent } from './geom/geometrypolygon.component';
@@ -15,6 +15,7 @@ import { SimpleGeometryComponent } from './geom/simplegeometry.component';
 @Component({
   selector: 'aol-collection-coordinates',
   template: ` <div class="aol-collection-coordinates"></div> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class CollectionCoordinatesComponent implements OnChanges, OnInit, OnDestroy {

@@ -1,11 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { KeyboardPan } from 'ol/interaction.js';
+import { Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import KeyboardPan from 'ol/interaction/KeyboardPan.js';
 import { MapComponent } from '../map.component';
 
 @Component({
-    selector: 'aol-interaction-keyboardpan',
-    template: '',
-    standalone: false
+  selector: 'aol-interaction-keyboardpan',
+  template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class KeyboardPanInteractionComponent implements OnInit, OnDestroy {
   @Input()

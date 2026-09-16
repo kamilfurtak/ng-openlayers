@@ -1,13 +1,14 @@
-import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
-import { TileJSON } from 'ol/source.js';
+import { Component, Input, OnInit, forwardRef, ChangeDetectionStrategy } from '@angular/core';
+import TileJSON from 'ol/source/TileJSON.js';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { SourceComponent } from './source.component';
 
 @Component({
-    selector: 'aol-source-tilejson',
-    template: ` <ng-content></ng-content> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileJSONComponent) }],
-    standalone: true,
+  selector: 'aol-source-tilejson',
+  template: ` <ng-content></ng-content> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceTileJSONComponent) }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SourceTileJSONComponent extends SourceComponent implements OnInit {
   @Input()
@@ -15,7 +16,7 @@ export class SourceTileJSONComponent extends SourceComponent implements OnInit {
 
   instance: TileJSON;
 
-  constructor(@Host() layer: LayerTileComponent) {
+  constructor(layer: LayerTileComponent) {
     super(layer);
   }
 

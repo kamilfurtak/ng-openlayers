@@ -1,13 +1,14 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { DragPan } from 'ol/interaction.js';
+import { Component, OnDestroy, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import DragPan from 'ol/interaction/DragPan.js';
 import Kinetic from 'ol/Kinetic.js';
 import { MapComponent } from '../map.component';
 import { Condition } from 'ol/events/condition.js';
 
 @Component({
-    selector: 'aol-interaction-dragpan',
-    template: '',
-    standalone: true,
+  selector: 'aol-interaction-dragpan',
+  template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class DragPanInteractionComponent implements OnInit, OnDestroy {
   @Input()

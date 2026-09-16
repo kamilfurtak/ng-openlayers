@@ -1,0 +1,8 @@
+{
+  "tilejson": "2.2.0",
+  "name": "OpenStreetMap",
+  "tiles": ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+  "minzoom": 0,
+  "maxzoom": 19,
+  "attribution": "\u00a9 <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors"
+}

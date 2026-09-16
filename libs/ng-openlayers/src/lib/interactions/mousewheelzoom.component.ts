@@ -1,11 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { MouseWheelZoom } from 'ol/interaction.js';
+import { Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import MouseWheelZoom from 'ol/interaction/MouseWheelZoom.js';
 import { MapComponent } from '../map.component';
 
 @Component({
-    selector: 'aol-interaction-mousewheelzoom',
-    template: '',
-    standalone: true,
+  selector: 'aol-interaction-mousewheelzoom',
+  template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class MouseWheelZoomInteractionComponent implements OnInit, OnDestroy {
   @Input()

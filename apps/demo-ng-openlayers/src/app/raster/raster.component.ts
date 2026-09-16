@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import {
   ControlFullScreenComponent,
   CoordinateComponent,
@@ -19,8 +19,8 @@ interface RasterData {
 }
 
 @Component({
-    selector: 'app-raster',
-    template: `
+  selector: 'app-raster',
+  template: `
     <aol-map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -32,7 +32,7 @@ interface RasterData {
 
       <aol-layer-image>
         <aol-source-raster
-          threads="4"
+          [threads]="4"
           operationType="image"
           [operation]="operation"
           (beforeOperations)="beforeOperations($event)"
@@ -68,8 +68,8 @@ interface RasterData {
       </div>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -91,20 +91,21 @@ interface RasterData {
         margin: 20px;
       }
     `,
-    ],
-    imports: [
-        MapComponent,
-        DefaultInteractionComponent,
-        DefaultControlComponent,
-        ControlFullScreenComponent,
-        ViewComponent,
-        CoordinateComponent,
-        LayerImageComponent,
-        SourceRasterComponent,
-        SourceOsmComponent,
-        SourceXYZComponent,
-        FormsModule,
-    ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    ControlFullScreenComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerImageComponent,
+    SourceRasterComponent,
+    SourceOsmComponent,
+    SourceXYZComponent,
+    FormsModule,
+  ],
 })
 export class RasterComponent {
   operation = rasterOperation;

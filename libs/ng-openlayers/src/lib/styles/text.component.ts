@@ -1,11 +1,12 @@
-import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { Text } from 'ol/style.js';
+import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import Text from 'ol/style/Text.js';
 import { StyleComponent } from './style.component';
 
 @Component({
-    selector: 'aol-style-text',
-    template: ` <div class="aol-style-text"></div> `,
-    standalone: true,
+  selector: 'aol-style-text',
+  template: ` <div class="aol-style-text"></div> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class StyleTextComponent implements OnInit, OnChanges {
   @Input()

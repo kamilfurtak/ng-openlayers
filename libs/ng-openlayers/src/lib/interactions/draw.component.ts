@@ -1,10 +1,19 @@
-import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MapComponent } from '../map.component';
-import { Draw } from 'ol/interaction.js';
+import Draw from 'ol/interaction/Draw.js';
 import { Collection, Feature } from 'ol';
-import { Vector } from 'ol/source.js';
-import { Style } from 'ol/style.js';
-import { DrawEvent, GeometryFunction } from 'ol/interaction/Draw.js';
+import Vector from 'ol/source/Vector.js';
+import Style from 'ol/style/Style.js';
+import { DrawEvent, GeometryFunction, Options as DrawOptions } from 'ol/interaction/Draw.js';
 import { StyleFunction } from 'ol/style/Style.js';
 import { Condition } from 'ol/events/condition.js';
 import { Type } from 'ol/geom/Geometry.js';
@@ -16,6 +25,7 @@ import { unByKey } from 'ol/Observable.js';
 @Component({
   selector: 'aol-interaction-draw',
   template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class DrawInteractionComponent implements OnInit, OnDestroy {
@@ -49,6 +59,10 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   freehand?: boolean;
   @Input()
   wrapX?: boolean;
+  @Input()
+  trace?: DrawOptions['trace'];
+  @Input()
+  traceSource?: Vector;
 
   @Output()
   olChange = new EventEmitter<DrawEvent>();
@@ -56,6 +70,8 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
   olChangeActive = new EventEmitter<ObjectEvent>();
   @Output()
   olDrawAbort = new EventEmitter<DrawEvent>();
+  @Output()
+  drawAbort = new EventEmitter<DrawEvent>();
   @Output()
   drawEnd = new EventEmitter<DrawEvent>();
   @Output()
@@ -75,7 +91,10 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
     this.eventKeys = [
       this.instance.on('change', (event: DrawEvent) => this.olChange.emit(event)),
       this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event)),
-      this.instance.on('drawabort', (event: DrawEvent) => this.olDrawAbort.emit(event)),
+      this.instance.on('drawabort', (event: DrawEvent) => {
+        this.olDrawAbort.emit(event);
+        this.drawAbort.emit(event);
+      }),
       this.instance.on('drawend', (event: DrawEvent) => this.drawEnd.emit(event)),
       this.instance.on('drawstart', (event: DrawEvent) => this.drawStart.emit(event)),
       this.instance.on('error', (event: BaseEvent) => this.olError.emit(event)),
@@ -93,5 +112,6 @@ export class DrawInteractionComponent implements OnInit, OnDestroy {
     unByKey(this.eventKeys);
     this.eventKeys = [];
     this.map.instance.removeInteraction(this.instance);
+    this.instance?.dispose();
   }
 }

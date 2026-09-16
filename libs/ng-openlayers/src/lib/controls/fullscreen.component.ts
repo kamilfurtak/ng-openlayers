@@ -1,11 +1,12 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FullScreen } from 'ol/control.js';
+import { Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import FullScreen from 'ol/control/FullScreen.js';
 import { MapComponent } from '../map.component';
 
 @Component({
-    selector: 'aol-control-fullscreen',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-control-fullscreen',
+  template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class ControlFullScreenComponent implements OnInit, OnDestroy {
   @Input()

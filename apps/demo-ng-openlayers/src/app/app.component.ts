@@ -1,71 +1,42 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { SeoService } from './seo.service';
+import { project } from './project-info';
 
 @Component({
-    selector: 'app-root',
-    template: `
-    <header>
-      <h1 routerLink="/">ng-openlayers demo</h1>
-      <nav aria-label="Project links">
-        <a href="https://www.npmjs.com/package/ng-openlayers" rel="noopener">npm</a>
-        <a href="https://github.com/kamilfurtak/ng-openlayers" rel="noopener">GitHub</a>
-      </nav>
+  selector: 'app-root',
+  imports: [RouterLink, RouterOutlet],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" routerLink="/" aria-label="ng-openlayers home">
+          <img src="/assets/logo.svg" width="32" height="32" alt="" />
+          ng-openlayers
+        </a>
+        <nav aria-label="Main navigation">
+          <a routerLink="/" fragment="examples">Examples</a>
+          <a routerLink="/" fragment="get-started">Get started</a>
+          <a class="github-link" [href]="project.repository">GitHub <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
     </header>
-    <div class="main-container"><router-outlet></router-outlet></div>
+    <main id="main"><router-outlet /></main>
+    <footer class="site-footer container">
+      <div>
+        <a class="brand" routerLink="/">ng-openlayers</a>
+        <p>Declarative maps. Open possibilities.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://furtak.dev">Built by Kamil Furtak ↗</a>
+        <a [href]="project.repository + '/blob/master/LICENSE.md'">MPL-2.0 license</a>
+        <a href="https://github.com/sponsors/kamilfurtak">Sponsor the project</a>
+      </div>
+    </footer>
   `,
-    styles: [
-        `
-      header {
-        top: 0;
-        height: 75px;
-        width: 100%;
-        display: -ms-flexbox;
-        display: flex;
-        flex-wrap: wrap;
-        -ms-flex-pack: justify;
-        justify-content: space-between;
-        z-index: 4;
-        background-color: #202124;
-        color: #fff;
-        font-family: Roboto, sans-serif;
-        font-size: 16px;
-        align-items: center;
-        opacity: 1;
-        box-shadow:
-          0 2px 4px -1px rgba(0, 0, 0, 0.2),
-          0 4px 5px 0 rgba(0, 0, 0, 0.14),
-          0 1px 10px 0 rgba(0, 0, 0, 0.12);
-      }
-
-      header h1 {
-        padding-left: 1rem;
-        cursor: pointer;
-      }
-
-      nav {
-        display: flex;
-        gap: 1rem;
-        margin-left: auto;
-        padding-right: 1rem;
-      }
-
-      nav a {
-        color: #fff;
-        font-weight: 600;
-        text-decoration: none;
-      }
-
-      nav a:hover {
-        text-decoration: underline;
-      }
-
-      .main-container {
-        height: calc(100% - 72px);
-        background-color: white;
-        margin: 0px;
-        overflow: auto;
-      }
-    `,
-    ],
-    standalone: false
 })
-export class AppComponent {}
+export class AppComponent {
+  readonly project = project;
+  private readonly seo = inject(SeoService);
+}

@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { MapComponent } from '../map.component';
-import { Select } from 'ol/interaction.js';
-import { Layer } from 'ol/layer.js';
-import { Style } from 'ol/style.js';
+import Select from 'ol/interaction/Select.js';
+import Layer from 'ol/layer/Layer.js';
+import Style from 'ol/style/Style.js';
 import { Collection, Feature } from 'ol';
 import { SelectEvent, FilterFunction } from 'ol/interaction/Select.js';
 import { StyleFunction } from 'ol/style/Style.js';
@@ -11,9 +11,10 @@ import { ObjectEvent } from 'ol/Object.js';
 import BaseEvent from 'ol/events/Event.js';
 
 @Component({
-    selector: 'aol-interaction-select',
-    template: '',
-    standalone: true,
+  selector: 'aol-interaction-select',
+  template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SelectInteractionComponent implements OnInit, OnDestroy {
   @Input()
@@ -65,5 +66,6 @@ export class SelectInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+    this.instance?.dispose();
   }
 }

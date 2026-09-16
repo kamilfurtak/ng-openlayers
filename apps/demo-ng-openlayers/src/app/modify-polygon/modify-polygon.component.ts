@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import OLFeature from 'ol/Feature';
 import Projection from 'ol/proj/Projection';
-import { GeoJSON } from 'ol/format';
+import GeoJSON from 'ol/format/GeoJSON.js';
 import { Feature as GeoJsonFeature, Polygon as GeoJsonPolygon } from 'geojson';
 import { Polygon } from 'ol/geom';
 import { JsonPipe } from '@angular/common';
@@ -20,8 +20,8 @@ import { DefaultInteractionComponent } from 'ng-openlayers';
 import { MapComponent } from 'ng-openlayers';
 
 @Component({
-    selector: 'app-modify-polygon',
-    template: `
+  selector: 'app-modify-polygon',
+  template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-interaction-select [wrapX]="true" #select></aol-interaction-select>
@@ -29,15 +29,15 @@ import { MapComponent } from 'ng-openlayers';
         #modify
         [features]="select.instance.getFeatures()"
         (olModifyEnd)="modifyEnd($event.features.getArray()[0])"
-        >
+      >
       </aol-interaction-modify>
-    
+
       <aol-view [zoom]="5">
         <aol-coordinate [x]="1.4886" [y]="43.5554" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
-    
+
       <aol-layer-tile [opacity]="1"> <aol-source-osm></aol-source-osm> </aol-layer-tile>
-    
+
       @if (feature) {
         <aol-layer-vector>
           <aol-source-vector>
@@ -51,16 +51,16 @@ import { MapComponent } from 'ng-openlayers';
         </aol-layer-vector>
       }
     </aol-map>
-    
+
     <div class="info">
       <h3>Result</h3>
       <code>
         <pre>{{ feature | json }}</pre>
       </code>
     </div>
-    `,
-    styles: [
-        `
+  `,
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -75,23 +75,24 @@ import { MapComponent } from 'ng-openlayers';
         padding: 1rem;
       }
     `,
-    ],
-    imports: [
-        MapComponent,
-        DefaultInteractionComponent,
-        SelectInteractionComponent,
-        ModifyInteractionComponent,
-        ViewComponent,
-        CoordinateComponent,
-        LayerTileComponent,
-        SourceOsmComponent,
-        LayerVectorComponent,
-        SourceVectorComponent,
-        FeatureComponent,
-        GeometryPolygonComponent,
-        CollectionCoordinatesComponent,
-        JsonPipe,
-    ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    SelectInteractionComponent,
+    ModifyInteractionComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    LayerVectorComponent,
+    SourceVectorComponent,
+    FeatureComponent,
+    GeometryPolygonComponent,
+    CollectionCoordinatesComponent,
+    JsonPipe,
+  ],
 })
 export class ModifyPolygonComponent implements OnInit {
   constructor() {}
@@ -119,7 +120,8 @@ export class ModifyPolygonComponent implements OnInit {
 
   ngOnInit() {}
 
-  modifyEnd(feature: OLFeature<Polygon>) {
+  modifyEnd(feature: OLFeature) {
+    if (!(feature?.getGeometry() instanceof Polygon)) return;
     this.feature = this.format.writeFeatureObject(feature, {
       dataProjection: this.inputProj,
       featureProjection: this.displayProj,

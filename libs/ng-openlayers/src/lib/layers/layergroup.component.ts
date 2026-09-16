@@ -1,12 +1,13 @@
-import { Component, OnDestroy, OnInit, SkipSelf, Optional } from '@angular/core';
-import { Group } from 'ol/layer.js';
+import { Component, OnDestroy, OnInit, SkipSelf, Optional, ChangeDetectionStrategy } from '@angular/core';
+import Group from 'ol/layer/Group.js';
 import { LayerComponent } from './layer.component';
 import { MapComponent } from '../map.component';
 
 @Component({
-    selector: 'aol-layer-group',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-layer-group',
+  template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class LayerGroupComponent extends LayerComponent implements OnInit, OnDestroy {
   public instance: Group;

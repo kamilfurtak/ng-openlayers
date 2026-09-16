@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ElementRef } from '@angular/core';
 import { ControlAttributionComponent } from './attribution.component';
-import { Attribution } from 'ol/control.js';
+import Attribution from 'ol/control/Attribution.js';
 import { MapComponent } from '../map.component';
 
 describe('ControlAttributionComponent', () => {

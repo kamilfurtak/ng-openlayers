@@ -1,16 +1,17 @@
-import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, Input, OnInit, forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { LayerVectorComponent } from '../layers/layervector.component';
 import { SourceComponent } from './source.component';
 import FeatureFormat from 'ol/format/Feature.js';
-import { Vector } from 'ol/source.js';
-import { GeoJSON } from 'ol/format.js';
+import Vector from 'ol/source/Vector.js';
+import GeoJSON from 'ol/format/GeoJSON.js';
 import { ProjectionLike } from 'ol/proj.js';
 
 @Component({
-    selector: 'aol-source-geojson',
-    template: ` <ng-content></ng-content> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceGeoJSONComponent) }],
-    standalone: true,
+  selector: 'aol-source-geojson',
+  template: ` <ng-content></ng-content> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceGeoJSONComponent) }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SourceGeoJSONComponent extends SourceComponent implements OnInit {
   @Input()
@@ -25,7 +26,7 @@ export class SourceGeoJSONComponent extends SourceComponent implements OnInit {
   instance: Vector;
   format: FeatureFormat;
 
-  constructor(@Host() layer: LayerVectorComponent) {
+  constructor(layer: LayerVectorComponent) {
     super(layer);
   }
 

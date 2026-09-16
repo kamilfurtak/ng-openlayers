@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { Control, defaults } from 'ol/control.js';
 import { Collection } from 'ol';
 import { Options as AttributionOptions } from 'ol/control/Attribution.js';
@@ -8,9 +8,10 @@ import { Options as ZoomOptions } from 'ol/control/Zoom.js';
 import { MapComponent } from '../map.component';
 
 @Component({
-    selector: 'aol-control-defaults',
-    template: '',
-    standalone: true,
+  selector: 'aol-control-defaults',
+  template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class DefaultControlComponent implements OnInit, OnDestroy {
   @Input()

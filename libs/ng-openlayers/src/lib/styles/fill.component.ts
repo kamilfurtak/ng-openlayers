@@ -1,5 +1,5 @@
-import { Component, Input, OnChanges, OnInit, Optional, SimpleChanges } from '@angular/core';
-import { Fill } from 'ol/style.js';
+import { Component, Input, OnChanges, OnInit, Optional, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import Fill from 'ol/style/Fill.js';
 import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';
 import { StyleTextComponent } from './text.component';
@@ -9,6 +9,7 @@ import { ColorLike } from 'ol/colorlike.js';
 @Component({
   selector: 'aol-style-fill',
   template: ` <div class="aol-style-fill"></div> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class StyleFillComponent implements OnInit, OnChanges {

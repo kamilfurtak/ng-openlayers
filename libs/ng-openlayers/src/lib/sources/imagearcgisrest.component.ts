@@ -2,12 +2,12 @@ import {
   Component,
   EventEmitter,
   forwardRef,
-  Host,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import ImageArcGISRest from 'ol/source/ImageArcGISRest.js';
 import { LayerImageComponent } from '../layers/layerimage.component';
@@ -18,10 +18,11 @@ import { LoadFunction } from 'ol/Image.js';
 import { ImageSourceEvent } from 'ol/source/Image.js';
 
 @Component({
-    selector: 'aol-source-imagearcgisrest',
-    template: ` <ng-content></ng-content> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageArcGISRestComponent) }],
-    standalone: true,
+  selector: 'aol-source-imagearcgisrest',
+  template: ` <ng-content></ng-content> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceImageArcGISRestComponent) }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SourceImageArcGISRestComponent extends SourceComponent implements OnInit, OnChanges {
   @Input() projection: ProjectionLike | string;
@@ -43,7 +44,7 @@ export class SourceImageArcGISRestComponent extends SourceComponent implements O
 
   instance: ImageArcGISRest;
 
-  constructor(@Host() layer: LayerImageComponent) {
+  constructor(layer: LayerImageComponent) {
     super(layer);
   }
 

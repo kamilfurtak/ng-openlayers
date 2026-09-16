@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DrawInteractionComponent } from './draw.component';
 import { MapComponent } from '../map.component';
-import { Draw } from 'ol/interaction.js';
+import Draw from 'ol/interaction/Draw.js';
 
 describe('DrawInteractionComponent', () => {
   let component: DrawInteractionComponent;

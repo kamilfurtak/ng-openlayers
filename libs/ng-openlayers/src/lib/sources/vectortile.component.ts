@@ -1,5 +1,5 @@
-import { Component, Host, Input, forwardRef, ContentChild, AfterContentInit } from '@angular/core';
-import { VectorTile } from 'ol/source.js';
+import { Component, Input, forwardRef, ContentChild, AfterContentInit, ChangeDetectionStrategy } from '@angular/core';
+import VectorTile from 'ol/source/VectorTile.js';
 import { FeatureLike } from 'ol/Feature.js';
 import FeatureFormat from 'ol/format/Feature.js';
 import TileGrid from 'ol/tilegrid/TileGrid.js';
@@ -11,10 +11,11 @@ import { ProjectionLike } from 'ol/proj.js';
 import { UrlFunction } from 'ol/Tile.js';
 
 @Component({
-    selector: 'aol-source-vectortile',
-    template: ` <ng-content></ng-content> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceVectorTileComponent) }],
-    standalone: true,
+  selector: 'aol-source-vectortile',
+  template: ` <ng-content></ng-content> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceVectorTileComponent) }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SourceVectorTileComponent extends SourceComponent implements AfterContentInit {
   @Input()
@@ -43,7 +44,7 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
   format: FeatureFormat<FeatureLike>;
   tileGrid: TileGrid;
 
-  constructor(@Host() layer: LayerVectorTileComponent) {
+  constructor(layer: LayerVectorTileComponent) {
     super(layer);
   }
 

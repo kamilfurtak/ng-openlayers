@@ -4,7 +4,6 @@ import { MapComponent } from '../map.component';
 import SimpleGeometry from 'ol/geom/SimpleGeometry.js';
 
 @Directive()
-// eslint-disable-next-line @angular-eslint/directive-class-suffix
 export abstract class SimpleGeometryComponent implements OnInit {
   @Input() srid: string;
 

@@ -1,12 +1,13 @@
-import { Component, ContentChild, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ContentChild, Input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { MapComponent } from './map.component';
 import Overlay, { PanOptions, Positioning } from 'ol/Overlay.js';
 import { ContentComponent } from './content.component';
 
 @Component({
-    selector: 'aol-overlay',
-    template: '<ng-content></ng-content>',
-    standalone: true,
+  selector: 'aol-overlay',
+  template: '<ng-content></ng-content>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class OverlayComponent implements OnInit, OnDestroy {
   @ContentChild(ContentComponent, { static: true })

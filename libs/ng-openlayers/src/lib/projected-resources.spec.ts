@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Collection, Feature } from 'ol';
@@ -30,6 +30,7 @@ import { ModifyInteractionComponent } from './interactions/modify.component';
     DrawInteractionComponent,
     ModifyInteractionComponent,
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <aol-map width="300px" height="200px">
       <aol-view [center]="[0, 0]" [zoom]="2" />

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
   CoordinateComponent,
   DefaultControlComponent,
@@ -61,6 +61,7 @@ import {
       </aol-layer-vector>
     </aol-map>
   `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MapComponent,
     DefaultInteractionComponent,

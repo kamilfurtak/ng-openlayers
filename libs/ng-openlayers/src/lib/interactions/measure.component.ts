@@ -8,6 +8,7 @@ import {
   Output,
   SimpleChanges,
   ViewEncapsulation,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import Feature from 'ol/Feature.js';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
@@ -18,12 +19,15 @@ import { EventsKey } from 'ol/events.js';
 import BaseEvent from 'ol/events/Event.js';
 import { Geometry, LineString, Polygon } from 'ol/geom.js';
 import { Type } from 'ol/geom/Geometry.js';
-import { Draw } from 'ol/interaction.js';
+import Draw from 'ol/interaction/Draw.js';
 import { DrawEvent } from 'ol/interaction/Draw.js';
 import VectorLayer from 'ol/layer/Vector.js';
 import VectorSource from 'ol/source/Vector.js';
 import { getArea, getLength } from 'ol/sphere.js';
-import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style.js';
+import CircleStyle from 'ol/style/Circle.js';
+import Fill from 'ol/style/Fill.js';
+import Stroke from 'ol/style/Stroke.js';
+import Style from 'ol/style/Style.js';
 import { StyleFunction } from 'ol/style/Style.js';
 import { MapComponent } from '../map.component';
 
@@ -48,6 +52,7 @@ export interface MeasureResult {
   template: '',
   styleUrls: ['./measure.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
 export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit {
@@ -205,6 +210,7 @@ export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit
   private removeInteraction(): void {
     if (this.instance) {
       this.map.instance.removeInteraction(this.instance);
+      this.instance.dispose();
     }
   }
 

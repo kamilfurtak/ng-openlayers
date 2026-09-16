@@ -1,10 +1,21 @@
-import { AfterContentInit, Component, Host, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
-import { Circle, Fill, Stroke } from 'ol/style.js';
+import {
+  AfterContentInit,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import Circle from 'ol/style/Circle.js';
+import Fill from 'ol/style/Fill.js';
+import Stroke from 'ol/style/Stroke.js';
 import { StyleComponent } from './style.component';
 
 @Component({
   selector: 'aol-style-circle',
   template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDestroy {
@@ -20,7 +31,7 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
   public componentType = 'style-circle';
   public instance: Circle;
 
-  constructor(@Host() private host: StyleComponent) {}
+  constructor(private host: StyleComponent) {}
 
   /**
    * WORK-AROUND: since the re-rendering is not triggered on style change

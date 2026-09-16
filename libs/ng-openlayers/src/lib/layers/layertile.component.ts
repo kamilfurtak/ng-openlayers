@@ -1,14 +1,24 @@
-import { Component, OnDestroy, OnInit, Input, Optional, OnChanges, SimpleChanges } from '@angular/core';
-import { Tile } from 'ol/layer.js';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  Input,
+  Optional,
+  OnChanges,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import Tile from 'ol/layer/Tile.js';
 import TileSource from 'ol/source/Tile.js';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
 
 @Component({
-    selector: 'aol-layer-tile',
-    template: ` <ng-content></ng-content> `,
-    standalone: true,
+  selector: 'aol-layer-tile',
+  template: ` <ng-content></ng-content> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class LayerTileComponent extends LayerComponent implements OnInit, OnDestroy, OnChanges {
   public override instance: Tile<TileSource>;

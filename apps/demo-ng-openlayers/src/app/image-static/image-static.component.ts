@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Extent, getCenter } from 'ol/extent';
 import Projection, { Options as ProjectionOptions } from 'ol/proj/Projection';
 import { FormsModule } from '@angular/forms';
@@ -8,8 +8,8 @@ import { ViewComponent } from 'ng-openlayers';
 import { MapComponent } from 'ng-openlayers';
 
 @Component({
-    selector: 'app-root',
-    template: `
+  selector: 'app-root',
+  template: `
     <aol-map [width]="'100%'" [height]="'100%'">
       <aol-view [projection]="projection" [zoom]="2" [center]="[512, 484]"> </aol-view>
       <aol-layer-image [opacity]="opacity" [extent]="extent">
@@ -28,8 +28,8 @@ import { MapComponent } from 'ng-openlayers';
       </select>
     </div>
   `,
-    styles: [
-        `
+  styles: [
+    `
       :host {
         height: 100%;
         display: flex;
@@ -44,14 +44,9 @@ import { MapComponent } from 'ng-openlayers';
         padding: 1rem;
       }
     `,
-    ],
-    imports: [
-        MapComponent,
-        ViewComponent,
-        LayerImageComponent,
-        SourceImageStaticComponent,
-        FormsModule,
-    ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MapComponent, ViewComponent, LayerImageComponent, SourceImageStaticComponent, FormsModule],
 })
 export class ImageStaticComponent {
   public url = 'https://imgs.xkcd.com/comics/online_communities.png';

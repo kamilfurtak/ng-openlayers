@@ -4,15 +4,15 @@ import {
   ContentChild,
   EventEmitter,
   forwardRef,
-  Host,
   Input,
   OnChanges,
   Optional,
   Output,
   SimpleChanges,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Size } from 'ol/size.js';
-import { XYZ } from 'ol/source.js';
+import XYZ from 'ol/source/XYZ.js';
 import { TileSourceEvent } from 'ol/source/Tile.js';
 import { LoadFunction, UrlFunction } from 'ol/Tile.js';
 import TileGrid from 'ol/tilegrid/TileGrid.js';
@@ -22,10 +22,11 @@ import { TileGridComponent } from '../tilegrid.component';
 import { SourceComponent } from './source.component';
 
 @Component({
-    selector: 'aol-source-xyz',
-    template: ` <ng-content></ng-content> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceXYZComponent) }],
-    standalone: true,
+  selector: 'aol-source-xyz',
+  template: ` <ng-content></ng-content> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceXYZComponent) }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SourceXYZComponent extends SourceComponent implements AfterContentInit, OnChanges {
   @Input()
@@ -73,7 +74,6 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
 
   constructor(
     @Optional()
-    @Host()
     protected layer?: LayerTileComponent
   ) {
     super(layer);
@@ -99,8 +99,14 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
     }
 
     this.instance.setProperties(properties, false);
-    if (changes.hasOwnProperty('url')) {
-      this.init();
+    // Keep the source subtype, cache and event subscriptions when URLs change.
+    if (changes['urls']) {
+      this.instance.setUrls(this.urls);
+    } else if (changes['url']) {
+      this.instance.setUrl(this.url);
+    }
+    if (changes['attributions']) {
+      this.instance.setAttributions(this.attributions);
     }
   }
 

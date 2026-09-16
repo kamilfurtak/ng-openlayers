@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren, ChangeDetectionStrategy } from '@angular/core';
 import {
   CollectionCoordinatesComponent,
   CoordinateComponent,
@@ -18,13 +18,15 @@ import {
   StyleStrokeComponent,
   ViewComponent,
 } from 'ng-openlayers';
-import { Fill, Stroke, Style } from 'ol/style';
-import { Layer } from 'ol/layer';
+import Fill from 'ol/style/Fill.js';
+import Stroke from 'ol/style/Stroke.js';
+import Style from 'ol/style/Style.js';
+import Layer from 'ol/layer/Layer.js';
 import { Feature } from 'ol';
 
 @Component({
-    selector: 'app-color-select-hover',
-    template: `
+  selector: 'app-color-select-hover',
+  template: `
     <aol-map #map (pointerMove)="changeFeatureHovered($event)" width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
       <aol-control-defaults></aol-control-defaults>
@@ -41,12 +43,12 @@ import { Feature } from 'ol';
           <aol-layer-vector #aoiLayerVector>
             @if (f.id === hoveredFeatureId) {
               <aol-style>
-                <aol-style-stroke [color]="'white'" width="3"></aol-style-stroke>
+                <aol-style-stroke [color]="'white'" [width]="3"></aol-style-stroke>
                 <aol-style-fill [color]="'rgba(90, 17, 26, 0.3)'"></aol-style-fill>
               </aol-style>
             } @else {
               <aol-style>
-                <aol-style-stroke [color]="'rgba(90, 17, 26)'" width="3"></aol-style-stroke>
+                <aol-style-stroke [color]="'rgba(90, 17, 26)'" [width]="3"></aol-style-stroke>
                 <aol-style-fill [color]="'rgba(90, 17, 26, 0.5)'"></aol-style-fill>
               </aol-style>
             }
@@ -65,25 +67,26 @@ import { Feature } from 'ol';
       </aol-layer-group>
     </aol-map>
   `,
-    imports: [
-        MapComponent,
-        DefaultInteractionComponent,
-        DefaultControlComponent,
-        SelectInteractionComponent,
-        ViewComponent,
-        CoordinateComponent,
-        LayerTileComponent,
-        SourceOsmComponent,
-        LayerGroupComponent,
-        LayerVectorComponent,
-        StyleComponent,
-        StyleStrokeComponent,
-        StyleFillComponent,
-        SourceVectorComponent,
-        FeatureComponent,
-        GeometryPolygonComponent,
-        CollectionCoordinatesComponent,
-    ]
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MapComponent,
+    DefaultInteractionComponent,
+    DefaultControlComponent,
+    SelectInteractionComponent,
+    ViewComponent,
+    CoordinateComponent,
+    LayerTileComponent,
+    SourceOsmComponent,
+    LayerGroupComponent,
+    LayerVectorComponent,
+    StyleComponent,
+    StyleStrokeComponent,
+    StyleFillComponent,
+    SourceVectorComponent,
+    FeatureComponent,
+    GeometryPolygonComponent,
+    CollectionCoordinatesComponent,
+  ],
 })
 export class ColorSelectHoverComponent implements OnInit {
   @ViewChild('map', { static: true })

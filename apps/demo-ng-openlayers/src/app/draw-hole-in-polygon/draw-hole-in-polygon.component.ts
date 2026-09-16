@@ -1,7 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, signal, ChangeDetectionStrategy } from '@angular/core';
 import OLFeature from 'ol/Feature';
 import Projection from 'ol/proj/Projection';
-import { GeoJSON } from 'ol/format';
+import GeoJSON from 'ol/format/GeoJSON.js';
 import { Feature as GeoJsonFeature, Polygon as GeoJsonPolygon } from 'geojson';
 import { Polygon } from 'ol/geom';
 import { JsonPipe } from '@angular/common';
@@ -25,11 +25,16 @@ import {
 } from 'ng-openlayers';
 import { FormsModule } from '@angular/forms';
 import { Feature } from 'ol';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-modify-polygon',
   template: `
+    @if (warning()) {
+      <div role="status" class="warning">
+        {{ warning() }}
+        <button type="button" (click)="warning.set('')" aria-label="Dismiss warning">Dismiss</button>
+      </div>
+    }
     <aol-map #map width="100%" height="100%">
       <!-- Default interaction for basic panning and zooming -->
       <aol-interaction-default></aol-interaction-default>
@@ -139,6 +144,7 @@ import { ToastrService } from 'ngx-toastr';
       }
     `,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MapComponent,
     DefaultInteractionComponent,
@@ -194,14 +200,14 @@ export class DrawHoleInPolygonComponent {
   selectInteractionEnabled = false;
   modifyInteractionEnabled = false;
 
-  // Inject the ToastrService to display warning notifications
-  constructor(private toastr: ToastrService) {}
+  readonly warning = signal('');
 
   /**
    * modifyEnd() is called when a feature modification is finished.
    * It converts the modified feature into a GeoJSON object and updates the component's feature.
    */
-  modifyEnd(feature: OLFeature<Polygon>) {
+  modifyEnd(feature: OLFeature) {
+    if (!(feature?.getGeometry() instanceof Polygon)) return;
     this.feature = this.format.writeFeatureObject(feature, {
       dataProjection: this.inputProj, // Source projection of the feature
       featureProjection: this.displayProj, // Projection used by the map
@@ -236,17 +242,17 @@ export class DrawHoleInPolygonComponent {
 
   /**
    * onDrawError() handles errors during the hole drawing process.
-   * Depending on the error type, it shows a warning message using Toastr.
+   * Depending on the error type, it shows a warning message next to the map.
    */
   onDrawError($event: DrawHoleInPolygonInteractionError) {
     if ($event.type === DrawHoleInPolygonInteractionErrorType.MoPolygonFound) {
-      this.toastr.warning('No polygon found to draw hole.');
+      this.warning.set('No polygon found to draw hole.');
     }
     if ($event.type === DrawHoleInPolygonInteractionErrorType.DrawVertexOutsidePolygon) {
-      this.toastr.warning('Cannot add vertex outside the polygon');
+      this.warning.set('Cannot add vertex outside the polygon');
     }
     if ($event.type === DrawHoleInPolygonInteractionErrorType.NoLinearRingFoundToRemove) {
-      this.toastr.warning('No linear ring found to remove.');
+      this.warning.set('No linear ring found to remove.');
     }
   }
 }

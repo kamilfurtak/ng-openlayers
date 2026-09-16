@@ -1,14 +1,15 @@
-import { Component, Host, Input, OnInit, forwardRef } from '@angular/core';
-import { BingMaps } from 'ol/source.js';
+import { Component, Input, OnInit, forwardRef, ChangeDetectionStrategy } from '@angular/core';
+import BingMaps from 'ol/source/BingMaps.js';
 import { SourceComponent } from './source.component';
 import { LayerTileComponent } from '../layers/layertile.component';
 import { LoadFunction } from 'ol/Tile.js';
 
 @Component({
-    selector: 'aol-source-bingmaps',
-    template: ` <div class="aol-source-bingmaps"></div> `,
-    providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceBingmapsComponent) }],
-    standalone: true,
+  selector: 'aol-source-bingmaps',
+  template: ` <div class="aol-source-bingmaps"></div> `,
+  providers: [{ provide: SourceComponent, useExisting: forwardRef(() => SourceBingmapsComponent) }],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class SourceBingmapsComponent extends SourceComponent implements OnInit {
   @Input()
@@ -32,7 +33,7 @@ export class SourceBingmapsComponent extends SourceComponent implements OnInit {
 
   instance: BingMaps;
 
-  constructor(@Host() layer: LayerTileComponent) {
+  constructor(layer: LayerTileComponent) {
     super(layer);
   }
 

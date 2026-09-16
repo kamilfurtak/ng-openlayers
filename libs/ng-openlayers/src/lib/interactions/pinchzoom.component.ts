@@ -1,11 +1,12 @@
-import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { PinchZoom } from 'ol/interaction.js';
+import { Component, OnDestroy, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import PinchZoom from 'ol/interaction/PinchZoom.js';
 import { MapComponent } from '../map.component';
 
 @Component({
-    selector: 'aol-interaction-pinchzoom',
-    template: '',
-    standalone: true,
+  selector: 'aol-interaction-pinchzoom',
+  template: '',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class PinchZoomInteractionComponent implements OnInit, OnDestroy {
   @Input()
