@@ -14,7 +14,9 @@ describe('Map bindings and interactions', () => {
     cy.get('output[aria-label="Opacity"]').should('have.text', '0.9');
     cy.get('[aria-label="Increase opacity"]').click().click();
     cy.get('output[aria-label="Opacity"]').should('have.text', '1');
-    cy.get('[aria-label="Increase zoom"]').click().click().click().click();
+    cy.get('[aria-label="Increase zoom"]').click();
+    cy.get('output[aria-label="Zoom"]').should('have.text', '16');
+    cy.get('[aria-label="Increase zoom"]').click().click().click();
     cy.get('output[aria-label="Zoom"]').should('have.text', '18');
     cy.get('[aria-label="Decrease zoom"]').click();
     cy.get('output[aria-label="Zoom"]').should('have.text', '17');
@@ -30,6 +32,7 @@ describe('Map bindings and interactions', () => {
         cy.contains('button', 'Increase zoom').click();
         cy.get('output[aria-label="Resolution events"]').should('have.text', String(Number(before) + 1));
       });
+      cy.get('.demo-stage .ol-layer canvas').first().should('be.visible');
     }
   });
 

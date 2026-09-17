@@ -49,9 +49,15 @@ describe('Presentation and data sources', () => {
     });
     cy.document().its('documentElement.scrollWidth').should('be.lte', 390);
     cy.contains('a', 'Explore examples').click();
-    cy.get('[aria-label="Search examples"]').should('be.visible').type('swipe');
+    cy.get('[aria-label="Search examples"]').should('be.visible').and(($search) => {
+      const bounds = $search[0].getBoundingClientRect();
+      expect(bounds.top).to.be.at.least(0);
+      expect(bounds.bottom).to.be.at.most(844);
+    }).type('swipe');
     cy.get('.example-card').should('have.length', 1).click();
-    cy.get('[aria-label="Layer comparison"]').should('have.value', '50').and('be.visible');
+    cy.get('[aria-label="Layer comparison"]').should('have.value', '50').and('be.visible').focus();
+    cy.press(Cypress.Keyboard.Keys.RIGHT);
+    cy.get('[aria-label="Layer comparison"]').should('have.value', '51');
     cy.get('@clipRectangle').should('have.been.called');
     cy.get('[aria-label="Layer comparison"]').invoke('val', 80).trigger('input');
     cy.get<Cypress.Agent<sinon.SinonSpy>>('@clipRectangle').should((spy) => {

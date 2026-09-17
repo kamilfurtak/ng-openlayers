@@ -38,6 +38,10 @@ describe('Every public example', () => {
 describe('Catalog and published content', () => {
   it('combines search and category filters, exposes an empty state and resets', () => {
     cy.visit('/');
+    cy.get('h1').should('have.length', 1).and('have.text', 'Build maps.The Angular way.');
+    cy.title().should('equal', 'ng-openlayers · OpenLayers maps for Angular');
+    cy.get('link[rel="canonical"]').should('have.length', 1)
+      .and('have.attr', 'href', 'https://ng-openlayers.furtak.dev/');
     cy.get('.example-card').should('have.length', 27);
     cy.get('[aria-label="Search examples"]').type('  POLYGON  ');
     cy.get('.example-card').should('have.length', 4);
@@ -50,6 +54,11 @@ describe('Catalog and published content', () => {
     cy.get('.example-card').should('have.length', 27);
     cy.get('[aria-label="Search examples"]').should('have.value', '');
     cy.contains('button', 'All examples').should('have.attr', 'aria-pressed', 'true');
+    cy.contains('button', /^\s*Interactions\s*$/).click();
+    cy.get('.example-card').should('have.length', 6);
+    cy.contains('.example-card', 'Measure').click();
+    cy.title().should('equal', 'Measure · Angular example | ng-openlayers');
+    cy.get('link[rel="canonical"]').should('have.attr', 'href', 'https://ng-openlayers.furtak.dev/examples/measure/');
   });
 
   it('navigates between lazy routes, updates metadata and tears maps down', () => {
@@ -69,6 +78,51 @@ describe('Catalog and published content', () => {
     cy.get('.ol-viewport').should('not.exist');
     cy.get('.example-card').should('have.length', 27);
     cy.get('#project-schema').invoke('text').then((text) => expect(JSON.parse(text)['@graph']).to.have.length(1));
+    cy.contains('.example-card', 'Basic').click();
+    cy.get('.ol-viewport').should('have.length', 1);
+    cy.get('output[aria-label="Longitude"]').should('have.text', '5');
+    cy.get('[aria-label="Increase longitude"]').click();
+    cy.get('output[aria-label="Longitude"]').should('have.text', '6');
+  });
+
+  it('keeps prerendered content and native navigation usable when application JavaScript is blocked', () => {
+    const blockedScripts: { document: Document; url: string }[] = [];
+    cy.on('window:before:load', (window) => {
+      window.document.addEventListener('securitypolicyviolation', (event) => {
+        if (event.effectiveDirective === 'script-src-elem') {
+          blockedScripts.push({ document: window.document, url: event.blockedURI });
+        }
+      });
+    });
+    const assertApplicationScriptBlocked = () => {
+      cy.document().should((document) => {
+        // The production bootstrap tag stays intact; a real browser CSP violation
+        // proves it could not execute, rather than only examining HTML text.
+        const main = document.querySelector<HTMLScriptElement>('script[src^="main-"]');
+        expect(main, 'production application bootstrap').not.to.equal(null);
+        expect(blockedScripts.some((blocked) => blocked.document === document && blocked.url === main?.src),
+          'browser blocked the application bootstrap on this document').to.equal(true);
+      });
+      cy.get('.ol-viewport').should('not.exist');
+    };
+    cy.setCookie('ng_openlayers_test_disable_scripts', '1');
+    cy.visit('/');
+    assertApplicationScriptBlocked();
+    cy.get('h1').should('have.text', 'Build maps.The Angular way.');
+    cy.get('.example-card').should('have.length', 27);
+    cy.document().then((homeDocument) => {
+      cy.get('.example-card').first().click();
+      cy.location('pathname').should('match', /^\/examples\/basic\/?$/);
+      cy.document().should((exampleDocument) => expect(exampleDocument).not.to.equal(homeDocument));
+    });
+    assertApplicationScriptBlocked();
+    cy.get('h1').should('have.text', 'Basic');
+    cy.contains('a', 'View source').should('be.visible');
+    cy.get('.map-placeholder').should('be.visible').and('contain.text', 'loads in your browser');
+    cy.get('meta[name="description"]').should('have.attr', 'content').and('match', /zoom and opacity/);
+    cy.get('#project-schema').invoke('text').then((schema) => {
+      expect(JSON.parse(schema)['@graph'][0].codeRepository).to.equal('https://github.com/kamilfurtak/ng-openlayers');
+    });
   });
 
   it('publishes complete prerendered content, sitemap, robots and a noindex 404', () => {

@@ -39,10 +39,8 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run test-ci
-      - run: npx playwright install --with-deps chromium
-      - run: npm run e2e
       - name: Cypress production browser regression tests
-        run: npm run e2e:cypress
+        run: npm run e2e
 
       - name: Upload test reports
         if: always()
@@ -51,7 +49,6 @@ jobs:
           name: test-reports
           path: |
             coverage/
-            playwright-report/
             test-results/
           retention-days: 14
           if-no-files-found: ignore

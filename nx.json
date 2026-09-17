@@ -68,7 +68,12 @@
       }
     ],
     "e2e": {
-      "inputs": ["default", "^production", "{workspaceRoot}/playwright.config.ts"],
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/tools/run-cypress.mjs",
+        "{workspaceRoot}/tools/finalize-site.mjs"
+      ],
       "cache": false
     }
   },

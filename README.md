@@ -142,21 +142,19 @@ npm start                 # Local demo at http://localhost:4200
 npm run lint
 npm run test-ci           # Library and zoneless demo unit tests with coverage
 npm run build             # npm package + prerendered production site
-npx playwright install chromium
-npm run e2e               # Production-site browser regressions
-npm run e2e:cypress      # Cypress production interactions in Chrome
+npm run e2e               # Cypress production-site browser regressions in Chrome
 npm run test:consumer     # Install and test the actual npm tarball on Angular 22
 ```
 
-`test:consumer` does not publish a package. The CI workflow runs these checks before deploying the site; npm publishing uses the separate release job.
+`npm run test:all` runs lint, unit tests, Cypress and the packaged-consumer checks. Install Chrome for the unit and Cypress suites. `test:consumer` does not publish a package. The CI workflow runs these checks before deploying the site; npm publishing uses the separate release job.
 
-| Directory                     | Purpose                                                   |
-| ----------------------------- | --------------------------------------------------------- |
-| `libs/ng-openlayers`          | Publishable library                                       |
-| `apps/demo-ng-openlayers`     | Standalone, zoneless example site                         |
-| `apps/demo-ng-openlayers-e2e` | Playwright browser and prerendering regressions           |
-| `compatibility/angular22`     | Independent consumer of the built npm package             |
-| `tools`                       | Static-site validation and packaged-consumer verification |
+| Directory                        | Purpose                                                   |
+| -------------------------------- | --------------------------------------------------------- |
+| `libs/ng-openlayers`             | Publishable library                                       |
+| `apps/demo-ng-openlayers`        | Standalone, zoneless example site                         |
+| `apps/demo-ng-openlayers-cypress` | Cypress browser, keyboard and prerendering regressions     |
+| `compatibility/angular22`        | Independent consumer of the built npm package             |
+| `tools`                          | Static-site validation and packaged-consumer verification |
 
 ## Maintenance and license
 

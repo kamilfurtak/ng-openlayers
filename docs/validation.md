@@ -7,18 +7,16 @@ npm ci
 npm run lint
 npm run test-ci
 npm run build
-npx playwright install chromium
 npm run e2e
-npm run e2e:cypress
 npm run test:consumer
 npm audit
 ```
 
-`npm run test:all` runs lint, both unit suites, both production browser suites and the packaged consumer. Install Chrome and Playwright Chromium first. `test` is a finite run; `test:watch:lib` and `test:watch:demo` start individual unit watchers.
+`npm run test:all` runs lint, both unit suites, the Cypress production browser suite and the packaged consumer. Install Chrome first. `test` is a finite run; `test:watch:lib` and `test:watch:demo` start individual unit watchers.
 
 `test-ci` uses Jasmine/Karma with real OpenLayers objects in ChromeHeadless. Demo tests run without Zone.js, matching the application. Library tests also include explicit zone-based event-boundary coverage. Set `CHROME_BIN` if Chrome is not detected.
 
-Cypress 16.1 runs Chrome against the production static site on its own port 4303. Its runner owns and closes that server, fails on an occupied port, browser failure, failed tests or zero tests, and saves a JSON result and failure screenshots under `test-results/cypress/`. See the [Cypress guide](../apps/demo-ng-openlayers-cypress/README.md) for focused runs and fixture boundaries. Playwright uses its own port 4301 and retains the no-JavaScript and native keyboard checks.
+Cypress 16.1 runs Chrome against the production static site on its own port 4303. Its runner owns and closes that server, fails on an occupied port, browser failure, failed tests or zero tests, and saves a JSON result and failure screenshots under `test-results/cypress/`. See the [Cypress guide](../apps/demo-ng-openlayers-cypress/README.md) for focused runs and fixture boundaries. Cypress also checks native keyboard input and navigation with application JavaScript blocked by a test-server Content Security Policy. The production HTML and scripts remain unmodified; browser policy-violation events prove the bootstrap was blocked. `e2e:cypress` remains an alias for `e2e`.
 
 `test:consumer` builds and installs the actual npm tarball into an independent Angular 22 application. It verifies compilation and zoneless lifecycle behavior without source aliases or npm linking. It does not publish a package.
 
@@ -41,7 +39,7 @@ Browser provider responses are deterministic fixtures. Local scripts, icons, met
 ## Verified on 2026-09-17
 
 - 190 library unit tests and 40 zoneless demo unit tests passed.
-- All 47 Cypress scenarios and 7 Playwright scenarios passed, including all 27 example routes.
+- All 48 Cypress scenarios passed, including all 27 example routes.
 - The built 22.0.1 tarball compiled and passed its independent Angular 22.1.7 consumer lifecycle test.
 - Root and independent-consumer npm audits reported zero vulnerabilities.
 - Camofox live inspection verified desktop rendering, first-hover UTFGrid data and an unclipped overlay at 390 px.
@@ -53,7 +51,7 @@ Browser provider responses are deterministic fixtures. Local scripts, icons, met
 
 ## Coverage and CI
 
-Unit coverage reports include HTML, LCOV and JSON summaries under `coverage/ng-openlayers` and `coverage/demo-ng-openlayers`. Nx restores those output directories on unit cache hits. Browser suites always execute; they cannot replay a cached success. The shared TypeScript alias gives Nx an explicit dependency from the demo to the library, so library edits invalidate its build and tests.
+Unit coverage reports include HTML, LCOV and JSON summaries under `coverage/ng-openlayers` and `coverage/demo-ng-openlayers`. Nx restores those output directories on unit cache hits. The Cypress suite always executes; it cannot replay a cached success. The shared TypeScript alias gives Nx an explicit dependency from the demo to the library, so library edits invalidate its build and tests.
 
 Enforced global coverage floors:
 
