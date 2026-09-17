@@ -35,6 +35,11 @@ const server = createServer(async (request, response) => {
     response.writeHead(200, {
       'content-type': mimeTypes[extname(path)] ?? 'application/octet-stream',
       'cache-control': 'no-store',
+      // Test-scoped browser fallback: retain the real production HTML/assets,
+      // while CSP prevents its scripts from executing on every native navigation.
+      ...(extname(path) === '.html' && request.headers.cookie?.split(';').some(
+        (cookie) => cookie.trim() === 'ng_openlayers_test_disable_scripts=1',
+      ) ? { 'content-security-policy': "script-src 'none'" } : {}),
     });
     response.end(request.method === 'HEAD' ? undefined : await readFile(path));
   } catch {
@@ -49,11 +54,12 @@ await new Promise((resolveListening, reject) => {
 });
 
 try {
+  const project = resolve(root, 'apps/demo-ng-openlayers-cypress');
   const spec = process.argv[2];
   const result = await cypress.run({
-    project: resolve(root, 'apps/demo-ng-openlayers-cypress'),
+    project,
     browser: process.env['CYPRESS_BROWSER'] ?? 'chrome',
-    ...(spec ? { spec } : {}),
+    ...(spec ? { spec: resolve(project, spec) } : {}),
   });
   const completed = 'totalFailed' in result;
   process.exitCode = completed && result.totalTests > 0 && result.totalFailed === 0 ? 0 : 1;

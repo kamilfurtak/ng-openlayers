@@ -9,7 +9,7 @@
       "path": "./apps/demo-ng-openlayers/tsconfig.spec.json"
     },
     {
-      "path": "./apps/demo-ng-openlayers-e2e/tsconfig.json"
+      "path": "./apps/demo-ng-openlayers-cypress/tsconfig.json"
     },
     {
       "path": "./libs/ng-openlayers/tsconfig.lib.json"
