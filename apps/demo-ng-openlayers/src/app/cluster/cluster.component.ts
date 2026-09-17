@@ -83,7 +83,7 @@ import { MapComponent } from 'ng-openlayers';
 
     <div class="control">
       <span>Distance : </span>
-      <input type="range" min="0" max="255" [(ngModel)]="distance" />
+      <input type="range" min="0" max="255" aria-label="Cluster distance" [(ngModel)]="distance" />
       <span> ({{ distance }})</span>
     </div>
   `,

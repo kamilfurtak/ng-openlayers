@@ -30,6 +30,7 @@ export class ControlComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.instance) {
       this.map.instance.removeControl(this.instance);
+      this.instance.dispose();
     }
   }
 }

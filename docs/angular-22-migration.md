@@ -4,7 +4,7 @@ This is a major release: upgrade Angular to 22 before installing ng-openlayers 2
 
 ## Toolchain
 
-The workspace uses Angular 22.1.6, Angular CLI/build 22.1.8, Nx 23.2.1, OpenLayers 10.10.0, Proj4 2.22.0 and ng-packagr 22.1.1. Official Angular and Nx migrations were applied. Use Node 24.15+ or 22.22.3+.
+The workspace uses Angular 22.1.7, Angular CLI/build 22.1.8, Nx 23.2.1, OpenLayers 10.10.0, Proj4 2.22.0 and ng-packagr 22.1.1. Official Angular and Nx migrations were applied. Use Node 24.15+ or 22.22.3+.
 
 TypeScript remains on 6.0.3 because Angular 22 requires `>=6.0 <6.1`. The independent consumer uses Vitest 4.1.11 because Angular's test builder requires Vitest 4; Vitest 5 is outside its supported peer range. Jasmine/Karma regressions remain in the main workspace. Zone.js is only a test dependency, including a regression that explicitly runs with zone-based change detection.
 

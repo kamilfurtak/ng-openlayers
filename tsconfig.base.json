@@ -16,7 +16,10 @@
     "lib": ["es2022", "dom"],
     "useDefineForClassFields": false,
     "rootDir": ".",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "ng-openlayers": ["./libs/ng-openlayers/src/public-api.ts"]
+    }
   },
   "angularCompilerOptions": {
     "skipLibs": true,

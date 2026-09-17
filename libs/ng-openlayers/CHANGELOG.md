@@ -1,3 +1,15 @@
+# 22.0.1 (2026-09-17)
+
+- Update the workspace and independent consumer to Angular 22.1.7; add Cypress 16.1 and update GitHub Actions.
+- Expand library and zoneless demo unit tests, enforce higher coverage floors, and run production Cypress interaction tests in CI alongside Playwright and the packaged-consumer check.
+- Apply view resolution, rotation and zoom constraints through OpenLayers setters; preserve panned camera state and user coordinates when replacing projections or constructor constraints.
+- Correct cleanup and updates for geometries, composed styles, overlays, graticules, controls, sources and interactions.
+- Apply MVT input options at initialization and propagate projected format/tile-grid replacements while preserving WMTS semantics.
+- Fix geographic and imperial measurement behavior, aborted-sketch cleanup and polygon-hole editing/removal.
+- Restore separate standalone keyboard pan/zoom components and include them in AngularOpenlayersModule.
+- Repair example selection, icons, overlays, UTFGrid races, coordinate formatting and GeoJSON exports; replace a legacy keyed imagery endpoint with a public source.
+- Preserve test reports in CI, restore coverage artifacts from Nx cache, and always execute browser regression suites.
+
 # 22.0.0 (2026-09-16)
 
 - **Breaking:** require Angular 22, OpenLayers 10.10+ and Proj4 2.22+.

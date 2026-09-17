@@ -3,13 +3,15 @@ import { Feature } from 'ol';
 import { Coordinate } from 'ol/coordinate.js';
 import { DrawEvent } from 'ol/interaction/Draw.js';
 import { Geometry, LinearRing, Polygon } from 'ol/geom.js';
+import BaseEvent from 'ol/events/Event.js';
+import { EventsKey } from 'ol/events.js';
+import { unByKey } from 'ol/Observable.js';
 import Fill from 'ol/style/Fill.js';
 import Style from 'ol/style/Style.js';
 import { DrawInteractionComponent } from './draw.component';
 import { MapComponent } from '../map.component';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 import { Condition, platformModifierKey } from 'ol/events/condition.js';
-import { containsCoordinate } from 'ol/extent.js';
 import VectorLayer from 'ol/layer/Vector.js';
 
 export enum DrawHoleInPolygonInteractionErrorType {
@@ -51,6 +53,8 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
 
   foundFeatureToApplyEnclave: Feature<Geometry>;
   foundPolygonToApplyEnclave: Polygon;
+  private geometryChangeKey?: EventsKey;
+  private originalGeometry?: Polygon;
   staticStyle = new Style({
     fill: new Fill({
       color: 'rgba(0,0,0,0)',
@@ -59,125 +63,119 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
 
   constructor(private map: MapComponent) {}
 
-  onDrawStart = (e: DrawEvent) => {
-    const startCoordinate = (e.feature.getGeometry() as Polygon).getCoordinates()[0][0];
+  onDrawStart = (event: DrawEvent) => {
+    this.cancelSketch();
+    const geometry = event.feature.getGeometry();
+    if (!(geometry instanceof Polygon)) return;
+    const startCoordinate = geometry.getCoordinates()[0][0];
     const startPixel = this.map.instance.getPixelFromCoordinate(startCoordinate);
-
-    const foundFeatureLike = this.map.instance.forEachFeatureAtPixel(startPixel, (feature) => {
-      return feature;
+    const feature = this.map.instance.forEachFeatureAtPixel(startPixel, (candidate) => {
+      return candidate instanceof Feature && candidate.getGeometry() instanceof Polygon ? candidate : undefined;
     });
 
-    if (foundFeatureLike?.getGeometry().getType() === 'Polygon') {
-      this.foundFeatureToApplyEnclave = foundFeatureLike as Feature<Geometry>;
-      this.foundPolygonToApplyEnclave = this.foundFeatureToApplyEnclave.getGeometry() as Polygon;
-      e.feature.getGeometry().on('change', this.onGeomChange);
+    if (feature) {
+      this.foundFeatureToApplyEnclave = feature;
+      this.foundPolygonToApplyEnclave = feature.getGeometry() as Polygon;
+      this.originalGeometry = this.foundPolygonToApplyEnclave;
+      this.geometryChangeKey = geometry.on('change', this.onGeomChange);
       this.map.instance.on('click', this.onMapClick);
     } else {
       this.drawError.emit({
         type: DrawHoleInPolygonInteractionErrorType.MoPolygonFound,
-        event: e,
+        event,
         message: 'No polygon found to draw hole.',
       });
-      console.warn('No polygon found to draw hole.');
-      e.target.abortDrawing();
+      this.drawInteractionComponent.instance.abortDrawing();
     }
   };
 
-  onGeomChange = (e: DrawEvent) => {
-    const coordinates: Coordinate[] = e.target.getCoordinates()[0];
-
-    if (coordinates.every((coord) => this.foundPolygonToApplyEnclave.intersectsCoordinate(coord))) {
-      const linear_ring = new LinearRing(coordinates);
-      const polygonCoordinates = this.foundPolygonToApplyEnclave.getCoordinates();
-      const coordsLength = this.foundPolygonToApplyEnclave.getCoordinates().length;
-
-      const geom = new Polygon(polygonCoordinates.slice(0, coordsLength));
-
-      geom.appendLinearRing(linear_ring);
-      this.foundFeatureToApplyEnclave.setGeometry(geom);
+  onGeomChange = (event: BaseEvent) => {
+    if (!this.originalGeometry) return;
+    const coordinates: Coordinate[] = (event.target as Polygon).getCoordinates()[0];
+    if (coordinates.every((coordinate) => this.originalGeometry.intersectsCoordinate(coordinate))) {
+      const geometry = this.originalGeometry.clone();
+      geometry.appendLinearRing(new LinearRing(coordinates));
+      this.foundFeatureToApplyEnclave.setGeometry(geometry);
     }
   };
 
   onDrawEnd = () => {
-    console.log('onDrawEnd');
-    this.map.instance.un('click', this.onMapClick);
-
-    this.drawEnd.emit(new Feature(this.foundFeatureToApplyEnclave.getGeometry()));
+    if (!this.originalGeometry) return;
+    const feature = this.foundFeatureToApplyEnclave;
+    this.releaseSketch();
+    this.drawEnd.emit(new Feature(feature.getGeometry().clone()));
   };
 
-  onMapClick = (e: MapBrowserEvent) => {
-    console.log('onMapClick', e);
-
-    const coordinate = this.map.instance.getCoordinateFromPixel(e.pixel);
-
+  onMapClick = (event: MapBrowserEvent) => {
+    const coordinate = this.map.instance.getCoordinateFromPixel(event.pixel);
     if (!this.foundPolygonToApplyEnclave?.intersectsCoordinate(coordinate)) {
-      e.preventDefault();
-      e.stopPropagation();
-      console.warn('Cannot add vertex outside the polygon');
+      event.preventDefault();
+      event.stopPropagation();
       this.drawError.emit({
         type: DrawHoleInPolygonInteractionErrorType.DrawVertexOutsidePolygon,
-        event: e,
+        event,
         message: 'Cannot add vertex outside the polygon',
       });
       this.drawInteractionComponent.instance.removeLastPoint();
-
       return false;
     }
   };
-  drawCondition: Condition = (e) => {
-    const vectorLayer = this.map.instance
-      .getLayers()
-      .getArray()
-      .find((l) => l instanceof VectorLayer);
 
-    if (!vectorLayer) {
+  drawCondition: Condition = (event) => {
+    const layers = this.map.instance.getAllLayers().filter((layer) => layer instanceof VectorLayer);
+    if (layers.length === 0) {
       this.drawError.emit({
         type: DrawHoleInPolygonInteractionErrorType.NoVectorLayerFound,
-        event: e,
+        event,
         message: 'No vector layer found',
       });
       return false;
     }
 
-    const foundFeatureToRemoveEnclave = vectorLayer
-      .getSource()
-      .getClosestFeatureToCoordinate(e.coordinate, (feature: Feature<Geometry>) => {
-        console.log(feature.getGeometry().intersectsCoordinate(e.coordinate));
-        return feature.getGeometry().getType() === 'Polygon';
+    if (!platformModifierKey(event)) return true;
+    for (const layer of layers) {
+      const source = layer.getSource();
+      const feature = source?.getClosestFeatureToCoordinate(event.coordinate, (candidate: Feature<Geometry>) => {
+        const geometry = candidate.getGeometry();
+        return (
+          geometry instanceof Polygon &&
+          new Polygon([geometry.getCoordinates()[0]]).intersectsCoordinate(event.coordinate)
+        );
       });
-
-    console.log('foundFeatureToApplyEnclave', foundFeatureToRemoveEnclave);
-
-    const isPlatformModifierKey = platformModifierKey(e);
-    if (isPlatformModifierKey && foundFeatureToRemoveEnclave) {
-      this.checkAndRemoveHole(e, foundFeatureToRemoveEnclave);
-      return false;
+      if (feature) {
+        this.checkAndRemoveHole(event, feature);
+        return false;
+      }
     }
     return true;
   };
 
   ngOnDestroy(): void {
-    this.map.instance.un('click', this.onMapClick);
+    this.cancelSketch();
   }
 
-  onDrawAbort(e: DrawEvent) {
-    this.map.instance.un('click', this.onMapClick);
+  onDrawAbort(event: DrawEvent) {
+    if (this.geometryChangeKey && this.geometryChangeKey.target !== event.feature.getGeometry()) return;
+    this.cancelSketch();
+  }
 
-    console.log('onDrawAbort', e);
-    const coordinates = (e.feature.getGeometry() as Polygon).getCoordinates()[0];
-    console.log('coordinates', coordinates.length);
-    if (coordinates.length > 2) {
-      this.removeLastLinearRing();
-    }
+  private releaseSketch(): void {
+    this.map.instance.un('click', this.onMapClick);
+    if (this.geometryChangeKey) unByKey(this.geometryChangeKey);
+    this.geometryChangeKey = undefined;
+    this.originalGeometry = undefined;
+  }
+
+  private cancelSketch(): void {
+    if (this.originalGeometry) this.foundFeatureToApplyEnclave.setGeometry(this.originalGeometry);
+    this.releaseSketch();
   }
 
   removeLastLinearRing() {
-    const polygon = this.foundFeatureToApplyEnclave.getGeometry() as Polygon;
-    let coordinates = polygon.getCoordinates();
-    console.log('coordinates', coordinates);
-    coordinates = coordinates.slice(0, -1); // Remove the last linear ring
-    const newPolygon = new Polygon(coordinates);
-    this.foundFeatureToApplyEnclave.setGeometry(newPolygon);
+    const polygon = this.foundFeatureToApplyEnclave?.getGeometry();
+    if (polygon instanceof Polygon && polygon.getLinearRingCount() > 1) {
+      this.foundFeatureToApplyEnclave.setGeometry(new Polygon(polygon.getCoordinates().slice(0, -1)));
+    }
   }
 
   checkAndRemoveHole(e: MapBrowserEvent, foundFeatureToApplyEnclave: Feature<Geometry>) {
@@ -185,7 +183,7 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
     let coordinates = polygon.getCoordinates();
     const coordinateIndex = coordinates.slice(1).findIndex((coordinate) => {
       const polygonFromLinearRing = new Polygon([coordinate], 'XY');
-      return containsCoordinate(polygonFromLinearRing.getExtent(), e.coordinate);
+      return polygonFromLinearRing.intersectsCoordinate(e.coordinate);
     });
 
     if (coordinateIndex > -1) {
@@ -202,7 +200,6 @@ export class DrawHoleInPolygonInteractionComponent implements OnDestroy {
         event: e,
         message: 'No linear ring found to remove',
       });
-      console.warn('No linear ring found to remove');
       return false;
     }
   }

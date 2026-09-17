@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, Optional, SimpleChanges, OnChanges, ChangeDetectionStrategy } from '@angular/core';
 import VectorTile from 'ol/layer/VectorTile.js';
 import VectorTileSource from 'ol/source/VectorTile.js';
-import Style from 'ol/style/Style.js';
+import { StyleLike } from 'ol/style/Style.js';
+import { FlatStyleLike } from 'ol/style/flat.js';
 import { MapComponent } from '../map.component';
 import { LayerComponent } from './layer.component';
 import { LayerGroupComponent } from './layergroup.component';
-import { StyleFunction } from 'ol/style/Style.js';
 import { VectorTileRenderType } from 'ol/layer/VectorTile.js';
 import { OrderFunction } from 'ol/render.js';
 import { BackgroundColor } from 'ol/layer/Base.js';
@@ -26,7 +26,7 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
   @Input()
   renderOrder: OrderFunction;
   @Input()
-  style: Style | Style[] | StyleFunction;
+  style: StyleLike | FlatStyleLike;
   @Input()
   updateWhileAnimating: boolean;
   @Input()
@@ -56,5 +56,7 @@ export class LayerVectorTileComponent extends LayerComponent implements OnInit, 
 
   ngOnChanges(changes: SimpleChanges) {
     super.ngOnChanges(changes);
+    if (this.instance && changes.style) this.instance.setStyle(this.style);
+    if (this.instance && changes.background) this.instance.setBackground(this.background);
   }
 }

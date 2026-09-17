@@ -41,7 +41,7 @@ export const examplesList = [
   },
   {
     title: 'Side by side',
-    description: 'Compare two independent maps in a shared layout.',
+    description: 'Compare two map layers with synchronized panning and zooming.',
     routerLink: 'side-by-side',
   },
   {
@@ -134,7 +134,7 @@ export const examplesList = [
   },
   {
     title: 'Draw hole in polygon',
-    description: 'Draw an interior ring in a polygon. Use Ctrl-click to remove a hole.',
+    description: 'Draw an interior ring in a polygon. Use Ctrl/Cmd-click to remove a hole.',
     routerLink: 'draw-hole-in-polygon',
   },
   {

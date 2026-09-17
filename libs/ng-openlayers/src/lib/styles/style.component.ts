@@ -1,4 +1,13 @@
-import { Component, Input, OnInit, Optional, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  OnDestroy,
+  Optional,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import Fill from 'ol/style/Fill.js';
 import Image from 'ol/style/Image.js';
 import Stroke from 'ol/style/Stroke.js';
@@ -15,7 +24,7 @@ import { GeometryFunction } from 'ol/style/Style.js';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class StyleComponent implements OnInit {
+export class StyleComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   geometry: string | Geometry | GeometryFunction;
   @Input()
@@ -50,5 +59,22 @@ export class StyleComponent implements OnInit {
     // console.log('creating aol-style instance with: ', this);
     this.instance = new Style(this);
     this.host.instance.setStyle(this.instance);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (!this.instance) return;
+    if (changes.geometry) this.instance.setGeometry(this.geometry);
+    if (changes.fill) this.instance.setFill(this.fill);
+    if (changes.image) this.instance.setImage(this.image);
+    if (changes.stroke) this.instance.setStroke(this.stroke);
+    if (changes.text) this.instance.setText(this.text);
+    if (changes.zIndex) this.instance.setZIndex(this.zIndex);
+    this.update();
+  }
+
+  ngOnDestroy() {
+    if (this.host.instance.getStyle() === this.instance) {
+      this.host.instance.setStyle(undefined);
+    }
   }
 }

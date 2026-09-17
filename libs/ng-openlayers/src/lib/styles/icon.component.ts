@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, OnDestroy, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import Icon from 'ol/style/Icon.js';
 
 // TODO https://github.com/openlayers/openlayers/issues/12694
@@ -13,7 +13,7 @@ import { IconAnchorUnits, IconOrigin } from 'ol/style/Icon.js';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class StyleIconComponent implements OnInit, OnChanges {
+export class StyleIconComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   anchor: [number, number];
   @Input()
@@ -25,7 +25,7 @@ export class StyleIconComponent implements OnInit, OnChanges {
   @Input()
   color: [number, number, number, number];
   @Input()
-  crossOrigin: IconOrigin;
+  crossOrigin: string | null;
   @Input()
   img: HTMLCanvasElement | HTMLImageElement;
   @Input()
@@ -57,6 +57,7 @@ export class StyleIconComponent implements OnInit, OnChanges {
     // console.log('creating ol.style.Icon instance with: ', this);
     this.instance = new Icon(this);
     this.host.instance.setImage(this.instance);
+    this.host.update();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -72,11 +73,20 @@ export class StyleIconComponent implements OnInit, OnChanges {
     if (changes.scale) {
       this.instance.setScale(changes.scale.currentValue);
     }
+    if (changes.anchor) this.instance.setAnchor(this.anchor);
+    if (changes.rotateWithView) this.instance.setRotateWithView(this.rotateWithView);
     if (changes.src) {
       this.instance = new Icon(this);
       this.host.instance.setImage(this.instance);
     }
     this.host.update();
     // console.log('changes detected in aol-style-icon: ', changes);
+  }
+
+  ngOnDestroy() {
+    if (this.host.instance.getImage() === this.instance) {
+      this.host.instance.setImage(null);
+      this.host.update();
+    }
   }
 }

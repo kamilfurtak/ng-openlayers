@@ -32,5 +32,6 @@ export class ControlZoomSliderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // console.log('removing aol-control-zoomslider');
     this.map.instance.removeControl(this.instance);
+    this.instance.dispose();
   }
 }

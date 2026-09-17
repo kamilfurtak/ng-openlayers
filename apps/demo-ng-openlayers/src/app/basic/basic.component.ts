@@ -46,11 +46,11 @@ import { MapComponent } from 'ng-openlayers';
             </aol-geometry-point>
             <aol-style>
               <aol-style-icon
-                [src]="'assets/marker.png'"
+                [src]="'assets/marker.svg'"
                 [anchor]="[0.5, 1]"
                 [anchorXUnits]="'fraction'"
                 [anchorYUnits]="'fraction'"
-                [scale]="0.1"
+                [scale]="2"
                 [anchorOrigin]="'top-left'"
               >
               </aol-style-icon>

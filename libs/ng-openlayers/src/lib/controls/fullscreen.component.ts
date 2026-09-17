@@ -34,5 +34,6 @@ export class ControlFullScreenComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // console.log('removing aol-control-fullscreen');
     this.map.instance.removeControl(this.instance);
+    this.instance.dispose();
   }
 }

@@ -13,7 +13,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Map } from 'ol';
+import Map from 'ol/Map.js';
 import MapBrowserEvent from 'ol/MapBrowserEvent.js';
 import MapEvent from 'ol/MapEvent.js';
 import { ObjectEvent } from 'ol/Object.js';

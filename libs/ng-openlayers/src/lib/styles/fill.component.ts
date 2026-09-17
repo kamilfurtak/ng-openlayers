@@ -1,4 +1,13 @@
-import { Component, Input, OnChanges, OnInit, Optional, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  OnDestroy,
+  Optional,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import Fill from 'ol/style/Fill.js';
 import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';
@@ -12,7 +21,7 @@ import { ColorLike } from 'ol/colorlike.js';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class StyleFillComponent implements OnInit, OnChanges {
+export class StyleFillComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   color: Color | ColorLike;
 
@@ -25,7 +34,7 @@ export class StyleFillComponent implements OnInit, OnChanges {
     @Optional() styleTextHost: StyleTextComponent
   ) {
     if (!styleHost) {
-      throw new Error('aol-style-stroke must be a descendant of aol-style');
+      throw new Error('aol-style-fill must be a descendant of aol-style');
     }
     if (styleTextHost) {
       this.host = styleTextHost;
@@ -50,11 +59,13 @@ export class StyleFillComponent implements OnInit, OnChanges {
         break;
       case 'style-circle':
         (this.host as StyleCircleComponent).fill = this.instance;
+        this.host.instance?.setFill(this.instance);
         // console.log('setting ol.style.circle instance\'s fill:', this.host);
         break;
       default:
         throw new Error('unknown host type: ' + this.host);
     }
+    this.host.update();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -66,5 +77,15 @@ export class StyleFillComponent implements OnInit, OnChanges {
     }
     this.host.update();
     // console.log('changes detected in aol-style-fill, setting new color: ', changes);
+  }
+
+  ngOnDestroy() {
+    if (this.host instanceof StyleCircleComponent && this.host.fill === this.instance) {
+      this.host.fill = null;
+    }
+    if (this.host.instance?.getFill() === this.instance) {
+      this.host.instance.setFill(null);
+      this.host.update();
+    }
   }
 }

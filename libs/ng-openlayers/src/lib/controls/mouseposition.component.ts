@@ -34,5 +34,6 @@ export class ControlMousePositionComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // console.log('removing aol-control-mouseposition');
     this.map.instance.removeControl(this.instance);
+    this.instance.dispose();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, signal } from '@angular/core';
 import OLFeature from 'ol/Feature';
 import Projection from 'ol/proj/Projection';
 import GeoJSON from 'ol/format/GeoJSON.js';
@@ -24,7 +24,11 @@ import { MapComponent } from 'ng-openlayers';
   template: `
     <aol-map #map width="100%" height="100%">
       <aol-interaction-default></aol-interaction-default>
-      <aol-interaction-select [wrapX]="true" #select></aol-interaction-select>
+      <aol-interaction-select
+        [wrapX]="true"
+        #select
+        (olSelect)="selectedCount.set(select.instance.getFeatures().getLength())"
+      ></aol-interaction-select>
       <aol-interaction-modify
         #modify
         [features]="select.instance.getFeatures()"
@@ -53,6 +57,10 @@ import { MapComponent } from 'ng-openlayers';
     </aol-map>
 
     <div class="info">
+      <p>
+        Selected features: <output aria-label="Selected features">{{ selectedCount() }}</output>
+      </p>
+      <p>Click the polygon to select it, then drag a vertex to edit its geometry.</p>
       <h3>Result</h3>
       <code>
         <pre>{{ feature | json }}</pre>
@@ -97,6 +105,7 @@ import { MapComponent } from 'ng-openlayers';
 export class ModifyPolygonComponent implements OnInit {
   constructor() {}
 
+  readonly selectedCount = signal(0);
   format: GeoJSON = new GeoJSON();
   displayProj = new Projection({ code: 'EPSG:3857' });
   inputProj = new Projection({ code: 'EPSG:4326' });

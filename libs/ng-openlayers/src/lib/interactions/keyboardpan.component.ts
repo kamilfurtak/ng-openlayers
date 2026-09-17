@@ -6,7 +6,7 @@ import { MapComponent } from '../map.component';
   selector: 'aol-interaction-keyboardpan',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
+  standalone: true,
 })
 export class KeyboardPanInteractionComponent implements OnInit, OnDestroy {
   @Input()
@@ -25,5 +25,6 @@ export class KeyboardPanInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+    this.instance?.dispose();
   }
 }

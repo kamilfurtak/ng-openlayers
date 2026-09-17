@@ -14,6 +14,7 @@ import { Config } from 'ol/source/TileJSON.js';
 export class SourceUTFGridComponent extends SourceComponent implements OnInit {
   @Input() tileJSON: Config;
   @Input() url: string;
+  @Input() preemptive = true;
 
   instance: UTFGrid;
 

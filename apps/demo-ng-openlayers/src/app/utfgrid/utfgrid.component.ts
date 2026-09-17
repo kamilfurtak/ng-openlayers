@@ -24,7 +24,7 @@ import { Coordinate } from 'ol/coordinate';
       <aol-view #view [zoom]="2" [center]="[3000000, 3000000]"></aol-view>
       <aol-layer-tile> <aol-source-osm></aol-source-osm> </aol-layer-tile>
       <aol-layer-tile>
-        <aol-source-utfgrid #UTFGrid url="/assets/utfgrid/tilejson.json"></aol-source-utfgrid>
+        <aol-source-utfgrid #UTFGrid url="/assets/utfgrid/tilejson.json" [preemptive]="false"></aol-source-utfgrid>
       </aol-layer-tile>
       @if (info(); as detail) {
         <aol-overlay [positioning]="'bottom-right'" [stopEvent]="false">
@@ -76,14 +76,24 @@ export class UTFGridComponent {
 
   readonly info = signal<Record<string, string> | null>(null);
   readonly coords = signal<Coordinate>([0, 0]);
+  private infoRequest = 0;
 
   displayInfo(c: Coordinate) {
-    this.UTFGrid.instance.forDataAtCoordinateAndResolution(c, this.view.instance.getResolution(), (data) => {
-      if (this.isUtfGridInfo(data)) {
-        this.info.set(data);
-        this.coords.set(c);
-      }
-    });
+    const request = ++this.infoRequest;
+    this.UTFGrid.instance.forDataAtCoordinateAndResolution(
+      c,
+      this.view.instance.getResolution(),
+      (data) => {
+        if (request !== this.infoRequest) return;
+        if (this.isUtfGridInfo(data)) {
+          this.info.set(data);
+          this.coords.set(c);
+        } else {
+          this.info.set(null);
+        }
+      },
+      true
+    );
   }
 
   private isUtfGridInfo(data: unknown): data is Record<string, string> {

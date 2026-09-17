@@ -71,9 +71,7 @@ export class CursorPositionComponent implements OnInit {
   ngOnInit() {}
 
   dispatchCursor(event): void {
-    const coordinates = event.coordinate;
-    this.lon = transform(coordinates, 'EPSG:3857', 'EPSG:4326')[0];
-    this.lat = transform(coordinates, 'EPSG:3857', 'EPSG:4326')[1];
+    [this.lon, this.lat] = transform(event.coordinate, 'EPSG:3857', 'EPSG:4326');
   }
 
   latToString(lat: number) {
@@ -86,6 +84,6 @@ export class CursorPositionComponent implements OnInit {
 }
 
 function toSexagesimal(value: number, positiveSuffix: string, negativeSuffix: string): string {
-  const modValue = ((value + 180) % 360) - 180;
-  return (modValue > 0 ? positiveSuffix : negativeSuffix) + Math.abs(modValue).toFixed(6);
+  const modValue = ((((value + 180) % 360) + 360) % 360) - 180;
+  return (modValue >= 0 ? positiveSuffix : negativeSuffix) + Math.abs(modValue).toFixed(6);
 }

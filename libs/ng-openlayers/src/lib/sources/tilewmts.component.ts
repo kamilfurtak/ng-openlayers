@@ -74,7 +74,23 @@ export class SourceTileWMTSComponent extends SourceComponent implements AfterCon
   tileLoadError = new EventEmitter<TileSourceEvent>();
 
   @ContentChild(TileGridWMTSComponent, { static: false })
-  tileGridWMTS: TileGridWMTSComponent;
+  set tileGridWMTS(component: TileGridWMTSComponent | undefined) {
+    this.gridComponent = component;
+    this.observeContent('grid', component?.instanceChange, () => {
+      this.tileGrid = component.instance;
+      if (this.instance) this.setLayerSource();
+    });
+    if (this.instance && component) {
+      this.tileGrid = component.instance;
+      this.setLayerSource();
+    }
+  }
+
+  get tileGridWMTS(): TileGridWMTSComponent | undefined {
+    return this.gridComponent;
+  }
+
+  private gridComponent?: TileGridWMTSComponent;
 
   instance: SourceWMTS;
 
@@ -83,38 +99,27 @@ export class SourceTileWMTSComponent extends SourceComponent implements AfterCon
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: Record<string, unknown> = {};
-    if (!this.instance) {
-      return;
-    }
-    for (const key in changes) {
-      if (changes.hasOwnProperty(key)) {
-        switch (key) {
-          case 'url':
-            this.url = changes[key].currentValue;
-            this.setLayerSource();
-            break;
-          default:
-            break;
-        }
-        properties[key] = changes[key].currentValue;
-      }
-    }
-    this.instance.setProperties(properties, false);
+    if (!this.instance) return;
+    if (changes.urls) this.instance.setUrls(this.urls);
+    else if (changes.url) this.instance.setUrl(this.url);
+    if (changes.dimensions) this.instance.updateDimensions(this.dimensions);
+    if (changes.attributions) this.instance.setAttributions(this.attributions);
   }
 
   setLayerSource(): void {
+    const previous = this.instance;
     this.instance = new SourceWMTS(this);
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
     this.instance.on('tileloadend', (event: TileSourceEvent) => this.tileLoadEnd.emit(event));
     this.instance.on('tileloaderror', (event: TileSourceEvent) => this.tileLoadError.emit(event));
     this.host.instance.setSource(this.instance);
+    previous?.dispose();
   }
 
   ngAfterContentInit(): void {
     if (this.tileGridWMTS) {
       this.tileGrid = this.tileGridWMTS.instance;
-      this.setLayerSource();
     }
+    this.setLayerSource();
   }
 }

@@ -3,10 +3,10 @@ import KeyboardZoom from 'ol/interaction/KeyboardZoom.js';
 import { MapComponent } from '../map.component';
 
 @Component({
-  selector: 'aol-interaction-keyboardpan',
+  selector: 'aol-interaction-keyboardzoom',
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
+  standalone: true,
 })
 export class KeyboardZoomInteractionComponent implements OnInit, OnDestroy {
   @Input()
@@ -25,5 +25,6 @@ export class KeyboardZoomInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+    this.instance?.dispose();
   }
 }

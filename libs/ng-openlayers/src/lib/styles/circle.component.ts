@@ -60,11 +60,17 @@ export class StyleCircleComponent implements AfterContentInit, OnChanges, OnDest
     if (changes.radius) {
       this.instance.setRadius(changes.radius.currentValue);
     }
+    if (changes.fill) this.instance.setFill(this.fill);
+    if (changes.stroke) this.instance.setStroke(this.stroke);
+    this.host.update();
     // console.log('changes detected in aol-style-circle, setting new radius: ', changes['radius'].currentValue);
   }
 
   ngOnDestroy() {
     // console.log('removing aol-style-circle');
-    this.host.instance.setImage(null);
+    if (this.host.instance.getImage() === this.instance) {
+      this.host.instance.setImage(null);
+      this.host.update();
+    }
   }
 }

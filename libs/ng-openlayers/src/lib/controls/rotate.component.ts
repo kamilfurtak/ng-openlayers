@@ -34,5 +34,6 @@ export class ControlRotateComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // console.log('removing aol-control-rotate');
     this.map.instance.removeControl(this.instance);
+    this.instance.dispose();
   }
 }

@@ -33,5 +33,6 @@ export class ControlZoomToExtentComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // console.log('removing aol-control-zoomtoextent');
     this.map.instance.removeControl(this.instance);
+    this.instance.dispose();
   }
 }

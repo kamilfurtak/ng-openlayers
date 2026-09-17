@@ -46,8 +46,8 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
   sources: Source[] = [];
 
   @ContentChild(SourceComponent, { static: false })
-  set source(sourceComponent: SourceComponent) {
-    this.sources = [sourceComponent.instance];
+  set source(sourceComponent: SourceComponent | undefined) {
+    this.sources = sourceComponent?.instance ? [sourceComponent.instance] : [];
     if (this.instance) {
       // Openlayer doesn't handle sources update. Just recreate Raster instance.
       this.init();
@@ -63,9 +63,11 @@ export class SourceRasterComponent extends SourceComponent implements AfterConte
   }
 
   init() {
+    const previous = this.instance;
     this.instance = new Raster(this);
     this.instance.on('beforeoperations', (event: RasterSourceEvent) => this.beforeOperations.emit(event));
     this.instance.on('afteroperations', (event: RasterSourceEvent) => this.afterOperations.emit(event));
     this.register(this.instance);
+    previous?.dispose();
   }
 }

@@ -59,7 +59,7 @@ import {
       <button type="button" (click)="clearMeasurements()">Clear</button>
 
       <h3>Result</h3>
-      <p [innerHTML]="lastMeasurement"></p>
+      <p><output aria-label="Measurement result" [innerHTML]="lastMeasurement"></output></p>
     </div>
   `,
   styles: [

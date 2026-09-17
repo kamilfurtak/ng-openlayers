@@ -29,7 +29,8 @@
         "tsConfig": "libs/ng-openlayers/tsconfig.spec.json",
         "karmaConfig": "libs/ng-openlayers/karma.conf.js",
         "polyfills": ["zone.js"]
-      }
+      },
+      "outputs": ["{workspaceRoot}/coverage/ng-openlayers"]
     }
   }
 }

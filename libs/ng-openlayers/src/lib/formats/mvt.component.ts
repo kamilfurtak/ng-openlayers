@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, forwardRef, Input, OnChanges, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormatComponent } from './format.component';
 import MVT from 'ol/format/MVT.js';
 import { FeatureClass, FeatureLike } from 'ol/Feature.js';
@@ -10,7 +10,7 @@ import { FeatureClass, FeatureLike } from 'ol/Feature.js';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class FormatMVTComponent extends FormatComponent {
+export class FormatMVTComponent extends FormatComponent implements OnInit, OnChanges {
   @Input()
   featureClass: FeatureClass;
   @Input()
@@ -24,6 +24,14 @@ export class FormatMVTComponent extends FormatComponent {
 
   constructor() {
     super();
+  }
+
+  ngOnInit() {
+    if (!this.instance) this.ngOnChanges();
+  }
+
+  ngOnChanges() {
     this.instance = new MVT<FeatureLike>(this);
+    this.instanceChange.emit(this.instance);
   }
 }

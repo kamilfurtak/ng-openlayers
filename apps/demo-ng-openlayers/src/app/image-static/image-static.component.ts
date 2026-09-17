@@ -18,7 +18,7 @@ import { MapComponent } from 'ng-openlayers';
     </aol-map>
     <div class="controls">
       Current image url:
-      <select (change)="onUrlChange($event)">
+      <select aria-label="Image URL" (change)="onUrlChange($event)">
         <option value="https://imgs.xkcd.com/comics/online_communities.png">
           https://imgs.xkcd.com/comics/online_communities.png
         </option>

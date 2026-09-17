@@ -244,6 +244,8 @@ const COMPONENTS = [
   PinchZoomInteractionComponent,
   DrawInteractionComponent,
   MeasureInteractionComponent,
+  KeyboardPanInteractionComponent,
+  KeyboardZoomInteractionComponent,
   SelectInteractionComponent,
   ModifyInteractionComponent,
   TranslateInteractionComponent,

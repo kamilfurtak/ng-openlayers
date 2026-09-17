@@ -33,22 +33,12 @@ export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestro
   constructor(private map: MapComponent) {}
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: Record<string, unknown> = {};
-
-    if (!this.instance) {
+    if (!this.instance || !Object.keys(changes).length) {
       return;
     }
-
-    for (const key in changes) {
-      if (Object.prototype.hasOwnProperty.call(changes, key)) {
-        properties[key] = changes[key].currentValue;
-      }
-    }
-
-    if (properties) {
-      this.instance = new Graticule(properties);
-    }
-    this.instance.setMap(this.map.instance);
+    this.instance.setMap(null);
+    this.instance.dispose();
+    this.ngAfterContentInit();
   }
 
   ngAfterContentInit(): void {
@@ -62,6 +52,9 @@ export class GraticuleComponent implements AfterContentInit, OnChanges, OnDestro
   }
 
   ngOnDestroy(): void {
-    this.instance.setMap(null);
+    if (this.instance) {
+      this.instance.setMap(null);
+      this.instance.dispose();
+    }
   }
 }

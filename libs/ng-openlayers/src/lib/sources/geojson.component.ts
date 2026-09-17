@@ -31,7 +31,11 @@ export class SourceGeoJSONComponent extends SourceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.format = new GeoJSON(this);
+    this.format = new GeoJSON({
+      dataProjection: this.defaultDataProjection,
+      featureProjection: this.featureProjection,
+      geometryName: this.geometryName,
+    });
     this.instance = new Vector(this);
     this.host.instance.setSource(this.instance);
   }
