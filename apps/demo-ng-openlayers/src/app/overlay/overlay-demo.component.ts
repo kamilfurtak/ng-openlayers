@@ -54,13 +54,12 @@ import {
   styles: [
     `
       .tooltip {
-        margin-top: 35%;
-        right: 50%;
-        position: relative;
+        max-width: min(260px, 70vw);
+        text-align: center;
         border-radius: 4px;
         color: white;
         padding: 4px 8px;
-        white-space: nowrap;
+        white-space: normal;
       }
 
       .tooltip-static {
@@ -109,8 +108,8 @@ export class OverlayDemoComponent {
   };
 
   tooltip = {
-    lon: 0,
-    lat: 0,
-    text: 'Lorem ipsum dolor sit amet',
+    lon: -2.269282,
+    lat: 46.987247,
+    text: 'An HTML overlay anchored to the map',
   };
 }

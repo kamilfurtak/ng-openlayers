@@ -53,7 +53,7 @@ export class CollectionCoordinatesComponent implements OnChanges, OnInit, OnDest
 
   ngOnInit() {
     this.viewChangeKey = this.map.instance.on('change:view', (e) => this.onMapViewChanged(e));
-    this.mapSrid = this.map.instance.getView().getProjection().getCode();
+    this.mapSrid = this.map.instance.getView()?.getProjection().getCode() ?? this.mapSrid;
     this.transformCoordinates();
   }
 
@@ -69,7 +69,9 @@ export class CollectionCoordinatesComponent implements OnChanges, OnInit, OnDest
   }
 
   private onMapViewChanged(event: ObjectEvent) {
-    this.mapSrid = event.target.get(event.key).getProjection().getCode();
+    const view = event.target.get(event.key);
+    if (!view) return;
+    this.mapSrid = view.getProjection().getCode();
     this.transformCoordinates();
   }
 

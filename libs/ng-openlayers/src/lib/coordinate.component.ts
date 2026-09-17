@@ -52,12 +52,14 @@ export class CoordinateComponent implements OnChanges, OnInit, OnDestroy {
       this.host = viewHost as unknown as CoordinateHost;
     } else if (overlayHost !== null) {
       this.host = overlayHost as unknown as CoordinateHost;
+    } else {
+      throw new Error('aol-coordinate must be a child of a view, point, circle or overlay component');
     }
   }
 
   ngOnInit() {
     this.viewChangeKey = this.map.instance.on('change:view', (e) => this.onMapViewChanged(e));
-    this.mapSrid = this.map.instance.getView().getProjection().getCode();
+    this.mapSrid = this.map.instance.getView()?.getProjection().getCode() ?? this.mapSrid;
     this.transformCoordinates();
   }
 
@@ -73,11 +75,14 @@ export class CoordinateComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   private onMapViewChanged(event: ObjectEvent) {
-    this.mapSrid = event.target.get(event.key).getProjection().getCode();
+    const view = event.target.get(event.key);
+    if (!view) return;
+    this.mapSrid = view.getProjection().getCode();
     this.transformCoordinates();
   }
 
   private transformCoordinates() {
+    if (!this.host.instance) return;
     let transformedCoordinates: number[];
 
     if (this.srid === this.mapSrid) {

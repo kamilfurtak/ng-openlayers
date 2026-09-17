@@ -1,14 +1,23 @@
-import { Component, Input, Optional, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Optional,
+  OnInit,
+  OnChanges,
+  OnDestroy,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import Text from 'ol/style/Text.js';
 import { StyleComponent } from './style.component';
 
 @Component({
   selector: 'aol-style-text',
-  template: ` <div class="aol-style-text"></div> `,
+  template: '<ng-content></ng-content>',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class StyleTextComponent implements OnInit, OnChanges {
+export class StyleTextComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   font: string | undefined;
   @Input()
@@ -40,8 +49,9 @@ export class StyleTextComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     // console.log('creating ol.style.Text instance with: ', this);
-    this.instance = new Text(this);
+    this.instance = new Text({ ...this, textBaseline: this.textBaseLine as CanvasTextBaseline });
     this.host.instance.setText(this.instance);
+    this.host.update();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -63,6 +73,9 @@ export class StyleTextComponent implements OnInit, OnChanges {
     if (changes.rotation) {
       this.instance.setRotation(changes.rotation.currentValue);
     }
+    if (changes.rotateWithView) {
+      this.instance.setRotateWithView(this.rotateWithView);
+    }
     if (changes.text) {
       this.instance.setText(changes.text.currentValue);
     }
@@ -76,5 +89,14 @@ export class StyleTextComponent implements OnInit, OnChanges {
     // console.log('changes detected in aol-style-text, setting new properties: ', changes);
   }
 
-  update() {}
+  update() {
+    this.host.update();
+  }
+
+  ngOnDestroy() {
+    if (this.host.instance.getText() === this.instance) {
+      this.host.instance.setText(null);
+      this.host.update();
+    }
+  }
 }

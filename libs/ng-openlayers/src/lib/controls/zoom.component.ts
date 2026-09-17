@@ -36,5 +36,6 @@ export class ControlZoomComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // console.log('removing aol-control-zoom');
     this.map.instance.removeControl(this.instance);
+    this.instance.dispose();
   }
 }

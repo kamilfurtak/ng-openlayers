@@ -35,7 +35,20 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   wrapX?: boolean;
 
   @ContentChild(SourceVectorComponent, { static: false })
-  sourceVectorComponent: SourceVectorComponent;
+  set sourceVectorComponent(component: SourceVectorComponent | undefined) {
+    this.vectorComponent = component;
+    this.source = component?.instance;
+    if (this.instance) {
+      this.instance.setSource(this.source ?? null);
+      this.register(this.instance);
+    }
+  }
+
+  get sourceVectorComponent(): SourceVectorComponent | undefined {
+    return this.vectorComponent;
+  }
+
+  private vectorComponent?: SourceVectorComponent;
 
   instance: Cluster;
   source: Vector;
@@ -45,7 +58,7 @@ export class SourceClusterComponent extends SourceComponent implements AfterCont
   }
 
   ngAfterContentInit() {
-    this.source = this.sourceVectorComponent.instance;
+    this.source = this.sourceVectorComponent?.instance;
 
     this.instance = new Cluster(this);
     this.host.instance.setSource(this.instance);

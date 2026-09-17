@@ -5,7 +5,12 @@ module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine'],
-    plugins: [require('karma-jasmine'), require('karma-chrome-launcher'), require('karma-jasmine-html-reporter')],
+    plugins: [
+      require('karma-jasmine'),
+      require('karma-chrome-launcher'),
+      require('karma-jasmine-html-reporter'),
+      require('karma-coverage'),
+    ],
     client: {
       clearContext: false, // leave Jasmine Spec Runner output visible in browser
     },
@@ -16,5 +21,11 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false,
+    coverageReporter: {
+      dir: require('path').join(__dirname, '../../coverage/demo-ng-openlayers'),
+      subdir: '.',
+      check: { global: { statements: 75, branches: 90, functions: 50, lines: 80 } },
+      reporters: [{ type: 'html' }, { type: 'text-summary' }, { type: 'json-summary' }, { type: 'lcovonly' }],
+    },
   });
 };

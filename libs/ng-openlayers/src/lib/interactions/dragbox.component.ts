@@ -29,5 +29,6 @@ export class DragBoxInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+    this.instance?.dispose();
   }
 }

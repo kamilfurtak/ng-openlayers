@@ -21,7 +21,7 @@ import { MapComponent } from 'ng-openlayers';
   template: `
     <aol-map [width]="'100%'" [height]="'100%'">
       <aol-interaction-default></aol-interaction-default>
-      <aol-view [zoom]="zoom" [projection]="viewProjection" (changeResolution)="onResolutionChange()">
+      <aol-view #view [zoom]="zoom" [projection]="viewProjection" (changeResolution)="onResolutionChange()">
         <aol-coordinate [x]="0" [y]="0" [srid]="'EPSG:4326'"></aol-coordinate>
       </aol-view>
       <aol-layer-tile> <aol-source-osm></aol-source-osm> </aol-layer-tile>
@@ -44,11 +44,11 @@ import { MapComponent } from 'ng-openlayers';
             </aol-geometry-point>
             <aol-style>
               <aol-style-icon
-                [src]="'assets/marker.png'"
+                [src]="'assets/marker.svg'"
                 [anchor]="[0.5, 1]"
                 [anchorXUnits]="'fraction'"
                 [anchorYUnits]="'fraction'"
-                [scale]="0.1"
+                [scale]="2"
                 [anchorOrigin]="'top-left'"
               >
               </aol-style-icon>
@@ -58,7 +58,7 @@ import { MapComponent } from 'ng-openlayers';
       </aol-layer-vector>
     </aol-map>
     <div class="controls">
-      Current projection:
+      Active projection: <output aria-label="Active projection">{{ view.instance?.getProjection()?.getCode() }}</output>
       <select aria-label="Projection" (change)="projectionChange($event)">
         <option value="EPSG:3857">EPSG:3857</option>
         <option value="EPSG:4326">EPSG:4326</option>

@@ -24,5 +24,6 @@ export class ControlScaleLineComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeControl(this.instance);
+    this.instance.dispose();
   }
 }

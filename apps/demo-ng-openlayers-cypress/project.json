@@ -1,0 +1,20 @@
+{
+  "name": "demo-ng-openlayers-cypress",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/demo-ng-openlayers-cypress/src",
+  "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["demo-ng-openlayers"],
+  "targets": {
+    "e2e": {
+      "executor": "nx:run-commands",
+      "cache": false,
+      "dependsOn": ["typecheck"],
+      "options": { "command": "node tools/run-cypress.mjs" }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": { "command": "tsc --project apps/demo-ng-openlayers-cypress/tsconfig.json" }
+    }
+  }
+}

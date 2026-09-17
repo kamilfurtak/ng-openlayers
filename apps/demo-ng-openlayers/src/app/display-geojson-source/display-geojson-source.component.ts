@@ -1,7 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SourceGeoJSONComponent } from 'ng-openlayers';
-import { FeatureComponent } from 'ng-openlayers';
-import { SourceVectorComponent } from 'ng-openlayers';
 import { LayerVectorComponent } from 'ng-openlayers';
 import { LayerGroupComponent } from 'ng-openlayers';
 import { SourceOsmComponent } from 'ng-openlayers';
@@ -27,14 +25,9 @@ import { MapComponent } from 'ng-openlayers';
 
       <aol-layer-group>
         <aol-layer-vector>
-          <aol-source-vector>
-            <aol-feature>
-              <aol-source-geojson
-                [url]="'https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json'"
-              >
-              </aol-source-geojson>
-            </aol-feature>
-          </aol-source-vector>
+          <aol-source-geojson
+            url="https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
+          ></aol-source-geojson>
         </aol-layer-vector>
       </aol-layer-group>
     </aol-map>
@@ -50,8 +43,6 @@ import { MapComponent } from 'ng-openlayers';
     SourceOsmComponent,
     LayerGroupComponent,
     LayerVectorComponent,
-    SourceVectorComponent,
-    FeatureComponent,
     SourceGeoJSONComponent,
   ],
 })

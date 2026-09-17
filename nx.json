@@ -69,7 +69,7 @@
     ],
     "e2e": {
       "inputs": ["default", "^production", "{workspaceRoot}/playwright.config.ts"],
-      "cache": true
+      "cache": false
     }
   },
   "defaultBase": "master",

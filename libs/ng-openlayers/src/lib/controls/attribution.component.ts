@@ -31,5 +31,6 @@ export class ControlAttributionComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // console.log('removing aol-control-attribution');
     this.map.instance.removeControl(this.instance);
+    this.instance.dispose();
   }
 }

@@ -26,5 +26,6 @@ export class DragRotateAndZoomInteractionComponent implements OnInit, OnDestroy 
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+    this.instance?.dispose();
   }
 }

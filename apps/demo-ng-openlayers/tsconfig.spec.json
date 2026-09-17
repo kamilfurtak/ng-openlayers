@@ -6,9 +6,10 @@
     "moduleResolution": "bundler",
     "module": "preserve",
     "lib": ["dom", "es2022"],
-    "isolatedModules": true
+    "isolatedModules": true,
+    "resolveJsonModule": true
   },
-  "files": ["src/test.ts", "src/polyfills.ts"],
+  "files": ["src/test.ts"],
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"],
   "angularCompilerOptions": {
     "extendedDiagnostics": {

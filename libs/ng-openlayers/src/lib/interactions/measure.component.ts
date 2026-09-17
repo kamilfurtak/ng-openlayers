@@ -94,6 +94,7 @@ export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit
   private helpTooltipElement?: HTMLElement;
   private sketch?: Feature<Geometry>;
   private geometryChangeKey?: EventsKey;
+  private interactionKeys: EventsKey[] = [];
   private pointerMoveKey?: EventsKey;
   private readonly staticMeasureOverlays: Overlay[] = [];
 
@@ -139,6 +140,10 @@ export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit
       this.recreateInteraction();
     }
 
+    if (changes.unit && this.sketch?.getGeometry()) {
+      this.updateMeasureTooltip(this.sketch.getGeometry());
+    }
+
     if (changes.showHelpTooltip) {
       this.syncHelpTooltip();
     }
@@ -157,8 +162,13 @@ export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit
   }
 
   clearMeasurements(): void {
+    this.instance?.abortDrawing();
+    this.resetSketch();
     this.activeSource.clear();
-    this.staticMeasureOverlays.forEach((overlay) => this.map.instance.removeOverlay(overlay));
+    this.staticMeasureOverlays.forEach((overlay) => {
+      this.map.instance.removeOverlay(overlay);
+      overlay.dispose();
+    });
     this.staticMeasureOverlays.length = 0;
     this.resetActiveMeasureTooltip();
   }
@@ -168,12 +178,13 @@ export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit
     this.removeInternalLayer();
     this.removeHelpTooltip();
     this.removeMeasureTooltip();
-    this.staticMeasureOverlays.forEach((overlay) => this.map.instance.removeOverlay(overlay));
+    this.staticMeasureOverlays.forEach((overlay) => {
+      this.map.instance.removeOverlay(overlay);
+      overlay.dispose();
+    });
     this.staticMeasureOverlays.length = 0;
 
-    if (this.geometryChangeKey) {
-      unByKey(this.geometryChangeKey);
-    }
+    this.internalSource.dispose();
   }
 
   private get activeSource(): VectorSource {
@@ -186,28 +197,39 @@ export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit
       style: this.style ?? this.defaultStyle,
       type: this.type as Type,
     });
-    this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event));
-    this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event));
-    this.instance.on('drawend', (event: DrawEvent) => this.handleDrawEnd(event));
-    this.instance.on('drawstart', (event: DrawEvent) => this.handleDrawStart(event));
-    this.instance.on('error', (event: BaseEvent) => this.olError.emit(event));
-    this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event));
+    this.interactionKeys = [
+      this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event)),
+      this.instance.on('change:active', (event: ObjectEvent) => this.olChangeActive.emit(event)),
+      this.instance.on('drawend', (event: DrawEvent) => this.handleDrawEnd(event)),
+      this.instance.on('drawstart', (event: DrawEvent) => this.handleDrawStart(event)),
+      this.instance.on('drawabort', () => {
+        this.resetSketch();
+        this.resetActiveMeasureTooltip();
+      }),
+      this.instance.on('error', (event: BaseEvent) => this.olError.emit(event)),
+      this.instance.on('propertychange', (event: ObjectEvent) => this.propertyChange.emit(event)),
+    ];
     this.map.instance.addInteraction(this.instance);
   }
 
   private recreateInteraction(): void {
-    this.sketch = undefined;
+    this.removeInteraction();
+    this.resetActiveMeasureTooltip();
+    this.createInteraction();
+  }
 
+  private resetSketch(): void {
+    this.sketch = undefined;
     if (this.geometryChangeKey) {
       unByKey(this.geometryChangeKey);
       this.geometryChangeKey = undefined;
     }
-
-    this.removeInteraction();
-    this.createInteraction();
   }
 
   private removeInteraction(): void {
+    this.resetSketch();
+    unByKey(this.interactionKeys);
+    this.interactionKeys = [];
     if (this.instance) {
       this.map.instance.removeInteraction(this.instance);
       this.instance.dispose();
@@ -238,10 +260,12 @@ export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit
     }
 
     this.map.instance.removeLayer(this.internalLayer);
+    this.internalLayer.dispose();
     this.internalLayer = undefined;
   }
 
   private handleDrawStart(event: DrawEvent): void {
+    this.resetSketch();
     this.sketch = event.feature;
     this.measureStart.emit(event.feature);
     this.drawStart.emit(event);
@@ -251,6 +275,7 @@ export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit
       return;
     }
 
+    this.updateMeasureTooltip(geometry);
     this.geometryChangeKey = geometry.on('change', (geometryEvent: BaseEvent) => {
       this.updateMeasureTooltip(geometryEvent.target as Geometry);
     });
@@ -264,13 +289,13 @@ export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit
     }
 
     this.drawEnd.emit(event);
-    this.freezeActiveMeasureTooltip();
-    this.sketch = undefined;
-
-    if (this.geometryChangeKey) {
-      unByKey(this.geometryChangeKey);
-      this.geometryChangeKey = undefined;
+    if (result) {
+      this.updateMeasureTooltip(event.feature.getGeometry());
+      this.freezeActiveMeasureTooltip();
+    } else {
+      this.removeMeasureTooltip();
     }
+    this.resetSketch();
 
     this.createMeasureTooltip();
   }
@@ -279,7 +304,7 @@ export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit
     const geometry = feature.getGeometry();
 
     if (geometry instanceof Polygon) {
-      const measure = getArea(geometry);
+      const measure = getArea(geometry, { projection: this.map.instance.getView().getProjection() });
 
       return {
         feature,
@@ -291,7 +316,7 @@ export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit
     }
 
     if (geometry instanceof LineString) {
-      const measure = getLength(geometry);
+      const measure = getLength(geometry, { projection: this.map.instance.getView().getProjection() });
 
       return {
         feature,
@@ -321,14 +346,18 @@ export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit
   ): { formattedMeasure: string; tooltipCoordinate: number[] } | undefined {
     if (geometry instanceof Polygon) {
       return {
-        formattedMeasure: this.formatArea(getArea(geometry)),
+        formattedMeasure: this.formatArea(
+          getArea(geometry, { projection: this.map.instance.getView().getProjection() })
+        ),
         tooltipCoordinate: geometry.getInteriorPoint().getCoordinates(),
       };
     }
 
     if (geometry instanceof LineString) {
       return {
-        formattedMeasure: this.formatLength(getLength(geometry)),
+        formattedMeasure: this.formatLength(
+          getLength(geometry, { projection: this.map.instance.getView().getProjection() })
+        ),
         tooltipCoordinate: geometry.getLastCoordinate(),
       };
     }
@@ -393,6 +422,7 @@ export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit
   private removeMeasureTooltip(): void {
     if (this.measureTooltip) {
       this.map.instance.removeOverlay(this.measureTooltip);
+      this.measureTooltip.dispose();
       this.measureTooltip = undefined;
     }
 
@@ -438,6 +468,7 @@ export class MeasureInteractionComponent implements OnChanges, OnDestroy, OnInit
 
     if (this.helpTooltip) {
       this.map.instance.removeOverlay(this.helpTooltip);
+      this.helpTooltip.dispose();
       this.helpTooltip = undefined;
     }
 

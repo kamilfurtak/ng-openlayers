@@ -39,6 +39,8 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
 
   ngOnDestroy() {
     this.map.instance.removeControl(this.instance);
+    this.instance.getOverviewMap().dispose();
+    this.instance.dispose();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -49,6 +51,8 @@ export class ControlOverviewMapComponent implements OnInit, OnChanges, OnDestroy
 
   private reloadInstance() {
     this.map.instance.removeControl(this.instance);
+    this.instance.getOverviewMap().dispose();
+    this.instance.dispose();
     this.instance = new OverviewMap(this);
     this.map.instance.addControl(this.instance);
   }

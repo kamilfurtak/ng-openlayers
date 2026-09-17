@@ -25,8 +25,8 @@ module.exports = function (config) {
     coverageReporter: {
       dir: require('path').join(__dirname, '../../coverage/ng-openlayers'),
       subdir: '.',
-      check: { global: { statements: 30, branches: 20, functions: 20, lines: 30 } },
-      reporters: [{ type: 'html' }, { type: 'text-summary' }],
+      check: { global: { statements: 85, branches: 75, functions: 80, lines: 90 } },
+      reporters: [{ type: 'html' }, { type: 'text-summary' }, { type: 'json-summary' }, { type: 'lcovonly' }],
     },
   });
 };

@@ -9,47 +9,70 @@ npm run test-ci
 npm run build
 npx playwright install chromium
 npm run e2e
+npm run e2e:cypress
 npm run test:consumer
 npm audit
 ```
 
-`test-ci` uses Jasmine/Karma and real OpenLayers objects in ChromeHeadless. Set `CHROME_BIN` if Chrome is not detected. `e2e` builds and serves the production static site. `test:consumer` installs the actual library tarball into an independent Angular 22 application and verifies compilation and lifecycle behavior without source aliases.
+`npm run test:all` runs lint, both unit suites, both production browser suites and the packaged consumer. Install Chrome and Playwright Chromium first. `test` is a finite run; `test:watch:lib` and `test:watch:demo` start individual unit watchers.
 
-## Verified on 2026-09-16
+`test-ci` uses Jasmine/Karma with real OpenLayers objects in ChromeHeadless. Demo tests run without Zone.js, matching the application. Library tests also include explicit zone-based event-boundary coverage. Set `CHROME_BIN` if Chrome is not detected.
 
-- Clean install without legacy peer resolution; no npm audit vulnerabilities in the root or consumer installation.
-- Lint for all three Nx projects.
-- 55 library tests, 7 browser tests and 1 packaged-consumer lifecycle test.
-- Production library build and 28 prerendered content pages, plus the example-index redirect and a standalone 404 page.
-- Camofox visual inspection at desktop and mobile widths, DOM checks, live OSM map rendering and a map-control state change.
+Cypress 16.1 runs Chrome against the production static site on its own port 4303. Its runner owns and closes that server, fails on an occupied port, browser failure, failed tests or zero tests, and saves a JSON result and failure screenshots under `test-results/cypress/`. See the [Cypress guide](../apps/demo-ng-openlayers-cypress/README.md) for focused runs and fixture boundaries. Playwright uses its own port 4301 and retains the no-JavaScript and native keyboard checks.
 
-The dependency review leaves TypeScript at 6.0.3 and consumer Vitest at 4.1.11 to match Angular's supported peer ranges. Node type definitions follow the CI runtime's major. The demo uses Angular's default Baseline browser targets.
+`test:consumer` builds and installs the actual npm tarball into an independent Angular 22 application. It verifies compilation and zoneless lifecycle behavior without source aliases or npm linking. It does not publish a package.
 
 ## Regression coverage
 
-- Map disposal and event bridge cleanup; view replacement, projected coordinates and event rebinding.
-- Layers and overlays attaching/detaching, layer property updates and render callback replacement/removal.
-- Sources composed through custom Angular components and isolation between sibling maps.
-- OSM/XYZ URL updates preserving source identity and subscriptions; replacement-source ownership.
-- Dynamic style composition, flat vector styles and cluster spacing/cleanup.
-- Draw abortion and interaction event cleanup, including snap/select/translate.
-- Zone-based map setup outside Angular and re-entry only for subscribed map outputs.
-- Browser navigation, map controls, projection changes, drawing, mobile search/filtering and keyboard-controlled swipe.
-- All sitemap routes opening with distinct metadata and an initialized map; home and example content usable with JavaScript disabled.
+| Area                    | Behavior checked                                                                                                                                                                                              |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Map and view            | Every event output, observed zone entry, disposal, animation cancellation, simultaneous inputs, resolution/rotation/zoom constraints, projection changes, panned camera state and OpenLayers user coordinates |
+| Geometry and features   | Coordinate projection, point/circle/collection updates, feature IDs, conditional geometry removal, sibling isolation and replacement ownership                                                                |
+| Sources                 | URL updates, source replacement and disposal, cluster content changes, raster content swaps, GeoJSON projections, projected WMTS/XYZ/vector grids and MVT changes                                             |
+| Layers and styles       | Nested groups, visibility/opacity/zoom ranges, render callbacks, flat/vector-tile styles, dynamic style collections, child fill/stroke/text/icon updates and cleanup                                          |
+| Controls and overlays   | Attachment/removal, owned control disposal, overview-map replacement, overlay offset/positioning, graticule replacement and WMTS subtype                                                                      |
+| Editing and measurement | Draw abortion, selection/snap/translation events, keyboard pan/zoom, distance/area in metric and imperial units, projected measurements, sketch cancellation, polygon-hole removal and restoration            |
+| Demo state              | Search/categories/empty state, clipboard feedback, catalog/route contracts, SEO metadata, cursor formatting, geometry export, UTFGrid stale/empty responses, raster pixel transforms and canvas clipping      |
+| Browser flows           | All 27 examples, hydrated client navigation, map forms, drawing/modifying/selecting/snapping, hole editing, measurements, raster source/brightness changes, UTFGrid labels, overlays, mobile search and swipe |
+| Static distribution     | Prerendered descriptions, canonical URLs, JSON-LD, sitemap, 404/noindex, no-JavaScript content, packaged documentation and independent consumer                                                               |
 
-Browser regression tiles are explicitly mocked to avoid depending on external providers. The all-route smoke test substitutes external responses and checks initialization/errors; it does not validate every provider's data or every example's complete interaction flow. Camofox's live tile check is separate from these deterministic tests.
+Browser provider responses are deterministic fixtures. Local scripts, icons, metadata and UTFGrid data are served normally; Cypress fails on missing local resources or an unrecognized external provider. Real OpenLayers handles interactions and canvas rendering. Raster assertions inspect actual pixel values; a general canvas presence check alone does not prove a provider rendered correctly. Camofox live-provider inspection is separate from mocked browser regressions.
 
-## Measured boundaries
+## Verified on 2026-09-17
 
-Library coverage: 40.26% statements, 29.26% branches, 31.44% functions and 41.03% lines. CI retains the existing floor of 30% statements/lines and 20% branches/functions. Many specialized sources and controls still need behavioral tests; these results do not prove absence of all memory leaks.
+- 190 library unit tests and 40 zoneless demo unit tests passed.
+- All 47 Cypress scenarios and 7 Playwright scenarios passed, including all 27 example routes.
+- The built 22.0.1 tarball compiled and passed its independent Angular 22.1.7 consumer lifecycle test.
+- Root and independent-consumer npm audits reported zero vulnerabilities.
+- Camofox live inspection verified desktop rendering, first-hover UTFGrid data and an unclipped overlay at 390 px.
 
-The library enforces `noImplicitAny` and the workspace uses strict Angular templates. Full TypeScript strict mode has not been enabled across the legacy API.
+| Project | Statements | Branches | Functions | Lines |
+| --- | ---: | ---: | ---: | ---: |
+| Library | 92.03% | 81.81% | 87.61% | 94.54% |
+| Demo | 79.4% | 94.87% | 54.34% | 86.5% |
 
-The production home page's initial JavaScript and CSS total approximately 331 kB before compression (about 91 kB estimated transfer). OpenLayers is loaded with the example routes. A 400 kB warning / 500 kB error budget protects initial assets. These are build sizes, not field performance or Core Web Vitals measurements.
+## Coverage and CI
 
-Nx cache inputs include sources and shared package/TypeScript configuration. E2E also includes the Playwright configuration. Static content, canonical metadata, sitemap entries and JSON-LD are validated in the build/browser checks. Search-engine indexing is not asserted by these checks.
+Unit coverage reports include HTML, LCOV and JSON summaries under `coverage/ng-openlayers` and `coverage/demo-ng-openlayers`. Nx restores those output directories on unit cache hits. Browser suites always execute; they cannot replay a cached success. The shared TypeScript alias gives Nx an explicit dependency from the demo to the library, so library edits invalidate its build and tests.
 
-The CI workflow runs validation before GitHub Pages deployment. Npm publication remains a separate release action.
+Enforced global coverage floors:
+
+| Project | Statements | Branches | Functions | Lines |
+| ------- | ---------: | -------: | --------: | ----: |
+| Library |        85% |      75% |       80% |   90% |
+| Demo    |        75% |      90% |       50% |   80% |
+
+CI runs the checks before GitHub Pages deployment and publishes coverage, browser reports and failure screenshots as an artifact. Npm publication runs only for a release commit after successful validation.
+
+The dependency review keeps TypeScript 6.0.3 and consumer Vitest 4.1.11 within Angular 22's supported peer ranges. Node type definitions follow the CI runtime's major. The demo uses Angular's default Baseline browser targets.
+
+## Boundaries
+
+Coverage measures executed, instrumented code; it does not prove every OpenLayers option, browser, external provider or possible input combination. No tests assert the absence of every memory leak. Polygon-hole regressions cover selection, vertex checks, removal and cancellation; they do not establish full topology validation for self-intersecting geometry.
+
+The library enforces `noImplicitAny` and the workspace uses strict Angular templates. Full TypeScript strict mode has not been enabled across the legacy API. Many constructor-only control/source options still require recreating their Angular component; view constraints and projected grid/format changes have dedicated replacement behavior.
+
+OpenLayers maps require a browser DOM/canvas. The home page and 27 example descriptions are prerendered; the map canvas itself is not rendered on the server. A 400 kB warning / 500 kB error budget protects initial site assets. Build sizes are not field performance or Core Web Vitals measurements. Technical metadata checks do not guarantee Google indexing or ranking.
 
 ## Package presentation
 

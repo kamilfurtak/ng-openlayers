@@ -36,9 +36,41 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
   wrapX: boolean;
 
   @ContentChild(FormatComponent, { static: false })
-  formatComponent: FormatComponent;
+  set formatComponent(component: FormatComponent | undefined) {
+    this.projectedFormat = component;
+    this.observeContent('format', component?.instanceChange, (format) => {
+      this.format = format;
+      if (this.instance) this.init();
+    });
+    if (this.instance) {
+      this.format = component?.instance;
+      this.init();
+    }
+  }
+
+  get formatComponent(): FormatComponent | undefined {
+    return this.projectedFormat;
+  }
+
+  private projectedFormat?: FormatComponent;
   @ContentChild(TileGridComponent, { static: false })
-  tileGridComponent: TileGridComponent;
+  set tileGridComponent(component: TileGridComponent | undefined) {
+    this.projectedGrid = component;
+    this.observeContent('grid', component?.instanceChange, (grid) => {
+      this.tileGrid = grid;
+      if (this.instance) this.init();
+    });
+    if (this.instance) {
+      this.tileGrid = component?.instance;
+      this.init();
+    }
+  }
+
+  get tileGridComponent(): TileGridComponent | undefined {
+    return this.projectedGrid;
+  }
+
+  private projectedGrid?: TileGridComponent;
 
   public instance: VectorTile<FeatureLike>;
   format: FeatureFormat<FeatureLike>;
@@ -50,10 +82,15 @@ export class SourceVectorTileComponent extends SourceComponent implements AfterC
 
   /* need the children to construct the OL3 object */
   ngAfterContentInit() {
-    this.format = this.formatComponent.instance;
-    this.tileGrid = this.tileGridComponent.instance;
-    // console.log('creating ol.source.VectorTile instance with:', this);
+    this.format = this.formatComponent?.instance;
+    this.tileGrid = this.tileGridComponent?.instance;
+    this.init();
+  }
+
+  private init(): void {
+    const previous = this.instance;
     this.instance = new VectorTile<FeatureLike>(this);
     this.host.instance.setSource(this.instance);
+    previous?.dispose();
   }
 }

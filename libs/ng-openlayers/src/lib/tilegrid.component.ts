@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { createXYZ } from 'ol/tilegrid.js';
 import TileGrid from 'ol/tilegrid/TileGrid.js';
 import { Extent } from 'ol/extent.js';
@@ -12,6 +12,7 @@ import { Size } from 'ol/size.js';
   standalone: true,
 })
 export class TileGridComponent implements OnInit, OnChanges {
+  @Output() readonly instanceChange = new EventEmitter<TileGrid>();
   @Input()
   extent: Extent;
   @Input()
@@ -28,11 +29,7 @@ export class TileGridComponent implements OnInit, OnChanges {
   instance: TileGrid;
 
   ngOnInit() {
-    if (!this.resolutions) {
-      this.instance = createXYZ(this);
-    } else {
-      this.instance = new TileGrid(this);
-    }
+    if (!this.instance) this.ngOnChanges();
   }
 
   ngOnChanges() {
@@ -41,5 +38,6 @@ export class TileGridComponent implements OnInit, OnChanges {
     } else {
       this.instance = new TileGrid(this);
     }
+    this.instanceChange.emit(this.instance);
   }
 }

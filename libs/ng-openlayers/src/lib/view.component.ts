@@ -9,13 +9,12 @@ import {
   Output,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import View from 'ol/View.js';
+import View, { ViewOptions } from 'ol/View.js';
 import { MapComponent } from './map.component';
 import { ObjectEvent } from 'ol/Object.js';
 import { Extent } from 'ol/extent.js';
 import { Coordinate } from 'ol/coordinate.js';
-import { ProjectionLike } from 'ol/proj.js';
-import { DrawEvent } from 'ol/interaction/Draw.js';
+import { ProjectionLike, transform, getUserProjection } from 'ol/proj.js';
 import BaseEvent from 'ol/events/Event.js';
 import { EventsKey } from 'ol/events.js';
 import { unByKey } from 'ol/Observable.js';
@@ -72,7 +71,7 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
   zoomAnimation = false;
 
   @Output()
-  olChange = new EventEmitter<DrawEvent>();
+  olChange = new EventEmitter<BaseEvent>();
   @Output()
   changeCenter = new EventEmitter<ObjectEvent>();
   @Output()
@@ -94,12 +93,56 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
     this.replaceView();
   }
 
-  private replaceView(): void {
+  private replaceView(changes: SimpleChanges = {}): void {
+    const previous = this.instance;
+    const options: ViewOptions = Object.fromEntries(
+      (
+        [
+          'constrainRotation',
+          'enableRotation',
+          'extent',
+          'maxResolution',
+          'minResolution',
+          'maxZoom',
+          'minZoom',
+          'resolution',
+          'resolutions',
+          'rotation',
+          'zoom',
+          'zoomFactor',
+          'center',
+          'projection',
+          'constrainOnlyCenter',
+          'smoothExtentConstraint',
+          'constrainResolution',
+          'smoothResolutionConstraint',
+          'showFullExtent',
+          'multiWorld',
+        ] as const
+      ).map((key) => [key, this[key]])
+    );
+    if (previous) {
+      options.center = previous.getCenter();
+      options.rotation = previous.getRotation();
+      options.resolution = previous.getResolution();
+      options.zoom = undefined;
+      if (changes['projection']) {
+        if (options.center && !getUserProjection()) {
+          options.center = transform(options.center, previous.getProjection(), options.projection ?? 'EPSG:3857');
+        }
+        options.resolution = undefined;
+        options.zoom = previous.getZoom();
+      }
+      for (const key of ['center', 'rotation', 'resolution', 'zoom'] as const) {
+        if (changes[key]) Object.assign(options, { [key]: changes[key].currentValue });
+      }
+      if (changes['zoom'] && !changes['resolution']) options.resolution = undefined;
+    }
     unByKey(this.eventKeys);
-    this.instance?.cancelAnimations();
-    this.instance = new View(this);
+    previous?.cancelAnimations();
+    this.instance = new View(options);
     this.eventKeys = [
-      this.instance.on('change', (event: DrawEvent) => this.olChange.emit(event)),
+      this.instance.on('change', (event: BaseEvent) => this.olChange.emit(event)),
       this.instance.on('change:center', (event: ObjectEvent) => this.changeCenter.emit(event)),
       this.instance.on('change:resolution', (event: ObjectEvent) => this.changeResolution.emit(event)),
       this.instance.on('change:rotation', (event: ObjectEvent) => this.changeRotation.emit(event)),
@@ -108,46 +151,64 @@ export class ViewComponent implements OnInit, OnChanges, OnDestroy {
     ];
     // Bind before publishing: projected coordinates react to change:view.
     this.host.instance.setView(this.instance);
+    // Coordinate children also observe change:view. Preserve the current camera
+    // after they update their projection, including a user-panned center.
+    if (previous && options.center) this.instance.setCenter(options.center);
+    previous?.dispose();
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const properties: Record<string, unknown> = {};
-    if (!this.instance) {
-      return;
+    if (!this.instance) return;
+    const setters = new Set([
+      'zoom',
+      'center',
+      'rotation',
+      'resolution',
+      'minZoom',
+      'maxZoom',
+      'constrainResolution',
+      'zoomAnimation',
+    ]);
+    // OpenLayers constraints are initialized in the constructor; setProperties alone
+    // updates observable metadata but leaves those constraints and target state stale.
+    if (Object.keys(changes).some((key) => !setters.has(key))) {
+      this.replaceView(changes);
     }
-    if (Object.prototype.hasOwnProperty.call(changes, 'projection')) {
-      this.replaceView();
-    }
-    for (const key in changes) {
-      if (Object.prototype.hasOwnProperty.call(changes, key)) {
-        switch (key) {
-          case 'zoom':
-            /** Work-around: setting the zoom via setProperties does not work. */
-            if (this.zoomAnimation) {
-              this.instance.animate({ zoom: changes[key].currentValue });
-            } else {
-              this.instance.setZoom(changes[key].currentValue);
-            }
-            break;
-          case 'projection':
-            break;
-          case 'center':
-            /** Work-around: setting the center via setProperties does not work. */
-            this.instance.setCenter(changes[key].currentValue);
-            break;
-          default:
-            break;
-        }
-        properties[key] = changes[key].currentValue;
+    for (const key of ['minZoom', 'maxZoom', 'constrainResolution', 'center', 'rotation', 'resolution', 'zoom']) {
+      if (!changes[key]) continue;
+      const value = changes[key].currentValue;
+      switch (key) {
+        case 'minZoom':
+          this.instance.setMinZoom(value);
+          break;
+        case 'maxZoom':
+          this.instance.setMaxZoom(value);
+          break;
+        case 'constrainResolution':
+          this.instance.setConstrainResolution(value);
+          break;
+        case 'center':
+          this.instance.setCenter(value);
+          break;
+        case 'rotation':
+          this.instance.setRotation(value);
+          break;
+        case 'resolution':
+          this.instance.setResolution(value);
+          break;
+        case 'zoom':
+          if (this.zoomAnimation) this.instance.animate({ zoom: value });
+          else this.instance.setZoom(value);
+          break;
       }
     }
-    // console.log('changes detected in aol-view, setting new properties: ', properties);
-    this.instance.setProperties(properties, false);
   }
 
   ngOnDestroy() {
     unByKey(this.eventKeys);
     this.eventKeys = [];
     this.instance?.cancelAnimations();
+    if (this.instance && this.host.instance.getView() === this.instance) this.host.instance.setView(undefined);
+    this.instance?.dispose();
   }
 }

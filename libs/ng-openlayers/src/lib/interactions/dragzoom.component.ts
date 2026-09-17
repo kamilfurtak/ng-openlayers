@@ -30,5 +30,6 @@ export class DragZoomInteractionComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.map.instance.removeInteraction(this.instance);
+    this.instance?.dispose();
   }
 }

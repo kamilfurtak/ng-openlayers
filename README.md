@@ -27,7 +27,7 @@ Use standalone components or `AngularOpenlayersModule`. Each component owns its 
 
 | Package    | Supported range | Development version |
 | ---------- | --------------- | ------------------- |
-| Angular    | `^22.0.0`       | `22.1.6`            |
+| Angular    | `^22.0.0`       | `22.1.7`            |
 | OpenLayers | `^10.10.0`      | `10.10.0`           |
 | Proj4      | `^2.22.0`       | `2.22.0`            |
 
@@ -124,7 +124,7 @@ The demo prerenders the home page and all example descriptions, then creates map
 | `aol-interaction-draw`              | `[trace]`, `[traceSource]`, `(drawAbort)` alongside `(olDrawAbort)`                                           |
 | `aol-styles`                        | Style composition follows children added or removed with `@if` / `@for`                                       |
 
-Inputs that OpenLayers only accepts in a constructor still require recreating the component; not every OpenLayers option is dynamically mutable. The map's legacy `logo`, `renderer` and `loadTilesWhile*` inputs and style `snapToPixel` inputs are retained for source compatibility but are not supported options in current OpenLayers.
+View constraints and projected vector-tile/WMTS format or grid changes replace the owned OpenLayers object automatically. Other inputs that OpenLayers only accepts in a constructor still require recreating the component; not every OpenLayers option is dynamically mutable. The map's legacy `logo`, `renderer` and `loadTilesWhile*` inputs and style `snapToPixel` inputs are retained for source compatibility but are not supported options in current OpenLayers.
 
 Reusable wrapper components can provide sources, styles and attribution through ancestor injection. The [upstream comparison](https://github.com/kamilfurtak/ng-openlayers/blob/master/docs/upstream-review.md) explains the changes adopted from Quentin Lampin's `ngx-openlayers`.
 
@@ -140,10 +140,11 @@ Start with [a basic map](https://ng-openlayers.furtak.dev/examples/basic/), [dra
 npm ci
 npm start                 # Local demo at http://localhost:4200
 npm run lint
-npm run test-ci            # Library regressions in ChromeHeadless
+npm run test-ci           # Library and zoneless demo unit tests with coverage
 npm run build             # npm package + prerendered production site
 npx playwright install chromium
 npm run e2e               # Production-site browser regressions
+npm run e2e:cypress      # Cypress production interactions in Chrome
 npm run test:consumer     # Install and test the actual npm tarball on Angular 22
 ```
 

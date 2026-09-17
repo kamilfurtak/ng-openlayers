@@ -1,4 +1,13 @@
-import { Component, Input, OnChanges, OnInit, Optional, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  OnDestroy,
+  Optional,
+  SimpleChanges,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import Stroke from 'ol/style/Stroke.js';
 import { StyleComponent } from './style.component';
 import { StyleCircleComponent } from './circle.component';
@@ -12,7 +21,7 @@ import { ColorLike } from 'ol/colorlike.js';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class StyleStrokeComponent implements OnInit, OnChanges {
+export class StyleStrokeComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   color: Color | ColorLike;
   @Input()
@@ -61,12 +70,14 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
         break;
       case 'style-circle':
         (this.host as StyleCircleComponent).stroke = this.instance;
+        this.host.instance?.setStroke(this.instance);
         // console.log('setting ol.style.circle instance\'s stroke:', this.host);
         break;
       default:
         throw new Error('unknown host type: ' + this.host);
       // break;
     }
+    this.host.update();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -93,5 +104,15 @@ export class StyleStrokeComponent implements OnInit, OnChanges {
     }
     this.host.update();
     // console.log('changes detected in aol-style-stroke, setting new properties: ', changes);
+  }
+
+  ngOnDestroy() {
+    if (this.host instanceof StyleCircleComponent && this.host.stroke === this.instance) {
+      this.host.stroke = null;
+    }
+    if (this.host.instance?.getStroke() === this.instance) {
+      this.host.instance.setStroke(null);
+      this.host.update();
+    }
   }
 }

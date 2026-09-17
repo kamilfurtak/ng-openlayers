@@ -94,10 +94,8 @@ import { Feature } from 'ol';
 
     <div class="info">
       <p>
-        Mode: ADD/REMOVE ENCLAVE. Start sketch by clicking inside the polygon area. To undo the drawn vertex, press the
-        Ctrl+Z key. Finish sketch by moving the pointer closer to the first point and clicking once with left mouse
-        button. Click on the selected enclave with the Ctrl key pressed to remove it. To remove the last drawn vertex,
-        press the Ctrl+Z key .
+        Start a hole by clicking inside the polygon. Add vertices, then click the first vertex to finish.
+        To remove an existing hole, click it while holding Ctrl (Windows/Linux) or Cmd (macOS).
       </p>
       <!-- Button to toggle the hole drawing mode -->
       <button (click)="drawHole()">
@@ -219,17 +217,8 @@ export class DrawHoleInPolygonComponent {
    * It extracts the geometry (including the new hole) and updates the feature accordingly.
    */
   endHoleDraw(feature: Feature) {
-    // Cast the feature's geometry to a Polygon
-    const olGeomPolygon = feature.getGeometry() as Polygon;
-    // Update the feature property with the new coordinates (including the drawn hole)
-    this.feature = {
-      type: 'Feature',
-      properties: {},
-      geometry: {
-        type: 'Polygon',
-        coordinates: olGeomPolygon.getCoordinates(),
-      },
-    };
+    // Interaction geometries use the view projection; the template expects GeoJSON longitude/latitude.
+    this.modifyEnd(feature);
   }
 
   /**

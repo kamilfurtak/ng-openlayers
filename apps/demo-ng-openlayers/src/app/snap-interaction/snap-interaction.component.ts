@@ -55,8 +55,12 @@ import { SnapEvent } from 'ol/events/SnapEvent';
 
     <div class="info">
       <h3>Result</h3>
-      <p>Snap events: {{ snapCount }}</p>
-      <p>Last vertex: {{ lastVertex }}</p>
+      <p>
+        Snap events: <output aria-label="Snap events">{{ snapCount }}</output>
+      </p>
+      <p>
+        Last vertex: <output aria-label="Last vertex">{{ lastVertex }}</output>
+      </p>
     </div>
   `,
   styles: [

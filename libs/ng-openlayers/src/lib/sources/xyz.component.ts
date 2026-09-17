@@ -61,7 +61,23 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   wrapX: boolean;
 
   @ContentChild(TileGridComponent, { static: false })
-  tileGridXYZ: TileGridComponent;
+  set tileGridXYZ(component: TileGridComponent | undefined) {
+    this.gridComponent = component;
+    this.observeContent('grid', component?.instanceChange, (grid) => {
+      this.tileGrid = grid;
+      if (this.instance) this.init();
+    });
+    if (this.instance) {
+      this.tileGrid = component?.instance;
+      this.init();
+    }
+  }
+
+  get tileGridXYZ(): TileGridComponent | undefined {
+    return this.gridComponent;
+  }
+
+  private gridComponent?: TileGridComponent;
 
   @Output()
   tileLoadStart = new EventEmitter<TileSourceEvent>();
@@ -111,6 +127,7 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
   }
 
   init() {
+    const previous = this.instance;
     this.instance = new XYZ(this);
 
     this.instance.on('tileloadstart', (event: TileSourceEvent) => this.tileLoadStart.emit(event));
@@ -118,5 +135,6 @@ export class SourceXYZComponent extends SourceComponent implements AfterContentI
     this.instance.on('tileloaderror', (event: TileSourceEvent) => this.tileLoadError.emit(event));
 
     this.register(this.instance);
+    previous?.dispose();
   }
 }
