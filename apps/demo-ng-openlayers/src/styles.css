@@ -252,7 +252,7 @@ code,
   flex-wrap: wrap;
   gap: 17px;
   font-size: 10px;
-  color: #6b7a70;
+  color: var(--muted);
   margin-top: 18px;
 }
 .hero-notes span::before {
@@ -281,7 +281,7 @@ code,
   margin-right: 6px;
 }
 .preview-top .mono {
-  color: #859286;
+  color: var(--muted);
 }
 .map-illustration {
   display: block;
@@ -348,7 +348,7 @@ code,
   justify-content: center;
   gap: 12px;
   font-size: 11px;
-  color: #67796a;
+  color: var(--muted);
 }
 .capability-strip > div + div {
   border-left: 1px solid var(--line);
@@ -434,7 +434,7 @@ code,
 }
 .result-count {
   white-space: nowrap;
-  color: #6b7b71;
+  color: var(--muted);
   font-size: 10px;
 }
 .example-grid {
@@ -467,7 +467,7 @@ code,
 }
 .category-label {
   font-size: 9px;
-  color: #5f7a65;
+  color: var(--muted);
   background: #eef4e9;
   border-radius: 4px;
   padding: 2px 7px;
@@ -498,7 +498,7 @@ code,
   margin-top: auto;
 }
 .card-bottom .mono {
-  color: #9aa99a;
+  color: var(--muted);
   font-size: 9px;
 }
 .empty-state {
@@ -540,7 +540,7 @@ code,
     10px/2.5 ui-monospace,
     Consolas,
     monospace;
-  color: #819081;
+  color: var(--muted);
   border: 1px solid var(--line);
   background: #fff;
   border-radius: 5px;
@@ -650,7 +650,7 @@ code,
   flex-shrink: 0;
 }
 .release-label {
-  color: #71816e;
+  color: var(--muted);
   font-size: 9px;
 }
 .site-footer {
@@ -673,14 +673,14 @@ code,
   flex-wrap: wrap;
   gap: 25px;
   font-size: 10px;
-  color: #6a7d6e;
+  color: var(--muted);
 }
 .breadcrumbs {
   display: flex;
   gap: 12px;
   align-items: center;
   font-size: 11px;
-  color: #748277;
+  color: var(--muted);
   padding: 30px 0;
 }
 .breadcrumbs a {
@@ -733,7 +733,7 @@ code,
   flex-wrap: wrap;
   gap: 12px;
   margin-top: 12px;
-  color: #708174;
+  color: var(--muted);
   font-size: 10px;
 }
 .demo-footnote a {
